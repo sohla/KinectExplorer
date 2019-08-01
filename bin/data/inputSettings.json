@@ -1,0 +1,20 @@
+{
+    "inputSettings": {
+        "sliders": {
+            "blobCount": "1",
+            "d": "0",
+            "far": "120",
+            "near": "127"
+        },
+        "switches": {
+            "DrawBlob": "0",
+            "DrawContour": "0",
+            "DrawDepth": "0",
+            "DrawFilter": "1",
+            "DrawGray": "0",
+            "DrawOutline": "1",
+            "DrawSpline": "0",
+            "UseCvThreshold": "0"
+        }
+    }
+}

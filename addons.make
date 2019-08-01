@@ -1,0 +1,8 @@
+ofxControlPanel
+ofxKinect
+ofxMSACore
+ofxMSAInterpolator
+ofxMSAMotionTracker
+ofxOpenCv
+ofxOsc
+ofxXmlSettings
