@@ -3,17 +3,17 @@
         "sliders": {
             "blobCount": "1",
             "d": "0",
-            "divide": "5",
-            "far": "120",
+            "divide": "9",
+            "far": "75",
             "near": "127"
         },
         "switches": {
-            "DrawBlob": "1",
+            "DrawBlob": "0",
             "DrawContour": "1",
             "DrawDepth": "0",
             "DrawFilter": "1",
-            "DrawGray": "0",
-            "DrawOutline": "1",
+            "DrawGray": "1",
+            "DrawOutline": "0",
             "DrawSpline": "1",
             "UseCvThreshold": "0"
         }

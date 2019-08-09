@@ -152,7 +152,7 @@ void KinectManager::draw(InputModel &im){
             
             ofVec3f v = ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
             ofVec3f o = storedLine[j];
-            float f = 0.01;
+            float f = 0.2;// TODO add control!s
             
             o.x = (f * v.x + ((1.0 - f) * o.x));
             o.y = (f * v.y + ((1.0 - f) * o.y));
