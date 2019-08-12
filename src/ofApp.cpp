@@ -32,6 +32,12 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
+void ofApp::exit(){
+    
+    pixelRecorder.exit();
+}
+
+//--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if(key=='r'){
         if(!pixelRecorder.isRecording()){

@@ -19,21 +19,17 @@ void PixelRecorder::setup(){
     vidRecorder.setPixelFormat("gray");
 
     ofAddListener(vidRecorder.outputFileCompleteEvent, this, &PixelRecorder::recordingComplete);
-
 }
 
-
-void PixelRecorder::draw(){
-    if(vidRecorder.isRecording()){
-        ofSetColor(255, 0, 0);
-        ofDrawCircle(ofGetWidth() - 20, 20, 10);
-    }
+void PixelRecorder::exit(){
+    
+    ofRemoveListener(vidRecorder.outputFileCompleteEvent, this, &PixelRecorder::recordingComplete);
+    vidRecorder.close();
 }
 
+//--------------------------------------------------------------
 void PixelRecorder::update(const ofPixels &pixels){
     
-    
-
     if(vidRecorder.isRecording()){
         bool success = vidRecorder.addFrame(pixels);
         if (!success) {
@@ -51,12 +47,20 @@ void PixelRecorder::update(const ofPixels &pixels){
     }
 }
 
+void PixelRecorder::draw(){
+    
+    if(vidRecorder.isRecording()){
+        ofSetColor(255, 0, 0);
+        ofDrawCircle(ofGetWidth() - 20, 20, 10);
+    }
+}
+//--------------------------------------------------------------
 void PixelRecorder::start(string fileName, int w, int h){
     
     string fileExt = ".mov"; // ffmpeg uses the extension to determine the container type. run 'ffmpeg -formats' to see supported formats
 
     if(!vidRecorder.isInitialized()) {
-        vidRecorder.setup(fileName+ofGetTimestampString()+fileExt, w, h, 60);
+        vidRecorder.setup(fileName + ofGetTimestampString() + fileExt, w, h, 60);
         //          vidRecorder.setup(fileName+ofGetTimestampString()+fileExt, vidGrabber.getWidth(), vidGrabber.getHeight(), 30); // no audio
         //            vidRecorder.setup(fileName+ofGetTimestampString()+fileExt, 0,0,0, sampleRate, channels); // no video
         //          vidRecorder.setupCustomOutput(vidGrabber.getWidth(), vidGrabber.getHeight(), 30, sampleRate, channels, "-vcodec mpeg4 -b 1600k -acodec mp2 -ab 128k -f mpegts udp://localhost:1234"); // for custom ffmpeg output string (streaming, etc)
@@ -67,16 +71,13 @@ void PixelRecorder::start(string fileName, int w, int h){
 }
 
 void PixelRecorder::stop(){
+    
     vidRecorder.close();
 }
 
 
-void PixelRecorder::exit(){
-    ofRemoveListener(vidRecorder.outputFileCompleteEvent, this, &PixelRecorder::recordingComplete);
-    vidRecorder.close();
-
-}
 //--------------------------------------------------------------
 void PixelRecorder::recordingComplete(ofxVideoRecorderOutputFileCompleteEventArgs& args){
+    
     cout << "The recoded video file is now complete." << endl;
 }
