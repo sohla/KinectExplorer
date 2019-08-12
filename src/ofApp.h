@@ -6,6 +6,7 @@
 #include "KinectManager.h"
 #include "AnalysisManager.h"
 #include "PixelRecorder.h"
+#include "PixelPlayer.h"
 
 class ofApp : public ofBaseApp{
 
@@ -34,4 +35,5 @@ class ofApp : public ofBaseApp{
         KinectManager   kinectManager;
         AnalysisManager analysisManager;
         PixelRecorder   pixelRecorder;
+        PixelPlayer     pixelPlayer;
 };

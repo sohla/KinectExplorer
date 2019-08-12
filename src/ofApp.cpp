@@ -4,6 +4,7 @@
 void ofApp::setup(){
 
     ofSetFrameRate(30);
+    ofSetVerticalSync(true);
     
     ofSetBackgroundColorHex(0x111111);
     
@@ -11,6 +12,8 @@ void ofApp::setup(){
     kinectManager.setup(inputModel);
     analysisManager.setup(inputModel);
     pixelRecorder.setup();
+    
+    pixelPlayer.setup("test2019-08-12-16-08-33-221.mov");
 }
 
 //--------------------------------------------------------------
@@ -19,18 +22,27 @@ void ofApp::update(){
     inputManager.update();
 
     // update returns next frames pixels
-    kinectManager.update([&](const ofPixels &pixels){
+//    kinectManager.update([&](const ofPixels &pixels){
+//
+//        analysisManager.update(inputModel, pixels);
+//        pixelRecorder.update(pixels);
+//    });
+    
+    pixelPlayer.update([&](const ofPixels &pixels){
+
         analysisManager.update(inputModel, pixels);
-        pixelRecorder.update(pixels);
+
     });
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    kinectManager.draw(inputModel);
+//    kinectManager.draw(inputModel);
     
-    analysisManager.draw(inputModel);
+//    analysisManager.draw(inputModel);
+    
     // draw input gui on top of everything
     inputManager.draw();
     
@@ -45,6 +57,7 @@ void ofApp::exit(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    
     if(key=='r'){
         if(!pixelRecorder.isRecording()){
             pixelRecorder.start("test", kinectManager.kinect.width , kinectManager.kinect.height);

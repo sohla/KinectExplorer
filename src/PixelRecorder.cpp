@@ -17,7 +17,8 @@ void PixelRecorder::setup(){
     vidRecorder.setVideoCodec("mpeg4");
     vidRecorder.setVideoBitrate("800k");
     vidRecorder.setPixelFormat("gray");
-
+    //vidRecorder.setOutputPixelFormat("gray");
+    
     ofAddListener(vidRecorder.outputFileCompleteEvent, this, &PixelRecorder::recordingComplete);
 }
 

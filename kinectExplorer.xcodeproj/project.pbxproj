@@ -69,6 +69,7 @@
 		F069BF722300F5D500C80DE1 /* PixelRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF702300F5D500C80DE1 /* PixelRecorder.cpp */; };
 		F069BF942300F99000C80DE1 /* ofxVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF8D2300F71A00C80DE1 /* ofxVideoRecorder.cpp */; };
 		F069BF9A23011C5E00C80DE1 /* AnalysisManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF9823011C5E00C80DE1 /* AnalysisManager.cpp */; };
+		F069BFA023012BE300C80DE1 /* PixelPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF9E23012BE300C80DE1 /* PixelPlayer.cpp */; };
 		F07BCF2A22F13D6D006B9947 /* KinectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F07BCF2822F13D6D006B9947 /* KinectManager.cpp */; };
 		F0D64FD922F004AA0059DBFD /* InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FD722F004AA0059DBFD /* InputManager.cpp */; };
 		F0D64FF122F0056F0059DBFD /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FDD22F0056F0059DBFD /* ofxBaseGui.cpp */; };
@@ -576,6 +577,8 @@
 		F069BF8E2300F71A00C80DE1 /* ofxVideoRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxVideoRecorder.h; sourceTree = "<group>"; };
 		F069BF9823011C5E00C80DE1 /* AnalysisManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnalysisManager.cpp; sourceTree = "<group>"; };
 		F069BF9923011C5E00C80DE1 /* AnalysisManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnalysisManager.h; sourceTree = "<group>"; };
+		F069BF9E23012BE300C80DE1 /* PixelPlayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PixelPlayer.cpp; sourceTree = "<group>"; };
+		F069BF9F23012BE300C80DE1 /* PixelPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelPlayer.h; sourceTree = "<group>"; };
 		F070AF5E3926EB2CB7A15D1B /* params.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = params.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/params.h; sourceTree = SOURCE_ROOT; };
 		F07BCF2822F13D6D006B9947 /* KinectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KinectManager.cpp; sourceTree = "<group>"; };
 		F07BCF2922F13D6D006B9947 /* KinectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KinectManager.h; sourceTree = "<group>"; };
@@ -1569,6 +1572,8 @@
 				F069BF9923011C5E00C80DE1 /* AnalysisManager.h */,
 				F069BF702300F5D500C80DE1 /* PixelRecorder.cpp */,
 				F069BF732300F5FD00C80DE1 /* PixelRecorder.h */,
+				F069BF9E23012BE300C80DE1 /* PixelPlayer.cpp */,
+				F069BF9F23012BE300C80DE1 /* PixelPlayer.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1972,6 +1977,7 @@
 				ACE7DC9A3223ED5EE1B80074 /* cameras.c in Sources */,
 				F4135EEFC911E9ED211FB6F9 /* core.c in Sources */,
 				E55DEEF784A10419E444669E /* flags.c in Sources */,
+				F069BFA023012BE300C80DE1 /* PixelPlayer.cpp in Sources */,
 				49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */,
 				D31F5C1B140C59B2AF1533A8 /* registration.c in Sources */,
 				F0D64FF722F0056F0059DBFD /* ofxInputField.cpp in Sources */,
