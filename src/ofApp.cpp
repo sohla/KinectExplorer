@@ -3,10 +3,13 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+    ofSetFrameRate(30);
+    
     ofSetBackgroundColorHex(0x111111);
     
     inputManager.setup(inputModel);
     kinectManager.setup(inputModel);
+    analysisManager.setup(inputModel);
     pixelRecorder.setup();
 }
 
@@ -14,15 +17,11 @@ void ofApp::setup(){
 void ofApp::update(){
     
     inputManager.update();
-    //kinectManager.update(inputModel);
 
-    // record the raw pixels from kinect
-//    pixelRecorder.update(kinectManager.kinect.getDepthPixels());
-    
-    kinectManager.updateTwo([&](const ofPixels &pixels){
-        
+    // update returns next frames pixels
+    kinectManager.update([&](const ofPixels &pixels){
+        analysisManager.update(inputModel, pixels);
         pixelRecorder.update(pixels);
-
     });
 }
 
@@ -31,6 +30,7 @@ void ofApp::draw(){
 
     kinectManager.draw(inputModel);
     
+    analysisManager.draw(inputModel);
     // draw input gui on top of everything
     inputManager.draw();
     

@@ -68,6 +68,7 @@
 		EDA6787F2E8DEF6246CF24D3 /* guiTypeLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 589362A07AEB006B1B8BE93F /* guiTypeLogger.cpp */; };
 		F069BF722300F5D500C80DE1 /* PixelRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF702300F5D500C80DE1 /* PixelRecorder.cpp */; };
 		F069BF942300F99000C80DE1 /* ofxVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF8D2300F71A00C80DE1 /* ofxVideoRecorder.cpp */; };
+		F069BF9A23011C5E00C80DE1 /* AnalysisManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF9823011C5E00C80DE1 /* AnalysisManager.cpp */; };
 		F07BCF2A22F13D6D006B9947 /* KinectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F07BCF2822F13D6D006B9947 /* KinectManager.cpp */; };
 		F0D64FD922F004AA0059DBFD /* InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FD722F004AA0059DBFD /* InputManager.cpp */; };
 		F0D64FF122F0056F0059DBFD /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FDD22F0056F0059DBFD /* ofxBaseGui.cpp */; };
@@ -573,6 +574,8 @@
 		F069BF782300F71A00C80DE1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		F069BF8D2300F71A00C80DE1 /* ofxVideoRecorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxVideoRecorder.cpp; sourceTree = "<group>"; };
 		F069BF8E2300F71A00C80DE1 /* ofxVideoRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxVideoRecorder.h; sourceTree = "<group>"; };
+		F069BF9823011C5E00C80DE1 /* AnalysisManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = AnalysisManager.cpp; sourceTree = "<group>"; };
+		F069BF9923011C5E00C80DE1 /* AnalysisManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnalysisManager.h; sourceTree = "<group>"; };
 		F070AF5E3926EB2CB7A15D1B /* params.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = params.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/params.h; sourceTree = SOURCE_ROOT; };
 		F07BCF2822F13D6D006B9947 /* KinectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KinectManager.cpp; sourceTree = "<group>"; };
 		F07BCF2922F13D6D006B9947 /* KinectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KinectManager.h; sourceTree = "<group>"; };
@@ -1562,6 +1565,8 @@
 				F0D64FD822F004AA0059DBFD /* InputManager.h */,
 				F07BCF2822F13D6D006B9947 /* KinectManager.cpp */,
 				F07BCF2922F13D6D006B9947 /* KinectManager.h */,
+				F069BF9823011C5E00C80DE1 /* AnalysisManager.cpp */,
+				F069BF9923011C5E00C80DE1 /* AnalysisManager.h */,
 				F069BF702300F5D500C80DE1 /* PixelRecorder.cpp */,
 				F069BF732300F5FD00C80DE1 /* PixelRecorder.h */,
 			);
@@ -1929,6 +1934,7 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				E8A48D51B598B0E8012410D2 /* guiCallbackValue.cpp in Sources */,
+				F069BF9A23011C5E00C80DE1 /* AnalysisManager.cpp in Sources */,
 				2B11014060CFA00EA494FBC6 /* guiTypeTextDropDown.cpp in Sources */,
 				F0D64FD922F004AA0059DBFD /* InputManager.cpp in Sources */,
 				9FEF7AFAD4DDFFD2A55AA54A /* simpleFileLister.cpp in Sources */,

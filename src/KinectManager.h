@@ -19,39 +19,21 @@ class KinectManager {
 public:
 
     void setup(InputModel &im);
-    void update(InputModel &im);
     void draw(InputModel &im);
     
     template<typename F>
-    void updateTwo(F next){
+    void update(F next){
+        
         kinect.update();
         
         if(kinect.isFrameNew()) {
-            
-            depthImage.setFromPixels(kinect.getDepthPixels());
             next(kinect.getDepthPixels());
         }
-        
     }
     
     ofxKinect kinect;
-    
-    ofxCvGrayscaleImage depthImage; // grayscale depth image
-    ofxCvGrayscaleImage grayThreshNear; // the near thresholded image
-    ofxCvGrayscaleImage grayThreshFar; // the far thresholded image
-
-    bool bThreshWithOpenCV;
-    
-    int nearThreshold;
-    int farThreshold;
-    
     int angle;
 
-    ofxCvContourFinder contourFinder;
-
-    ofPolyline              storedLine;
-    
-    msa::Interpolator2D     spline2D;
 
 };
 

@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "InputManager.h"
 #include "KinectManager.h"
+#include "AnalysisManager.h"
 #include "PixelRecorder.h"
 
 class ofApp : public ofBaseApp{
@@ -26,9 +27,11 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-	
+
+        InputModel      inputModel;
+
         InputManager    inputManager;
         KinectManager   kinectManager;
-        InputModel      inputModel;
+        AnalysisManager analysisManager;
         PixelRecorder   pixelRecorder;
 };
