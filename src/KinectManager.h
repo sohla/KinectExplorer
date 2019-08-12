@@ -22,6 +22,18 @@ public:
     void update(InputModel &im);
     void draw(InputModel &im);
     
+    template<typename F>
+    void updateTwo(F next){
+        kinect.update();
+        
+        if(kinect.isFrameNew()) {
+            
+            depthImage.setFromPixels(kinect.getDepthPixels());
+            next(kinect.getDepthPixels());
+        }
+        
+    }
+    
     ofxKinect kinect;
     
     ofxCvGrayscaleImage depthImage; // grayscale depth image

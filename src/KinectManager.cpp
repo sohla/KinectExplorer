@@ -57,6 +57,7 @@ void KinectManager::setup(InputModel &im){
 
 }
 
+
 void KinectManager::update(InputModel &im){
     
     
@@ -195,9 +196,5 @@ void KinectManager::draw(InputModel &im){
             
             spline2D.clear();
         }
-
-
     }
-    
-
 }

@@ -14,10 +14,16 @@ void ofApp::setup(){
 void ofApp::update(){
     
     inputManager.update();
-    kinectManager.update(inputModel);
+    //kinectManager.update(inputModel);
 
     // record the raw pixels from kinect
-    pixelRecorder.update(kinectManager.kinect.getDepthPixels());
+//    pixelRecorder.update(kinectManager.kinect.getDepthPixels());
+    
+    kinectManager.updateTwo([&](const ofPixels &pixels){
+        
+        pixelRecorder.update(pixels);
+
+    });
 }
 
 //--------------------------------------------------------------
