@@ -7,6 +7,7 @@ void ofApp::setup(){
     
     inputManager.setup(inputModel);
     kinectManager.setup(inputModel);
+    pixelRecorder.setup();
 }
 
 //--------------------------------------------------------------
@@ -14,6 +15,9 @@ void ofApp::update(){
     
     inputManager.update();
     kinectManager.update(inputModel);
+
+    // record the raw pixels from kinect
+    pixelRecorder.update(kinectManager.kinect.getDepthPixels());
 }
 
 //--------------------------------------------------------------
@@ -23,11 +27,19 @@ void ofApp::draw(){
     
     // draw input gui on top of everything
     inputManager.draw();
+    
+    pixelRecorder.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if(key=='r'){
+        if(!pixelRecorder.isRecording()){
+            pixelRecorder.start("test", kinectManager.kinect.width , kinectManager.kinect.height);
+        }else{
+            pixelRecorder.stop();
+        }
+    }
 }
 
 //--------------------------------------------------------------

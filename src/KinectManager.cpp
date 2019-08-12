@@ -34,7 +34,7 @@ void KinectManager::setup(InputModel &im){
     im.kWidth = kinect.width;
     im.kHeight = kinect.height;
 
-    grayImage.allocate(kinect.width, kinect.height);
+    depthImage.allocate(kinect.width, kinect.height);
     grayThreshNear.allocate(kinect.width, kinect.height);
     grayThreshFar.allocate(kinect.width, kinect.height);
     
@@ -71,20 +71,20 @@ void KinectManager::update(InputModel &im){
     if(kinect.isFrameNew()) {
         
         // load grayscale depth image from the kinect source
-        grayImage.setFromPixels(kinect.getDepthPixels());
+        depthImage.setFromPixels(kinect.getDepthPixels());
         
         // we do two thresholds - one for the far plane and one for the near plane
         // we then do a cvAnd to get the pixels which are a union of the two thresholds
         if(bThreshWithOpenCV) {
-            grayThreshNear = grayImage;
-            grayThreshFar = grayImage;
+            grayThreshNear = depthImage;
+            grayThreshFar = depthImage;
             grayThreshNear.threshold(nearThreshold, true);
             grayThreshFar.threshold(farThreshold);
-            cvAnd(grayThreshNear.getCvImage(), grayThreshFar.getCvImage(), grayImage.getCvImage(), NULL);
+            cvAnd(grayThreshNear.getCvImage(), grayThreshFar.getCvImage(), depthImage.getCvImage(), NULL);
         } else {
             
             // or we do it ourselves - show people how they can work with the pixels
-            ofPixels & pix = grayImage.getPixels();
+            ofPixels & pix = depthImage.getPixels();
             unsigned long numPixels = pix.size();
             for(int i = 0; i < numPixels; i++) {
                 if(pix[i] < nearThreshold && pix[i] > farThreshold) {
@@ -96,13 +96,13 @@ void KinectManager::update(InputModel &im){
         }
         
         // update the cv images
-        grayImage.flagImageChanged();
-        grayImage.mirror(false, true);
+        depthImage.flagImageChanged();
+        depthImage.mirror(false, true);
         
         int count = im.sliders.get("blobCount").cast<int>();
         int min = 1;
         int max = (kinect.width * kinect.height) / 3;
-        contourFinder.findContours(grayImage, min, max, count, false);
+        contourFinder.findContours(depthImage, min, max, count, false);
 
     }
 }
@@ -120,7 +120,7 @@ void KinectManager::draw(InputModel &im){
     }
 
     if(im.switches.get("DrawGray").cast<bool>()){
-        grayImage.draw(0, 0, width, height);
+        depthImage.draw(0, 0, width, height);
     }
 
     if(im.switches.get("DrawContour").cast<bool>()){

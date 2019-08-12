@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "InputManager.h"
 #include "KinectManager.h"
+#include "PixelRecorder.h"
 
 class ofApp : public ofBaseApp{
 
@@ -28,4 +29,5 @@ class ofApp : public ofBaseApp{
         InputManager    inputManager;
         KinectManager   kinectManager;
         InputModel      inputModel;
+        PixelRecorder   pixelRecorder;
 };

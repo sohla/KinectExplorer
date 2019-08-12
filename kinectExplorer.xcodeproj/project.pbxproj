@@ -66,6 +66,8 @@
 		E8999CBB9C2C6F093A5BD013 /* ofxControlPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ED318057376FEDA301BD823E /* ofxControlPanel.cpp */; };
 		E8A48D51B598B0E8012410D2 /* guiCallbackValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D51169F112943BB2022A756A /* guiCallbackValue.cpp */; };
 		EDA6787F2E8DEF6246CF24D3 /* guiTypeLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 589362A07AEB006B1B8BE93F /* guiTypeLogger.cpp */; };
+		F069BF722300F5D500C80DE1 /* PixelRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF702300F5D500C80DE1 /* PixelRecorder.cpp */; };
+		F069BF942300F99000C80DE1 /* ofxVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF8D2300F71A00C80DE1 /* ofxVideoRecorder.cpp */; };
 		F07BCF2A22F13D6D006B9947 /* KinectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F07BCF2822F13D6D006B9947 /* KinectManager.cpp */; };
 		F0D64FD922F004AA0059DBFD /* InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FD722F004AA0059DBFD /* InputManager.cpp */; };
 		F0D64FF122F0056F0059DBFD /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FDD22F0056F0059DBFD /* ofxBaseGui.cpp */; };
@@ -563,6 +565,14 @@
 		EF419E34A6E9298A6A98C415 /* cap_winrt.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cap_winrt.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/videoio/cap_winrt.hpp; sourceTree = SOURCE_ROOT; };
 		EF872612718328680A4B9D64 /* MSACoreCommon.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = MSACoreCommon.h; path = ../../../addons/ofxMSACore/src/MSACoreCommon.h; sourceTree = SOURCE_ROOT; };
 		F0656B9018BCC041F81CD5AA /* videoio.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = videoio.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/videoio.hpp; sourceTree = SOURCE_ROOT; };
+		F069BF702300F5D500C80DE1 /* PixelRecorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PixelRecorder.cpp; sourceTree = "<group>"; };
+		F069BF732300F5FD00C80DE1 /* PixelRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PixelRecorder.h; sourceTree = "<group>"; };
+		F069BF752300F71A00C80DE1 /* License.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = License.md; sourceTree = "<group>"; };
+		F069BF762300F71A00C80DE1 /* ofxaddons_thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ofxaddons_thumbnail.png; sourceTree = "<group>"; };
+		F069BF772300F71A00C80DE1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F069BF782300F71A00C80DE1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F069BF8D2300F71A00C80DE1 /* ofxVideoRecorder.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxVideoRecorder.cpp; sourceTree = "<group>"; };
+		F069BF8E2300F71A00C80DE1 /* ofxVideoRecorder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxVideoRecorder.h; sourceTree = "<group>"; };
 		F070AF5E3926EB2CB7A15D1B /* params.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = params.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/params.h; sourceTree = SOURCE_ROOT; };
 		F07BCF2822F13D6D006B9947 /* KinectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KinectManager.cpp; sourceTree = "<group>"; };
 		F07BCF2922F13D6D006B9947 /* KinectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KinectManager.h; sourceTree = "<group>"; };
@@ -1387,6 +1397,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				F069BF742300F71A00C80DE1 /* ofxVideoRecorder */,
 				F0D64FDA22F0056F0059DBFD /* ofxGui */,
 				3598F21374BFCA3EDCE76F18 /* ofxControlPanel */,
 				9683228C705CA3FF4F2EA945 /* ofxKinect */,
@@ -1551,6 +1562,8 @@
 				F0D64FD822F004AA0059DBFD /* InputManager.h */,
 				F07BCF2822F13D6D006B9947 /* KinectManager.cpp */,
 				F07BCF2922F13D6D006B9947 /* KinectManager.h */,
+				F069BF702300F5D500C80DE1 /* PixelRecorder.cpp */,
+				F069BF732300F5FD00C80DE1 /* PixelRecorder.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1600,6 +1613,28 @@
 				B09FCFF976DCEACB7C7C8D4E /* optical_flow.hpp */,
 			);
 			name = superres;
+			sourceTree = "<group>";
+		};
+		F069BF742300F71A00C80DE1 /* ofxVideoRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				F069BF752300F71A00C80DE1 /* License.md */,
+				F069BF762300F71A00C80DE1 /* ofxaddons_thumbnail.png */,
+				F069BF772300F71A00C80DE1 /* README.md */,
+				F069BF782300F71A00C80DE1 /* .gitignore */,
+				F069BF8C2300F71A00C80DE1 /* src */,
+			);
+			name = ofxVideoRecorder;
+			path = ../../../addons/ofxVideoRecorder;
+			sourceTree = "<group>";
+		};
+		F069BF8C2300F71A00C80DE1 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F069BF8D2300F71A00C80DE1 /* ofxVideoRecorder.cpp */,
+				F069BF8E2300F71A00C80DE1 /* ofxVideoRecorder.h */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 		F0C89F35964434FD6E335702 /* libusb */ = {
@@ -1934,6 +1969,7 @@
 				49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */,
 				D31F5C1B140C59B2AF1533A8 /* registration.c in Sources */,
 				F0D64FF722F0056F0059DBFD /* ofxInputField.cpp in Sources */,
+				F069BF942300F99000C80DE1 /* ofxVideoRecorder.cpp in Sources */,
 				0F8F016776681D468C0D0949 /* audio.c in Sources */,
 				A854A26C873CB7CB18844F73 /* MSACoreGL.cpp in Sources */,
 				250A95BA26587BE85DB0A353 /* ofxCvColorImage.cpp in Sources */,
@@ -1943,6 +1979,7 @@
 				1D5F3298C2FA073628012944 /* ofxCvContourFinder.cpp in Sources */,
 				E212C821D1064B92DD953A42 /* ofxCvHaarFinder.cpp in Sources */,
 				63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */,
+				F069BF722300F5D500C80DE1 /* PixelRecorder.cpp in Sources */,
 				F0D64FF222F0056F0059DBFD /* ofxColorPicker.cpp in Sources */,
 				169D3C72FDE6C5590A1616F5 /* ofxCvFloatImage.cpp in Sources */,
 				FB09C6B2A1DA0EA217240CB8 /* ofxCvGrayscaleImage.cpp in Sources */,

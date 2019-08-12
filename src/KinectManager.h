@@ -24,7 +24,7 @@ public:
     
     ofxKinect kinect;
     
-    ofxCvGrayscaleImage grayImage; // grayscale depth image
+    ofxCvGrayscaleImage depthImage; // grayscale depth image
     ofxCvGrayscaleImage grayThreshNear; // the near thresholded image
     ofxCvGrayscaleImage grayThreshFar; // the far thresholded image
 
