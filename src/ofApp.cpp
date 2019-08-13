@@ -29,9 +29,7 @@ void ofApp::update(){
 //    });
     
     pixelPlayer.update([&](const ofPixels &pixels){
-
         analysisManager.update(inputModel, pixels);
-
     });
     
 }
@@ -39,14 +37,16 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-//    kinectManager.draw(inputModel);
+    kinectManager.draw(inputModel);
     
-//    analysisManager.draw(inputModel);
+    analysisManager.draw(inputModel);
     
     // draw input gui on top of everything
     inputManager.draw();
     
     pixelRecorder.draw();
+
+//    pixelPlayer.draw();
 }
 
 //--------------------------------------------------------------

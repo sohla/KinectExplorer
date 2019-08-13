@@ -14,8 +14,9 @@ void PixelPlayer::setup(string fileName){
     
     player.load(fileName);
     
-    grayImage.allocate(player.getWidth(), player.getHeight());
-
+    inputImage.allocate(int(player.getWidth()), int(player.getHeight()));
+    grayImage.allocate(int(player.getWidth()), int(player.getHeight()));
+    
     player.setLoopState(OF_LOOP_NORMAL);
     player.play();
     
@@ -28,7 +29,8 @@ void PixelPlayer::setup(string fileName){
 //}
 
 void PixelPlayer::draw(){
-    
+    //player.draw(0,0);
+    grayImage.draw(0, 480);
 }
 
 void PixelPlayer::exit(){

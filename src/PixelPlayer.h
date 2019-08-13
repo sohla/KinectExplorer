@@ -25,14 +25,16 @@ public:
     template<typename F>
     void update(F next){
         player.update();
-        //grayImage.setFromPixels(player.getPixels());
-        next(player.getPixels());
+        inputImage.setFromPixels(player.getPixels());
+        grayImage = inputImage;
+        next(grayImage.getPixels());
     }
 
 private:
     
     ofVideoPlayer         player;
-    ofxCvGrayscaleImage   grayImage;
+    ofxCvColorImage     inputImage;
+    ofxCvGrayscaleImage grayImage;
 };
 
 #endif /* PixelPlayer_hpp */

@@ -34,7 +34,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
     bThreshWithOpenCV = im.switches.get("UseCvThreshold").cast<bool>();
 
-    // load grayscale depth image from the kinect source
+    // load gray image from source
     depthImage.setFromPixels(pixels);
 
     // we do two thresholds - one for the far plane and one for the near plane
@@ -59,7 +59,8 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         }
     }
 
-    // update the cv images
+    //depthImage.blurHeavily();
+    
     depthImage.flagImageChanged();
     depthImage.mirror(false, true);
 
@@ -79,6 +80,7 @@ void AnalysisManager::draw(InputModel &im){
     int div = im.sliders.get("divide").cast<int>();
     
     if(im.switches.get("DrawGray").cast<bool>()){
+        ofSetHexColor(0xFFFFFF);
         depthImage.draw(0, 0, width, height);
     }
 
