@@ -25,6 +25,14 @@ void AnalysisManager::setup(InputModel &im){
         ofVec3f v = ofVec3f(0,0,0);
         storedLine.addVertex(v);
     }
+    
+    sender.setup(HOST, PORT);
+
+    ofxOscMessage m;
+    m.setAddress("/gyrosc/button");
+    m.addFloatArg(1.0);
+    sender.sendMessage(m, false);
+
 }
 
 void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
@@ -36,6 +44,10 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
     // load gray image from source
     depthImage.setFromPixels(pixels);
+
+    if(im.switches.get("Blur").cast<bool>()){
+        depthImage.blurHeavily();
+    }
 
     // we do two thresholds - one for the far plane and one for the near plane
     // we then do a cvAnd to get the pixels which are a union of the two thresholds
@@ -58,9 +70,8 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
             }
         }
     }
-    if(im.switches.get("Blur").cast<bool>()){
-        depthImage.blurHeavily();
-    }
+    
+    depthImage.dilate();
     
     depthImage.flagImageChanged();
     depthImage.mirror(false, true);
@@ -103,8 +114,19 @@ void AnalysisManager::draw(InputModel &im){
 
         if(im.switches.get("DrawBlob").cast<bool>()){
             ofSetHexColor(0xFF0000);
-            polyline.draw();
+            polyline.draw();            
         }
+        
+        float area = ofMap(blob.area, 20000, 100000, 0.1, 4.0);
+        
+        ofxOscMessage m;
+        m.setAddress("/gyrosc/rrate");
+        m.addFloatArg(area);
+        m.addFloatArg(area);
+        m.addFloatArg(area);
+        sender.sendMessage(m, false);
+
+        std::cout << blob.area << " " << area << m << std::endl;
 
         ofPolyline outline;
         spline2D.reserve(div);

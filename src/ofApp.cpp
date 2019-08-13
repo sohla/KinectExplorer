@@ -15,9 +15,9 @@ void ofApp::setup(){
     
     pixelPlayer.setup("test2019-08-12-16-08-33-221.mov");
 
-    graph.setup(0, inputModel.kHeight, inputModel.kWidth, 50);
-    graph.setDx(1.0); // which means delta of time
-    graph.setColor(ofColor::white);  // ofColor(255,255,255)
+//    graph.setup(0, inputModel.kHeight, inputModel.kWidth, 50);
+//    graph.setDx(1.0); // which means delta of time
+//    graph.setColor(ofColor::white);  // ofColor(255,255,255)
 
 }
 
@@ -41,7 +41,7 @@ void ofApp::update(){
             analysisManager.update(inputModel, pixels);
         });
     }
-    graph.add(ofRandom(-1,1));
+//    graph.add(ofRandom(-1,1));
 
 }
 
@@ -58,7 +58,7 @@ void ofApp::draw(){
     pixelRecorder.draw();
 
 //    pixelPlayer.draw();
-    graph.draw();
+//    graph.draw();
 
 }
 

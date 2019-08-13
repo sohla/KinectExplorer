@@ -9,7 +9,7 @@
 #define KinectManager_hpp
 
 #include <stdio.h>
-#include "Model.h"
+#include "InputModel.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
 #include "MSAInterpolator.h"

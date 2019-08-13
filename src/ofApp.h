@@ -1,14 +1,14 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Model.h"
+#include "InputModel.h"
 #include "InputManager.h"
 #include "KinectManager.h"
 #include "AnalysisManager.h"
 #include "PixelRecorder.h"
 #include "PixelPlayer.h"
 
-#include "ofxGraph.h"
+//#include "ofxGraph.h"
 
 class ofApp : public ofBaseApp{
 
@@ -39,5 +39,5 @@ class ofApp : public ofBaseApp{
         PixelRecorder   pixelRecorder;
         PixelPlayer     pixelPlayer;
 
-    ofxGraph graph;
+//    ofxGraph graph;
 };

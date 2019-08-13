@@ -9,7 +9,7 @@
 #define InputManager_hpp
 
 #include <stdio.h>
-#include "Model.h"
+#include "InputModel.h"
 
 #include "ofxGui.h"
 #include "ofxOscParameterSync.h"

@@ -9,10 +9,17 @@
 #define AnalysisManager_hpp
 
 #include <stdio.h>
-#include "Model.h"
+#include "InputModel.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
 #include "MSAInterpolator.h"
+
+#include "ofxOsc.h"
+// send host (aka ip address)
+#define HOST "127.0.0.1"
+
+/// send port
+#define PORT 57120
 
 class AnalysisManager {
     
@@ -38,6 +45,7 @@ public:
 
     msa::Interpolator2D     spline2D;
 
+    ofxOscSender sender;
 };
 
 #endif /* AnalysisManager_hpp */
