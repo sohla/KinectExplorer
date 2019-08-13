@@ -58,8 +58,9 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
             }
         }
     }
-
-    //depthImage.blurHeavily();
+    if(im.switches.get("Blur").cast<bool>()){
+        depthImage.blurHeavily();
+    }
     
     depthImage.flagImageChanged();
     depthImage.mirror(false, true);

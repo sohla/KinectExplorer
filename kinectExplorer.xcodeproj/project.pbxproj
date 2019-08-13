@@ -70,6 +70,7 @@
 		F069BF942300F99000C80DE1 /* ofxVideoRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF8D2300F71A00C80DE1 /* ofxVideoRecorder.cpp */; };
 		F069BF9A23011C5E00C80DE1 /* AnalysisManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF9823011C5E00C80DE1 /* AnalysisManager.cpp */; };
 		F069BFA023012BE300C80DE1 /* PixelPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BF9E23012BE300C80DE1 /* PixelPlayer.cpp */; };
+		F069BFC923025A4B00C80DE1 /* ofxGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F069BFC223025A4B00C80DE1 /* ofxGraph.cpp */; };
 		F07BCF2A22F13D6D006B9947 /* KinectManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F07BCF2822F13D6D006B9947 /* KinectManager.cpp */; };
 		F0D64FD922F004AA0059DBFD /* InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FD722F004AA0059DBFD /* InputManager.cpp */; };
 		F0D64FF122F0056F0059DBFD /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FDD22F0056F0059DBFD /* ofxBaseGui.cpp */; };
@@ -579,6 +580,12 @@
 		F069BF9923011C5E00C80DE1 /* AnalysisManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnalysisManager.h; sourceTree = "<group>"; };
 		F069BF9E23012BE300C80DE1 /* PixelPlayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PixelPlayer.cpp; sourceTree = "<group>"; };
 		F069BF9F23012BE300C80DE1 /* PixelPlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PixelPlayer.h; sourceTree = "<group>"; };
+		F069BFA523025A4B00C80DE1 /* ofxaddons_thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ofxaddons_thumbnail.png; sourceTree = "<group>"; };
+		F069BFBD23025A4B00C80DE1 /* screenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = screenshot.png; sourceTree = "<group>"; };
+		F069BFBE23025A4B00C80DE1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F069BFBF23025A4B00C80DE1 /* ofxGraph.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = ofxGraph.gif; sourceTree = "<group>"; };
+		F069BFC123025A4B00C80DE1 /* ofxGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGraph.h; sourceTree = "<group>"; };
+		F069BFC223025A4B00C80DE1 /* ofxGraph.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGraph.cpp; sourceTree = "<group>"; };
 		F070AF5E3926EB2CB7A15D1B /* params.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = params.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/params.h; sourceTree = SOURCE_ROOT; };
 		F07BCF2822F13D6D006B9947 /* KinectManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = KinectManager.cpp; sourceTree = "<group>"; };
 		F07BCF2922F13D6D006B9947 /* KinectManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KinectManager.h; sourceTree = "<group>"; };
@@ -1403,6 +1410,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				F069BFA423025A4B00C80DE1 /* ofxGraph */,
 				F069BF742300F71A00C80DE1 /* ofxVideoRecorder */,
 				F0D64FDA22F0056F0059DBFD /* ofxGui */,
 				3598F21374BFCA3EDCE76F18 /* ofxControlPanel */,
@@ -1643,6 +1651,28 @@
 			children = (
 				F069BF8D2300F71A00C80DE1 /* ofxVideoRecorder.cpp */,
 				F069BF8E2300F71A00C80DE1 /* ofxVideoRecorder.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		F069BFA423025A4B00C80DE1 /* ofxGraph */ = {
+			isa = PBXGroup;
+			children = (
+				F069BFA523025A4B00C80DE1 /* ofxaddons_thumbnail.png */,
+				F069BFBD23025A4B00C80DE1 /* screenshot.png */,
+				F069BFBE23025A4B00C80DE1 /* README.md */,
+				F069BFBF23025A4B00C80DE1 /* ofxGraph.gif */,
+				F069BFC023025A4B00C80DE1 /* src */,
+			);
+			name = ofxGraph;
+			path = ../../../addons/ofxGraph;
+			sourceTree = "<group>";
+		};
+		F069BFC023025A4B00C80DE1 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F069BFC123025A4B00C80DE1 /* ofxGraph.h */,
+				F069BFC223025A4B00C80DE1 /* ofxGraph.cpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1978,6 +2008,7 @@
 				F4135EEFC911E9ED211FB6F9 /* core.c in Sources */,
 				E55DEEF784A10419E444669E /* flags.c in Sources */,
 				F069BFA023012BE300C80DE1 /* PixelPlayer.cpp in Sources */,
+				F069BFC923025A4B00C80DE1 /* ofxGraph.cpp in Sources */,
 				49BEEB2DFA5319D55AA6899F /* tilt.c in Sources */,
 				D31F5C1B140C59B2AF1533A8 /* registration.c in Sources */,
 				F0D64FF722F0056F0059DBFD /* ofxInputField.cpp in Sources */,

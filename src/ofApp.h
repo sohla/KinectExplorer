@@ -8,6 +8,8 @@
 #include "PixelRecorder.h"
 #include "PixelPlayer.h"
 
+#include "ofxGraph.h"
+
 class ofApp : public ofBaseApp{
 
     
@@ -36,4 +38,6 @@ class ofApp : public ofBaseApp{
         AnalysisManager analysisManager;
         PixelRecorder   pixelRecorder;
         PixelPlayer     pixelPlayer;
+
+    ofxGraph graph;
 };
