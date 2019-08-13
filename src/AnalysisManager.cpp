@@ -133,7 +133,7 @@ void AnalysisManager::draw(InputModel &im){
         spline2D.reserve(div);
         storedLine.resize(div);
 
-        for(int j = 0; j < div; j++){
+        for(int j = 0; j <= div; j++){
 
             ofVec3f v = polyline[j];//ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
             ofVec3f o = storedLine[j];
