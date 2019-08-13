@@ -21,7 +21,7 @@ void AnalysisManager::setup(InputModel &im){
     farThreshold = 150;
     bThreshWithOpenCV = true;
     
-    for(int j = 0; j < 16; j++){
+    for(int j = 0; j < 64; j++){
         ofVec3f v = ofVec3f(0,0,0);
         storedLine.addVertex(v);
     }
@@ -126,15 +126,16 @@ void AnalysisManager::draw(InputModel &im){
         m.addFloatArg(area);
         sender.sendMessage(m, false);
 
-        std::cout << blob.area << " " << area << m << std::endl;
-
+        //std::cout << blob.area << " " << area << m << std::endl;
+        div = blob.nPts;
+        
         ofPolyline outline;
         spline2D.reserve(div);
         storedLine.resize(div);
 
         for(int j = 0; j < div; j++){
 
-            ofVec3f v = ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
+            ofVec3f v = polyline[j];//ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
             ofVec3f o = storedLine[j];
             float f = 0.2;// TODO add control!s
 
@@ -146,12 +147,12 @@ void AnalysisManager::draw(InputModel &im){
             spline2D.push_back(o);
         }
 
-        outline.close();
+//        outline.close();
 
 
-        storedLine[div-1] = storedLine[0];
-        ofVec3f v = storedLine[0];
-        spline2D.push_back(v);
+//        storedLine[div-1] = storedLine[0];
+//        ofVec3f v = storedLine[0];
+//        spline2D.push_back(v);
 
         if(im.switches.get("DrawFilter").cast<bool>()){
 
@@ -174,7 +175,7 @@ void AnalysisManager::draw(InputModel &im){
             glColor3f(1, 0, 1);
             //inline void drawInterpolatorSmooth(Interpolator2D &spline, int numSteps, int dotSize = 8, int lineWidth = 2) {
 
-            drawInterpolatorSmooth(spline2D, div, 0, 10);
+            drawInterpolatorSmooth(spline2D, div, 0, 2);
             glPopMatrix();
 
             spline2D.clear();

@@ -52,7 +52,7 @@ struct InputModel {
         ofParameter<int>("near",0,50,127),
         ofParameter<int>("far",0,50,127),
         ofParameter<int>("blobCount",1,1,4),
-        ofParameter<int>("divide",3,3,16),//[3,16,\lin,1,3].asSpec,
+        ofParameter<int>("divide",3,3,64),//[3,16,\lin,1,3].asSpec,
     };
     
     ofParameterGroup        sliders;
