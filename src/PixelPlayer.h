@@ -24,10 +24,16 @@ public:
     
     template<typename F>
     void update(F next){
-        player.update();
-        inputImage.setFromPixels(player.getPixels());
-        grayImage = inputImage;
-        next(grayImage.getPixels());
+
+        if(player.isLoaded()){
+            
+            player.update();
+            inputImage.setFromPixels(player.getPixels());
+            grayImage = inputImage;
+            next(grayImage.getPixels());
+        }else{
+            //next(nothing);
+        }
     }
 
 private:

@@ -21,16 +21,21 @@ void ofApp::update(){
     
     inputManager.update();
 
-    // update returns next frames pixels
-//    kinectManager.update([&](const ofPixels &pixels){
-//
-//        analysisManager.update(inputModel, pixels);
-//        pixelRecorder.update(pixels);
-//    });
-    
-    pixelPlayer.update([&](const ofPixels &pixels){
-        analysisManager.update(inputModel, pixels);
-    });
+    if(inputModel.switches.get("Realtime").cast<bool>() == true){
+
+        // update returns next frames pixels
+        kinectManager.update([&](const ofPixels &pixels){
+            
+            analysisManager.update(inputModel, pixels);
+            pixelRecorder.update(pixels);
+        });
+    }else{
+
+        // play loaded video
+        pixelPlayer.update([&](const ofPixels &pixels){
+            analysisManager.update(inputModel, pixels);
+        });
+    }
     
 }
 
