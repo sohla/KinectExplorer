@@ -9,6 +9,8 @@
 #define AnalysisManager_hpp
 
 #include <stdio.h>
+#include "ofMain.h"
+
 #include "InputModel.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
@@ -43,6 +45,8 @@ public:
     msa::Interpolator2D     spline2D;
 
     ofxOscSender sender;
+    
+    ofImage edge;
 };
 
 #endif /* AnalysisManager_hpp */

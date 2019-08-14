@@ -82,6 +82,11 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     depthImage.mirror(false, true);
     depthImage.flagImageChanged();
 
+    // basic ofxCv working in the pipeline
+    // need to hook it all up to input model (gui)
+    ofxCv::Canny(depthImage, edge, 50, 130, 3);
+    edge.update();
+    
     //---------------------------------------------------------------------------
     // PROCESS pipeline END
     //---------------------------------------------------------------------------
@@ -101,8 +106,6 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         }
         polyline.close();
 
-        div = blob.nPts;//•hack
-
         dividedLine.clear();
         spline2D.reserve(div);
         storedLine.resize(div);
@@ -110,7 +113,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         // hand coded filter of div points
         for(int j = 0; j <= div; j++){
             
-            ofVec3f v = polyline[j];//ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
+            ofVec3f v = ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
             ofVec3f o = storedLine[j];
             float f = 0.2;// TODO add control!s
             
@@ -119,15 +122,16 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
             
             dividedLine.addVertex(v);
             storedLine[j] = o;
-            spline2D.push_back(o);
+            
         }
         
-        //        outline.close();
+        dividedLine.close();
         
-        
-        //        storedLine[div-1] = storedLine[0];
-        //        ofVec3f v = storedLine[0];
-        //        spline2D.push_back(v);
+        storedLine[div-1] = storedLine[0];
+
+        for(int j = 0; j <= div; j++){
+            spline2D.push_back(storedLine[j]);
+        }
 
         // OUTPUT ANALYSIS DATA
         float area = ofMap(blob.area, 20000, 100000, 0.1, 4.0);
@@ -150,6 +154,10 @@ void AnalysisManager::draw(InputModel &im){
     int height = im.kHeight;
     int div = im.sliders.get("divide").cast<int>();
 
+    
+    ofSetHexColor(0xFF0000);
+    edge.draw(0,0);
+    
     if(im.switches.get("DrawGray").cast<bool>()){
         
         ofSetHexColor(0xFFFFFF);
