@@ -34,13 +34,15 @@ void KinectManager::setup(InputModel &im){
     im.kWidth = kinect.width;
     im.kHeight = kinect.height;
 
-    // zero the tilt on startup
-    angle = 25;
-    kinect.setCameraTiltAngle(angle);
+    // tilt on startup
+    kinect.setCameraTiltAngle(-20);
 }
 
 
+void KinectManager::update(InputModel &im){
 
+    
+}
 
 void KinectManager::draw(InputModel &im){
     

@@ -17,7 +17,7 @@ struct InputModel {
 
     int kWidth = 0;
     int kHeight = 0;
-
+    int kinectAngle = -20;
     /*
      var names = [
      "near",

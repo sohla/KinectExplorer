@@ -18,6 +18,8 @@
 
 #include "ofxCv.h"
 
+#include "ofxBiquadFilter.h"
+
 #include "ofxOsc.h"
 // send host (aka ip address)
 #define HOST "127.0.0.1"
@@ -47,6 +49,9 @@ public:
     ofxOscSender sender;
     
     ofImage edge;
+    
+    float oldArea;
+    ofxBiquadFilter1f filterLowPass;
 };
 
 #endif /* AnalysisManager_hpp */

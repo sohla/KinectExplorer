@@ -24,6 +24,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    kinectManager.update(inputModel);
+    
     inputManager.update();
 
     if(inputModel.switches.get("Realtime").cast<bool>() == true){
@@ -71,12 +73,26 @@ void ofApp::exit(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-    if(key=='r'){
+    if(key == 'r'){
         if(!pixelRecorder.isRecording()){
             pixelRecorder.start("test", kinectManager.kinect.width , kinectManager.kinect.height);
         }else{
             pixelRecorder.stop();
         }
+    }
+    
+    if(key == OF_KEY_UP){
+        
+        inputModel.kinectAngle++;
+        if(inputModel.kinectAngle > 30) inputModel.kinectAngle = 30;
+        kinectManager.kinect.setCameraTiltAngle(inputModel.kinectAngle);
+    }
+
+    if(key == OF_KEY_DOWN){
+
+        inputModel.kinectAngle--;
+        if(inputModel.kinectAngle < -30) inputModel.kinectAngle = -30;
+        kinectManager.kinect.setCameraTiltAngle(inputModel.kinectAngle);
     }
 }
 

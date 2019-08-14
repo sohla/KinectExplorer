@@ -85,6 +85,8 @@
 		F09AE6A223038AC100736210 /* Distance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F09AE5BD23038AC000736210 /* Distance.cpp */; };
 		F09AE6A323038AC100736210 /* ETF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F09AE5C723038AC000736210 /* ETF.cpp */; };
 		F09AE6A423038AC100736210 /* fdog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F09AE5C823038AC000736210 /* fdog.cpp */; };
+		F09AE70523039A3600736210 /* ofxBiquadFilterInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F09AE6F723039A3500736210 /* ofxBiquadFilterInstance.cpp */; };
+		F09AE70623039A3600736210 /* ofxBiquadFilter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F09AE6F823039A3500736210 /* ofxBiquadFilter.cpp */; };
 		F0D64FD922F004AA0059DBFD /* InputManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FD722F004AA0059DBFD /* InputManager.cpp */; };
 		F0D64FF122F0056F0059DBFD /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FDD22F0056F0059DBFD /* ofxBaseGui.cpp */; };
 		F0D64FF222F0056F0059DBFD /* ofxColorPicker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0D64FDE22F0056F0059DBFD /* ofxColorPicker.cpp */; };
@@ -637,6 +639,10 @@
 		F09AE5C723038AC000736210 /* ETF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ETF.cpp; sourceTree = "<group>"; };
 		F09AE5C823038AC000736210 /* fdog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fdog.cpp; sourceTree = "<group>"; };
 		F09AE64D23038AC100736210 /* ofxCv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCv.h; sourceTree = "<group>"; };
+		F09AE6F623039A3500736210 /* ofxBiquadFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBiquadFilter.h; sourceTree = "<group>"; };
+		F09AE6F723039A3500736210 /* ofxBiquadFilterInstance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBiquadFilterInstance.cpp; sourceTree = "<group>"; };
+		F09AE6F823039A3500736210 /* ofxBiquadFilter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBiquadFilter.cpp; sourceTree = "<group>"; };
+		F09AE6F923039A3500736210 /* ofxBiquadFilterInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBiquadFilterInstance.h; sourceTree = "<group>"; };
 		F0D64FD722F004AA0059DBFD /* InputManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = InputManager.cpp; sourceTree = "<group>"; };
 		F0D64FD822F004AA0059DBFD /* InputManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InputManager.h; sourceTree = "<group>"; };
 		F0D64FDC22F0056F0059DBFD /* ofxGuiGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGuiGroup.h; sourceTree = "<group>"; };
@@ -1456,6 +1462,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				F09AE6D823039A3500736210 /* ofxBiquadFilter */,
 				F09AE4C423038ABF00736210 /* ofxCv */,
 				F069BFA423025A4B00C80DE1 /* ofxGraph */,
 				F069BF742300F71A00C80DE1 /* ofxVideoRecorder */,
@@ -1845,6 +1852,26 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		F09AE6D823039A3500736210 /* ofxBiquadFilter */ = {
+			isa = PBXGroup;
+			children = (
+				F09AE6F523039A3500736210 /* src */,
+			);
+			name = ofxBiquadFilter;
+			path = ../../../addons/ofxBiquadFilter;
+			sourceTree = "<group>";
+		};
+		F09AE6F523039A3500736210 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				F09AE6F623039A3500736210 /* ofxBiquadFilter.h */,
+				F09AE6F723039A3500736210 /* ofxBiquadFilterInstance.cpp */,
+				F09AE6F823039A3500736210 /* ofxBiquadFilter.cpp */,
+				F09AE6F923039A3500736210 /* ofxBiquadFilterInstance.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		F0C89F35964434FD6E335702 /* libusb */ = {
 			isa = PBXGroup;
 			children = (
@@ -2166,6 +2193,7 @@
 				495A92A35AC1D16E07CA45C7 /* guiTypeCustom.cpp in Sources */,
 				8A230FB96662FB1AB1611B8A /* simpleColor.cpp in Sources */,
 				CBE57D7C657C0B7FD0102864 /* guiTypeMultiToggle.cpp in Sources */,
+				F09AE70623039A3600736210 /* ofxBiquadFilter.cpp in Sources */,
 				F09AE69823038AC100736210 /* Helpers.cpp in Sources */,
 				5AB5747E5EF615D728FE9C67 /* guiTypeLabel.cpp in Sources */,
 				F0D64FF922F0056F0059DBFD /* ofxPanel.cpp in Sources */,
@@ -2212,6 +2240,7 @@
 				F09AE6A223038AC100736210 /* Distance.cpp in Sources */,
 				F07BCF2A22F13D6D006B9947 /* KinectManager.cpp in Sources */,
 				640279EE111671BD026CB013 /* ofxOscReceiver.cpp in Sources */,
+				F09AE70523039A3600736210 /* ofxBiquadFilterInstance.cpp in Sources */,
 				8F5205AEF8861EF234F0651A /* ofxOscSender.cpp in Sources */,
 				62545D179C94265CA1389D4A /* OscOutboundPacketStream.cpp in Sources */,
 				879A251454401BC0B6E4F238 /* OscTypes.cpp in Sources */,

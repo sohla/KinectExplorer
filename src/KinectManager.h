@@ -20,7 +20,8 @@ public:
 
     void setup(InputModel &im);
     void draw(InputModel &im);
-    
+    void update(InputModel &im);
+
     template<typename F>
     void update(F next){
         
@@ -32,7 +33,6 @@ public:
     }
     
     ofxKinect kinect;
-    int angle;
 
 
 };

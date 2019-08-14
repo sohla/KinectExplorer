@@ -47,7 +47,6 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     // load gray image from source
     depthImage.setFromPixels(pixels);
 
-    
     //---------------------------------------------------------------------------
     // PROCESS pipeline START
     //---------------------------------------------------------------------------
@@ -135,16 +134,41 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
         // OUTPUT ANALYSIS DATA
         float area = ofMap(blob.area, 20000, 100000, 0.1, 4.0);
-        
-        ofxOscMessage m;
-        m.setAddress("/gyrosc/rrate");
-        m.addFloatArg(area);
-        m.addFloatArg(area);
-        m.addFloatArg(area);
-        sender.sendMessage(m, false);
-        
         //std::cout << blob.area << " " << area << m << std::endl;
 
+        
+        float rocArea = (area - oldArea);
+        
+        filterLowPass.setFc(0.03);
+        filterLowPass.update(abs(rocArea));
+
+        float score = abs(filterLowPass.value()) * 5.0;
+        
+        
+        float ms = ofMap(score, 0.0, 1.0, 0.1, 4.0);
+
+
+        ofxOscMessage m;
+        m.setAddress("/gyrosc/rrate");
+        m.addFloatArg(ms);
+        m.addFloatArg(ms);
+        m.addFloatArg(ms);
+        sender.sendMessage(m, false);
+
+        std::cout << score << " " << ms << m << std::endl;
+
+//        for(int i = 0; i < score; i++){
+//            std::cout << "•";
+//        };
+//        std::cout << std::endl;
+
+//        std::cout << filterLowPass.value() << std::endl;
+        
+        
+        
+        
+        oldArea = area;
+        
     });
 }
 
