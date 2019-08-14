@@ -147,7 +147,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         
         float ms = ofMap(score, 0.0, 1.0, 0.1, 4.0);
 
-
+        // move to oscTransmitterManager :
         ofxOscMessage m;
         m.setAddress("/gyrosc/rrate");
         m.addFloatArg(ms);
@@ -161,11 +161,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 //            std::cout << "•";
 //        };
 //        std::cout << std::endl;
-
 //        std::cout << filterLowPass.value() << std::endl;
-        
-        
-        
         
         oldArea = area;
         

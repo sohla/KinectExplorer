@@ -35,20 +35,20 @@ public:
     void draw(InputModel &im);
     void exit();
     
-    ofxCvGrayscaleImage depthImage; // grayscale depth image
-    ofxCvGrayscaleImage grayThreshNear; // the near thresholded image
-    ofxCvGrayscaleImage grayThreshFar; // the far thresholded image
+    ofxCvGrayscaleImage depthImage;
+    ofxCvGrayscaleImage grayThreshNear;
+    ofxCvGrayscaleImage grayThreshFar;
 
     ofxCvContourFinder contourFinder;
 
+    ofImage edge;
+
+    
+    // data per blob : need to move
     ofPolyline              dividedLine;
     ofPolyline              storedLine;
-
     msa::Interpolator2D     spline2D;
-
     ofxOscSender sender;
-    
-    ofImage edge;
     
     float oldArea;
     ofxBiquadFilter1f filterLowPass;
