@@ -17,9 +17,6 @@ void AnalysisManager::setup(InputModel &im){
     grayThreshNear.allocate(width, height);
     grayThreshFar.allocate(width, height);
 
-    nearThreshold = 225;
-    farThreshold = 150;
-    bThreshWithOpenCV = true;
     
     for(int j = 0; j < 64; j++){
         ofVec3f v = ofVec3f(0,0,0);
@@ -37,13 +34,23 @@ void AnalysisManager::setup(InputModel &im){
 
 void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
-    nearThreshold = im.sliders.get("near").cast<int>() * 2;
-    farThreshold = im.sliders.get("far").cast<int>() * 2;
+    // get from input model
+    int blobCount = im.sliders.get("blobCount").cast<int>();
+    int nearThreshold = im.sliders.get("near").cast<int>() * 2;
+    int farThreshold = im.sliders.get("far").cast<int>() * 2;
+    bool bThreshWithOpenCV = im.switches.get("UseCvThreshold").cast<bool>();
+    int div = im.sliders.get("divide").cast<int>();
 
-    bThreshWithOpenCV = im.switches.get("UseCvThreshold").cast<bool>();
+    int min = 1;
+    int max = (im.kWidth * im.kHeight) / 3;
 
     // load gray image from source
     depthImage.setFromPixels(pixels);
+
+    
+    //---------------------------------------------------------------------------
+    // PROCESS pipeline START
+    //---------------------------------------------------------------------------
 
     if(im.switches.get("Blur").cast<bool>()){
         depthImage.blurHeavily();
@@ -58,7 +65,6 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         grayThreshFar.threshold(farThreshold);
         cvAnd(grayThreshNear.getCvImage(), grayThreshFar.getCvImage(), depthImage.getCvImage(), NULL);
     } else {
-
         // or we do it ourselves - show people how they can work with the pixels
         ofPixels & pix = depthImage.getPixels();
         unsigned long numPixels = pix.size();
@@ -71,52 +77,59 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         }
     }
     
-    depthImage.dilate();
+    //depthImage.dilate();
     
-    depthImage.flagImageChanged();
     depthImage.mirror(false, true);
+    depthImage.flagImageChanged();
 
-    int count = im.sliders.get("blobCount").cast<int>();
-    int min = 1;
-    int max = (im.kWidth * im.kHeight) / 3;
-    
-    contourFinder.findContours(depthImage, min, max, count, false);
+    //---------------------------------------------------------------------------
+    // PROCESS pipeline END
+    //---------------------------------------------------------------------------
 
-    
-}
+    //---------------------------------------------------------------------------
+    // ANALYSIS START
+    //---------------------------------------------------------------------------
 
-void AnalysisManager::draw(InputModel &im){
-   
-    int width = im.kWidth;
-    int height = im.kHeight;
-    int div = im.sliders.get("divide").cast<int>();
-    
-    if(im.switches.get("DrawGray").cast<bool>()){
-        ofSetHexColor(0xFFFFFF);
-        depthImage.draw(0, 0, width, height);
-    }
+    contourFinder.findContours(depthImage, min, max, blobCount, false);
 
-    if(im.switches.get("DrawContour").cast<bool>()){
-        ofSetHexColor(0x00FFFF);
-        contourFinder.draw(0, 0, width, height);
-    }
-    
-    int nb = contourFinder.nBlobs;
-    for (int i=0; i<nb; i++) {
-        
-        ofxCvBlob blob = contourFinder.blobs[i];
+    for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
 
+        // loval polyline to iterate
         ofPolyline polyline;
         for(int j = 0; j < blob.nPts; j++){
             polyline.addVertex(ofVec3f(blob.pts[j].x, blob.pts[j].y));
         }
         polyline.close();
 
-        if(im.switches.get("DrawBlob").cast<bool>()){
-            ofSetHexColor(0xFF0000);
-            polyline.draw();            
+        div = blob.nPts;//•hack
+
+        dividedLine.clear();
+        spline2D.reserve(div);
+        storedLine.resize(div);
+        
+        // hand coded filter of div points
+        for(int j = 0; j <= div; j++){
+            
+            ofVec3f v = polyline[j];//ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
+            ofVec3f o = storedLine[j];
+            float f = 0.2;// TODO add control!s
+            
+            o.x = (f * v.x + ((1.0 - f) * o.x));
+            o.y = (f * v.y + ((1.0 - f) * o.y));
+            
+            dividedLine.addVertex(v);
+            storedLine[j] = o;
+            spline2D.push_back(o);
         }
         
+        //        outline.close();
+        
+        
+        //        storedLine[div-1] = storedLine[0];
+        //        ofVec3f v = storedLine[0];
+        //        spline2D.push_back(v);
+
+        // OUTPUT ANALYSIS DATA
         float area = ofMap(blob.area, 20000, 100000, 0.1, 4.0);
         
         ofxOscMessage m;
@@ -125,34 +138,34 @@ void AnalysisManager::draw(InputModel &im){
         m.addFloatArg(area);
         m.addFloatArg(area);
         sender.sendMessage(m, false);
-
-        //std::cout << blob.area << " " << area << m << std::endl;
-        div = blob.nPts;
         
-        ofPolyline outline;
-        spline2D.reserve(div);
-        storedLine.resize(div);
+        //std::cout << blob.area << " " << area << m << std::endl;
 
-        for(int j = 0; j <= div; j++){
+    });
+}
 
-            ofVec3f v = polyline[j];//ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
-            ofVec3f o = storedLine[j];
-            float f = 0.2;// TODO add control!s
+void AnalysisManager::draw(InputModel &im){
+   
+    int width = im.kWidth;
+    int height = im.kHeight;
+    int div = im.sliders.get("divide").cast<int>();
 
-            o.x = (f * v.x + ((1.0 - f) * o.x));
-            o.y = (f * v.y + ((1.0 - f) * o.y));
+    if(im.switches.get("DrawGray").cast<bool>()){
+        
+        ofSetHexColor(0xFFFFFF);
+        depthImage.draw(0, 0, width, height);
+    }
 
-            outline.addVertex(v);
-            storedLine[j] = o;
-            spline2D.push_back(o);
-        }
-
-//        outline.close();
-
-
-//        storedLine[div-1] = storedLine[0];
-//        ofVec3f v = storedLine[0];
-//        spline2D.push_back(v);
+    if(im.switches.get("DrawContour").cast<bool>()){
+        
+        ofSetHexColor(0x00FFFF);
+        contourFinder.draw(0, 0, width, height);
+    }
+    
+    int nb = contourFinder.nBlobs;
+    
+    for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
+        
 
         if(im.switches.get("DrawFilter").cast<bool>()){
 
@@ -163,7 +176,7 @@ void AnalysisManager::draw(InputModel &im){
         if(im.switches.get("DrawOutline").cast<bool>()){
 
             ofSetHexColor(0xFFFF00);
-            outline.draw();
+            dividedLine.draw();
         }
 
         if(im.switches.get("DrawSpline").cast<bool>()){
@@ -180,7 +193,7 @@ void AnalysisManager::draw(InputModel &im){
 
             spline2D.clear();
         }
-    }
+    });
 }
 
 void AnalysisManager::exit(){

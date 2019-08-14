@@ -14,6 +14,8 @@
 #include "ofxKinect.h"
 #include "MSAInterpolator.h"
 
+#include "ofxCv.h"
+
 #include "ofxOsc.h"
 // send host (aka ip address)
 #define HOST "127.0.0.1"
@@ -33,14 +35,9 @@ public:
     ofxCvGrayscaleImage grayThreshNear; // the near thresholded image
     ofxCvGrayscaleImage grayThreshFar; // the far thresholded image
 
-    bool bThreshWithOpenCV;
-
-    int nearThreshold;
-    int farThreshold;
-
-
     ofxCvContourFinder contourFinder;
 
+    ofPolyline              dividedLine;
     ofPolyline              storedLine;
 
     msa::Interpolator2D     spline2D;

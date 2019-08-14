@@ -34,14 +34,13 @@ struct InputModel {
      
      */
     
-    ofParameter<bool>   switchValues[10] = {
+    ofParameter<bool>   switchValues[9] = {
         ofParameter<bool>("Realtime",true),
         ofParameter<bool>("UseCvThreshold",true),
         ofParameter<bool>("DrawDepth",true),
         ofParameter<bool>("DrawGray",false),
         ofParameter<bool>("Blur",false),
         ofParameter<bool>("DrawContour",false),
-        ofParameter<bool>("DrawBlob",false),
         ofParameter<bool>("DrawOutline",false),
         ofParameter<bool>("DrawFilter",false),
         ofParameter<bool>("DrawSpline",false),
@@ -63,7 +62,7 @@ struct InputModel {
 
         switches.setName("switches");
 
-        for(int i = 0; i < 10 ; i++){
+        for(int i = 0; i < 9 ; i++){
             switches.add(switchValues[i]);
         }
 

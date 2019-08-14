@@ -16,7 +16,7 @@
             "DrawGray": "1",
             "DrawOutline": "0",
             "DrawSpline": "0",
-            "Realtime": "0",
+            "Realtime": "1",
             "UseCvThreshold": "0"
         }
     }
