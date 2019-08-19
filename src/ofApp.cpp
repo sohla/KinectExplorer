@@ -13,7 +13,7 @@ void ofApp::setup(){
     analysisManager.setup(inputModel);
     pixelRecorder.setup();
     
-    pixelPlayer.setup("test2019-08-12-16-08-33-221.mov");
+    pixelPlayer.setup("test2019-08-19-15-18-53-209.mov");
 
 //    graph.setup(0, inputModel.kHeight, inputModel.kWidth, 50);
 //    graph.setDx(1.0); // which means delta of time

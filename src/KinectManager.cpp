@@ -22,7 +22,9 @@ void KinectManager::setup(InputModel &im){
     kinect.open();        // opens first available kinect
     //kinect.open(1);    // open a kinect by id, starting with 0 (sorted by serial # lexicographically))
     //kinect.open("A00362A08602047A");    // open a kinect using it's unique serial #
-    
+
+    kinect.setPixelFormat(OF_PIXELS_GRAY);
+
     // print the intrinsic IR sensor values
     if(kinect.isConnected()) {
         ofLogNotice() << "sensor-emitter dist: " << kinect.getSensorEmitterDistance() << "cm";
@@ -30,12 +32,14 @@ void KinectManager::setup(InputModel &im){
         ofLogNotice() << "zero plane pixel size: " << kinect.getZeroPlanePixelSize() << "mm";
         ofLogNotice() << "zero plane dist: " << kinect.getZeroPlaneDistance() << "mm";
         ofLogNotice() << "width: " << kinect.getWidth() << " height: " << kinect.getHeight();
+        ofLogNotice() << "format: " << short(kinect.getPixelFormat());
     }
     im.kWidth = kinect.width;
     im.kHeight = kinect.height;
 
     // tilt on startup
     kinect.setCameraTiltAngle(-20);
+    
 }
 
 

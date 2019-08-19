@@ -28,7 +28,8 @@ public:
         kinect.update();
         
         if(kinect.isFrameNew()) {
-            next(kinect.getDepthPixels());
+            ofPixels p = kinect.getRawDepthPixels();
+            next(p);
         }
     }
     

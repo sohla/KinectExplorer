@@ -155,7 +155,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         m.addFloatArg(ms);
         sender.sendMessage(m, false);
 
-        std::cout << score << " " << ms << m << std::endl;
+//        std::cout << score << " " << ms << m << std::endl;
 
 //        for(int i = 0; i < score; i++){
 //            std::cout << "•";
@@ -175,8 +175,8 @@ void AnalysisManager::draw(InputModel &im){
     int div = im.sliders.get("divide").cast<int>();
 
     
-    ofSetHexColor(0xFF0000);
-    edge.draw(0,0);
+//    ofSetHexColor(0xFF0000);
+//    edge.draw(0,0);
     
     if(im.switches.get("DrawGray").cast<bool>()){
         

@@ -14,13 +14,13 @@ void PixelRecorder::setup(){
     ffmpegPath = ffmpegPath + "/../../usr/local/bin/ffmpeg";
     vidRecorder.setFfmpegLocation(ffmpegPath); // use this is you have ffmpeg installed in your data folder
 
-    vidRecorder.setVideoCodec("mpeg4");
+    vidRecorder.setVideoCodec("h263p");
     
     // https://openkinect.org/wiki/FAQ#What_is_the_frame_size.2Fbitrate_of_the_rgb.2Fdepth.2FIR_stream_contained_in_the_isochronous_usb_tranfers_etc..3F
     //12672000 bytes/sec =
     vidRecorder.setVideoBitrate("1.2M");
     vidRecorder.setPixelFormat("gray");
-    //vidRecorder.setOutputPixelFormat("gray");
+    vidRecorder.setOutputPixelFormat("gray");
     
     ofAddListener(vidRecorder.outputFileCompleteEvent, this, &PixelRecorder::recordingComplete);
 }
