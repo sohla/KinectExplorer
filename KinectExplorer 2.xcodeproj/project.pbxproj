@@ -1,0 +1,192 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		F014D8CA230AC540006923A9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F014D8C5230AC540006923A9 /* kinectExplorer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4B69B5B0A3A1756003C02F2;
+			remoteInfo = kinectExplorer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F014D8BB230AC540006923A9 /* openFrameworks-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
+		F014D8BC230AC540006923A9 /* addons.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = addons.make; sourceTree = "<group>"; };
+		F014D8BD230AC540006923A9 /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
+		F014D8BE230AC540006923A9 /* bin */ = {isa = PBXFileReference; lastKnownFileType = folder; path = bin; sourceTree = "<group>"; };
+		F014D8BF230AC540006923A9 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		F014D8C0230AC540006923A9 /* sccode */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sccode; sourceTree = "<group>"; };
+		F014D8C1230AC540006923A9 /* config.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.make; sourceTree = "<group>"; };
+		F014D8C2230AC540006923A9 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		F014D8C3230AC540006923A9 /* Project.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		F014D8C4230AC540006923A9 /* .git */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .git; sourceTree = "<group>"; };
+		F014D8C5230AC540006923A9 /* kinectExplorer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = kinectExplorer.xcodeproj; sourceTree = "<group>"; };
+		F014D8C8230AC540006923A9 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		F014D8B5230AC540006923A9 = {
+			isa = PBXGroup;
+			children = (
+				F014D8BB230AC540006923A9 /* openFrameworks-Info.plist */,
+				F014D8BC230AC540006923A9 /* addons.make */,
+				F014D8BD230AC540006923A9 /* .DS_Store */,
+				F014D8BE230AC540006923A9 /* bin */,
+				F014D8BF230AC540006923A9 /* Makefile */,
+				F014D8C0230AC540006923A9 /* sccode */,
+				F014D8C1230AC540006923A9 /* config.make */,
+				F014D8C2230AC540006923A9 /* .gitignore */,
+				F014D8C3230AC540006923A9 /* Project.xcconfig */,
+				F014D8C4230AC540006923A9 /* .git */,
+				F014D8C5230AC540006923A9 /* kinectExplorer.xcodeproj */,
+				F014D8C8230AC540006923A9 /* src */,
+			);
+			sourceTree = "<group>";
+		};
+		F014D8C6230AC540006923A9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F014D8CB230AC540006923A9 /* kinectExplorerDebug.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		F014D8BA230AC540006923A9 /* KinectExplorer */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = F014D8CC230AC540006923A9 /* Build configuration list for PBXLegacyTarget "KinectExplorer" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = /Users/soh_la/Develop/OSX/Frameworks/of_v0.10.0_osx_release/apps/myApps/KinectExplorer;
+			dependencies = (
+			);
+			name = KinectExplorer;
+			passBuildSettingsInEnvironment = 1;
+			productName = KinectExplorer;
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		F014D8B6230AC540006923A9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = F014D8B9230AC540006923A9 /* Build configuration list for PBXProject "KinectExplorer 2" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F014D8B5230AC540006923A9;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F014D8C6230AC540006923A9 /* Products */;
+					ProjectRef = F014D8C5230AC540006923A9 /* kinectExplorer.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				F014D8BA230AC540006923A9 /* KinectExplorer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		F014D8CB230AC540006923A9 /* kinectExplorerDebug.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = kinectExplorerDebug.app;
+			remoteRef = F014D8CA230AC540006923A9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin XCBuildConfiguration section */
+		F014D8B7230AC540006923A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		F014D8B8230AC540006923A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		F014D8CD230AC540006923A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = KinectExplorer;
+			};
+			name = Debug;
+		};
+		F014D8CE230AC540006923A9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = KinectExplorer;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F014D8B9230AC540006923A9 /* Build configuration list for PBXProject "KinectExplorer 2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F014D8B7230AC540006923A9 /* Debug */,
+				F014D8B8230AC540006923A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F014D8CC230AC540006923A9 /* Build configuration list for PBXLegacyTarget "KinectExplorer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F014D8CD230AC540006923A9 /* Debug */,
+				F014D8CE230AC540006923A9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F014D8B6230AC540006923A9 /* Project object */;
+}
