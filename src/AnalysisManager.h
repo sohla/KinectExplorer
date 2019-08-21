@@ -40,7 +40,8 @@ public:
     ofxCvGrayscaleImage grayThreshFar;
 
     ofxCvContourFinder contourFinder;
-
+    //•ofxCv::ContourFinder finder;
+    
     ofImage edge;
 
     
