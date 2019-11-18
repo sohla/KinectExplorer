@@ -12,7 +12,7 @@
 #include "InputModel.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
-#include "MSAInterpolator.h"
+//#include "MSAInterpolator.h"
 
 class KinectManager {
     

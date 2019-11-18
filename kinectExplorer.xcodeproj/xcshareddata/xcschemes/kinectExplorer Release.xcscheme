@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1020"
+   LastUpgradeVersion = "0600"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-               BuildableName = "kinectExplorer.app"
-               BlueprintName = "kinectExplorer"
-               ReferencedContainer = "container:kinectExplorer.xcodeproj">
+               BuildableName = "KinectExplorer.app"
+               BlueprintName = "KinectExplorer"
+               ReferencedContainer = "container:KinectExplorer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "kinectExplorer.app"
-            BlueprintName = "kinectExplorer"
-            ReferencedContainer = "container:kinectExplorer.xcodeproj">
+            BuildableName = "KinectExplorer.app"
+            BlueprintName = "KinectExplorer"
+            ReferencedContainer = "container:KinectExplorer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "kinectExplorer.app"
-            BlueprintName = "kinectExplorer"
-            ReferencedContainer = "container:kinectExplorer.xcodeproj">
+            BuildableName = "KinectExplorer.app"
+            BlueprintName = "KinectExplorer"
+            ReferencedContainer = "container:KinectExplorer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
-            BuildableName = "kinectExplorer.app"
-            BlueprintName = "kinectExplorer"
-            ReferencedContainer = "container:kinectExplorer.xcodeproj">
+            BuildableName = "KinectExplorer.app"
+            BlueprintName = "KinectExplorer"
+            ReferencedContainer = "container:KinectExplorer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

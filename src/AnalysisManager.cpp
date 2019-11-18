@@ -93,9 +93,34 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     //---------------------------------------------------------------------------
     // ANALYSIS START
     //---------------------------------------------------------------------------
+    finder.findContours(depthImage);
 
+    
+
+    if(finder.size() > 0){
+//        std::cout << finder.getContours().size() << std::endl;
+        std::cout << finder.getConvexHull(0).size() << std::endl;
+        
+        dividedLine.clear();
+        this->points = finder.getConvexHull(0);
+        
+        for_each(this->points.begin(), this->points.end(), [&](cv::Point point){
+            dividedLine.addVertex(point.x, point.y);
+        });
+        
+        dividedLine.close();
+        
+        std::cout
+            << dividedLine.getArea()
+            << ","
+            << dividedLine.getBoundingBox().getArea()
+            << std::endl;
+
+        //ofVec3f v = ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
+    }
+    /*
     contourFinder.findContours(depthImage, min, max, blobCount, false);
-
+    
     for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
 
         // loval polyline to iterate
@@ -166,6 +191,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         oldArea = area;
         
     });
+     */
 }
 
 void AnalysisManager::draw(InputModel &im){
@@ -175,9 +201,16 @@ void AnalysisManager::draw(InputModel &im){
     int div = im.sliders.get("divide").cast<int>();
 
     
-//    ofSetHexColor(0xFF0000);
-//    edge.draw(0,0);
-    
+    // Draw many ofCircles here
+    //finder.draw();
+    if(finder.size() > 0){
+        
+        //finder.getPolyline(0).draw();
+        dividedLine.draw();
+    }
+
+
+/*
     if(im.switches.get("DrawGray").cast<bool>()){
         
         ofSetHexColor(0xFFFFFF);
@@ -222,8 +255,25 @@ void AnalysisManager::draw(InputModel &im){
             spline2D.clear();
         }
     });
-}
+*/
+ }
 
 void AnalysisManager::exit(){
     
+}
+double polygon_area(int actual_size, double x[], double y[])
+{
+    printf("In polygon.area\n");
+    
+    double area = 0.0;
+    
+    for (int i = 0; i < actual_size; ++i)
+    {
+        int j = (i + 1)%actual_size;
+        area += 0.5 * (x[i]*y[j] -  x[j]*y[i]);
+    }
+    
+    printf("The area of the polygon is %lf  \n", area);
+    
+    return (area);
 }

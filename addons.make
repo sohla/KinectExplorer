@@ -1,8 +1,9 @@
+ofxBiquadFilter
 ofxControlPanel
+ofxCv
+ofxGui
 ofxKinect
-ofxMSACore
-ofxMSAInterpolator
-ofxMSAMotionTracker
 ofxOpenCv
 ofxOsc
+ofxVideoRecorder
 ofxXmlSettings

@@ -14,7 +14,7 @@
 #include "InputModel.h"
 #include "ofxOpenCv.h"
 #include "ofxKinect.h"
-#include "MSAInterpolator.h"
+//#include "MSAInterpolator.h"
 
 #include "ofxCv.h"
 
@@ -40,15 +40,16 @@ public:
     ofxCvGrayscaleImage grayThreshFar;
 
     ofxCvContourFinder contourFinder;
-    //•ofxCv::ContourFinder finder;
+    ofxCv::ContourFinder finder;
     
     ofImage edge;
 
-    
+    std::vector<cv::Point> points;
+
     // data per blob : need to move
     ofPolyline              dividedLine;
     ofPolyline              storedLine;
-    msa::Interpolator2D     spline2D;
+//    msa::Interpolator2D     spline2D;
     ofxOscSender sender;
     
     float oldArea;
