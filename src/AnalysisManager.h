@@ -48,9 +48,11 @@ public:
     // data per blob : need to move
     ofPolyline              smoothedLine;
     ofPolyline              storedLine;
-//    msa::Interpolator2D     spline2D;
+
     ofxOscSender            sender;
+
     float                   oldArea;
+
     ofxBiquadFilter1f       filterLowPass;
     
     ofEasyCam cam;

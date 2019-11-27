@@ -16,6 +16,7 @@ void AnalysisManager::setup(InputModel &im){
     depthImage.allocate(width, height);
     grayThreshNear.allocate(width, height);
     grayThreshFar.allocate(width, height);
+    edge.allocate(width, height, OF_IMAGE_COLOR);
     
     for(int j = 0; j < 64; j++){
         ofVec3f v = ofVec3f(0,0,0);
@@ -49,14 +50,14 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
     int t1 = im.sliders.get("t1").cast<int>();
     int t2 = im.sliders.get("t2").cast<int>();
     
-    //ofxCv::Canny(depthImage, edge, t1, t2, 3);
-//    ofxCv::Sobel(depthImage, edge);
-//    edge.update();
-    
     // load gray image from source
     depthImage.setFromPixels(pixels);
 
-
+    //ofxCv::Canny(depthImage, edge, t1, t2, 3);
+    ofxCv::Sobel(depthImage, edge);
+    edge.update();
+    
+    
     //---------------------------------------------------------------------------
     // PROCESS pipeline START
     //---------------------------------------------------------------------------
@@ -218,36 +219,11 @@ void AnalysisManager::draw(InputModel &im){
             
         }
 
-//        if(im.switches.get("DrawSpline").cast<bool>()){
-//
-//            spline2D.setInterpolation(msa::kInterpolationCubic);
-//
-//            glPushMatrix();
-//            glColor3f(1, 0, 1);
-//            //inline void drawInterpolatorSmooth(Interpolator2D &spline, int numSteps, int dotSize = 8, int lineWidth = 2) {
-//
-//            drawInterpolatorSmooth(spline2D, div, 0, 2);
-//            glPopMatrix();
-//
-//            spline2D.clear();
-//        }
-        //finder.draw();
-        
-/*
         if(im.switches.get("DrawFinder").cast<bool>()){
-            if(finder.size() > 0){
-                
-//                ofSetHexColor(0xFFFF00);
-//                finder.draw();
-//                ofSetHexColor(0xFF0000);
-//                finder.getPolyline(0).draw();
-//                ofSetHexColor(0xF0F0F0);
-//                finderLine.draw();
-                
-                edge.draw(0,0,width,height);
-            }
+            ofSetHexColor(0xFFFFFF);
+            edge.draw(0,0,width,height);
         };
-*/
+
 
     });
 
