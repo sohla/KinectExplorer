@@ -208,11 +208,15 @@ void AnalysisManager::draw(InputModel &im){
             line.addVertices(blob.pts);
             line.setClosed(true);
             line = line.getSmoothed(smooth);
-            line.draw();
+
+            ofPolyline dl;
+            dl = line.getResampledByCount(24);
+            
+            ofSetHexColor(0x0FFF0F);
+            dl.draw();
             
             ofSetHexColor(0xF00F00);
             ofFill();
-            
             
             ofBeginShape();
             for( int i = 0; i < line.getVertices().size(); i++) {
