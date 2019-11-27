@@ -41,17 +41,14 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
     int max = (im.kWidth * im.kHeight) / 3;
 
     
-    // basic ofxCv working in the pipeline
-    // need to hook it all up to input model (gui)
-    int t1 = im.sliders.get("t1").cast<int>();
-    int t2 = im.sliders.get("t2").cast<int>();
-    
-    // load gray image from source
     depthImage.setFromPixels(pixels);
 
+    // basic ofxCv working in the pipeline
+    // not using as yet
+    // load gray image from source
     //ofxCv::Canny(depthImage, edge, t1, t2, 3);
-    ofxCv::Sobel(depthImage, edge);
-    edge.update();
+//    ofxCv::Sobel(depthImage, edge);
+//    edge.update();
     
     
     //---------------------------------------------------------------------------
@@ -218,18 +215,26 @@ void AnalysisManager::draw(InputModel &im){
             ofSetHexColor(0xF00F00);
             ofFill();
             
+            float xa = im.sliders.get("Xamp").cast<float>();
+            float xf = im.sliders.get("Xfrq").cast<float>();
+            float ya = im.sliders.get("Yamp").cast<float>();
+            float yf = im.sliders.get("Yfrq").cast<float>();
+
             ofBeginShape();
             for( int i = 0; i < line.getVertices().size(); i++) {
-                ofVertex(line.getVertices().at(i).x, line.getVertices().at(i).y);
+                auto x = line.getVertices().at(i).x + (sin(xf * (ofGetFrameNum() + i)) * xa);
+                auto y = line.getVertices().at(i).y + (sin(yf * (ofGetFrameNum() + i)) * ya);
+                
+                ofVertex(x, y);
             }
             ofEndShape();
             
         }
 
-        if(im.switches.get("DrawFinder").cast<bool>()){
-            ofSetHexColor(0xFFFFFF);
-            edge.draw(0,0,width,height);
-        };
+//        if(im.switches.get("DrawFinder").cast<bool>()){
+//            ofSetHexColor(0xFFFFFF);
+//            edge.draw(0,0,width,height);
+//        };
 
 
     });

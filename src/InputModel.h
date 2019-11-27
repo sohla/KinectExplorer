@@ -48,15 +48,20 @@ struct InputModel {
     };
 
     
-    ofParameter<int>   sliderValues[6] = {
+    ofParameter<int>   sliderIntValues[4] = {
         ofParameter<int>("near",0,50,127),
         ofParameter<int>("far",0,50,127),
         ofParameter<int>("blobCount",1,1,4),
         ofParameter<int>("smooth",3,0,100),
-        ofParameter<int>("t1",0,0,200),
-        ofParameter<int>("t2",30,0,200),
     };
-    
+
+    ofParameter<float>   sliderFloatValues[4] = {
+        ofParameter<float>("Xamp",5.0,0,10.0),
+        ofParameter<float>("Xfrq",0.1,0,1.0),
+        ofParameter<float>("Yamp",5.0,0,10.0),
+        ofParameter<float>("Yfrq",0.1,0,1.0),
+    };
+
     ofParameterGroup        sliders;
     ofParameterGroup        switches;
 
@@ -71,8 +76,11 @@ struct InputModel {
 
         sliders.setName("sliders");
 
-        for(int i = 0; i < 6 ; i++){
-            sliders.add(sliderValues[i]);
+        for(int i = 0; i < 4 ; i++){
+            sliders.add(sliderIntValues[i]);
+        }
+        for(int i = 0; i < 4 ; i++){
+            sliders.add(sliderFloatValues[i]);
         }
     }
 
