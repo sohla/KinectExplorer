@@ -15,7 +15,7 @@ void InputManager::setup(InputModel &im){
 //    group.add(bDrawBuilding.set("bDrawBuilding", false));
 //    group.add(dmxOffValue.set("dmxOffValue", 0, 0, 255));
     
-    gui.setup("inputSettings", "inputSettings.json", 800, 0);
+    gui.setup("inputSettings", "inputSettings.json", 700, 0);
     gui.add(im.switches);
     gui.add(im.sliders);
     gui.loadFromFile("inputSettings.json");

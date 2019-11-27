@@ -16,7 +16,6 @@ void AnalysisManager::setup(InputModel &im){
     depthImage.allocate(width, height);
     grayThreshNear.allocate(width, height);
     grayThreshFar.allocate(width, height);
-
     
     for(int j = 0; j < 64; j++){
         ofVec3f v = ofVec3f(0,0,0);
@@ -32,20 +31,31 @@ void AnalysisManager::setup(InputModel &im){
 
 }
 
-void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
+void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMesh &inMesh){
 
     // get from input model
     int blobCount = im.sliders.get("blobCount").cast<int>();
     int nearThreshold = im.sliders.get("near").cast<int>() * 2;
     int farThreshold = im.sliders.get("far").cast<int>() * 2;
     bool bThreshWithOpenCV = im.switches.get("UseCvThreshold").cast<bool>();
-    int div = im.sliders.get("divide").cast<int>();
+    int smooth = im.sliders.get("smooth").cast<int>();
 
     int min = 1;
     int max = (im.kWidth * im.kHeight) / 3;
 
+    
+    // basic ofxCv working in the pipeline
+    // need to hook it all up to input model (gui)
+    int t1 = im.sliders.get("t1").cast<int>();
+    int t2 = im.sliders.get("t2").cast<int>();
+    
+    //ofxCv::Canny(depthImage, edge, t1, t2, 3);
+//    ofxCv::Sobel(depthImage, edge);
+//    edge.update();
+    
     // load gray image from source
     depthImage.setFromPixels(pixels);
+
 
     //---------------------------------------------------------------------------
     // PROCESS pipeline START
@@ -81,85 +91,30 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     depthImage.mirror(false, true);
     depthImage.flagImageChanged();
 
-    // basic ofxCv working in the pipeline
-    // need to hook it all up to input model (gui)
-    ofxCv::Canny(depthImage, edge, 50, 130, 3);
-    edge.update();
-    
-    //---------------------------------------------------------------------------
-    // PROCESS pipeline END
-    //---------------------------------------------------------------------------
-
     //---------------------------------------------------------------------------
     // ANALYSIS START
     //---------------------------------------------------------------------------
-    finder.findContours(depthImage);
 
-    
-
-    if(finder.size() > 0){
-//        std::cout << finder.getContours().size() << std::endl;
-        std::cout << finder.getConvexHull(0).size() << std::endl;
-        
-        dividedLine.clear();
-        this->points = finder.getConvexHull(0);
-        
-        for_each(this->points.begin(), this->points.end(), [&](cv::Point point){
-            dividedLine.addVertex(point.x, point.y);
-        });
-        
-        dividedLine.close();
-        
-        std::cout
-            << dividedLine.getArea()
-            << ","
-            << dividedLine.getBoundingBox().getArea()
-            << std::endl;
-
-        //ofVec3f v = ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
-    }
-    /*
+    // openCV contour
     contourFinder.findContours(depthImage, min, max, blobCount, false);
     
     for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
 
-        // loval polyline to iterate
-        ofPolyline polyline;
-        for(int j = 0; j < blob.nPts; j++){
-            polyline.addVertex(ofVec3f(blob.pts[j].x, blob.pts[j].y));
-        }
-        polyline.close();
+        smoothedLine.clear();
+        storedLine.clear();
 
-        dividedLine.clear();
-        spline2D.reserve(div);
-        storedLine.resize(div);
+        storedLine.addVertices(blob.pts);
+        smoothedLine = storedLine.getSmoothed(smooth);
         
-        // hand coded filter of div points
-        for(int j = 0; j <= div; j++){
-            
-            ofVec3f v = ofVec3f(polyline.getPointAtPercent( float(1.0 / div) * j ));
-            ofVec3f o = storedLine[j];
-            float f = 0.2;// TODO add control!s
-            
-            o.x = (f * v.x + ((1.0 - f) * o.x));
-            o.y = (f * v.y + ((1.0 - f) * o.y));
-            
-            dividedLine.addVertex(v);
-            storedLine[j] = o;
-            
-        }
-        
-        dividedLine.close();
-        
-        storedLine[div-1] = storedLine[0];
 
-        for(int j = 0; j <= div; j++){
-            spline2D.push_back(storedLine[j]);
-        }
-
+        
+        
         // OUTPUT ANALYSIS DATA
-        float area = ofMap(blob.area, 20000, 100000, 0.1, 4.0);
-        //std::cout << blob.area << " " << area << m << std::endl;
+        //float area = ofMap(blob.area, 20000, 100000, 0.1, 4.0);
+        float area = ofMap(smoothedLine.getArea(), 0, 100000, 0.0, 1.0);
+
+    
+        //std::cout << area << std::endl;
 
         
         float rocArea = (area - oldArea);
@@ -191,26 +146,29 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         oldArea = area;
         
     });
-     */
+    
 }
 
 void AnalysisManager::draw(InputModel &im){
    
     int width = im.kWidth;
     int height = im.kHeight;
-    int div = im.sliders.get("divide").cast<int>();
+    int smooth = im.sliders.get("smooth").cast<int>();
 
-    
-    // Draw many ofCircles here
-    //finder.draw();
-    if(finder.size() > 0){
-        
-        //finder.getPolyline(0).draw();
-        dividedLine.draw();
-    }
-
-
-/*
+ /*
+//    cam.begin();
+    glPointSize(2);
+    glLineWidth(1);
+    ofPushMatrix();
+    // the projected points are 'upside down' and 'backwards'
+    ofScale(1, 1, -1);
+    ofTranslate(0, 0, -1000); // center the points a bit
+    ofEnableDepthTest();
+    mesh.drawVertices();
+    ofDisableDepthTest();
+    ofPopMatrix();
+//    cam.end();
+*/
     if(im.switches.get("DrawGray").cast<bool>()){
         
         ofSetHexColor(0xFFFFFF);
@@ -227,35 +185,72 @@ void AnalysisManager::draw(InputModel &im){
     
     for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
         
-
-        if(im.switches.get("DrawFilter").cast<bool>()){
+        if(im.switches.get("Stored").cast<bool>()){
 
             ofSetHexColor(0x0000FF);
-            storedLine.draw();
+//            storedLine.draw();
+            
+            ofPolyline line;
+            line.addVertices(blob.pts);
+            line.setClosed(true);
+            line.draw();
         }
 
-        if(im.switches.get("DrawOutline").cast<bool>()){
-
+        if(im.switches.get("Smoothed").cast<bool>()){
+            
             ofSetHexColor(0xFFFF00);
-            dividedLine.draw();
+            //smoothedLine.draw();
+            ofPolyline line;
+            line.addVertices(blob.pts);
+            line.setClosed(true);
+            line = line.getSmoothed(smooth);
+            line.draw();
+            
+            ofSetHexColor(0xF00F00);
+            ofFill();
+            
+            
+            ofBeginShape();
+            for( int i = 0; i < line.getVertices().size(); i++) {
+                ofVertex(line.getVertices().at(i).x, line.getVertices().at(i).y);
+            }
+            ofEndShape();
+            
         }
 
-        if(im.switches.get("DrawSpline").cast<bool>()){
-
-
-            spline2D.setInterpolation(msa::kInterpolationCubic);
-
-            glPushMatrix();
-            glColor3f(1, 0, 1);
-            //inline void drawInterpolatorSmooth(Interpolator2D &spline, int numSteps, int dotSize = 8, int lineWidth = 2) {
-
-            drawInterpolatorSmooth(spline2D, div, 0, 2);
-            glPopMatrix();
-
-            spline2D.clear();
-        }
-    });
+//        if(im.switches.get("DrawSpline").cast<bool>()){
+//
+//            spline2D.setInterpolation(msa::kInterpolationCubic);
+//
+//            glPushMatrix();
+//            glColor3f(1, 0, 1);
+//            //inline void drawInterpolatorSmooth(Interpolator2D &spline, int numSteps, int dotSize = 8, int lineWidth = 2) {
+//
+//            drawInterpolatorSmooth(spline2D, div, 0, 2);
+//            glPopMatrix();
+//
+//            spline2D.clear();
+//        }
+        //finder.draw();
+        
+/*
+        if(im.switches.get("DrawFinder").cast<bool>()){
+            if(finder.size() > 0){
+                
+//                ofSetHexColor(0xFFFF00);
+//                finder.draw();
+//                ofSetHexColor(0xFF0000);
+//                finder.getPolyline(0).draw();
+//                ofSetHexColor(0xF0F0F0);
+//                finderLine.draw();
+                
+                edge.draw(0,0,width,height);
+            }
+        };
 */
+
+    });
+
  }
 
 void AnalysisManager::exit(){

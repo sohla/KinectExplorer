@@ -31,29 +31,36 @@ class AnalysisManager {
     
 public:
     void setup(InputModel &im);
-    void update(InputModel &im, const ofPixels &pixels);
+    void update(InputModel &im, const ofPixels &pixels, const ofMesh &inMesh);
     void draw(InputModel &im);
     void exit();
     
     ofxCvGrayscaleImage depthImage;
+    
     ofxCvGrayscaleImage grayThreshNear;
     ofxCvGrayscaleImage grayThreshFar;
 
     ofxCvContourFinder contourFinder;
-    ofxCv::ContourFinder finder;
     
     ofImage edge;
 
-    std::vector<cv::Point> points;
-
+    ofFbo fbo;
     // data per blob : need to move
-    ofPolyline              dividedLine;
+    ofPolyline              smoothedLine;
     ofPolyline              storedLine;
 //    msa::Interpolator2D     spline2D;
-    ofxOscSender sender;
+    ofxOscSender            sender;
+    float                   oldArea;
+    ofxBiquadFilter1f       filterLowPass;
     
-    float oldArea;
-    ofxBiquadFilter1f filterLowPass;
+    ofEasyCam cam;
+
+    
+    
+    ofxCv::ContourFinder finder;
+    std::vector<cv::Point> points;
+    ofPolyline              finderLine;
+    ofMesh                  mesh;
 };
 
 #endif /* AnalysisManager_hpp */

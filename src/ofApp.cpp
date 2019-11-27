@@ -31,17 +31,17 @@ void ofApp::update(){
     if(inputModel.switches.get("Realtime").cast<bool>() == true){
 
         // update returns next frames pixels
-        kinectManager.update([&](const ofPixels &pixels){
+        kinectManager.update([&](const ofPixels &pixels, const ofMesh &mesh){
             
-            analysisManager.update(inputModel, pixels);
+            analysisManager.update(inputModel, pixels, mesh);
             pixelRecorder.update(pixels);
         });
     }else{
 
         // play loaded video
-        pixelPlayer.update([&](const ofPixels &pixels){
-            analysisManager.update(inputModel, pixels);
-        });
+//        pixelPlayer.update([&](const ofPixels &pixels){
+//            analysisManager.update(inputModel, pixels);
+//        });
     }
 //    graph.add(ofRandom(-1,1));
 

@@ -38,8 +38,13 @@ void KinectManager::setup(InputModel &im){
     im.kHeight = kinect.height;
 
     // tilt on startup
-    kinect.setCameraTiltAngle(-20);
+//    kinect.setCameraTiltAngle(-20);
+    kinect.setCameraTiltAngle(0);
+
     
+    //
+    mesh.setMode(OF_PRIMITIVE_POINTS);
+
 }
 
 
