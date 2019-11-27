@@ -18,10 +18,6 @@ void AnalysisManager::setup(InputModel &im){
     grayThreshFar.allocate(width, height);
     edge.allocate(width, height, OF_IMAGE_COLOR);
     
-    for(int j = 0; j < 64; j++){
-        ofVec3f v = ofVec3f(0,0,0);
-        storedLine.addVertex(v);
-    }
     
     sender.setup(HOST, PORT);
 
@@ -99,53 +95,60 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
     // openCV contour
     contourFinder.findContours(depthImage, min, max, blobCount, false);
     
+    int count = 0;
     for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
 
-        smoothedLine.clear();
-        storedLine.clear();
-
-        storedLine.addVertices(blob.pts);
-        smoothedLine = storedLine.getSmoothed(smooth);
-        
-
-        
+        ofPolyline line;
+        line.addVertices(blob.pts);
+        line.setClosed(true);
+        line = line.getSmoothed(smooth);
         
         // OUTPUT ANALYSIS DATA
         //float area = ofMap(blob.area, 20000, 100000, 0.1, 4.0);
-        float area = ofMap(smoothedLine.getArea(), 0, 100000, 0.0, 1.0);
-
-    
-        //std::cout << area << std::endl;
-
+        float area = ofMap(line.getArea(), 0, -130000, 0.0, 1.0);
+        float perimeter = ofMap(line.getPerimeter(), 0, 3000, 0.0, 1.0);
+        glm::vec2 center = line.getCentroid2D();
+        ofRectangle bounds = line.getBoundingBox();
         
-        float rocArea = (area - oldArea);
-        
-        filterLowPass.setFc(0.03);
-        filterLowPass.update(abs(rocArea));
-
-        float score = abs(filterLowPass.value()) * 5.0;
-        
-        
-        float ms = ofMap(score, 0.0, 1.0, 0.1, 4.0);
-
-        // move to oscTransmitterManager :
+//        std::cout << count << " : " << line.size() << " : " << area << " : " << perimeter << center << bounds << std::endl;
         ofxOscMessage m;
-        m.setAddress("/gyrosc/rrate");
-        m.addFloatArg(ms);
-        m.addFloatArg(ms);
-        m.addFloatArg(ms);
+        m.setAddress("/blobi");
+        
+        m.addIntArg(count);
+        
+        m.addFloatArg(area);
+        m.addFloatArg(perimeter);
+
+        m.addFloatArg(ofMap(center.x, 0, 1000, 0.0, 1.0));
+        m.addFloatArg(ofMap(center.y, 0, 1000, 0.0, 1.0));
+
+        m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));
+        m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));
+
+        m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));
+        m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));
+
+
         sender.sendMessage(m, false);
 
-//        std::cout << score << " " << ms << m << std::endl;
+        
+//        float rocArea = (area - oldArea);
+//        filterLowPass.setFc(0.03);
+//        filterLowPass.update(abs(rocArea));
+//        float score = abs(filterLowPass.value()) * 5.0;
+//        float ms = ofMap(score, 0.0, 1.0, 0.1, 4.0);
 
-//        for(int i = 0; i < score; i++){
-//            std::cout << "•";
-//        };
-//        std::cout << std::endl;
-//        std::cout << filterLowPass.value() << std::endl;
+        // move to oscTransmitterManager :
+//        ofxOscMessage m;
+//        m.setAddress("/gyrosc/rrate");
+//        m.addFloatArg(ms);
+//        m.addFloatArg(ms);
+//        m.addFloatArg(ms);
+//        sender.sendMessage(m, false);
         
-        oldArea = area;
-        
+//        oldArea = area;
+
+        count++;
     });
     
 }

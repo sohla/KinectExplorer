@@ -21,10 +21,10 @@
 #include "ofxBiquadFilter.h"
 
 #include "ofxOsc.h"
+
 // send host (aka ip address)
 #define HOST "127.0.0.1"
-
-/// send port
+// send port
 #define PORT 57120
 
 class AnalysisManager {
@@ -44,16 +44,11 @@ public:
     
     ofImage edge;
 
-    ofFbo fbo;
-    // data per blob : need to move
-    ofPolyline              smoothedLine;
-    ofPolyline              storedLine;
 
     ofxOscSender            sender;
 
-    float                   oldArea;
-
-    ofxBiquadFilter1f       filterLowPass;
+//    float                   oldArea;
+//    ofxBiquadFilter1f       filterLowPass;
     
     ofEasyCam cam;
 
