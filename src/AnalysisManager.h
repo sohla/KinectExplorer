@@ -22,10 +22,15 @@
 
 #include "ofxOsc.h"
 
+#include "ofxPostProcessing.h"
+
+
 // send host (aka ip address)
 #define HOST "127.0.0.1"
 // send port
 #define PORT 57120
+
+#define MAX_BLOBS 4
 
 class AnalysisManager {
     
@@ -50,14 +55,19 @@ public:
 //    float                   oldArea;
 //    ofxBiquadFilter1f       filterLowPass;
     
+    std::vector<ofPolyline> smoothLines;
+    std::vector<ofPolyline> resampledLines;
+    
     ofEasyCam cam;
 
-    
-    
     ofxCv::ContourFinder finder;
     std::vector<cv::Point> points;
     ofPolyline              finderLine;
     ofMesh                  mesh;
+
+    ofxPostProcessing post;
+    ofLight light;
+
 };
 
 #endif /* AnalysisManager_hpp */

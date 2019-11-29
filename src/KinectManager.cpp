@@ -39,7 +39,7 @@ void KinectManager::setup(InputModel &im){
 
     // tilt on startup
 //    kinect.setCameraTiltAngle(-20);
-    kinect.setCameraTiltAngle(30);
+    kinect.setCameraTiltAngle(0);
 
     
     //

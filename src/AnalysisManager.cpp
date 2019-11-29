@@ -25,7 +25,16 @@ void AnalysisManager::setup(InputModel &im){
     m.setAddress("/gyrosc/button");
     m.addFloatArg(1.0);
     sender.sendMessage(m, false);
-
+    
+    
+    
+    for(int i = 0; i < MAX_BLOBS; i++){
+        smoothLines.push_back(ofPolyline());
+        resampledLines.push_back(ofPolyline());
+    }
+//    post.init(width, height);
+//    post.createPass<BloomPass>()->setEnabled(true);
+//    light.setPosition(1000, 1000, 2000);
 }
 
 void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMesh &inMesh){
@@ -36,6 +45,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
     int farThreshold = im.sliders.get("far").cast<int>() * 2;
     bool bThreshWithOpenCV = im.switches.get("UseCvThreshold").cast<bool>();
     int smooth = im.sliders.get("smooth").cast<int>();
+    int resample = im.sliders.get("resample").cast<int>();
 
     int min = 1;
     int max = (im.kWidth * im.kHeight) / 3;
@@ -84,15 +94,20 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
     
     depthImage.mirror(false, true);
     depthImage.flagImageChanged();
+    
+    // openCV contour
+    contourFinder.findContours(depthImage, min, max, blobCount, false);
+
+    
 
     //---------------------------------------------------------------------------
     // ANALYSIS START
     //---------------------------------------------------------------------------
 
-    // openCV contour
-    contourFinder.findContours(depthImage, min, max, blobCount, false);
+    for( auto &line : smoothLines ){line.clear();};
+    for( auto &line : resampledLines ){line.clear();};
     
-    int count = 0;
+    int i = 0;
     for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
 
         ofPolyline line;
@@ -100,54 +115,58 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
         line.setClosed(true);
         line = line.getSmoothed(smooth);
         
-        // OUTPUT ANALYSIS DATA
-        //float area = ofMap(blob.area, 20000, 100000, 0.1, 4.0);
-        float area = ofMap(line.getArea(), 0, -130000, 0.0, 1.0);
-        float perimeter = ofMap(line.getPerimeter(), 0, 3000, 0.0, 1.0);
-        glm::vec2 center = line.getCentroid2D();
-        ofRectangle bounds = line.getBoundingBox();
+        smoothLines[i].addVertices(blob.pts);
+        smoothLines[i].setClosed(true);
+        smoothLines[i] = smoothLines[i].getSmoothed(smooth);
         
-//        std::cout << count << " : " << line.size() << " : " << area << " : " << perimeter << center << bounds << std::endl;
-        ofxOscMessage m;
-        m.setAddress("/blobi");
-        
-        m.addIntArg(count);
-        
-        m.addFloatArg(area);
-        m.addFloatArg(perimeter);
-
-        m.addFloatArg(ofMap(center.x, 0, 1000, 0.0, 1.0));
-        m.addFloatArg(ofMap(center.y, 0, 1000, 0.0, 1.0));
-
-        m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));
-        m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));
-
-        m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));
-        m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));
-
-
-        sender.sendMessage(m, false);
-
-        
-//        float rocArea = (area - oldArea);
-//        filterLowPass.setFc(0.03);
-//        filterLowPass.update(abs(rocArea));
-//        float score = abs(filterLowPass.value()) * 5.0;
-//        float ms = ofMap(score, 0.0, 1.0, 0.1, 4.0);
-
-        // move to oscTransmitterManager :
-//        ofxOscMessage m;
-//        m.setAddress("/gyrosc/rrate");
-//        m.addFloatArg(ms);
-//        m.addFloatArg(ms);
-//        m.addFloatArg(ms);
-//        sender.sendMessage(m, false);
-        
-//        oldArea = area;
-
-        count++;
+        resampledLines[i] = smoothLines[i].getResampledByCount(resample);
+        resampledLines[i].setClosed(true);
+        i++;
     });
+
     
+ 
+    // OUTPUT ANALYSIS DATA
+    i = 0;
+    for( auto &line : resampledLines ){
+
+        // only send data if the line has data
+        if( line.size() > 0){
+            float area = ofMap(line.getArea(), 0, -130000, 0.0, 1.0);
+            float perimeter = ofMap(line.getPerimeter(), 0, 3000, 0.0, 1.0);
+            glm::vec2 center = line.getCentroid2D();
+            ofRectangle bounds = line.getBoundingBox();
+
+           // std::cout << i << " : " << line.size() << " : " << area << " : " << perimeter << center << " : " ;
+            ofxOscMessage m;
+            m.setAddress("/blobi");
+            
+            m.addIntArg(i);
+            m.addIntArg(line.size());
+
+            m.addFloatArg(area);
+            m.addFloatArg(perimeter);
+
+            m.addFloatArg(ofMap(center.x, 0, 1000, 0.0, 1.0));
+            m.addFloatArg(ofMap(center.y, 0, 1000, 0.0, 1.0));
+
+            m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));
+            m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));
+
+            m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));
+            m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));
+
+            for( auto &vert :  line.getVertices()){
+                m.addDoubleArg(vert.x);
+                m.addDoubleArg(vert.y);
+                //std::cout << vert.x << " , " << vert.y;
+            }
+            //std::cout << std::endl;
+            
+            sender.sendMessage(m, false);
+        }
+        i++;
+    }
 }
 
 void AnalysisManager::draw(InputModel &im){
@@ -156,20 +175,6 @@ void AnalysisManager::draw(InputModel &im){
     int height = im.kHeight;
     int smooth = im.sliders.get("smooth").cast<int>();
 
- /*
-//    cam.begin();
-    glPointSize(2);
-    glLineWidth(1);
-    ofPushMatrix();
-    // the projected points are 'upside down' and 'backwards'
-    ofScale(1, 1, -1);
-    ofTranslate(0, 0, -1000); // center the points a bit
-    ofEnableDepthTest();
-    mesh.drawVertices();
-    ofDisableDepthTest();
-    ofPopMatrix();
-//    cam.end();
-*/
     if(im.switches.get("DrawGray").cast<bool>()){
         
         ofSetHexColor(0xFFFFFF);
@@ -182,63 +187,46 @@ void AnalysisManager::draw(InputModel &im){
         contourFinder.draw(0, 0, width, height);
     }
     
-    int nb = contourFinder.nBlobs;
+    float xa = im.sliders.get("Xamp").cast<float>();
+    float xf = im.sliders.get("Xfrq").cast<float>();
+    float ya = im.sliders.get("Yamp").cast<float>();
+    float yf = im.sliders.get("Yfrq").cast<float>();
     
-    for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
-        
-        if(im.switches.get("Stored").cast<bool>()){
 
-            ofSetHexColor(0x0000FF);
-//            storedLine.draw();
-            
-            ofPolyline line;
-            line.addVertices(blob.pts);
-            line.setClosed(true);
+    if(im.switches.get("Smooth").cast<bool>()){
+
+        ofSetHexColor(0x0000FF);
+
+        int i;
+        for( auto & line : smoothLines){
             line.draw();
         }
+    }
 
-        if(im.switches.get("Smoothed").cast<bool>()){
+    if(im.switches.get("Resample").cast<bool>()){
+        
+        ofSetHexColor(0xFF0000);
+        
+        for( auto &line : resampledLines ){
+//            std::cout << "::" << line.size() << std::endl;
             
-            ofSetHexColor(0xFFFF00);
-            //smoothedLine.draw();
-            ofPolyline line;
-            line.addVertices(blob.pts);
-            line.setClosed(true);
-            line = line.getSmoothed(smooth);
+            line.draw();
 
-            ofPolyline dl;
-            dl = line.getResampledByCount(24);
-            
-            ofSetHexColor(0x0FFF0F);
-            dl.draw();
-            
-            ofSetHexColor(0xF00F00);
-            ofFill();
-            
-            float xa = im.sliders.get("Xamp").cast<float>();
-            float xf = im.sliders.get("Xfrq").cast<float>();
-            float ya = im.sliders.get("Yamp").cast<float>();
-            float yf = im.sliders.get("Yfrq").cast<float>();
-
+            // fill resample line
+            ofSetColor(200,10,20);
             ofBeginShape();
-            for( int i = 0; i < line.getVertices().size(); i++) {
-                auto x = line.getVertices().at(i).x + (sin(xf * (ofGetFrameNum() + i)) * xa);
-                auto y = line.getVertices().at(i).y + (sin(yf * (ofGetFrameNum() + i)) * ya);
-                
+
+            int i;
+            for( auto &vert :  line.getVertices()){
+                auto x = vert.x + (sin(xf * (ofGetFrameNum() + i)) * xa);
+                auto y = vert.y + (sin(yf * (ofGetFrameNum() + i)) * ya);
                 ofVertex(x, y);
+            i++;
             }
             ofEndShape();
             
         }
-
-//        if(im.switches.get("DrawFinder").cast<bool>()){
-//            ofSetHexColor(0xFFFFFF);
-//            edge.draw(0,0,width,height);
-//        };
-
-
-    });
-
+    }
  }
 
 void AnalysisManager::exit(){

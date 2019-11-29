@@ -41,18 +41,19 @@ struct InputModel {
         ofParameter<bool>("DrawGray",false),
         ofParameter<bool>("Blur",false),
         ofParameter<bool>("DrawContour",false),
-        ofParameter<bool>("Stored",false),
-        ofParameter<bool>("Smoothed",false),
+        ofParameter<bool>("Smooth",false),
+        ofParameter<bool>("Resample",false),
         ofParameter<bool>("DrawSpline",false),
         ofParameter<bool>("DrawFinder",false),
     };
 
     
-    ofParameter<int>   sliderIntValues[4] = {
+    ofParameter<int>   sliderIntValues[5] = {
         ofParameter<int>("near",0,50,127),
         ofParameter<int>("far",0,50,127),
         ofParameter<int>("blobCount",1,1,4),
         ofParameter<int>("smooth",3,0,100),
+        ofParameter<int>("resample",24,4,100),
     };
 
     ofParameter<float>   sliderFloatValues[4] = {
@@ -76,7 +77,7 @@ struct InputModel {
 
         sliders.setName("sliders");
 
-        for(int i = 0; i < 4 ; i++){
+        for(int i = 0; i < 5 ; i++){
             sliders.add(sliderIntValues[i]);
         }
         for(int i = 0; i < 4 ; i++){

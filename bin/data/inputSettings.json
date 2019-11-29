@@ -1,17 +1,21 @@
 {
     "inputSettings": {
         "sliders": {
+            "Xamp": "0",
+            "Xfrq": "0.132653",
+            "Yamp": "0",
+            "Yfrq": "0.142857",
             "blobCount": "1",
             "d": "0",
             "divide": "3",
-            "far": "88",
+            "far": "92",
             "near": "127",
-            "smooth": "26",
+            "smooth": "9",
             "t1": "0",
             "t2": "30"
         },
         "switches": {
-            "Blur": "0",
+            "Blur": "1",
             "Divided": "1",
             "DrawBlob": "0",
             "DrawContour": "0",
@@ -22,6 +26,8 @@
             "DrawOutline": "0",
             "DrawSpline": "0",
             "Realtime": "1",
+            "Resample": "1",
+            "Smooth": "0",
             "Smoothed": "1",
             "Stored": "0",
             "UseCvThreshold": "0"

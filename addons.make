@@ -5,5 +5,6 @@ ofxGui
 ofxKinect
 ofxOpenCv
 ofxOsc
+ofxPostProcessing
 ofxVideoRecorder
 ofxXmlSettings

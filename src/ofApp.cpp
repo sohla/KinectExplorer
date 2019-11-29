@@ -8,9 +8,9 @@ void ofApp::setup(){
     
     ofSetBackgroundColorHex(0x111111);
     
+    analysisManager.setup(inputModel);
     inputManager.setup(inputModel);
     kinectManager.setup(inputModel);
-    analysisManager.setup(inputModel);
     pixelRecorder.setup();
     
     pixelPlayer.setup("test2019-08-13-11-27-24-354.mov");
