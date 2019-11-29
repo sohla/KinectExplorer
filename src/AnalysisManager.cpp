@@ -7,6 +7,7 @@
 
 #include "AnalysisManager.h"
 
+void pSetHSV( float h, float s, float v, float a );
 
 void AnalysisManager::setup(InputModel &im){
 
@@ -40,6 +41,9 @@ void AnalysisManager::setup(InputModel &im){
 void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMesh &inMesh){
 
     // get from input model
+    int width = im.kWidth;
+    int height = im.kHeight;
+
     int blobCount = im.sliders.get("blobCount").cast<int>();
     int nearThreshold = im.sliders.get("near").cast<int>() * 2;
     int farThreshold = im.sliders.get("far").cast<int>() * 2;
@@ -65,10 +69,6 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
     // PROCESS pipeline START
     //---------------------------------------------------------------------------
 
-    if(im.switches.get("Blur").cast<bool>()){
-        depthImage.blurHeavily();
-    }
-
     // we do two thresholds - one for the far plane and one for the near plane
     // we then do a cvAnd to get the pixels which are a union of the two thresholds
     if(bThreshWithOpenCV) {
@@ -89,9 +89,43 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
             }
         }
     }
+
+
+/*
+    cv::Mat depthMat = ofxCv::toCv(depthImage);
+    cv::Mat depthf = cv::Mat(height, width, CV_8UC1);
     
-    //depthImage.dilate();
+    depthMat.convertTo(depthf, CV_8UC1, 255.0/2048.0);
     
+    const unsigned char noDepth = 0; // change to 255, if values no depth uses max value
+    cv::Mat temp, temp2;
+    
+    // 1 step - downsize for performance, use a smaller version of depth image
+    cv::Mat small_depthf;
+    cv::resize(depthf, small_depthf, cv::Size(), 0.2, 0.2);
+    
+    // 2 step - inpaint only the masked "unknown" pixels
+    cv::inpaint(small_depthf, (small_depthf == noDepth), temp, 5.0, cv::INPAINT_TELEA);
+    
+    // 3 step - upscale to original size and replace inpainted regions in original depth image
+    resize(temp, temp2, depthf.size());
+    temp2.copyTo(depthf, (depthf == noDepth)); // add to the original signal
+    
+    
+    // convert mat to image
+    ofPixels & pix = depthImage.getPixels();
+    ofxCv::toOf(depthf, pix);
+    //depthImage.setFromPixels(p);
+*/
+    
+    
+    
+    if(im.switches.get("Blur").cast<bool>()){
+        
+        depthImage.blurHeavily();
+        depthImage.erode();
+    }
+
     depthImage.mirror(false, true);
     depthImage.flagImageChanged();
     
@@ -205,26 +239,38 @@ void AnalysisManager::draw(InputModel &im){
 
     if(im.switches.get("Resample").cast<bool>()){
         
-        ofSetHexColor(0xFF0000);
+        //ofSetHexColor(0xFF0000);
         
         for( auto &line : resampledLines ){
 //            std::cout << "::" << line.size() << std::endl;
             
-            line.draw();
+//            line.draw();
 
             // fill resample line
-            ofSetColor(200,10,20);
-            ofBeginShape();
-
-            int i;
-            for( auto &vert :  line.getVertices()){
-                auto x = vert.x + (sin(xf * (ofGetFrameNum() + i)) * xa);
-                auto y = vert.y + (sin(yf * (ofGetFrameNum() + i)) * ya);
-                ofVertex(x, y);
-            i++;
-            }
-            ofEndShape();
+            glBegin(GL_POLYGON);
             
+//            glVertex2f(x, y);
+//
+//            glColor3u(r,g,b);
+//            ...
+            
+            
+//            ofBeginShape();
+
+            int i = 0;
+            int size = line.size();
+            float a = 0.0;
+            for( auto &vert :  line.getVertices()){
+                auto x = vert.x;// + (sin(xf * (ofGetFrameNum() + i)) * xa);
+                auto y = vert.y;// + (sin(yf * (ofGetFrameNum() + i)) * ya);
+                a = ( (float)i / (float)size) * 360.0;
+                pSetHSV( a,1.0,1.0,1.0);
+                glVertex2f(x, y);
+                i++;
+            }
+//            ofEndShape();
+            glEnd();
+
         }
     }
  }
@@ -247,4 +293,26 @@ double polygon_area(int actual_size, double x[], double y[])
     printf("The area of the polygon is %lf  \n", area);
     
     return (area);
+}
+void pSetHSV( float h, float s, float v, float a ) {
+    // H [0, 360] S, V and A [0.0, 1.0].
+    int i = (int)floor(h/60.0f) % 6;
+    float f = h/60.0f - floor(h/60.0f);
+    float p = v * (float)(1 - s);
+    float q = v * (float)(1 - s * f);
+    float t = v * (float)(1 - (1 - f) * s);
+    
+    switch (i) {
+        case 0: glColor4f(v, t, p, a);
+            break;
+        case 1: glColor4f(q, v, p, a);
+            break;
+        case 2: glColor4f(p, v, t, a);
+            break;
+        case 3: glColor4f(p, q, v, a);
+            break;
+        case 4: glColor4f(t, p, v, a);
+            break;
+        case 5: glColor4f(v, p, q, a);
+    }
 }

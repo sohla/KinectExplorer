@@ -8,8 +8,9 @@
             "blobCount": "1",
             "d": "0",
             "divide": "3",
-            "far": "92",
+            "far": "85",
             "near": "127",
+            "resample": "24",
             "smooth": "9",
             "t1": "0",
             "t2": "30"
