@@ -47,7 +47,8 @@ public:
                 }
             }
 
-            next(p,mesh);
+            //next(p,mesh);
+            next(p);
         }
     }
     

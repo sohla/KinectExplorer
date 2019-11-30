@@ -31,17 +31,17 @@ void ofApp::update(){
     if(inputModel.switches.get("Realtime").cast<bool>() == true){
 
         // update returns next frames pixels
-        kinectManager.update([&](const ofPixels &pixels, const ofMesh &mesh){
+        kinectManager.update([&](const ofPixels &pixels){
             
-            analysisManager.update(inputModel, pixels, mesh);
+            analysisManager.update(inputModel, pixels);
             pixelRecorder.update(pixels);
         });
     }else{
 
         // play loaded video
-//        pixelPlayer.update([&](const ofPixels &pixels){
-//            analysisManager.update(inputModel, pixels);
-//        });
+        pixelPlayer.update([&](const ofPixels &pixels){
+            analysisManager.update(inputModel, pixels);
+        });
     }
 //    graph.add(ofRandom(-1,1));
 
@@ -81,6 +81,15 @@ void ofApp::keyPressed(int key){
         }
     }
     
+    if(key == 'o'){
+        ofFileDialogResult result = ofSystemLoadDialog();
+        
+        if(result.bSuccess){
+            std::cout << result.fileName << " : " << result.filePath << std::endl;
+            pixelPlayer.setup(result.fileName);
+        }
+        
+    }
     if(key == OF_KEY_UP){
         
         inputModel.kinectAngle++;

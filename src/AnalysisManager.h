@@ -36,7 +36,7 @@ class AnalysisManager {
     
 public:
     void setup(InputModel &im);
-    void update(InputModel &im, const ofPixels &pixels, const ofMesh &inMesh);
+    void update(InputModel &im, const ofPixels &pixels);
     void draw(InputModel &im);
     void exit();
     
@@ -58,15 +58,10 @@ public:
     std::vector<ofPolyline> smoothLines;
     std::vector<ofPolyline> resampledLines;
     
-    ofEasyCam cam;
-
     ofxCv::ContourFinder finder;
     std::vector<cv::Point> points;
     ofPolyline              finderLine;
-    ofMesh                  mesh;
 
-    ofxPostProcessing post;
-    ofLight light;
 
 };
 

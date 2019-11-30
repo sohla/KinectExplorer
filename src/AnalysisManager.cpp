@@ -38,7 +38,7 @@ void AnalysisManager::setup(InputModel &im){
 //    light.setPosition(1000, 1000, 2000);
 }
 
-void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMesh &inMesh){
+void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
     // get from input model
     int width = im.kWidth;
@@ -123,7 +123,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels, const ofMes
     if(im.switches.get("Blur").cast<bool>()){
         
         depthImage.blurHeavily();
-        depthImage.erode();
+        //depthImage.erode();
     }
 
     depthImage.mirror(false, true);
@@ -239,39 +239,22 @@ void AnalysisManager::draw(InputModel &im){
 
     if(im.switches.get("Resample").cast<bool>()){
         
-        //ofSetHexColor(0xFF0000);
+        ofSetHexColor(0xFF0000);
         
         for( auto &line : resampledLines ){
-//            std::cout << "::" << line.size() << std::endl;
-            
-//            line.draw();
 
-            // fill resample line
-            glBegin(GL_POLYGON);
-            
-//            glVertex2f(x, y);
-//
-//            glColor3u(r,g,b);
-//            ...
-            
-            
-//            ofBeginShape();
+            ofBeginShape();
 
-            int i = 0;
             int size = line.size();
-            float a = 0.0;
+            float a = ofGetFrameNum() % 360;
             for( auto &vert :  line.getVertices()){
-                auto x = vert.x;// + (sin(xf * (ofGetFrameNum() + i)) * xa);
-                auto y = vert.y;// + (sin(yf * (ofGetFrameNum() + i)) * ya);
-                a = ( (float)i / (float)size) * 360.0;
+                auto x = vert.x;
+                auto y = vert.y;
                 pSetHSV( a,1.0,1.0,1.0);
-                glVertex2f(x, y);
-                i++;
+                ofVertex(x, y);
             }
-//            ofEndShape();
-            glEnd();
-
-        }
+            ofEndShape();
+       }
     }
  }
 

@@ -14,13 +14,15 @@ void PixelPlayer::setup(string fileName){
     
     player.load(fileName);
     
+    inputImage.clear();
+    grayImage.clear();
     inputImage.allocate(int(player.getWidth()), int(player.getHeight()));
     grayImage.allocate(int(player.getWidth()), int(player.getHeight()));
     
     player.setLoopState(OF_LOOP_NORMAL);
     player.play();
     
-    std::cout << int(player.getPixelFormat()) << std::endl;
+    std::cout << "playing : " << fileName << int(player.getPixelFormat()) << std::endl;
 
 }
 
