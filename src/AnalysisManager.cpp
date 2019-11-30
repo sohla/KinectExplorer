@@ -32,6 +32,7 @@ void AnalysisManager::setup(InputModel &im){
     for(int i = 0; i < MAX_BLOBS; i++){
         smoothLines.push_back(ofPolyline());
         resampledLines.push_back(ofPolyline());
+        prevResampledLines.push_back(ofPolyline());
     }
 //    post.init(width, height);
 //    post.createPass<BloomPass>()->setEnabled(true);
@@ -155,9 +156,61 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         
         resampledLines[i] = smoothLines[i].getResampledByCount(resample);
         resampledLines[i].setClosed(true);
+
+        // how to filter ?
+        // local new list
+        // empty new resampled
+        // itr thru previous list,
+        //      find closest in new list
+        //      add found to resampled
+        //      remove found from local list
+        if(false){
+            ofPolyline reline = resampledLines[i];
+            ofPolyline newLine;
+           // resampledLines[i].clear();
+            int j = 0;
+            float f = 0.1;
+
+            for( auto &v : reline.getVertices()){
+
+                float dist = 1000000;
+                glm::vec3 fv;
+                for( auto &nv :prevResampledLines[i].getVertices()){
+
+                    float td = glm::distance(nv, v);
+
+                    if( td < dist){
+                        fv = nv;
+                        dist = td;
+                    }
+                }
+
+                std::vector<glm::vec3>::iterator pos = std::find(reline.getVertices().begin(), reline.getVertices().end(), fv);
+                if( pos != reline.getVertices().end()){
+                    reline.getVertices().erase(pos);
+                }
+
+                fv.x = (f * v.x + ((1.0 - f) * fv.x));
+                fv.y = (f * v.y + ((1.0 - f) * fv.y));
+
+                newLine.addVertex(fv);
+
+                //find nearest in reline to (v.x, v.y) return nv
+                //add nv to resampledLines
+                //remove nv from reline
+            }
+            
+            prevResampledLines[i] = newLine;
+            resampledLines[i] = newLine;
+            if( i == 0){
+                prevResampledLines[i] = resampledLines[i];
+            }
+        }
         i++;
     });
 
+    
+    
     
  
     // OUTPUT ANALYSIS DATA

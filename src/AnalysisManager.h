@@ -57,7 +57,8 @@ public:
     
     std::vector<ofPolyline> smoothLines;
     std::vector<ofPolyline> resampledLines;
-    
+    std::vector<ofPolyline> prevResampledLines;
+
     ofxCv::ContourFinder finder;
     std::vector<cv::Point> points;
     ofPolyline              finderLine;
