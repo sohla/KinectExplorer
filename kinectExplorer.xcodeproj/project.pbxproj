@@ -2126,8 +2126,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0600;
+				TargetAttributes = {
+					E4B69B5A0A3A1756003C02F2 = {
+						DevelopmentTeam = G9C3VREPPJ;
+					};
+				};
 			};
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "KinectExplorer" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "kinectExplorer" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -2453,6 +2458,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = G9C3VREPPJ;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
@@ -2546,6 +2552,7 @@
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = /Applications;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_FRAMEWORKS)",
 					"$(OF_CORE_LIBS)",
@@ -2802,6 +2809,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = G9C3VREPPJ;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -2895,6 +2903,7 @@
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = /Applications;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_FRAMEWORKS)",
 					"$(OF_CORE_LIBS)",
@@ -2912,6 +2921,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = G9C3VREPPJ;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_MODEL_TUNING = NONE;
@@ -3004,6 +3014,7 @@
 				INFOPLIST_FILE = "openFrameworks-Info.plist";
 				INSTALL_PATH = /Applications;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_CODE_SIGN_FLAGS = "--deep";
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_FRAMEWORKS)",
 					"$(OF_CORE_LIBS)",
@@ -3019,7 +3030,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "KinectExplorer" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "kinectExplorer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
