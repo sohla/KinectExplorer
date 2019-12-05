@@ -271,7 +271,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
 void AnalysisManager::draw(InputModel &im){
    
-    float scale = 1.5;
+    float scale = 1.7;
     int width = im.kWidth * scale;
     int height = im.kHeight * scale;
     int smooth = im.sliders.get("smooth").cast<int>();
@@ -310,13 +310,13 @@ void AnalysisManager::draw(InputModel &im){
     if(im.switches.get("Resample").cast<bool>()){
         
         ofSetHexColor(0xFF0000);
-        
+        int i = 0;
         for( auto &line : resampledLines ){
 
             ofBeginShape();
 
             int size = line.size();
-            float a = ofGetFrameNum() % 360;
+            float a = ofGetFrameNum() % 360 + (180 * i);
             for( auto &vert :  line.getVertices()){
                 auto x = vert.x * scale;
                 auto y = vert.y * scale;
@@ -324,6 +324,7 @@ void AnalysisManager::draw(InputModel &im){
                 ofVertex(x, y);
             }
             ofEndShape();
+            i++;
        }
     }
  
