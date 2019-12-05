@@ -33,6 +33,8 @@ void AnalysisManager::setup(InputModel &im){
         smoothLines.push_back(ofPolyline());
         resampledLines.push_back(ofPolyline());
         prevLines.push_back(ofPolyline());
+        outputLines.push_back(ofPolyline());
+        
     }
 //    post.init(width, height);
 //    post.createPass<BloomPass>()->setEnabled(true);
@@ -211,10 +213,11 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
             }
         }
         
-        resampledLines[i] = smoothLines[i].getResampledByCount(resample);
         resampledLines[i].setClosed(true);
+        resampledLines[i] = smoothLines[i].getResampledByCount(resample);
 
-        
+        outputLines[i] = resampledLines[i].getResampledByCount(8);
+
         
         i++;
     });
@@ -225,7 +228,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
  
     // OUTPUT ANALYSIS DATA
     i = 0;
-    for( auto &line : resampledLines ){
+    for( auto &line : outputLines ){
 
         // only send data if the line has data
         if( line.size() > 0){
@@ -268,8 +271,9 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
 void AnalysisManager::draw(InputModel &im){
    
-    int width = im.kWidth;
-    int height = im.kHeight;
+    float scale = 1.5;
+    int width = im.kWidth * scale;
+    int height = im.kHeight * scale;
     int smooth = im.sliders.get("smooth").cast<int>();
 
     
@@ -295,6 +299,13 @@ void AnalysisManager::draw(InputModel &im){
             line.draw();
         }
     }
+    ofBeginShape();
+        glColor4f(0,0,0,im.sliders.get("bgAlpha").cast<float>());
+        ofVertex(0,0);
+        ofVertex(0,height);
+        ofVertex(width,height);
+        ofVertex(width, 0);
+    ofEndShape();
 
     if(im.switches.get("Resample").cast<bool>()){
         
@@ -307,22 +318,15 @@ void AnalysisManager::draw(InputModel &im){
             int size = line.size();
             float a = ofGetFrameNum() % 360;
             for( auto &vert :  line.getVertices()){
-                auto x = vert.x;
-                auto y = vert.y;
+                auto x = vert.x * scale;
+                auto y = vert.y * scale;
                 pSetHSV( a,1.0,1.0,im.sliders.get("blobAlpha").cast<float>());
                 ofVertex(x, y);
             }
             ofEndShape();
        }
     }
-    ofBeginShape();
-        glColor4f(0,0,0,im.sliders.get("bgAlpha").cast<float>());
-        ofVertex(0,0);
-        ofVertex(0,height);
-        ofVertex(width,height);
-        ofVertex(width, 0);
-    ofEndShape();
-
+ 
  }
 
 void AnalysisManager::exit(){

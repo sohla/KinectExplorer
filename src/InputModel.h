@@ -58,8 +58,8 @@ struct InputModel {
 
     ofParameter<float>   sliderFloatValues[3] = {
         ofParameter<float>("filter",0.1,0.001,1.0),
-        ofParameter<float>("bgAlpha",0.1,0.001,1.0),
-        ofParameter<float>("blobAlpha",0.1,0.001,1.0),
+        ofParameter<float>("bgAlpha",0.1,0.01,1.0),
+        ofParameter<float>("blobAlpha",0.1,0.01,1.0),
     };
 
     ofParameterGroup        sliders;

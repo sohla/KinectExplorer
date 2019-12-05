@@ -13,7 +13,7 @@ void ofApp::setup(){
     kinectManager.setup(inputModel);
     pixelRecorder.setup();
     
-    pixelPlayer.setup("test2019-08-13-11-27-24-354.mov");
+    pixelPlayer.setup("test2019-12-01-18-43-51-333.mov");
 
 //    graph.setup(0, inputModel.kHeight, inputModel.kWidth, 50);
 //    graph.setDx(1.0); // which means delta of time
