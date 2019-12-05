@@ -95,6 +95,7 @@ void ofApp::keyPressed(int key){
         inputModel.kinectAngle++;
         if(inputModel.kinectAngle > 30) inputModel.kinectAngle = 30;
         kinectManager.kinect.setCameraTiltAngle(inputModel.kinectAngle);
+        std::cout << "tilt angle" << " : " << inputModel.kinectAngle << std::endl;
     }
 
     if(key == OF_KEY_DOWN){
@@ -102,6 +103,7 @@ void ofApp::keyPressed(int key){
         inputModel.kinectAngle--;
         if(inputModel.kinectAngle < -30) inputModel.kinectAngle = -30;
         kinectManager.kinect.setCameraTiltAngle(inputModel.kinectAngle);
+        std::cout << "tilt angle" << " : " << inputModel.kinectAngle << std::endl;
     }
 }
 
