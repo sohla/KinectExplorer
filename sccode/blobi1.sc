@@ -69,7 +69,7 @@
 				if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
 					r = Rect(o[0], o[1], 4, 4);
 					Pen.fillOval(r);
-				     Pen.moveTo(Point(prev[0],prev[1]));
+				    Pen.moveTo(Point(prev[0],prev[1]));
 				    Pen.lineTo(Point(o[0],o[1]));
 					Pen.stroke;
 					prev = o;

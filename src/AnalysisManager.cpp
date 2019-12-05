@@ -32,11 +32,13 @@ void AnalysisManager::setup(InputModel &im){
     for(int i = 0; i < MAX_BLOBS; i++){
         smoothLines.push_back(ofPolyline());
         resampledLines.push_back(ofPolyline());
-        prevResampledLines.push_back(ofPolyline());
+        prevLines.push_back(ofPolyline());
     }
 //    post.init(width, height);
 //    post.createPass<BloomPass>()->setEnabled(true);
 //    light.setPosition(1000, 1000, 2000);
+    
+    ofSetBackgroundAuto(false);
 }
 
 void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
@@ -51,7 +53,8 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     bool bThreshWithOpenCV = im.switches.get("UseCvThreshold").cast<bool>();
     int smooth = im.sliders.get("smooth").cast<int>();
     int resample = im.sliders.get("resample").cast<int>();
-
+    int blur = im.sliders.get("blur").cast<int>();
+    
     int min = 1;
     int max = (im.kWidth * im.kHeight) / 3;
 
@@ -123,7 +126,8 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     
     if(im.switches.get("Blur").cast<bool>()){
         
-        depthImage.blurHeavily();
+//        depthImage.blurHeavily();
+        depthImage.blurGaussian(blur);
         //depthImage.erode();
     }
 
@@ -154,8 +158,6 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         smoothLines[i].setClosed(true);
         smoothLines[i] = smoothLines[i].getSmoothed(smooth);
         
-        resampledLines[i] = smoothLines[i].getResampledByCount(resample);
-        resampledLines[i].setClosed(true);
 
         // how to filter ?
         // local new list
@@ -164,18 +166,20 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         //      find closest in new list
         //      add found to resampled
         //      remove found from local list
-        if(false){
-            ofPolyline reline = resampledLines[i];
+        if(im.switches.get("ApplyFilter").cast<bool>()){
+            
+            ofPolyline reline = smoothLines[i];
             ofPolyline newLine;
            // resampledLines[i].clear();
             int j = 0;
-            float f = 0.1;
+            float f = im.sliders.get("filter").cast<float>();
+
 
             for( auto &v : reline.getVertices()){
 
                 float dist = 1000000;
                 glm::vec3 fv;
-                for( auto &nv :prevResampledLines[i].getVertices()){
+                for( auto &nv :prevLines[i].getVertices()){
 
                     float td = glm::distance(nv, v);
 
@@ -200,12 +204,18 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
                 //remove nv from reline
             }
             
-            prevResampledLines[i] = newLine;
-            resampledLines[i] = newLine;
+            prevLines[i] = newLine;
+            smoothLines[i] = newLine;
             if( i == 0){
-                prevResampledLines[i] = resampledLines[i];
+                prevLines[i] = smoothLines[i];
             }
         }
+        
+        resampledLines[i] = smoothLines[i].getResampledByCount(resample);
+        resampledLines[i].setClosed(true);
+
+        
+        
         i++;
     });
 
@@ -262,6 +272,7 @@ void AnalysisManager::draw(InputModel &im){
     int height = im.kHeight;
     int smooth = im.sliders.get("smooth").cast<int>();
 
+    
     if(im.switches.get("DrawGray").cast<bool>()){
         
         ofSetHexColor(0xFFFFFF);
@@ -273,11 +284,6 @@ void AnalysisManager::draw(InputModel &im){
         ofSetHexColor(0x00FFFF);
         contourFinder.draw(0, 0, width, height);
     }
-    
-    float xa = im.sliders.get("Xamp").cast<float>();
-    float xf = im.sliders.get("Xfrq").cast<float>();
-    float ya = im.sliders.get("Yamp").cast<float>();
-    float yf = im.sliders.get("Yfrq").cast<float>();
     
 
     if(im.switches.get("Smooth").cast<bool>()){
@@ -303,12 +309,20 @@ void AnalysisManager::draw(InputModel &im){
             for( auto &vert :  line.getVertices()){
                 auto x = vert.x;
                 auto y = vert.y;
-                pSetHSV( a,1.0,1.0,1.0);
+                pSetHSV( a,1.0,1.0,im.sliders.get("blobAlpha").cast<float>());
                 ofVertex(x, y);
             }
             ofEndShape();
        }
     }
+    ofBeginShape();
+        glColor4f(0,0,0,im.sliders.get("bgAlpha").cast<float>());
+        ofVertex(0,0);
+        ofVertex(0,height);
+        ofVertex(width,height);
+        ofVertex(width, 0);
+    ofEndShape();
+
  }
 
 void AnalysisManager::exit(){

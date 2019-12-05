@@ -34,7 +34,7 @@ struct InputModel {
      
      */
     
-    ofParameter<bool>   switchValues[10] = {
+    ofParameter<bool>   switchValues[9] = {
         ofParameter<bool>("Realtime",true),
         ofParameter<bool>("UseCvThreshold",true),
         ofParameter<bool>("DrawDepth",true),
@@ -43,24 +43,23 @@ struct InputModel {
         ofParameter<bool>("DrawContour",false),
         ofParameter<bool>("Smooth",false),
         ofParameter<bool>("Resample",false),
-        ofParameter<bool>("DrawSpline",false),
-        ofParameter<bool>("DrawFinder",false),
+        ofParameter<bool>("ApplyFilter",false),
     };
 
     
-    ofParameter<int>   sliderIntValues[5] = {
+    ofParameter<int>   sliderIntValues[6] = {
         ofParameter<int>("near",0,50,127),
         ofParameter<int>("far",0,50,127),
         ofParameter<int>("blobCount",1,1,4),
         ofParameter<int>("smooth",3,0,100),
+        ofParameter<int>("blur",3,0,100),
         ofParameter<int>("resample",24,4,100),
     };
 
-    ofParameter<float>   sliderFloatValues[4] = {
-        ofParameter<float>("Xamp",5.0,0,10.0),
-        ofParameter<float>("Xfrq",0.1,0,1.0),
-        ofParameter<float>("Yamp",5.0,0,10.0),
-        ofParameter<float>("Yfrq",0.1,0,1.0),
+    ofParameter<float>   sliderFloatValues[3] = {
+        ofParameter<float>("filter",0.1,0.001,1.0),
+        ofParameter<float>("bgAlpha",0.1,0.001,1.0),
+        ofParameter<float>("blobAlpha",0.1,0.001,1.0),
     };
 
     ofParameterGroup        sliders;
@@ -71,16 +70,16 @@ struct InputModel {
 
         switches.setName("switches");
 
-        for(int i = 0; i < 10 ; i++){
+        for(int i = 0; i < 9 ; i++){
             switches.add(switchValues[i]);
         }
 
         sliders.setName("sliders");
 
-        for(int i = 0; i < 5 ; i++){
+        for(int i = 0; i < 6 ; i++){
             sliders.add(sliderIntValues[i]);
         }
-        for(int i = 0; i < 4 ; i++){
+        for(int i = 0; i < 3 ; i++){
             sliders.add(sliderFloatValues[i]);
         }
     }
