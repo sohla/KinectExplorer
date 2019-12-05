@@ -18,11 +18,11 @@
 
 #include "ofxCv.h"
 
-#include "ofxBiquadFilter.h"
+//#include "ofxBiquadFilter.h"
 
 #include "ofxOsc.h"
 
-#include "ofxPostProcessing.h"
+//#include "ofxPostProcessing.h"
 
 
 // send host (aka ip address)
