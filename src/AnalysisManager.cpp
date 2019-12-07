@@ -216,7 +216,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         resampledLines[i].setClosed(true);
         resampledLines[i] = smoothLines[i].getResampledByCount(resample);
 
-        outputLines[i] = resampledLines[i].getResampledByCount(8);
+        outputLines[i] = resampledLines[i].getResampledByCount(16);
 
         
         i++;
@@ -271,7 +271,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
 void AnalysisManager::draw(InputModel &im){
    
-    float scale = 1.7;
+    float scale = 1.0;
     int width = im.kWidth * scale;
     int height = im.kHeight * scale;
     int smooth = im.sliders.get("smooth").cast<int>();
