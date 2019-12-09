@@ -60,6 +60,14 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     int min = 1;
     int max = (im.kWidth * im.kHeight) / 3;
 
+    if(im.switches.get("UseCvThreshold").cast<bool>() == true){
+        ofxOscMessage m;
+        m.setAddress("/gyrosc/button");
+        
+        m.addIntArg(1);
+        sender.sendMessage(m, false);
+
+    }
     
     depthImage.setFromPixels(pixels);
 
