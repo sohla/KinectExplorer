@@ -30,7 +30,7 @@
 		(friction * input + ((1 - friction) * history))
 	};
 
-	var blobs = Array.fill(1,{Event.new(proto:blobModel)});
+	var blobs = Array.fill(2,{Event.new(proto:blobModel)});
 
 	//------------------------------------------------------
 	var loadPersonality = {|name|
@@ -41,11 +41,18 @@
 		var env = Environment.make {
 			interpret(str);
 		};
-		env.use{~init.()};
+		env.use{~init.(midiOut)};
 		env
 	};
-	//------------------------------------------------------
 
+	//------------------------------------------------------
+	MIDIClient.init;
+	MIDIClient.destinations;
+
+	midiOut = MIDIOut.newByName("IAC Driver", "Bus 1", dieIfNotFound: true);
+	midiOut.latency_(0.00);
+
+	//------------------------------------------------------
 
 	blobs.do({|b,i|
 		b.channel = i;
@@ -67,17 +74,13 @@
 		blobs.do({|blob,i|
 
 			var prev = [];
-			var r = [3,5,7,9];
 			//[i,blob].postln;
 			a = blob.rect.width * 10;
 			blob.areaRate = (a - blob.prevArea).abs;
 			blob.areaRateFiltered = filter.(blob.areaRate , blob.areaRateFiltered, 0.01);
 			blob.prevArea = a;
-		
-			z = (4 - blob.center.y.linlin(200,400,0,4).asInteger).max(r.size-1);
-			Pdef(\drums).set(\dur,(blob.areaRateFiltered.abs * 0.04).reciprocal);
-			Pdef(\bass).set(\dur,(blob.areaRateFiltered.abs * 0.04).reciprocal);
-			Pdef(\bass).set(\root,r[z]);
+			
+			blob.env.use{ ~update.(blobs,i)};
 
 			Pen.smoothing_(true);
 			Pen.width = 1;
@@ -113,13 +116,24 @@
 		.center_(Window.availableBounds.center)
 	).front;
 
-	window.layout = VLayout().add(
+	window.layout = VLayout().add( HLayout(
 		PopUpMenu()
 			.items_(persList)
 			.action_({|b|
+				blobs[0].env!?{
+					blobs[0].env.use{ ~deinit.(midiOut)};
+				};
 				blobs[0].env = loadPersonality.(persList.at(b.value));
 			})
-			.valueAction_(0)
+			.valueAction_(0),
+		PopUpMenu()
+			.items_(persList)
+			.action_({|b|
+				blobs[1].env = loadPersonality.(persList.at(b.value));
+			})
+			.valueAction_(1)
+);
+
 
 	);
 
@@ -154,11 +168,12 @@
 
 	window.onClose = ({
 
-				Pdef(\drums).stop();
-				Pdef(\drums).clear;
-				Pdef(\bass).stop();
-				Pdef(\bass).clear;
-				midiOut.allNotesOff(0);
+		blobs.do({|blob,i|
+
+			blob.env.use{
+				~deinit.(midiOut);
+			};
+		});
 
 
 		oscListener.free;
@@ -170,45 +185,11 @@
 
 	//------------------------------------------------------
 
-	MIDIClient.init;
-	MIDIClient.destinations;
-
-	midiOut = MIDIOut.newByName("IAC Driver", "Bus 1", dieIfNotFound: true);
-	midiOut.latency_(0.00);
 
 	//------------------------------------------------------
 
 
-	Pdef(\drums,
-		Pbind(
-			\note, Pseq([0,1,2,3,4,5,6,7],inf),
-			\args, #[],
-		);
-	);
 
-	Pdef(\drums).set(\dur,0.5);
-	Pdef(\drums).set(\octave,5);
-	Pdef(\drums).set(\amp,0.8);
-	Pdef(\drums).set(\type,\midi);
-	Pdef(\drums).set(\midiout,midiOut);
-	Pdef(\drums).set(\chan,0);
-	Pdef(\drums).play();
-
-
-	Pdef(\bass,
-		Pbind(
-			\note, Pseq([0,0,3,7,5,5,7,2],inf),
-			\args, #[],
-		);
-	);
-
-	Pdef(\bass).set(\dur,0.5);
-	Pdef(\bass).set(\octave,2);
-	Pdef(\bass).set(\amp,0.8);
-	Pdef(\bass).set(\type,\midi);
-	Pdef(\bass).set(\midiout,midiOut);
-	Pdef(\bass).set(\chan,1);
-	Pdef(\bass).play();
 )
 
 

@@ -22,10 +22,10 @@ void AnalysisManager::setup(InputModel &im){
     
     sender.setup(HOST, PORT);
 
-    ofxOscMessage m;
-    m.setAddress("/gyrosc/button");
-    m.addFloatArg(1.0);
-    sender.sendMessage(m, false);
+//    ofxOscMessage m;
+//    m.setAddress("/gyrosc/button");
+//    m.addFloatArg(1.0);
+//    sender.sendMessage(m, false);
     
     
     
@@ -60,14 +60,6 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     int min = 1;
     int max = (im.kWidth * im.kHeight) / 3;
 
-    if(im.switches.get("UseCvThreshold").cast<bool>() == true){
-        ofxOscMessage m;
-        m.setAddress("/gyrosc/button");
-        
-        m.addIntArg(1);
-        sender.sendMessage(m, false);
-
-    }
     
     depthImage.setFromPixels(pixels);
 
