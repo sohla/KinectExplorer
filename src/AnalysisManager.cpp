@@ -271,7 +271,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
 void AnalysisManager::draw(InputModel &im){
    
-    float scale = 1.0;
+    float scale = 1.6;
     int width = im.kWidth * scale;
     int height = im.kHeight * scale;
     int smooth = im.sliders.get("smooth").cast<int>();
