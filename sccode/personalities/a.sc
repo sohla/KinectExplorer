@@ -32,6 +32,10 @@
 	Pdef(\bass).set(\chan,1);
 	Pdef(\bass).play();
 };
+~volume = {|v|
+	Pdef(\drums).set(\amp,v);
+	Pdef(\bass).set(\amp,v);
+};
 
 
 ~update = {|blobs,i,midiOut|

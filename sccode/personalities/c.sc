@@ -26,6 +26,9 @@ var note = notes[0];
 
 
 };
+~volume = {|v|
+	Pdef(\c).set(\amp,v);
+};
 
 ~update = {|blobs,i,midiOut|
 

@@ -22,6 +22,9 @@ var name = \d;
 
 
 };
+~volume = {|v|
+	Pdef(name).set(\amp,v);
+};
 
 ~update = {|blobs,i,midiOut|
 

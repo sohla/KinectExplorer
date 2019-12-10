@@ -85,34 +85,46 @@
 
 			var prev = [];
 			var val = blob.rect.width * 10;
-			blob.pWidth.rateRaw = (val - blob.pWidth.prev).abs;
-			blob.pWidth.rateFiltered = filter.(blob.pWidth.rateRaw , blob.pWidth.rateFiltered, 0.03);
-			blob.pWidth.prev = val;
 
-			blob.env.use{ ~update.(blobs,i,midiOut)};
+			if( blob.area > 1, {
 
-			Pen.smoothing_(true);
-			Pen.width = 1;
+				[blobs[0].area,blobs[1].area].postln;
 
-			Pen.fillColor = cols.at(i);
-			Pen.strokeColor = cols.at(i);
-			Pen.fillOval(Rect(blob.center.x, blob.center.y,12,12));
-			Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
-			Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
-			Pen.strokeRect(blob.rect);
+				blob.pWidth.rateRaw = (val - blob.pWidth.prev).abs;
+				blob.pWidth.rateFiltered = filter.(blob.pWidth.rateRaw , blob.pWidth.rateFiltered, 0.03);
+				blob.pWidth.prev = val;
 
-			prev = blob.data.reshape(1,2)[0];
-			blob.data.reshape(blob.data.size,2).do({|o|
+				blob.env.use{ ~volume.(0.8)};
 
-				if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
-					r = Rect(o[0], o[1], 4, 4);
-					Pen.fillOval(r);
-				    Pen.moveTo(Point(prev[0],prev[1]));
-				    Pen.lineTo(Point(o[0],o[1]));
-					Pen.stroke;
-					prev = o;
+				blob.env.use{ ~update.(blobs,i,midiOut)};
+
+				Pen.smoothing_(true);
+				Pen.width = 1;
+
+				Pen.fillColor = cols.at(i);
+				Pen.strokeColor = cols.at(i);
+				Pen.fillOval(Rect(blob.center.x, blob.center.y,12,12));
+				Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
+				Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
+				Pen.strokeRect(blob.rect);
+
+				prev = blob.data.reshape(1,2)[0];
+				blob.data.reshape(blob.data.size,2).do({|o|
+
+					if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
+						r = Rect(o[0], o[1], 4, 4);
+						Pen.fillOval(r);
+					    Pen.moveTo(Point(prev[0],prev[1]));
+					    Pen.lineTo(Point(o[0],o[1]));
+						Pen.stroke;
+						prev = o;
+					});
 				});
-			});
+
+				},{
+					blob.env.use{ ~volume.(0.0)};
+
+				});
 
 		});
 
