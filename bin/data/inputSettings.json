@@ -1,53 +1,25 @@
 {
     "inputSettings": {
         "sliders": {
-            "Xamp": "0",
-            "Xfrq": "0.132653",
-            "Yamp": "0",
-            "Yfrq": "0.142857",
-<<<<<<< HEAD
-            "bgAlpha": "0.560561",
-=======
-            "bgAlpha": "0.0352551",
->>>>>>> f012d1e0d0be039542ccb739a73e4ce147f88675
+            "bgAlpha": "0.1",
             "blobAlpha": "1",
             "blobCount": "2",
-            "blur": "39",
-            "d": "0",
-            "divide": "3",
-<<<<<<< HEAD
-            "far": "53",
+            "blur": "0",
+            "far": "57",
             "filter": "0.1",
             "near": "127",
             "resample": "100",
-            "smooth": "33",
-=======
-            "far": "50",
-            "filter": "0.1",
-            "near": "127",
-            "resample": "100",
-            "smooth": "40",
->>>>>>> f012d1e0d0be039542ccb739a73e4ce147f88675
-            "t1": "0",
-            "t2": "30"
+            "smooth": "3"
         },
         "switches": {
             "ApplyFilter": "0",
-            "Blur": "1",
-            "Divided": "1",
-            "DrawBlob": "0",
+            "Blur": "0",
             "DrawContour": "0",
             "DrawDepth": "0",
-            "DrawFilter": "1",
-            "DrawFinder": "0",
             "DrawGray": "0",
-            "DrawOutline": "0",
-            "DrawSpline": "0",
             "Realtime": "1",
             "Resample": "1",
             "Smooth": "0",
-            "Smoothed": "1",
-            "Stored": "0",
             "UseCvThreshold": "0"
         }
     }
