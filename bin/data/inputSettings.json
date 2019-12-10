@@ -5,23 +5,35 @@
             "Xfrq": "0.132653",
             "Yamp": "0",
             "Yfrq": "0.142857",
+<<<<<<< HEAD
             "bgAlpha": "0.560561",
+=======
+            "bgAlpha": "0.0352551",
+>>>>>>> f012d1e0d0be039542ccb739a73e4ce147f88675
             "blobAlpha": "1",
             "blobCount": "2",
-            "blur": "13",
+            "blur": "39",
             "d": "0",
             "divide": "3",
+<<<<<<< HEAD
             "far": "53",
             "filter": "0.1",
             "near": "127",
             "resample": "100",
             "smooth": "33",
+=======
+            "far": "50",
+            "filter": "0.1",
+            "near": "127",
+            "resample": "100",
+            "smooth": "40",
+>>>>>>> f012d1e0d0be039542ccb739a73e4ce147f88675
             "t1": "0",
             "t2": "30"
         },
         "switches": {
             "ApplyFilter": "0",
-            "Blur": "0",
+            "Blur": "1",
             "Divided": "1",
             "DrawBlob": "0",
             "DrawContour": "0",

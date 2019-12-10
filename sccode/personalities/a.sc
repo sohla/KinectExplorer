@@ -34,14 +34,14 @@
 };
 
 
-~update = {|blobs,i|
+~update = {|blobs,i,midiOut|
 
 	var r = [3,5,7,9];
 
 	z = (4 - blobs[0].center.y.linlin(200,400,0,4).asInteger).max(r.size-1);
 
-	Pdef(\drums).set(\dur,(blobs[0].areaRateFiltered.abs * 0.04).reciprocal);
-	Pdef(\bass).set(\dur,(blobs[0].areaRateFiltered.abs * 0.04).reciprocal);
+	Pdef(\drums).set(\dur,(blobs[0].pWidth.rateFiltered.abs * 0.04).reciprocal);
+	Pdef(\bass).set(\dur,(blobs[0].pWidth.rateFiltered.abs * 0.04).reciprocal);
 	Pdef(\bass).set(\root,r[z]);
 
 };

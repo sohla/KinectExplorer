@@ -19,14 +19,14 @@
 
 };
 
-~update = {|blobs,i|
+~update = {|blobs,i,midiOut|
 	var r = [3,4,5,6].reverse;
 	
 	var z = (blobs[1].center.y.linlin(350,450,0,3)).floor;
 	// z.postln;
 	Pdef(\melody).set(\octave,r[z]);
 
-	Pdef(\melody).set(\dur,(blobs[0].areaRateFiltered.abs * 0.04).reciprocal);
+	Pdef(\melody).set(\dur,(blobs[0].pWidth.rateFiltered.abs * 0.04).reciprocal);
 
 };
 

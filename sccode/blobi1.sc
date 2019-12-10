@@ -7,17 +7,23 @@
 	var oscListener;
 
 	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.10.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
-	var persList = ["a","b"];
+	var persList = ["c","d","a","b"];
+
+	var paramModel = (
+		\prev: 0,
+		\rateRaw: 0,
+		\rateFiltered: 0
+	);
 
 	var blobModel = (
-				\area: 0,
-				\prevArea: 0,
-				\areaRate: 0,
-				\areaRateFiltered: 0,
 				\dataSize: 3,
+				\area: 0,
 				\perimeter: 0,
 				\center: Point(0,0),
 				\rect: Rect(0,0,20,20),
+
+				\pWidth: Event.new(proto:paramModel),
+
 				\data: [[0,0]],
 				\isNoteOn: false,
 				\channel: 0,
@@ -62,6 +68,9 @@
 		b.perimeter = 0;
 		b.center = Point(0,0);
 		b.rect = Rect(0,0,0,0);
+		b.root = 0;
+		b.pWidth = Event.new(proto:paramModel);
+
 		// b.area = i;
 		// b.center = Point(200.rand*i,i *10);
 
@@ -74,13 +83,12 @@
 		blobs.do({|blob,i|
 
 			var prev = [];
-			//[i,blob].postln;
-			a = blob.rect.width * 10;
-			blob.areaRate = (a - blob.prevArea).abs;
-			blob.areaRateFiltered = filter.(blob.areaRate , blob.areaRateFiltered, 0.01);
-			blob.prevArea = a;
-			
-			blob.env.use{ ~update.(blobs,i)};
+			var val = blob.rect.width * 10;
+			blob.pWidth.rateRaw = (val - blob.pWidth.prev).abs;
+			blob.pWidth.rateFiltered = filter.(blob.pWidth.rateRaw , blob.pWidth.rateFiltered, 0.03);
+			blob.pWidth.prev = val;
+
+			blob.env.use{ ~update.(blobs,i,midiOut)};
 
 			Pen.smoothing_(true);
 			Pen.width = 1;
@@ -89,7 +97,7 @@
 			Pen.strokeColor = cols.at(i);
 			Pen.fillOval(Rect(blob.center.x, blob.center.y,12,12));
 			Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
-			Pen.fillRect(Rect(12 + (i*22),550,10, blob.areaRateFiltered * -1));
+			Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
 			Pen.strokeRect(blob.rect);
 
 			prev = blob.data.reshape(1,2)[0];
@@ -129,11 +137,14 @@
 		PopUpMenu()
 			.items_(persList)
 			.action_({|b|
+				blobs[1].env!?{
+					blobs[1].env.use{ ~deinit.(midiOut)};
+				};
 				blobs[1].env = loadPersonality.(persList.at(b.value));
 			})
 			.valueAction_(1)
 );
-
+ 
 
 	);
 
@@ -159,6 +170,9 @@
 
 			blobs[index].rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
 			blobs[index].channel = index;
+
+			blobs[index].pWidth.raw = msg[9]* 1000;
+
 		});
 		{graphView.refresh()}.defer;
 
@@ -187,8 +201,6 @@
 
 
 	//------------------------------------------------------
-
-
 
 )
 
