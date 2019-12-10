@@ -7,7 +7,7 @@
 	var oscListener;
 
 	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.10.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
-	var persList = ["a","b"];
+	var persList = ["c","d","a","b"];
 
 	var paramModel = (
 		\prev: 0,
@@ -55,8 +55,8 @@
 	MIDIClient.init;
 	MIDIClient.destinations;
 
-	// midiOut = MIDIOut.newByName("IAC Driver", "Bus 1", dieIfNotFound: true);
-	midiOut = MIDIOut.newByName("Network", "Session 1", dieIfNotFound: true);
+	midiOut = MIDIOut.newByName("IAC Driver", "Bus 1", dieIfNotFound: true);
+	// midiOut = MIDIOut.newByName("Network", "Session 1", dieIfNotFound: true);
 	midiOut.latency_(0.00);
 
 	//------------------------------------------------------
