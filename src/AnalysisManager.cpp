@@ -285,19 +285,40 @@ void AnalysisManager::draw(InputModel &im){
 
     if(im.switches.get("DrawContour").cast<bool>()){
         
-        ofSetHexColor(0x00FFFF);
-        contourFinder.draw(0, 0, width, height);
+        ofPushMatrix();
+        ofScale( scale, scale, 0.0 );
+
+        float a = ofGetFrameNum() % 360;
+        pSetHSV( a,1.0,1.0,1.0);
+
+        for( int i=0; i<(int)contourFinder.blobs.size(); i++ ) {
+            ofNoFill();
+            ofBeginShape();
+            for( int j=0; j<contourFinder.blobs[i].nPts; j++ ) {
+                ofVertex( contourFinder.blobs[i].pts[j].x, contourFinder.blobs[i].pts[j].y );
+            }
+            ofEndShape();
+            
+        }
+        ofPopMatrix();
+
+
     }
     
 
     if(im.switches.get("Smooth").cast<bool>()){
 
-        ofSetHexColor(0x0000FF);
+        ofPushMatrix();
+        ofScale( scale, scale, 0.0 );
+
+        float a = ofGetFrameNum() % 360;
+        pSetHSV( a,1.0,1.0,1.0);
 
         int i;
         for( auto & line : smoothLines){
             line.draw();
         }
+        ofPopMatrix();
     }
 
     //• if we wrap it all up we can play with perspective
@@ -307,6 +328,7 @@ void AnalysisManager::draw(InputModel &im){
 //    ofScale( scalex, scaley, 0.0 );
 //    ofRotateXDeg(-15);
 
+    ofFill();
     ofBeginShape();
         glColor4f(0,0,0,im.sliders.get("bgAlpha").cast<float>());
         ofVertex(0,0);
@@ -322,6 +344,7 @@ void AnalysisManager::draw(InputModel &im){
         int i = 0;
         for( auto &line : resampledLines ){
 
+            ofFill();
             ofBeginShape();
 
             int size = line.size();
