@@ -18,7 +18,9 @@
 	Pdef(\melody).play();
 
 };
-
+~volume = {|v|
+	Pdef(\melody).set(\amp,v);
+};
 ~update = {|blobs,i,midiOut|
 	var r = [3,4,5,6].reverse;
 	

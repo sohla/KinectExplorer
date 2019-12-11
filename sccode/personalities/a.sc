@@ -25,7 +25,7 @@
 	);
 
 	Pdef(\bass).set(\dur,0.5);
-	Pdef(\bass).set(\octave,2);
+	Pdef(\bass).set(\octave,3);
 	Pdef(\bass).set(\amp,0.8);
 	Pdef(\bass).set(\type,\midi);
 	Pdef(\bass).set(\midiout,midiOut);
@@ -44,8 +44,8 @@
 
 	z = (4 - blobs[0].center.y.linlin(200,400,0,4).asInteger).max(r.size-1);
 
-	Pdef(\drums).set(\dur,(blobs[0].pWidth.rateFiltered.abs * 0.04).reciprocal);
-	Pdef(\bass).set(\dur,(blobs[0].pWidth.rateFiltered.abs * 0.04).reciprocal);
+	Pdef(\drums).set(\dur,(blobs[0].pWidth.rateFiltered.abs * 0.06).reciprocal);
+	Pdef(\bass).set(\dur,(blobs[0].pWidth.rateFiltered.abs * 0.06).reciprocal);
 	Pdef(\bass).set(\root,r[z]);
 
 };
