@@ -7,7 +7,7 @@
 	var oscListener;
 
 	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.10.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
-	var persList = ["c","d","a","b"];
+	var persList = ["e","f","c","d","a","b"];
 
 	var paramModel = (
 		\prev: 0,
@@ -37,6 +37,13 @@
 	};
 
 	var blobs = Array.fill(2,{Event.new(proto:blobModel)});
+	//------------------------------------------------------
+	var blobFunctor = {|e|
+
+		blobs.do({|blob,i|
+			blob.env.use{~community.(blob,e)};
+		});
+	};
 
 	//------------------------------------------------------
 	var loadPersonality = {|name|
@@ -47,7 +54,8 @@
 		var env = Environment.make {
 			interpret(str);
 		};
-		env.use{~init.(midiOut)};
+		env.use{~init.(midiOut, blobFunctor)};
+		env.postln;
 		env
 	};
 
@@ -57,7 +65,7 @@
 
 	midiOut = MIDIOut.newByName("IAC Driver", "Bus 1", dieIfNotFound: true);
 	// midiOut = MIDIOut.newByName("Network", "Session 1", dieIfNotFound: true);
-	midiOut.latency_(0.00);
+	midiOut.latency_(0.01);
 
 	//------------------------------------------------------
 
@@ -88,7 +96,7 @@
 
 			if( blob.area > 1, {
 
-				[blobs[0].area,blobs[1].area].postln;
+				// [blobs[0].area,blobs[1].area].postln;
 
 				blob.pWidth.rateRaw = (val - blob.pWidth.prev).abs;
 				blob.pWidth.rateFiltered = filter.(blob.pWidth.rateRaw , blob.pWidth.rateFiltered, 0.03);

@@ -4,12 +4,13 @@ var notes = [12,11,9,7,5,4,2,0];
 var roots = [0,3,8];
 var note = notes[0];
 
-~init = {|midiOut|
+~init = {|midiOut, bf|
 	"c init".postln;
 
 	Pdef(\c,
 		Pbind(
 			\note, Pseq([0,4,7,4,7,12,16,7,12].stutter(1),inf),
+			\func, Pfunc({|e| bf.(e)}),
 			// \root, Pseq([0,3].stutter(36),inf),
 			//\root, Pseq([0,3].stutter(12),inf),
 			\args, #[],
@@ -26,6 +27,11 @@ var note = notes[0];
 
 
 };
+~community = {|b,e|
+	// [e].postln;
+	//b.env.postln;
+};
+
 ~volume = {|v|
 	Pdef(\c).set(\amp,v);
 };
@@ -39,6 +45,8 @@ var note = notes[0];
 
 	var a = blobs[0].rect;
 	var b = blobs[1].rect;
+
+
 
 	if( blobs[0].area > 4, {
 		if( blobs[1].area > 4, {

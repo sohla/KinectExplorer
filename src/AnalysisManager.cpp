@@ -299,6 +299,14 @@ void AnalysisManager::draw(InputModel &im){
             line.draw();
         }
     }
+
+    //• if we wrap it all up we can play with perspective
+    ofPushStyle();
+    ofPushMatrix();
+//    ofTranslate( x, y, 0.0 );
+//    ofScale( scalex, scaley, 0.0 );
+//    ofRotateXDeg(-15);
+
     ofBeginShape();
         glColor4f(0,0,0,im.sliders.get("bgAlpha").cast<float>());
         ofVertex(0,0);
@@ -308,7 +316,8 @@ void AnalysisManager::draw(InputModel &im){
     ofEndShape();
 
     if(im.switches.get("Resample").cast<bool>()){
-        
+
+
         ofSetHexColor(0xFF0000);
         int i = 0;
         for( auto &line : resampledLines ){
@@ -326,8 +335,12 @@ void AnalysisManager::draw(InputModel &im){
             ofEndShape();
             i++;
        }
+        
+
     }
  
+    ofPopMatrix();
+    ofPopStyle();
  }
 
 void AnalysisManager::exit(){
