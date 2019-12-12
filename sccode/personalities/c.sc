@@ -1,9 +1,8 @@
 var channel = 3;
 var isHit = false;
 var notes = [12,11,9,7,5,4,2,0];
-var roots = [0,3,8];
+var roots = [0,5].stutter(8);
 var note = notes[0];
-
 ~init = {|midiOut, bf|
 	"c init".postln;
 
@@ -74,7 +73,7 @@ var note = notes[0];
 	},{
 		isHit = false;
 
-		});
+	});
 
 	Pdef(\c).set(\octave,3+oct);
 	Pdef(\c).set(\dur,beat);

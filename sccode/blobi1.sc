@@ -7,7 +7,7 @@
 	var oscListener;
 
 	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.10.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
-	var persList = ["e","f","c","d","a","b"];
+	var persList = ["g","h","e","f","c","d","a","b"];
 
 	var paramModel = (
 		\prev: 0,
@@ -204,7 +204,7 @@
 	window.onClose = ({
 
 		blobs.do({|blob,i|
-
+ß††
 			blob.env.use{
 				~deinit.(midiOut);
 			};

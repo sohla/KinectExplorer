@@ -14,7 +14,7 @@ var name = \e;
 
 	Pdef(name).set(\dur,0.5);
 	//Pdef(name).set(\root,0);
-	Pbindef(name, \root, Pseq([0,3,8,5].stutter(32),inf));
+	Pbindef(name, \root, Pseq([0,3,8,5].stutter(64),inf));
 	Pbindef(name, \octave, Pseq([3,4].stutter(1),inf));
 	// Pdef(name).set(\octave,4);
 	Pdef(name).set(\amp,0.8);
