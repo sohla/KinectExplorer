@@ -1,7 +1,5 @@
 var channel = 9;
 var name = \h;
-var isHit = false;
-var roots = [0,5,2];
 
 ~init = {|midiOut, bf|
 	"d init".postln;
