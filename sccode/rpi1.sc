@@ -113,5 +113,5 @@ s.freeAll
 b = Buffer.read(s, "Applause1.wav");
 a = Synth.new(\help_Buffer,[\bufnum, b], target: s);
 a.free
-
+s.reboot
 s.quit
