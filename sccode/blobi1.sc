@@ -157,9 +157,6 @@
 
 					    Pen.moveTo(Point(blob.center.x, blob.center.y + (blob.rect.height/2)));
 						Pen.quadCurveTo(Point(mx, my), Point(ax, ay));
-					 //    Pen.moveTo(Point(blob.center.x, blob.center.y + (blob.rect.height/2)));
-						// Pen.quadCurveTo(Point(a1, b1), Point(bx, by));
- 						// Pen.fill;
 
 					//     Pen.moveTo(Point(ax, ay));
 					//     Pen.lineTo(Point(bx, by));

@@ -216,7 +216,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         resampledLines[i].setClosed(true);
         resampledLines[i] = smoothLines[i].getResampledByCount(resample);
 
-        outputLines[i] = resampledLines[i].getResampledByCount(32);
+        outputLines[i] = resampledLines[i].getResampledByCount(16);
 
         
         i++;
