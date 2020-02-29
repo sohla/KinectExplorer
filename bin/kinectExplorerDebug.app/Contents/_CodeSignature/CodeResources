@@ -15,10 +15,10 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			kUfW30pvcssgpr6FvBb+OM4S/xM=
+			0aRfngGww5yh7RHQ8yIwSzu+j1Q=
 			</data>
 			<key>requirement</key>
-			<string>identifier libfmodex and anchor apple generic and certificate leaf[subject.CN] = "Mac Developer: Steph O'Hara (5GQYFL9G3E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+			<string>identifier libfmodex and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: Steph O'Hara (5GQYFL9G3E)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Resources/icon-debug.icns</key>
 		<dict>

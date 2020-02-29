@@ -7,7 +7,7 @@
 	var oscListener;
 
 	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.10.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
-	var persList = ["g","h","e","f","c","d","a","b"];
+	var persList = ["c","d","g","h","e","f","a","b"];
 
 	var paramModel = (
 		\prev: 0,
@@ -117,10 +117,11 @@
 
 				Pen.fillColor = cols.at(i);
 				Pen.strokeColor = cols.at(i);
-				// Pen.fillOval(Rect(blob.center.x, blob.center.y,12,12));
-				// Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
-				// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
-				// Pen.strokeRect(blob.rect);
+
+				Pen.fillOval(Rect(blob.center.x, blob.center.y,12,12));
+				Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
+				Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
+				Pen.strokeRect(blob.rect);
 
 				prev = blob.data.reshape(1,2)[0];
 				blob.data.reshape(blob.data.size,2).do({|o,j|
@@ -147,19 +148,16 @@
 						// r = Rect(mx, my, 2, 2);
 						// Pen.fillOval(r);
 
-					    Pen.moveTo(Point(mx, my));
-						Pen.quadCurveTo(Point(a1, b1), Point(ax, ay));
-						Pen.moveTo(Point(a1, b1));
-						Pen.quadCurveTo(Point(mx, my), Point(bx, by));
-						Pen.fill;
+					 //    Pen.moveTo(Point(mx, my));
+						// Pen.quadCurveTo(Point(a1, b1), Point(ax, ay));
+						// Pen.moveTo(Point(a1, b1));
+						// Pen.quadCurveTo(Point(mx, my), Point(bx, by));
+						// Pen.fill;
+					 //    Pen.moveTo(Point(blob.center.x, blob.center.y + (blob.rect.height/2)));
+						// Pen.quadCurveTo(Point(mx, my), Point(ax, ay));
 
-
-
-					    Pen.moveTo(Point(blob.center.x, blob.center.y + (blob.rect.height/2)));
-						Pen.quadCurveTo(Point(mx, my), Point(ax, ay));
-
-					//     Pen.moveTo(Point(ax, ay));
-					//     Pen.lineTo(Point(bx, by));
+					    Pen.moveTo(Point(ax, ay));
+					    Pen.lineTo(Point(bx, by));
 						Pen.stroke;
 						prev = o;
 					});
@@ -177,7 +175,7 @@
 
 	QtGUI.palette = QPalette.dark; 
 
-	window = Window("",Rect(0,0,Window.screenBounds.width * 0.7, Window.screenBounds.height * 0.7)
+	window = Window("",Rect(0,0,Window.screenBounds.width * 0.35, Window.screenBounds.height * 0.5)
 		.center_(Window.availableBounds.center)
 	).front;
 
