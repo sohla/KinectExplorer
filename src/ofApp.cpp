@@ -15,7 +15,9 @@ void ofApp::setup(){
     analysisManager.setup(inputModel);
     inputManager.setup(inputModel);
     kinectManager.setup(inputModel);
+    
     pixelRecorder.setup();
+    irRecorder.setup();
     
     pixelPlayer.setup("test2019-12-01-18-47-56-139.mov");
 
@@ -38,7 +40,13 @@ void ofApp::update(){
         kinectManager.update([&](const ofPixels &pixels){
             
             analysisManager.update(inputModel, pixels);
+            
+            // can grab images from kinect to record
+            ofPixels q = kinectManager.kinect.getPixels();
+            irRecorder.update(q);
+
             pixelRecorder.update(pixels);
+
         });
     }else{
 
@@ -72,6 +80,7 @@ void ofApp::draw(){
 void ofApp::exit(){
     
     pixelRecorder.exit();
+    irRecorder.exit();
 }
 
 //--------------------------------------------------------------
@@ -79,9 +88,11 @@ void ofApp::keyPressed(int key){
     
     if(key == 'r'){
         if(!pixelRecorder.isRecording()){
-            pixelRecorder.start("test", kinectManager.kinect.width , kinectManager.kinect.height);
+            pixelRecorder.start("ke_depth", kinectManager.kinect.width , kinectManager.kinect.height);
+            irRecorder.start("ke_ir", kinectManager.kinect.width , kinectManager.kinect.height);
         }else{
             pixelRecorder.stop();
+            irRecorder.stop();
         }
     }
     

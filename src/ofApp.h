@@ -37,6 +37,7 @@ class ofApp : public ofBaseApp{
         KinectManager   kinectManager;
         AnalysisManager analysisManager;
         PixelRecorder   pixelRecorder;
+        PixelRecorder   irRecorder;
         PixelPlayer     pixelPlayer;
 
         static float scale;

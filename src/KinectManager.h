@@ -30,7 +30,6 @@ public:
         if(kinect.isFrameNew()) {
 
             ofPixels p = kinect.getDepthPixels();
-
             mesh.clear();
             
             int w = kinect.width;

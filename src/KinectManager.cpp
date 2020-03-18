@@ -62,6 +62,8 @@ void KinectManager::draw(InputModel &im){
     ofSetColor(255, 255, 255);
     
     if(im.switches.get("DrawDepth").cast<bool>()){
-        kinect.drawDepth(0, 0, width, height);
+       // kinect.drawDepth(0, 0, width, height);
+        kinect.draw(0, 0, width, height);
     }
+    
 }
