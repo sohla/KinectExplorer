@@ -6,7 +6,7 @@
 //
 
 #include "KinectManager.h"
-
+#include "ofApp.h"
 
 void KinectManager::setup(InputModel &im){
     
@@ -15,8 +15,8 @@ void KinectManager::setup(InputModel &im){
     // enable depth->video image calibration
     kinect.setRegistration(true);
     
-    kinect.init();
-    //kinect.init(true); // shows infrared instead of RGB video image
+    //kinect.init();
+    kinect.init(true); // shows infrared instead of RGB video image
     //kinect.init(false, false); // disable video image (faster fps)
     
     kinect.open();        // opens first available kinect
@@ -39,7 +39,7 @@ void KinectManager::setup(InputModel &im){
 
     // tilt on startup
 //    kinect.setCameraTiltAngle(-20);
-    kinect.setCameraTiltAngle(20);
+    kinect.setCameraTiltAngle(-30);
 
     
     //
@@ -55,8 +55,8 @@ void KinectManager::update(InputModel &im){
 
 void KinectManager::draw(InputModel &im){
     
-    int width = kinect.width;
-    int height = kinect.height;
+    int width = kinect.width * ofApp::scale;
+    int height = kinect.height * ofApp::scale;
     int div = im.sliders.get("divide").cast<int>();
 
     ofSetColor(255, 255, 255);

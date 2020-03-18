@@ -39,5 +39,7 @@ class ofApp : public ofBaseApp{
         PixelRecorder   pixelRecorder;
         PixelPlayer     pixelPlayer;
 
+        static float scale;
+
 //    ofxGraph graph;
 };
