@@ -21,9 +21,7 @@ void ofApp::setup(){
     
     pixelPlayer.setup("test2019-12-01-18-47-56-139.mov");
 
-//    graph.setup(0, inputModel.kHeight, inputModel.kWidth, 50);
-//    graph.setDx(1.0); // which means delta of time
-//    graph.setColor(ofColor::white);  // ofColor(255,255,255)
+    receiver.setup(PORT);
 
 }
 
@@ -55,8 +53,11 @@ void ofApp::update(){
             analysisManager.update(inputModel, pixels);
         });
     }
-//    graph.add(ofRandom(-1,1));
 
+    // OSC receiver
+    updateOSC();
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -84,15 +85,50 @@ void ofApp::exit(){
 }
 
 //--------------------------------------------------------------
+void ofApp::startRecording(){
+
+    pixelRecorder.start("ke_depth", kinectManager.kinect.width , kinectManager.kinect.height);
+    irRecorder.start("ke_ir", kinectManager.kinect.width , kinectManager.kinect.height);
+}
+//--------------------------------------------------------------
+void ofApp::stopRecording(){
+    
+    pixelRecorder.stop();
+    irRecorder.stop();
+}
+
+//--------------------------------------------------------------
+void ofApp::updateOSC(){
+
+    // check for waiting messages
+    while(receiver.hasWaitingMessages()){
+
+        // get the next message
+        ofxOscMessage m;
+        receiver.getNextMessage(m);
+
+        // check for mouse moved message
+        if(m.getAddress() == "/ke/record"){
+
+            int isOn = m.getArgAsInt32(0);
+            
+            if(isOn == 1){
+                startRecording();
+            }else{
+                stopRecording();
+            }
+        }
+    }
+}
+
+//--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
     if(key == 'r'){
         if(!pixelRecorder.isRecording()){
-            pixelRecorder.start("ke_depth", kinectManager.kinect.width , kinectManager.kinect.height);
-            irRecorder.start("ke_ir", kinectManager.kinect.width , kinectManager.kinect.height);
+            startRecording();
         }else{
-            pixelRecorder.stop();
-            irRecorder.stop();
+            stopRecording();
         }
     }
     
