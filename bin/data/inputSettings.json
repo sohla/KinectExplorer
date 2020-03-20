@@ -14,9 +14,9 @@
         "switches": {
             "ApplyFilter": "0",
             "Blur": "0",
-            "DrawContour": "0",
-            "DrawDepth": "0",
-            "DrawGray": "1",
+            "DrawContour": "1",
+            "DrawDepth": "1",
+            "DrawGray": "0",
             "Realtime": "1",
             "Resample": "0",
             "Smooth": "0",
