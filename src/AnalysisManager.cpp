@@ -262,7 +262,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
                 m.addDoubleArg(vert.y);
                 //std::cout << vert.x << " , " << vert.y;
             }
-            //std::cout << std::endl;
+//            std::cout << m << std::endl;
             
             sender.sendMessage(m, false);
         }
@@ -408,3 +408,4 @@ void pSetHSV( float h, float s, float v, float a ) {
         case 5: glColor4f(v, p, q, a);
     }
 }
+    
