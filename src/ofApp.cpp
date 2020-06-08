@@ -21,7 +21,7 @@ void ofApp::setup(){
     
     pixelPlayer.setup("test2019-12-01-18-47-56-139.mov");
 
-    receiver.setup(PORT);
+    receiver.setup(INPORT);
 
 }
 

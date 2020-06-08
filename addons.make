@@ -1,9 +1,9 @@
 ofxBiquadFilter
 ofxControlPanel
+ofxOpenCv
 ofxCv
 ofxGui
 ofxKinect
-ofxOpenCv
 ofxOsc
 ofxPostProcessing
 ofxVideoRecorder

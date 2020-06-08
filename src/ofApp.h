@@ -9,7 +9,7 @@
 #include "PixelPlayer.h"
 #include "ofxOsc.h"
 
-#define PORT 57000
+#define INPORT 57000
 
 class ofApp : public ofBaseApp{
 

@@ -11,7 +11,7 @@
 	<key>CFBundleIconFile</key>
 	<string>icon-debug.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>cc.openFrameworks.ofapp</string>
+	<string>cc.openFrameworks.KinectExplorerDebug</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
@@ -40,5 +40,9 @@
 	<string>11E503a</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>10.9</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs to access the camera</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs to access the microphone</string>
 </dict>
 </plist>

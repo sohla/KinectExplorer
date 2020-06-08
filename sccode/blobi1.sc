@@ -6,7 +6,7 @@
 	var midiOut;
 	var oscListener;
 
-	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.10.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
+	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
 	var persList = ["c","d","g","h","e","f","a","b"];
 
 	var paramModel = (
@@ -18,7 +18,7 @@
 	var blobModel = (
 				\dataSize: 3,
 				\area: 0,
-				\perimeter: 0,
+				\perimeter: 0,	
 				\center: Point(0,0),
 				\rect: Rect(0,0,20,20),
 

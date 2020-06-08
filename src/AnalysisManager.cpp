@@ -24,7 +24,7 @@ void AnalysisManager::setup(InputModel &im){
     sender.setup(HOST, PORT);
 
 //    ofxOscMessage m;
-//    m.setAddress("/gyrosc/button");
+//    m.setAddress("/blobi");
 //    m.addFloatArg(1.0);
 //    sender.sendMessage(m, false);
     
@@ -262,7 +262,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
                 m.addDoubleArg(vert.y);
                 //std::cout << vert.x << " , " << vert.y;
             }
-//            std::cout << m << std::endl;
+          //  std::cout << m << std::endl;
             
             sender.sendMessage(m, false);
         }
