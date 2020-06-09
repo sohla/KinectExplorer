@@ -7,8 +7,9 @@
 #include "AnalysisManager.h"
 #include "PixelRecorder.h"
 #include "PixelPlayer.h"
+#include "ofxOsc.h"
 
-//#include "ofxGraph.h"
+#define INPORT 57000
 
 class ofApp : public ofBaseApp{
 
@@ -31,13 +32,23 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+        void startRecording();
+        void stopRecording();
+        
+        void updateOSC();
+    
+    
         InputModel      inputModel;
 
         InputManager    inputManager;
         KinectManager   kinectManager;
         AnalysisManager analysisManager;
         PixelRecorder   pixelRecorder;
+        PixelRecorder   irRecorder;
         PixelPlayer     pixelPlayer;
 
-//    ofxGraph graph;
+        ofxOscReceiver  receiver;
+    
+        static float scale;
+
 };

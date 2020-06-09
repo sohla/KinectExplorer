@@ -10,6 +10,10 @@
 
 void PixelRecorder::setup(){
     
+    //
+//    string ffmpegPath = ofFilePath::getCurrentExePath();
+//    ffmpegPath = ffmpegPath + "/../../../../ffmpeg";
+
     string ffmpegPath = ofFilePath::getUserHomeDir();
     ffmpegPath = ffmpegPath + "/../../usr/local/bin/ffmpeg";
     vidRecorder.setFfmpegLocation(ffmpegPath); // use this is you have ffmpeg installed in your data folder
@@ -71,8 +75,11 @@ void PixelRecorder::start(string fileName, int w, int h){
         //12672000 bytes/sec =
         vidRecorder.setVideoBitrate("1.2M");
         vidRecorder.setPixelFormat("gray");
-
-        if(vidRecorder.setup(fileName + ofGetTimestampString() + fileExt, w, h, ofGetFrameRate())){
+        
+        string timeFormat = "%Y-%m-%d-%H-%M-%S";
+        string timeString = ofGetTimestampString(timeFormat);
+        
+        if(vidRecorder.setup(fileName + timeString + fileExt, w, h, ofGetFrameRate())){
             vidRecorder.start();
         }
         

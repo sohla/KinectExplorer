@@ -1,5 +1,9 @@
 #include "ofApp.h"
 
+
+float ofApp::scale{1.65};
+
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 
@@ -11,13 +15,13 @@ void ofApp::setup(){
     analysisManager.setup(inputModel);
     inputManager.setup(inputModel);
     kinectManager.setup(inputModel);
+    
     pixelRecorder.setup();
+    irRecorder.setup();
     
     pixelPlayer.setup("test2019-12-01-18-47-56-139.mov");
 
-//    graph.setup(0, inputModel.kHeight, inputModel.kWidth, 50);
-//    graph.setDx(1.0); // which means delta of time
-//    graph.setColor(ofColor::white);  // ofColor(255,255,255)
+    receiver.setup(INPORT);
 
 }
 
@@ -34,7 +38,13 @@ void ofApp::update(){
         kinectManager.update([&](const ofPixels &pixels){
             
             analysisManager.update(inputModel, pixels);
+            
+            // can grab images from kinect to record
+            ofPixels q = kinectManager.kinect.getPixels();
+            irRecorder.update(q);
+
             pixelRecorder.update(pixels);
+
         });
     }else{
 
@@ -43,8 +53,11 @@ void ofApp::update(){
             analysisManager.update(inputModel, pixels);
         });
     }
-//    graph.add(ofRandom(-1,1));
 
+    // OSC receiver
+    updateOSC();
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -68,6 +81,44 @@ void ofApp::draw(){
 void ofApp::exit(){
     
     pixelRecorder.exit();
+    irRecorder.exit();
+}
+
+//--------------------------------------------------------------
+void ofApp::startRecording(){
+
+    pixelRecorder.start("ke_depth", kinectManager.kinect.width , kinectManager.kinect.height);
+    irRecorder.start("ke_ir", kinectManager.kinect.width , kinectManager.kinect.height);
+}
+//--------------------------------------------------------------
+void ofApp::stopRecording(){
+    
+    pixelRecorder.stop();
+    irRecorder.stop();
+}
+
+//--------------------------------------------------------------
+void ofApp::updateOSC(){
+
+    // check for waiting messages
+    while(receiver.hasWaitingMessages()){
+
+        // get the next message
+        ofxOscMessage m;
+        receiver.getNextMessage(m);
+
+        // check for mouse moved message
+        if(m.getAddress() == "/ke/record"){
+
+            int isOn = m.getArgAsInt32(0);
+            
+            if(isOn == 1){
+                startRecording();
+            }else{
+                stopRecording();
+            }
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -75,9 +126,9 @@ void ofApp::keyPressed(int key){
     
     if(key == 'r'){
         if(!pixelRecorder.isRecording()){
-            pixelRecorder.start("test", kinectManager.kinect.width , kinectManager.kinect.height);
+            startRecording();
         }else{
-            pixelRecorder.stop();
+            stopRecording();
         }
     }
     

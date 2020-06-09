@@ -6,8 +6,8 @@
 	var midiOut;
 	var oscListener;
 
-	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.10.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
-	var persList = ["g","h","e","f","c","d","a","b"];
+	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
+	var persList = ["c","d","g","h","e","f","a","b"];
 
 	var paramModel = (
 		\prev: 0,
@@ -18,7 +18,7 @@
 	var blobModel = (
 				\dataSize: 3,
 				\area: 0,
-				\perimeter: 0,
+				\perimeter: 0,	
 				\center: Point(0,0),
 				\rect: Rect(0,0,20,20),
 
@@ -87,13 +87,19 @@
 	//------------------------------------------------------
 	updateGraphView = {|view|
 
-		var cols = [Color.red, Color.green, Color.blue, Color.yellow];
+		var cols = [Color.green(0.5), Color.green, Color.blue, Color.yellow];
 
 		blobs.do({|blob,i|
 
 			var prev = [];
 			var val = blob.rect.width * 10;
 
+			var ax, ay, bx, by, mx, my;
+			var xdif, ydif, a1, b1, a2, b2;
+
+			Pen.fillColor = Color.gray(1,0.01);
+			Pen.fillRect(window.view.bounds);
+			
 			if( blob.area > 1, {
 
 				// [blobs[0].area,blobs[1].area].postln;
@@ -111,19 +117,47 @@
 
 				Pen.fillColor = cols.at(i);
 				Pen.strokeColor = cols.at(i);
+
 				Pen.fillOval(Rect(blob.center.x, blob.center.y,12,12));
 				Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
 				Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
 				Pen.strokeRect(blob.rect);
 
 				prev = blob.data.reshape(1,2)[0];
-				blob.data.reshape(blob.data.size,2).do({|o|
+				blob.data.reshape(blob.data.size,2).do({|o,j|
 
 					if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
-						r = Rect(o[0], o[1], 4, 4);
-						Pen.fillOval(r);
-					    Pen.moveTo(Point(prev[0],prev[1]));
-					    Pen.lineTo(Point(o[0],o[1]));
+						// r = Rect(o[0], o[1], 4, 4);
+						// Pen.fillOval(r);
+
+						ax = prev[0];
+						ay = prev[1];
+						bx = o[0];
+						by = o[1];
+						mx = (ax + bx) / 2;
+						my = (ay + by) / 2;
+
+
+						xdif = (bx - ax) * 2;
+						ydif = (by - ay) * 2;
+						a1 = (mx - ydif);
+						b1 = (my + xdif);
+						a2 = (mx + ydif);
+						b2 = (my - xdif);
+
+						// r = Rect(mx, my, 2, 2);
+						// Pen.fillOval(r);
+
+					 //    Pen.moveTo(Point(mx, my));
+						// Pen.quadCurveTo(Point(a1, b1), Point(ax, ay));
+						// Pen.moveTo(Point(a1, b1));
+						// Pen.quadCurveTo(Point(mx, my), Point(bx, by));
+						// Pen.fill;
+					 //    Pen.moveTo(Point(blob.center.x, blob.center.y + (blob.rect.height/2)));
+						// Pen.quadCurveTo(Point(mx, my), Point(ax, ay));
+
+					    Pen.moveTo(Point(ax, ay));
+					    Pen.lineTo(Point(bx, by));
 						Pen.stroke;
 						prev = o;
 					});
@@ -141,7 +175,7 @@
 
 	QtGUI.palette = QPalette.dark; 
 
-	window = Window("",Rect(0,0,Window.screenBounds.width * 0.7, Window.screenBounds.height * 0.7)
+	window = Window("",Rect(0,0,Window.screenBounds.width * 0.35, Window.screenBounds.height * 0.5)
 		.center_(Window.availableBounds.center)
 	).front;
 
@@ -204,7 +238,7 @@
 	window.onClose = ({
 
 		blobs.do({|blob,i|
-ß††
+
 			blob.env.use{
 				~deinit.(midiOut);
 			};
@@ -224,7 +258,4 @@
 	//------------------------------------------------------
 
 )
-
-
-
 

@@ -5,9 +5,9 @@
             "blobAlpha": "1",
             "blobCount": "2",
             "blur": "3",
-            "far": "55",
+            "far": "51",
             "filter": "0.001",
-            "near": "122",
+            "near": "126",
             "resample": "100",
             "smooth": "17"
         },
@@ -15,10 +15,10 @@
             "ApplyFilter": "0",
             "Blur": "0",
             "DrawContour": "1",
-            "DrawDepth": "0",
+            "DrawDepth": "1",
             "DrawGray": "0",
             "Realtime": "0",
-            "Resample": "1",
+            "Resample": "0",
             "Smooth": "0",
             "UseCvThreshold": "0"
         }

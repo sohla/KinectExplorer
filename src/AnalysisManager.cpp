@@ -6,6 +6,7 @@
 //
 
 #include "AnalysisManager.h"
+#include "ofApp.h"
 
 void pSetHSV( float h, float s, float v, float a );
 
@@ -23,7 +24,7 @@ void AnalysisManager::setup(InputModel &im){
     sender.setup(HOST, PORT);
 
 //    ofxOscMessage m;
-//    m.setAddress("/gyrosc/button");
+//    m.setAddress("/blobi");
 //    m.addFloatArg(1.0);
 //    sender.sendMessage(m, false);
     
@@ -261,7 +262,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
                 m.addDoubleArg(vert.y);
                 //std::cout << vert.x << " , " << vert.y;
             }
-            //std::cout << std::endl;
+          //  std::cout << m << std::endl;
             
             sender.sendMessage(m, false);
         }
@@ -271,9 +272,8 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
 void AnalysisManager::draw(InputModel &im){
    
-    float scale = 1.65;
-    int width = im.kWidth * scale;
-    int height = im.kHeight * scale;
+    int width = im.kWidth * ofApp::scale;
+    int height = im.kHeight * ofApp::scale;
     int smooth = im.sliders.get("smooth").cast<int>();
 
     
@@ -281,12 +281,13 @@ void AnalysisManager::draw(InputModel &im){
         
         ofSetHexColor(0xFFFFFF);
         depthImage.draw(0, 0, width, height);
+        
     }
 
     if(im.switches.get("DrawContour").cast<bool>()){
         
         ofPushMatrix();
-        ofScale( scale, scale, 0.0 );
+        ofScale( ofApp::scale, ofApp::scale, 0.0 );
 
         float a = ofGetFrameNum() % 360;
         pSetHSV( a,1.0,1.0,1.0);
@@ -309,7 +310,7 @@ void AnalysisManager::draw(InputModel &im){
     if(im.switches.get("Smooth").cast<bool>()){
 
         ofPushMatrix();
-        ofScale( scale, scale, 0.0 );
+        ofScale( ofApp::scale, ofApp::scale, 0.0 );
 
         float a = ofGetFrameNum() % 360;
         pSetHSV( a,1.0,1.0,1.0);
@@ -350,8 +351,8 @@ void AnalysisManager::draw(InputModel &im){
             int size = line.size();
             float a = ofGetFrameNum() % 360 + (180 * i);
             for( auto &vert :  line.getVertices()){
-                auto x = vert.x * scale;
-                auto y = vert.y * scale;
+                auto x = vert.x * ofApp::scale;
+                auto y = vert.y * ofApp::scale;
                 pSetHSV( a,1.0,1.0,im.sliders.get("blobAlpha").cast<float>());
                 ofVertex(x, y);
             }
@@ -407,3 +408,4 @@ void pSetHSV( float h, float s, float v, float a ) {
         case 5: glColor4f(v, p, q, a);
     }
 }
+    
