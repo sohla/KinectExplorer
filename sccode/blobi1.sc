@@ -6,7 +6,7 @@
 	var midiOut;
 	var oscListener;
 
-	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/personalities/";
+	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/KinectExplorer/sccode/personalities/";
 	var persList = ["c","d","g","h","e","f","a","b"];
 
 	var paramModel = (

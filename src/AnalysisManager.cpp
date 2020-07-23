@@ -326,21 +326,25 @@ void AnalysisManager::draw(InputModel &im){
     ofPushStyle();
     ofPushMatrix();
 //    ofTranslate( x, y, 0.0 );
-//    ofScale( scalex, scaley, 0.0 );
+//    ofScale( 2, 2, 0.0 );
 //    ofRotateXDeg(-15);
 
     ofFill();
     ofBeginShape();
-        glColor4f(0,0,0,im.sliders.get("bgAlpha").cast<float>());
+        glColor4f(1,1,1,im.sliders.get("bgAlpha").cast<float>());
         ofVertex(0,0);
         ofVertex(0,height);
         ofVertex(width,height);
         ofVertex(width, 0);
     ofEndShape();
 
+    ofMesh rmesh;
+    glPointSize(im.sliders.get("circle").cast<int>());
+
     if(im.switches.get("Resample").cast<bool>()){
 
-
+        rmesh.setMode(OF_PRIMITIVE_POINTS);
+        
         ofSetHexColor(0xFF0000);
         int i = 0;
         for( auto &line : resampledLines ){
@@ -353,8 +357,11 @@ void AnalysisManager::draw(InputModel &im){
             for( auto &vert :  line.getVertices()){
                 auto x = vert.x * ofApp::scale;
                 auto y = vert.y * ofApp::scale;
-                pSetHSV( a,1.0,1.0,im.sliders.get("blobAlpha").cast<float>());
+//                pSetHSV( a,1.0,1.0,im.sliders.get("blobAlpha").cast<float>());
+                pSetHSV( 0,0,0,im.sliders.get("blobAlpha").cast<float>());
                 ofVertex(x, y);
+                
+                rmesh.addVertex(ofVec3f(x,y));
             }
             ofEndShape();
             i++;
@@ -362,7 +369,7 @@ void AnalysisManager::draw(InputModel &im){
         
 
     }
- 
+    rmesh.drawVertices();
     ofPopMatrix();
     ofPopStyle();
  }
