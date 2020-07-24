@@ -215,18 +215,19 @@
 	oscListener = OSCFunc({ arg msg, time, addr, recvPort;
 		//[msg, time, addr, recvPort].postln;skkstt
 		var index = msg[1].asInteger;
-	
-		if(blobs[index] != nil,{
-			blobs[index][\dataSize] = msg[2].asInteger;
-			blobs[index].data = msg.copyRange(11,400);
-			blobs[index].area = msg[3] * 100;
-			blobs[index].perimeter = msg[4] * 100;
-			blobs[index].center = filter.(Point(msg[5]* 1000,msg[6]* 1000), blobs[index].center, 0.3);
 
-			blobs[index].rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
+		if(blobs[index] != nil,{
+			blobs[index][\dataSize] = msg[10].asInteger;
+			blobs[index].data = msg.copyRange(11,400);
+			blobs[index].area = msg[2] * 100;
+			blobs[index].perimeter = msg[3] * 100;
+			blobs[index].center = filter.(Point(msg[4]* 1000,msg[5]* 1000), blobs[index].center, 0.3);
+			// blobs[index][\data].copyRange(0,blobs[index][\dataSize]-1).postln;
+
+			blobs[index].rect = Rect(msg[6] * 1000,msg[7]* 1000,msg[8]* 1000,msg[9]* 1000);
 			blobs[index].channel = index;
 
-			blobs[index].pWidth.raw = msg[9]* 1000;
+			blobs[index].pWidth.raw = msg[8]* 1000;
 
 		});
 		{graphView.refresh()}.defer;
@@ -258,4 +259,6 @@
 	//------------------------------------------------------
 
 )
+
+// NetAddr.localAddr
 

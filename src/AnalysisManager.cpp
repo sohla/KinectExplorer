@@ -224,7 +224,25 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     });
 
     
-    
+    /*
+     Notes on OSC
+     
+     0 /blobi
+     1 number of blobs
+     2 size of line points (max = line 220)
+     3 area
+     4 perimeter
+     5 center.x
+     6 center.y
+     7 rect.x
+     8 rect.y
+     9 rect.h
+     10 rect.w
+     11...n n=size of line points, data is interleaved (x0,y0,x1,y1...)
+     
+     
+     
+     */
     
  
     // OUTPUT ANALYSIS DATA
@@ -243,7 +261,6 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
             m.setAddress("/blobi");
             
             m.addIntArg(i);
-            m.addIntArg(line.size());
 
             m.addFloatArg(area);
             m.addFloatArg(perimeter);
@@ -257,6 +274,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
             m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));
             m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));
 
+            m.addIntArg(line.size());
             for( auto &vert :  line.getVertices()){
                 m.addDoubleArg(vert.x);
                 m.addDoubleArg(vert.y);
