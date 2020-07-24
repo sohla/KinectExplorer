@@ -1,15 +1,16 @@
 {
     "inputSettings": {
         "sliders": {
-            "bgAlpha": "0.124871",
+            "bgAlpha": "0.862182",
             "blobAlpha": "1",
             "blobCount": "2",
-            "blur": "8",
-            "far": "56",
+            "blur": "0",
+            "circle": "4",
+            "far": "106",
             "filter": "0.001",
             "near": "127",
             "resample": "100",
-            "smooth": "11"
+            "smooth": "0"
         },
         "switches": {
             "ApplyFilter": "0",
@@ -17,7 +18,7 @@
             "DrawContour": "0",
             "DrawDepth": "0",
             "DrawGray": "0",
-            "Realtime": "0",
+            "Realtime": "1",
             "Resample": "1",
             "Smooth": "0",
             "UseCvThreshold": "0"

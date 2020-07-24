@@ -14,7 +14,7 @@ void ofApp::setup(){
     
     analysisManager.setup(inputModel);
     inputManager.setup(inputModel);
-    kinectManager.setup(inputModel);
+    kinectCamera.setup(inputModel);
     
     pixelRecorder.setup();
     irRecorder.setup();
@@ -28,22 +28,22 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    kinectManager.update(inputModel);
+//    kinectManager.update(inputModel);
     
     inputManager.update();
 
     if(inputModel.switches.get("Realtime").cast<bool>() == true){
 
         // update returns next frames pixels
-        kinectManager.update([&](const ofPixels &pixels){
+        kinectCamera.update([&](const ofPixels &videoPixels, const ofPixels &depthPixels){
             
-            analysisManager.update(inputModel, pixels);
+            analysisManager.update(inputModel, depthPixels);
             
             // can grab images from kinect to record
-            ofPixels q = kinectManager.kinect.getPixels();
-            irRecorder.update(q);
+           // ofPixels q = kinectCamera.kinect.getPixels();
+            irRecorder.update(videoPixels);
 
-            pixelRecorder.update(pixels);
+            pixelRecorder.update(depthPixels);
 
         });
     }else{
@@ -63,7 +63,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    kinectManager.draw(inputModel);
+    kinectCamera.draw(inputModel);
     
     analysisManager.draw(inputModel);
     
@@ -87,8 +87,8 @@ void ofApp::exit(){
 //--------------------------------------------------------------
 void ofApp::startRecording(){
 
-    pixelRecorder.start("ke_depth", kinectManager.kinect.width , kinectManager.kinect.height);
-    irRecorder.start("ke_ir", kinectManager.kinect.width , kinectManager.kinect.height);
+    pixelRecorder.start("ke_depth", kinectCamera.kinect.width , kinectCamera.kinect.height);
+    irRecorder.start("ke_ir", kinectCamera.kinect.width , kinectCamera.kinect.height);
 }
 //--------------------------------------------------------------
 void ofApp::stopRecording(){
@@ -145,7 +145,7 @@ void ofApp::keyPressed(int key){
         
         inputModel.kinectAngle++;
         if(inputModel.kinectAngle > 30) inputModel.kinectAngle = 30;
-        kinectManager.kinect.setCameraTiltAngle(inputModel.kinectAngle);
+        kinectCamera.kinect.setCameraTiltAngle(inputModel.kinectAngle);
         std::cout << "tilt angle" << " : " << inputModel.kinectAngle << std::endl;
     }
 
@@ -153,7 +153,7 @@ void ofApp::keyPressed(int key){
 
         inputModel.kinectAngle--;
         if(inputModel.kinectAngle < -30) inputModel.kinectAngle = -30;
-        kinectManager.kinect.setCameraTiltAngle(inputModel.kinectAngle);
+        kinectCamera.kinect.setCameraTiltAngle(inputModel.kinectAngle);
         std::cout << "tilt angle" << " : " << inputModel.kinectAngle << std::endl;
     }
 }

@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "InputModel.h"
 #include "InputManager.h"
-#include "KinectManager.h"
+#include "KinectCamera.h"
 #include "AnalysisManager.h"
 #include "PixelRecorder.h"
 #include "PixelPlayer.h"
@@ -41,7 +41,7 @@ class ofApp : public ofBaseApp{
         InputModel      inputModel;
 
         InputManager    inputManager;
-        KinectManager   kinectManager;
+        KinectCamera   kinectCamera;
         AnalysisManager analysisManager;
         PixelRecorder   pixelRecorder;
         PixelRecorder   irRecorder;
