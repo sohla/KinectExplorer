@@ -18,7 +18,7 @@ class KinectCamera : public DepthCameraBase {
     
 public:
 
-    void setup(InputModel &im);
+    void setup(InputModel &im); 
     void draw(InputModel &im);
         
     void update(std::function<void(const ofPixels &videoPixels, const ofPixels &depthPixels)> updatedPixels){

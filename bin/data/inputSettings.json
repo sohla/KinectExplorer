@@ -3,10 +3,10 @@
         "sliders": {
             "bgAlpha": "0.862182",
             "blobAlpha": "1",
-            "blobCount": "2",
+            "blobCount": "1",
             "blur": "0",
             "circle": "4",
-            "far": "106",
+            "far": "58",
             "filter": "0.001",
             "near": "127",
             "resample": "100",
@@ -18,7 +18,7 @@
             "DrawContour": "0",
             "DrawDepth": "0",
             "DrawGray": "0",
-            "Realtime": "1",
+            "Realtime": "0",
             "Resample": "1",
             "Smooth": "0",
             "UseCvThreshold": "0"

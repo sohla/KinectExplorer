@@ -217,7 +217,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
         resampledLines[i].setClosed(true);
         resampledLines[i] = smoothLines[i].getResampledByCount(resample);
 
-        outputLines[i] = resampledLines[i].getResampledByCount(16);
+        outputLines[i] = resampledLines[i].getResampledByCount(32);
 
         
         i++;
@@ -229,21 +229,38 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
      
      0 /blobi
      1 number of blobs
-     2 size of line points (max = line 220)
-     3 area
-     4 perimeter
-     5 center.x
-     6 center.y
-     7 rect.x
-     8 rect.y
-     9 rect.h
-     10 rect.w
+     2 area
+     3 perimeter
+     4 center.x
+     5 center.y
+     6 rect.x
+     7 rect.y
+     8 rect.h
+     9 rect.w
+     10 size of line points (max = line 220)
      11...n n=size of line points, data is interleaved (x0,y0,x1,y1...)
      
      
      
      */
-    
+    /*
+     
+     unit receives a line and outputs a line
+     
+     each unit has
+        gui
+        data
+            on/off
+            draw
+            paramters...
+        
+        std::vector<ofPolyline> process(std::vector<ofPolyline> lines)
+     
+     
+     
+     
+     
+     */
  
     // OUTPUT ANALYSIS DATA
     i = 0;

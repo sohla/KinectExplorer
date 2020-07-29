@@ -16,8 +16,8 @@ void KinectCamera::setup(InputModel &im){
     kinect.setRegistration(true);
     
     //kinect.init();
-    kinect.init(true); // shows infrared instead of RGB video image
-    //kinect.init(false, false); // disable video image (faster fps)
+//    kinect.init(true); // shows infrared instead of RGB video image
+    kinect.init(false, true); // disable video image (faster fps)
     
     kinect.open();        // opens first available kinect
     //kinect.open(1);    // open a kinect by id, starting with 0 (sorted by serial # lexicographically))
