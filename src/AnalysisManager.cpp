@@ -15,20 +15,16 @@ void AnalysisManager::setup(InputModel &im){
     int width = im.kWidth;
     int height = im.kHeight;
 
+    im.switches.add(p);
+    
     depthImage.allocate(width, height);
     grayThreshNear.allocate(width, height);
     grayThreshFar.allocate(width, height);
-    edge.allocate(width, height, OF_IMAGE_COLOR);
+//    edge.allocate(width, height, OF_IMAGE_COLOR);
     
     
     sender.setup(HOST, PORT);
 
-//    ofxOscMessage m;
-//    m.setAddress("/blobi");
-//    m.addFloatArg(1.0);
-//    sender.sendMessage(m, false);
-    
-    
     
     for(int i = 0; i < MAX_BLOBS; i++){
         smoothLines.push_back(ofPolyline());
@@ -37,11 +33,9 @@ void AnalysisManager::setup(InputModel &im){
         outputLines.push_back(ofPolyline());
         
     }
-//    post.init(width, height);
-//    post.createPass<BloomPass>()->setEnabled(true);
-//    light.setPosition(1000, 1000, 2000);
     
     ofSetBackgroundAuto(false);
+
 }
 
 void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
@@ -63,7 +57,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
 
     
     depthImage.setFromPixels(pixels);
-
+    
     // basic ofxCv working in the pipeline
     // not using as yet
     // load gray image from source
@@ -129,16 +123,18 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     
     if(im.switches.get("Blur").cast<bool>()){
         
-//        depthImage.blurHeavily();
         depthImage.blurGaussian(blur);
-        //depthImage.erode();
+        depthImage.erode();
     }
 
     depthImage.mirror(false, true);
     depthImage.flagImageChanged();
     
+    
+    
+    
     // openCV contour
-    contourFinder.findContours(depthImage, min, max, blobCount, false);
+    contourFinder.findContours(depthImage, min, max, blobCount, true);
 
     
 

@@ -40,6 +40,7 @@ public:
     void draw(InputModel &im);
     void exit();
     
+    ofImage di;
     ofxCvGrayscaleImage depthImage;
     
     ofxCvGrayscaleImage grayThreshNear;
@@ -47,7 +48,7 @@ public:
 
     ofxCvContourFinder contourFinder;
     
-    ofImage edge;
+//    ofImage edge;
 
 
     ofxOscSender            sender;
@@ -60,11 +61,16 @@ public:
     std::vector<ofPolyline> outputLines;
     std::vector<ofPolyline> prevLines;
 
-    ofxCv::ContourFinder finder;
-    std::vector<cv::Point> points;
-    ofPolyline              finderLine;
+    //ofxCv::ContourFinder finder;
+//    std::vector<cv::Point> points;
+    //ofPolyline              finderLine;
 
+    ofParameter<bool> p = ofParameter<bool>("Hello World",true);
 
+ 
+    
+    
+    
 };
 
 #endif /* AnalysisManager_hpp */

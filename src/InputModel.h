@@ -53,7 +53,7 @@ struct InputModel {
         ofParameter<int>("blobCount",1,1,4),
         ofParameter<int>("smooth",3,0,100),
         ofParameter<int>("blur",3,0,100),
-        ofParameter<int>("resample",24,4,100),
+        ofParameter<int>("resample",24,4,512),
         ofParameter<int>("circle",1,0,100),
     };
 
