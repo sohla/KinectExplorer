@@ -8,7 +8,6 @@
 #include "ProcessPipeline.hpp"
 
 #include "NearFar_PixelProc.hpp"
-#include "Blur_PixelProc.hpp"
 #include "Base_PixelProc.hpp"
 
 void ProcessPipeline::setup(const DepthModel &model, ofxPanel &gui) {
