@@ -9,7 +9,10 @@
 #define ProcessPipeline_hpp
 
 #include <stdio.h>
-#include "InputModel.h"
+//#include "InputModel.h"
+#include "ofxGui.h"
+
+#include "PixelProc.hpp"
 
 
 /*
@@ -69,13 +72,13 @@
 
 class ProcessPipeline {
     
-    //Set<PixelProc>
+    std::vector<PixelProc*> processors;
     
 public:
 
-    void setup(InputModel &im);
-    void draw(InputModel &im);
-    void update(const InputModel &im, const ofPixels &depthPixels);
+    void setup(const DepthModel &model, ofxPanel &gui);
+    void draw(const DepthModel &model);
+    void update(const DepthModel &model, const ofPixels &videoPixels, const ofPixels &depthPixels);
     
 
 };

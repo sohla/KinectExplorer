@@ -9,10 +9,30 @@
 #include "PixelPlayer.h"
 #include "ofxOsc.h"
 
+#include "ProcessPipeline.hpp"
+#include "ofxGui.h"
+#include "ofxOscParameterSync.h"
+
 #define INPORT 57000
 
 class ofApp : public ofBaseApp{
 
+        InputModel      inputModel;
+
+        InputManager    inputManager;
+        DepthCameraBase*   depthCamera;
+        AnalysisManager analysisManager;
+        PixelRecorder   pixelRecorder;
+        PixelRecorder   irRecorder;
+        PixelPlayer     pixelPlayer;
+
+        ofxOscReceiver  receiver;
+    
+        ProcessPipeline pipeline;
+        ofxPanel                gui;
+        ofxOscParameterSync     sync;
+
+    DepthModel   model;
     
 	public:
 		void setup();
@@ -37,18 +57,7 @@ class ofApp : public ofBaseApp{
         
         void updateOSC();
     
-    
-        InputModel      inputModel;
-
-        InputManager    inputManager;
-        KinectCamera   kinectCamera;
-        AnalysisManager analysisManager;
-        PixelRecorder   pixelRecorder;
-        PixelRecorder   irRecorder;
-        PixelPlayer     pixelPlayer;
-
-        ofxOscReceiver  receiver;
-    
         static float scale;
+
 
 };

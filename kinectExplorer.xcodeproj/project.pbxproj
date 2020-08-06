@@ -114,6 +114,9 @@
 		E794ED6AACC02593670E02F9 /* guiTypeLogger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5F07611CEB551B7A5A884E25 /* guiTypeLogger.cpp */; };
 		ED56E2D20F0DBB385A1F8277 /* NoiseWarpPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14414C2645521DB7B21028D8 /* NoiseWarpPass.cpp */; };
 		F0199EB224DAE82F006533F0 /* ProcessPipeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0199EB024DAE82F006533F0 /* ProcessPipeline.cpp */; };
+		F0199EB824DB75CE006533F0 /* NearFar_PixelProc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0199EB624DB75CE006533F0 /* NearFar_PixelProc.cpp */; };
+		F0199EBB24DB8DAC006533F0 /* Blur_PixelProc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0199EB924DB8DAC006533F0 /* Blur_PixelProc.cpp */; };
+		F0199EC124DBAB7C006533F0 /* Base_PixelProc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0199EBF24DBAB7C006533F0 /* Base_PixelProc.cpp */; };
 		F0509CA2E805D1D5F70A87D0 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F72D5263CF8609CF22E13BD6 /* NetworkingUtils.cpp */; };
 		F38B6005B971378D6E1E83F8 /* ofxBiquadFilterInstance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E0BBDAAFF89CE0927126D2F /* ofxBiquadFilterInstance.cpp */; };
 		F877D69532909AE487E0EF22 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 572960DD09FAC11DCF63ED27 /* tinyxmlerror.cpp */; };
@@ -866,6 +869,12 @@
 		F0199EB024DAE82F006533F0 /* ProcessPipeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ProcessPipeline.cpp; sourceTree = "<group>"; };
 		F0199EB124DAE82F006533F0 /* ProcessPipeline.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ProcessPipeline.hpp; sourceTree = "<group>"; };
 		F0199EB424DAEA4F006533F0 /* PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PixelProc.hpp; sourceTree = "<group>"; };
+		F0199EB624DB75CE006533F0 /* NearFar_PixelProc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NearFar_PixelProc.cpp; sourceTree = "<group>"; };
+		F0199EB724DB75CE006533F0 /* NearFar_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NearFar_PixelProc.hpp; sourceTree = "<group>"; };
+		F0199EB924DB8DAC006533F0 /* Blur_PixelProc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Blur_PixelProc.cpp; sourceTree = "<group>"; };
+		F0199EBA24DB8DAC006533F0 /* Blur_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Blur_PixelProc.hpp; sourceTree = "<group>"; };
+		F0199EBF24DBAB7C006533F0 /* Base_PixelProc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Base_PixelProc.cpp; sourceTree = "<group>"; };
+		F0199EC024DBAB7C006533F0 /* Base_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Base_PixelProc.hpp; sourceTree = "<group>"; };
 		F0DD72AEABD1E435D4F458D2 /* intrin.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = intrin.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/hal/intrin.hpp; sourceTree = SOURCE_ROOT; };
 		F0E9BE253D8418D7BE19C5EC /* warpers.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = warpers.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/stitching/warpers.hpp; sourceTree = SOURCE_ROOT; };
 		F0F4FD1524CAAD8E00D63CBD /* DepthCameraBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DepthCameraBase.h; sourceTree = "<group>"; };
@@ -2326,6 +2335,12 @@
 				9BADA06C344FC858243CEE18 /* AnalysisManager.cpp */,
 				920DD8521DE0B4DE2F05BF6B /* AnalysisManager.h */,
 				F0199EB424DAEA4F006533F0 /* PixelProc.hpp */,
+				F0199EB624DB75CE006533F0 /* NearFar_PixelProc.cpp */,
+				F0199EB724DB75CE006533F0 /* NearFar_PixelProc.hpp */,
+				F0199EB924DB8DAC006533F0 /* Blur_PixelProc.cpp */,
+				F0199EBA24DB8DAC006533F0 /* Blur_PixelProc.hpp */,
+				F0199EBF24DBAB7C006533F0 /* Base_PixelProc.cpp */,
+				F0199EC024DBAB7C006533F0 /* Base_PixelProc.hpp */,
 				F0199EB024DAE82F006533F0 /* ProcessPipeline.cpp */,
 				F0199EB124DAE82F006533F0 /* ProcessPipeline.hpp */,
 			);
@@ -2654,6 +2669,7 @@
 				96821BC0D800745C8F3FB69D /* guiTypeVideo.cpp in Sources */,
 				DC007FE225E2F0E93B285C35 /* guiValue.cpp in Sources */,
 				3B5D58163B499A5AADA36E5B /* ofxControlPanel.cpp in Sources */,
+				F0199EC124DBAB7C006533F0 /* Base_PixelProc.cpp in Sources */,
 				6CB62DBBCC6BF3EBC23DB020 /* simpleColor.cpp in Sources */,
 				736334B6C1938CD58E528DAE /* simpleFileLister.cpp in Sources */,
 				B62AAA82CB58D901F7841E03 /* simpleLogger.cpp in Sources */,
@@ -2668,6 +2684,7 @@
 				DFCEB593AFB10B3AB1B4E26F /* fdog.cpp in Sources */,
 				6D69B5B606A5F6A8665A7BF9 /* Calibration.cpp in Sources */,
 				FB436CF053C362ED0C07B967 /* ContourFinder.cpp in Sources */,
+				F0199EBB24DB8DAC006533F0 /* Blur_PixelProc.cpp in Sources */,
 				1292E1D419C1CD74E94BBFE8 /* Distance.cpp in Sources */,
 				FDD2B9823E25412D3B4FEA5A /* Flow.cpp in Sources */,
 				7F132770802F94FC6CC52A33 /* Helpers.cpp in Sources */,
@@ -2710,6 +2727,7 @@
 				6F2D739BB67B61B0D43AB5BD /* ofxOscReceiver.cpp in Sources */,
 				866ACEB977FAB3191AD48906 /* ofxOscSender.cpp in Sources */,
 				843E027C63683C9D26AF89F2 /* BleachBypassPass.cpp in Sources */,
+				F0199EB824DB75CE006533F0 /* NearFar_PixelProc.cpp in Sources */,
 				A4F9B0C073D2D7512E845968 /* BloomPass.cpp in Sources */,
 				502D37656FF03643BBC68788 /* ContrastPass.cpp in Sources */,
 				BF8362C94243139D94B6C4E9 /* ConvolutionPass.cpp in Sources */,

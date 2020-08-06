@@ -9,15 +9,28 @@
 #define PixelProc_hpp
 
 #include <stdio.h>
+#include "ofxGui.h"
 
+#include "ofxOpenCv.h"
+#include "ofxCv.h"
+
+
+struct DepthModel {
+  
+    int kinectWidth = 0;
+    int kinectHeight = 0;
+    int kinectAngle = -30;
+    float kinectScale = 1.6;
+
+};
 
 class PixelProc {
     
-    
 public:
     
-    virtual void setup(InputModel &im){};
-    virtual void draw(InputModel &im){};
-    virtual ofPixels process(const InputModel &im, const ofPixels &depthPixels){};
+    virtual void setup(const DepthModel &model, ofxPanel &gui) = 0;
+    virtual void draw(const DepthModel &model) = 0;
+    virtual ofPixels process(const DepthModel &model, const ofPixels &videoPixels, const ofPixels &depthPixels) = 0;
+
 };
 #endif /* PixelProc_hpp */

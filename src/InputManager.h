@@ -15,7 +15,10 @@
 #include "ofxOscParameterSync.h"
 
 class InputManager {
-    
+
+    ofxPanel                gui;
+    ofxOscParameterSync     sync;
+
 public:
 
 
@@ -23,8 +26,6 @@ public:
     void update();
     void draw();
 
-    ofxPanel                gui;
-    ofxOscParameterSync     sync;
 
 };
 

@@ -1,5 +1,13 @@
 {
     "inputSettings": {
+        "blur": {
+            "on": "1"
+        },
+        "nearFar": {
+            "cv-threshold": "0",
+            "far": "206",
+            "near": "255"
+        },
         "sliders": {
             "bgAlpha": "0.862182",
             "blobAlpha": "1",

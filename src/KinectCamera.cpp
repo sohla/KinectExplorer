@@ -8,7 +8,7 @@
 #include "KinectCamera.h"
 #include "ofApp.h"
 
-void KinectCamera::setup(InputModel &im){
+void KinectCamera::setup(InputModel &im, DepthModel &model){
     
     ofSetLogLevel(OF_LOG_VERBOSE);
     
@@ -37,9 +37,10 @@ void KinectCamera::setup(InputModel &im){
     im.kWidth = kinect.width;
     im.kHeight = kinect.height;
 
-    // tilt on startup
-//    kinect.setCameraTiltAngle(-20);
-    kinect.setCameraTiltAngle(-30);
+    model.kinectWidth = kinect.width;
+    model.kinectHeight = kinect.height;
+    
+    kinect.setCameraTiltAngle(model.kinectAngle);
 
     
     //

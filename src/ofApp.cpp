@@ -12,9 +12,22 @@ void ofApp::setup(){
     
     ofSetBackgroundColorHex(0x111111);
     
-    analysisManager.setup(inputModel);
-    inputManager.setup(inputModel);
-    kinectCamera.setup(inputModel);
+//    analysisManager.setup(inputModel);
+//    inputManager.setup(inputModel);
+//    kinectCamera.setup(inputModel);
+    depthCamera = new KinectCamera();
+    
+    depthCamera->setup(inputModel, model);
+    
+    gui.setup("inputSettings", "inputSettings.json", 1070, 0);
+
+    pipeline.setup(model, gui);
+    
+    gui.loadFromFile("inputSettings.json");
+//    sync.setup((ofParameterGroup&)gui.getParameter(),6667,"localhost",6666);
+
+    
+    
     
     pixelRecorder.setup();
     irRecorder.setup();
@@ -28,16 +41,21 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-//    kinectManager.update(inputModel);
+//      kinectManager.update(inputModel);
     
-    inputManager.update();
+ //   inputManager.update();
 
     if(inputModel.switches.get("Realtime").cast<bool>() == true){
 
         // update returns next frames pixels
-        kinectCamera.update([&](const ofPixels &videoPixels, const ofPixels &depthPixels){
+        depthCamera->update([&](const ofPixels &videoPixels, const ofPixels &depthPixels){
             
-            analysisManager.update(inputModel, depthPixels);
+            pipeline.update(model, videoPixels,depthPixels);
+            
+//            analysisManager.update(inputModel, depthPixels);
+            
+            
+            //•• recorder can be a PixelProc and placed anywhere in the pipeline
             
             // can grab images from kinect to record
            // ofPixels q = kinectCamera.kinect.getPixels();
@@ -63,14 +81,19 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    kinectCamera.draw(inputModel);
+    gui.draw();
     
-    analysisManager.draw(inputModel);
+    
+//    depthCamera->draw(inputModel);
+
+    pipeline.draw(model);
+
+//    analysisManager.draw(inputModel);
     
     // draw input gui on top of everything
-    inputManager.draw();
+ //   inputManager.draw();
     
-    pixelRecorder.draw();
+ //   pixelRecorder.draw();
 
 //    pixelPlayer.draw();
 //    graph.draw();
@@ -87,8 +110,9 @@ void ofApp::exit(){
 //--------------------------------------------------------------
 void ofApp::startRecording(){
 
-    pixelRecorder.start("ke_depth", kinectCamera.kinect.width , kinectCamera.kinect.height);
-    irRecorder.start("ke_ir", kinectCamera.kinect.width , kinectCamera.kinect.height);
+    //•••FIX
+//    pixelRecorder.start("ke_depth", depthCamera.kinect.width , kinectCamera.kinect.height);
+//    irRecorder.start("ke_ir", depthCamera.kinect.width , kinectCamera.kinect.height);
 }
 //--------------------------------------------------------------
 void ofApp::stopRecording(){
@@ -141,11 +165,14 @@ void ofApp::keyPressed(int key){
         }
         
     }
+    
+    //•• FIX
+    /*
     if(key == OF_KEY_UP){
         
         inputModel.kinectAngle++;
         if(inputModel.kinectAngle > 30) inputModel.kinectAngle = 30;
-        kinectCamera.kinect.setCameraTiltAngle(inputModel.kinectAngle);
+        depthCamera.kinect.setCameraTiltAngle(inputModel.kinectAngle);
         std::cout << "tilt angle" << " : " << inputModel.kinectAngle << std::endl;
     }
 
@@ -153,9 +180,10 @@ void ofApp::keyPressed(int key){
 
         inputModel.kinectAngle--;
         if(inputModel.kinectAngle < -30) inputModel.kinectAngle = -30;
-        kinectCamera.kinect.setCameraTiltAngle(inputModel.kinectAngle);
+        depthCamera.kinect.setCameraTiltAngle(inputModel.kinectAngle);
         std::cout << "tilt angle" << " : " << inputModel.kinectAngle << std::endl;
     }
+     */
 }
 
 //--------------------------------------------------------------
