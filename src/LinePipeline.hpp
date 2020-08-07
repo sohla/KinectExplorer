@@ -20,10 +20,8 @@ class LinePipeline : public Base_PixelProc {
     
     ofParameter<int> blobsParam = ofParameter<int>("blobs",1,0,MAX_BLOBS);
 
-    std::vector<LineProc*> processors;
+    vector<LineProc*> processors;
 
-    
-    
     void proc(){};
     
     

@@ -21,7 +21,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     procImage.allocate(model.kinectWidth, model.kinectHeight);
 
     // build line pipeline
-    processors.push_back(new Base_LineProc());
+    processors.push_back(new Smooth_LineProc());
     
     for_each(processors.begin(), processors.end(), [&](LineProc* pp) {
         pp->setup(gui);
@@ -40,6 +40,7 @@ void LinePipeline::draw(const DepthModel &model){
     for_each(processors.begin(), processors.end(), [&](LineProc* pp) {
         pp->draw(model);
     });
+    
 }
 
 
@@ -65,10 +66,9 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &videoPix
             line.setClosed(true);
 
             // itr through procs passing polyline
-            for_each(processors.begin(), processors.end(), [&](LineProc* pp) {
-                line = pp->process(i, line);
-//                pp->draw(model);
-            });
+            for( auto &proc : processors ){
+                line = proc->process(i, line);
+            };
 
             i++;
         });

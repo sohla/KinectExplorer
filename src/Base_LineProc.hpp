@@ -14,7 +14,6 @@
 class Base_LineProc : public LineProc {
     
     virtual string title();
-//    virtual void proc();
 
 public:
     
@@ -27,9 +26,56 @@ protected:
     ofParameter<bool> drawParam = ofParameter<bool>("draw",false);
     ofParameter<bool> onParam = ofParameter<bool>("on",true);
 
-    ofPolyline procLine;
-
     vector<ofPolyline> procLines;
     
 };
+
+
+
+class Smooth_LineProc : public Base_LineProc {
+
+    ofParameter<int> smoothParam = ofParameter<int>("smooth",10,0,100);
+
+    string title(){
+        return "smooth";
+    }
+
+    void setup(ofxPanel &gui){
+
+        ofParameterGroup group;
+
+        group.setName(title());
+        group.add(onParam);
+        group.add(drawParam);
+        group.add(smoothParam);
+        gui.add(group);
+
+        // default behaviour keeps group closed
+        gui.getGroup(title()).minimize();
+
+        for(int i=0; i< MAX_BLOBS; i++){
+            procLines.push_back(ofPolyline());
+        }
+
+//        Base_LineProc::setup(gui);
+//        ofxGuiGroup group = gui.getGroup(title());
+//        group.add(smoothParam);
+//        group.draw();
+        
+        
+        
+    }
+    
+    ofPolyline process(const int &index, const ofPolyline &line){
+
+        if(onParam.get()){
+            procLines[index] = line.getSmoothed(smoothParam.get());
+        }
+        return procLines[index];
+    }
+
+
+    
+};
+
 #endif /* Base_LineProc_hpp */

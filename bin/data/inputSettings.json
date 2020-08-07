@@ -41,6 +41,11 @@
             "resample": "100",
             "smooth": "0"
         },
+        "smooth": {
+            "draw": "1",
+            "on": "1",
+            "smooth": "38"
+        },
         "switches": {
             "ApplyFilter": "0",
             "Blur": "0",

@@ -9,15 +9,15 @@
 
 void Base_LineProc::setup(ofxPanel &gui){
 
-        ofParameterGroup group;
+    ofParameterGroup group;
 
-        group.setName(title());
-        group.add(onParam);
-        group.add(drawParam);
-        gui.add(group);
+    group.setName(title());
+    group.add(onParam);
+    group.add(drawParam);
+    gui.add(group);
 
-        // default behaviour keeps group closed
-        gui.getGroup(title()).minimize();
+    // default behaviour keeps group closed
+    gui.getGroup(title()).minimize();
     
     for(int i=0; i< MAX_BLOBS; i++){
         procLines.push_back(ofPolyline());
@@ -27,16 +27,14 @@ void Base_LineProc::setup(ofxPanel &gui){
 
 void Base_LineProc::draw(const DepthModel &model){
     
-    
     if(drawParam.get()){
         ofPushMatrix();
         ofScale( model.kinectScale);
-//        procLine.scale(model.kinectScale, model.kinectScale);
-//        procLine.draw();
         
         for( auto &line : procLines ){
             line.draw();
         };
+
         ofPopMatrix();
     }
 }
@@ -44,11 +42,9 @@ void Base_LineProc::draw(const DepthModel &model){
 ofPolyline Base_LineProc::process(const int &index, const ofPolyline &line){
 
     if(onParam.get()){
-        procLines[index] = line.getSmoothed(10);
-        procLine = line.getSmoothed(10);
-    
+        procLines[index] = line;
     }
-    return procLine;
+    return procLines[index];
 }
 
 string Base_LineProc::title(){
