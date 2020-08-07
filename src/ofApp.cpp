@@ -47,6 +47,12 @@ void ofApp::update(){
 
     if(inputModel.switches.get("Realtime").cast<bool>() == true){
 
+        
+        //• split up pipelines : videoPixel and depthPixel : procs can be used on either
+        //• or is placed at the head of the pipeline
+        //• or there is a source : depth, video or player!!!
+        
+        
         // update returns next frames pixels
         depthCamera->update([&](const ofPixels &videoPixels, const ofPixels &depthPixels){
             

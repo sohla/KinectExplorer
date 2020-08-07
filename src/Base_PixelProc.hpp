@@ -135,4 +135,8 @@ class NearFar_PixelProc : public Base_PixelProc {
 
 //------------------------------------------------------------
 
+//• recorder proc
+
+
+
 #endif /* Base_PixelProc_hpp */

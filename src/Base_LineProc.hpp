@@ -56,14 +56,6 @@ class Smooth_LineProc : public Base_LineProc {
         for(int i=0; i< MAX_BLOBS; i++){
             procLines.push_back(ofPolyline());
         }
-
-//        Base_LineProc::setup(gui);
-//        ofxGuiGroup group = gui.getGroup(title());
-//        group.add(smoothParam);
-//        group.draw();
-        
-        
-        
     }
     
     ofPolyline process(const int &index, const ofPolyline &line){
@@ -73,9 +65,10 @@ class Smooth_LineProc : public Base_LineProc {
         }
         return procLines[index];
     }
-
-
-    
 };
+
+//• add resampled line
+//• osc out line
+
 
 #endif /* Base_LineProc_hpp */
