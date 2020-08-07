@@ -9,7 +9,7 @@
 #include "PixelPlayer.h"
 #include "ofxOsc.h"
 
-#include "ProcessPipeline.hpp"
+#include "PixelPipeline.hpp"
 #include "ofxGui.h"
 #include "ofxOscParameterSync.h"
 
@@ -28,7 +28,7 @@ class ofApp : public ofBaseApp{
 
         ofxOscReceiver  receiver;
     
-        ProcessPipeline pipeline;
+        PixelPipeline pipeline;
         ofxPanel                gui;
         ofxOscParameterSync     sync;
 

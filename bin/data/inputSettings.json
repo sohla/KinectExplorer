@@ -1,12 +1,33 @@
 {
     "inputSettings": {
         "blur": {
+            "blur": "13",
+            "draw": "0",
+            "on": "1"
+        },
+        "dilate": {
+            "draw": "0",
+            "on": "0"
+        },
+        "erode": {
+            "draw": "0",
+            "on": "0"
+        },
+        "line_base": {
+            "draw": "1",
             "on": "1"
         },
         "nearFar": {
             "cv-threshold": "0",
-            "far": "206",
-            "near": "255"
+            "draw": "0",
+            "far": "211",
+            "near": "255",
+            "on": "1"
+        },
+        "pixel_to_point": {
+            "blobs": "2",
+            "draw": "0",
+            "on": "1"
         },
         "sliders": {
             "bgAlpha": "0.862182",

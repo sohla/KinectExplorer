@@ -61,15 +61,9 @@ void KinectCamera::draw(InputModel &im){
     int div = im.sliders.get("divide").cast<int>();
 
     ofSetColor(255, 255, 255);
-    
-    if(im.switches.get("DrawDepth").cast<bool>()){
         
-        // kinect.drawDepth(0, 0, width, height);
-        //kinect.draw(0, 0, width, height);
-        
-        if(kinect.isUsingTexture()){
-            ofTexture flippedText = kinect.getTexture();
-            flippedText.draw(width, 0, -width, height);
-        }
+    if(kinect.isUsingTexture()){
+        ofTexture flippedText = kinect.getTexture();
+        flippedText.draw(width, 0, -width, height);
     }
 }

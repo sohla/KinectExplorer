@@ -19,7 +19,7 @@ struct DepthModel {
   
     int kinectWidth = 0;
     int kinectHeight = 0;
-    int kinectAngle = -30;
+    int kinectAngle = -20;
     float kinectScale = 1.6;
 
 };

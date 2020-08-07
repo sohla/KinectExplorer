@@ -128,7 +128,7 @@ void AnalysisManager::update(InputModel &im, const ofPixels &pixels){
     }
 
     depthImage.mirror(false, true);
-    //depthImage.flagImageChanged();
+    depthImage.flagImageChanged();
     
     
     
