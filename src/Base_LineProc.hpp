@@ -68,7 +68,10 @@ class Smooth_LineProc : public Base_LineProc {
 };
 
 //• add resampled line
+//• ICP ordered line to previous line
+//• filter time - basic, dynamic (per point) 
 //• osc out line
+
 
 
 #endif /* Base_LineProc_hpp */

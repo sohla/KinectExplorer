@@ -87,4 +87,8 @@ public:
     after traversing tree, build the gui
  
     GUI
+ 
+ 
+ 
+    point to 3d mesh to 
   */

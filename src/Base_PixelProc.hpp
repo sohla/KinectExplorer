@@ -136,6 +136,7 @@ class NearFar_PixelProc : public Base_PixelProc {
 //------------------------------------------------------------
 
 //• recorder proc
+//• syphon proc
 
 
 
