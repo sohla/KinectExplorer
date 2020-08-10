@@ -30,6 +30,10 @@ protected:
     
 };
 
+//------------------------------------------------------------
+//
+//------------------------------------------------------------
+
 
 
 class Smooth_LineProc : public Base_LineProc {
@@ -66,8 +70,44 @@ class Smooth_LineProc : public Base_LineProc {
         return procLines[index];
     }
 };
+//------------------------------------------------------------
+//
+//------------------------------------------------------------
+class Resample_LineProc : public Base_LineProc {
 
-//• add resampled line
+    ofParameter<int> resampleParam = ofParameter<int>("resample",6,4,32);
+
+    string title(){
+        return "resample";
+    }
+
+    void setup(ofxPanel &gui){
+
+        ofParameterGroup group;
+
+        group.setName(title());
+        group.add(onParam);
+        group.add(drawParam);
+        group.add(resampleParam);
+        gui.add(group);
+
+        // default behaviour keeps group closed
+        gui.getGroup(title()).minimize();
+
+        for(int i=0; i< MAX_BLOBS; i++){
+            procLines.push_back(ofPolyline());
+        }
+    }
+    
+    ofPolyline process(const int &index, const ofPolyline &line){
+
+        if(onParam.get()){
+            procLines[index] = line.getResampledByCount(resampleParam.get());
+        }
+        return procLines[index];
+    }
+};
+
 //• ICP ordered line to previous line
 //• filter time - basic, dynamic (per point) 
 //• osc out line

@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "InputModel.h"
 #include "InputManager.h"
-#include "KinectCamera.h"
+#include "KinectDepthCamera.h"
 #include "AnalysisManager.h"
 #include "PixelRecorder.h"
 #include "PixelPlayer.h"
@@ -20,7 +20,7 @@ class ofApp : public ofBaseApp{
         InputModel      inputModel;
 
         InputManager    inputManager;
-        DepthCameraBase*   depthCamera;
+        PixelSourceBase*   depthCamera;
         AnalysisManager analysisManager;
         PixelRecorder   pixelRecorder;
         PixelRecorder   irRecorder;
@@ -32,6 +32,7 @@ class ofApp : public ofBaseApp{
         ofxPanel                gui;
         ofxOscParameterSync     sync;
 
+     ofParameter<bool> realtimeParam = ofParameter<bool>("realtime",true);
     DepthModel   model;
     
 	public:

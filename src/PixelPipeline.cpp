@@ -32,12 +32,12 @@ void PixelPipeline::draw(const DepthModel &model){
 
 }
 
-void PixelPipeline::update(const DepthModel &model, const ofPixels &videoPixels, const ofPixels &depthPixels){
+void PixelPipeline::update(const DepthModel &model, const ofPixels &pixels){
 
-    ofPixels pixels = depthPixels;
+    ofPixels lp = pixels;
     
     for_each(processors.begin(), processors.end(), [&](PixelProc* pp) {
-        pixels = pp->process(model, videoPixels, pixels);
+        lp = pp->process(model, lp);
     });
 
 }

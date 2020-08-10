@@ -31,9 +31,9 @@ void Base_PixelProc::draw(const DepthModel &model){
     }
 }
 
-ofPixels Base_PixelProc::process(const DepthModel &model, const ofPixels &videoPixels, const ofPixels &depthPixels){
+ofPixels Base_PixelProc::process(const DepthModel &model, const ofPixels &pixels){
     
-    procImage.setFromPixels(depthPixels);
+    procImage.setFromPixels(pixels);
     if(onParam.get()){proc();};
     return procImage.getPixels();
 }

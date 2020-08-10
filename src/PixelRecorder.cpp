@@ -50,11 +50,12 @@ void PixelRecorder::draw(){
     
     if(vidRecorder.isRecording()){
         ofSetColor(255, 0, 0);
-        ofDrawCircle(ofGetWidth() - 20, 20, 10);
+        ofDrawCircle(ofGetWidth() - 20, ofGetHeight() - 20, 10);
     }else{
         ofSetColor(0, 0, 0);
-        ofDrawCircle(ofGetWidth() - 20, 20, 10);
+        ofDrawCircle(ofGetWidth() - 20, ofGetHeight() - 20, 10);
     }
+    ofSetColor(255, 255, 255);
 }
 //--------------------------------------------------------------
 void PixelRecorder::start(string fileName, int w, int h){

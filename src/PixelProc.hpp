@@ -30,7 +30,7 @@ public:
     
     virtual void setup(const DepthModel &model, ofxPanel &gui) = 0;
     virtual void draw(const DepthModel &model) = 0;
-    virtual ofPixels process(const DepthModel &model, const ofPixels &videoPixels, const ofPixels &depthPixels) = 0;
+    virtual ofPixels process(const DepthModel &model, const ofPixels &pixels) = 0;
 
 };
 #endif /* PixelProc_hpp */

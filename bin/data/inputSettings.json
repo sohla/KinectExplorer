@@ -1,17 +1,17 @@
 {
     "inputSettings": {
         "blur": {
-            "blur": "13",
+            "blur": "3",
             "draw": "0",
             "on": "1"
         },
         "dilate": {
             "draw": "0",
-            "on": "0"
+            "on": "1"
         },
         "erode": {
             "draw": "0",
-            "on": "0"
+            "on": "1"
         },
         "line_base": {
             "draw": "1",
@@ -20,14 +20,22 @@
         "nearFar": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "211",
+            "far": "129",
             "near": "255",
             "on": "1"
         },
         "pixel_to_point": {
-            "blobs": "2",
+            "blobs": "1",
             "draw": "0",
             "on": "1"
+        },
+        "realtime": {
+            "realtime": "0"
+        },
+        "resample": {
+            "draw": "0",
+            "on": "1",
+            "resample": "6"
         },
         "sliders": {
             "bgAlpha": "0.862182",
@@ -44,7 +52,7 @@
         "smooth": {
             "draw": "1",
             "on": "1",
-            "smooth": "38"
+            "smooth": "10"
         },
         "switches": {
             "ApplyFilter": "0",

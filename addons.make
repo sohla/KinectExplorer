@@ -6,5 +6,6 @@ ofxGui
 ofxKinect
 ofxOsc
 ofxPostProcessing
+ofxSyphon
 ofxVideoRecorder
 ofxXmlSettings

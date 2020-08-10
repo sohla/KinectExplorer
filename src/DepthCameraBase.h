@@ -12,13 +12,13 @@
 #include "InputModel.h"
 #include "PixelProc.hpp"
 
-class DepthCameraBase {
+class PixelSourceBase {
     
 public:
 
     virtual void setup(InputModel &im, DepthModel &model) = 0;
     virtual void draw(InputModel &im) = 0;
-    virtual void update(std::function<void(const ofPixels &videoPixels, const ofPixels &depthPixels)> updatedPixels) = 0;
+    virtual void update(std::function<void(const ofPixels &pixel)> updatedPixels) = 0;
 
 };
 

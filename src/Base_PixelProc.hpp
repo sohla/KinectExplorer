@@ -20,7 +20,7 @@ public:
     
     void setup(const DepthModel &model, ofxPanel &gui);
     void draw(const DepthModel &model);
-    ofPixels process(const DepthModel &model, const ofPixels &videoPixels, const ofPixels &depthPixels);
+    ofPixels process(const DepthModel &model, const ofPixels &pixels);
 
 protected:
 
@@ -70,7 +70,9 @@ class Blur_PixelProc : public Base_PixelProc {
 
     }
 
-    void proc(){procImage.blurGaussian(1 + blurParam.get() & ~1);}
+    void proc(){
+        procImage.blurGaussian(1 + (blurParam.get() & ~1)); // bitwise not (even) + 1 is....odd
+    };
     string title(){return "blur";};
 };
 

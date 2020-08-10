@@ -29,7 +29,7 @@ public:
     
     void setup(const DepthModel &model, ofxPanel &gui);
     void draw(const DepthModel &model);
-    ofPixels process(const DepthModel &model, const ofPixels &videoPixels, const ofPixels &depthPixels);
+    ofPixels process(const DepthModel &model, const ofPixels &pixel);
 
 protected:
 

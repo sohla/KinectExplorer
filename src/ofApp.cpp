@@ -15,19 +15,22 @@ void ofApp::setup(){
 //    analysisManager.setup(inputModel);
 //    inputManager.setup(inputModel);
 //    kinectCamera.setup(inputModel);
-    depthCamera = new KinectCamera();
+    depthCamera = new KinectDepthCamera();
     
     depthCamera->setup(inputModel, model);
     
     gui.setup("inputSettings", "inputSettings.json", 1070, 0);
 
-    pipeline.setup(model, gui);
     
-    gui.loadFromFile("inputSettings.json");
 //    sync.setup((ofParameterGroup&)gui.getParameter(),6667,"localhost",6666);
 
     
+    ofParameterGroup group;
     
+    group.setName("realtime");
+   
+    group.add(realtimeParam);
+    gui.add(group);
     
     pixelRecorder.setup();
     irRecorder.setup();
@@ -35,6 +38,10 @@ void ofApp::setup(){
     pixelPlayer.setup("test2019-12-01-18-47-56-139.mov");
 
     receiver.setup(INPORT);
+
+    pipeline.setup(model, gui);
+
+    gui.loadFromFile("inputSettings.json");
 
 }
 
@@ -44,8 +51,9 @@ void ofApp::update(){
 //      kinectManager.update(inputModel);
     
  //   inputManager.update();
-
-    if(inputModel.switches.get("Realtime").cast<bool>() == true){
+    
+    
+    if(realtimeParam.get() == true){
 
         
         //• split up pipelines : videoPixel and depthPixel : procs can be used on either
@@ -54,9 +62,9 @@ void ofApp::update(){
         
         
         // update returns next frames pixels
-        depthCamera->update([&](const ofPixels &videoPixels, const ofPixels &depthPixels){
+        depthCamera->update([&](const ofPixels &pixels){
             
-            pipeline.update(model, videoPixels,depthPixels);
+            pipeline.update(model, pixels);
             
 //            analysisManager.update(inputModel, depthPixels);
             
@@ -65,16 +73,17 @@ void ofApp::update(){
             
             // can grab images from kinect to record
            // ofPixels q = kinectCamera.kinect.getPixels();
-            irRecorder.update(videoPixels);
+         //   irRecorder.update(pixels);
 
-            pixelRecorder.update(depthPixels);
+            pixelRecorder.update(pixels);
 
         });
     }else{
 
         // play loaded video
         pixelPlayer.update([&](const ofPixels &pixels){
-            analysisManager.update(inputModel, pixels);
+            //analysisManager.update(inputModel, pixels);
+            pipeline.update(model, pixels);
         });
     }
 
@@ -99,9 +108,9 @@ void ofApp::draw(){
     // draw input gui on top of everything
  //   inputManager.draw();
     
- //   pixelRecorder.draw();
+    pixelRecorder.draw();
 
-//    pixelPlayer.draw();
+  //  pixelPlayer.draw();
 //    graph.draw();
 
 }
@@ -117,14 +126,14 @@ void ofApp::exit(){
 void ofApp::startRecording(){
 
     //•••FIX
-//    pixelRecorder.start("ke_depth", depthCamera.kinect.width , kinectCamera.kinect.height);
+    pixelRecorder.start("ke_depth", model.kinectWidth, model.kinectHeight);
 //    irRecorder.start("ke_ir", depthCamera.kinect.width , kinectCamera.kinect.height);
 }
 //--------------------------------------------------------------
 void ofApp::stopRecording(){
     
     pixelRecorder.stop();
-    irRecorder.stop();
+//    irRecorder.stop();
 }
 
 //--------------------------------------------------------------

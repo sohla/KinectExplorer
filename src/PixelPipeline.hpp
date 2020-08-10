@@ -22,7 +22,7 @@ public:
 
     void setup(const DepthModel &model, ofxPanel &gui);
     void draw(const DepthModel &model);
-    void update(const DepthModel &model, const ofPixels &videoPixels, const ofPixels &depthPixels);
+    void update(const DepthModel &model, const ofPixels &pixels);
     
 
 };
