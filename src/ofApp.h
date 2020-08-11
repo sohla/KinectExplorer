@@ -1,10 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "InputModel.h"
-#include "InputManager.h"
 #include "KinectDepthCamera.h"
-#include "AnalysisManager.h"
 #include "PixelRecorder.h"
 #include "PixelPlayer.h"
 #include "ofxOsc.h"
@@ -17,13 +14,9 @@
 
 class ofApp : public ofBaseApp{
 
-        InputModel      inputModel;
-
-        InputManager    inputManager;
         PixelSourceBase*   depthCamera;
-        AnalysisManager analysisManager;
         PixelRecorder   pixelRecorder;
-        PixelRecorder   irRecorder;
+//        PixelRecorder   irRecorder;
         PixelPlayer     pixelPlayer;
 
         ofxOscReceiver  receiver;
@@ -32,8 +25,8 @@ class ofApp : public ofBaseApp{
         ofxPanel                gui;
         ofxOscParameterSync     sync;
 
-     ofParameter<bool> realtimeParam = ofParameter<bool>("realtime",true);
-    DepthModel   model;
+        ofParameter<bool> realtimeParam = ofParameter<bool>("realtime",true);
+        DepthModel   model;
     
 	public:
 		void setup();

@@ -20,8 +20,8 @@ class KinectDepthCamera : public PixelSourceBase {
 
 public:
 
-    void setup(InputModel &im, DepthModel &model); 
-    void draw(InputModel &im);
+    void setup(DepthModel &model); 
+    void draw(DepthModel &model);
         
     void update(std::function<void(const ofPixels &pixels)> updatedPixels){
         

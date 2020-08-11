@@ -8,7 +8,7 @@
 #include "KinectDepthCamera.h"
 #include "ofApp.h"
 
-void KinectDepthCamera::setup(InputModel &im, DepthModel &model){
+void KinectDepthCamera::setup(DepthModel &model){
     
     ofSetLogLevel(OF_LOG_VERBOSE);
     
@@ -34,31 +34,19 @@ void KinectDepthCamera::setup(InputModel &im, DepthModel &model){
         ofLogNotice() << "width: " << kinect.getWidth() << " height: " << kinect.getHeight();
         ofLogNotice() << "format: " << short(kinect.getPixelFormat());
     }
-    im.kWidth = kinect.width;
-    im.kHeight = kinect.height;
 
     model.kinectWidth = kinect.width;
     model.kinectHeight = kinect.height;
     
     kinect.setCameraTiltAngle(model.kinectAngle);
 
-    
-    //
-//    mesh.setMode(OF_PRIMITIVE_POINTS);
 
 }
 
-
-//void KinectManager::update(InputModel &im){
-//
-//    
-//}
-
-void KinectDepthCamera::draw(InputModel &im){
+void KinectDepthCamera::draw(DepthModel &model){
     
-    int width = im.kWidth * ofApp::scale;
-    int height = im.kHeight * ofApp::scale;
-    int div = im.sliders.get("divide").cast<int>();
+    int width = model.kinectWidth * model.kinectScale;
+    int height = model.kinectHeight * model.kinectScale;
 
     ofSetColor(255, 255, 255);
         
