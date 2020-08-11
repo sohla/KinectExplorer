@@ -181,7 +181,7 @@ class Syphon_PixelProc : public Base_PixelProc {
 //------------------------------------------------------------
 
 //• recorder proc
-//• syphon proc
+//• idn proc
 
 
 
