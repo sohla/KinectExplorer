@@ -4,6 +4,7 @@ ofxOpenCv
 ofxCv
 ofxGui
 ofxKinect
+ofxNDI
 ofxOsc
 ofxPostProcessing
 ofxSyphon
