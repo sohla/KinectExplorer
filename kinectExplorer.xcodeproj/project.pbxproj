@@ -297,7 +297,6 @@
 		3E501BAFF00FAC988C696654 /* cap_winrt.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cap_winrt.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/videoio/cap_winrt.hpp; sourceTree = SOURCE_ROOT; };
 		3F55927604273B50CC60348D /* RunningBackground.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = RunningBackground.cpp; path = ../../addons/ofxCv/libs/ofxCv/src/RunningBackground.cpp; sourceTree = SOURCE_ROOT; };
 		3FB78EC015581F34D52A1F70 /* transform.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = transform.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/grid/transform.hpp; sourceTree = SOURCE_ROOT; };
-		401DE17B353BD754292942D3 /* DepthCameraBase.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = DepthCameraBase.h; path = src/DepthCameraBase.h; sourceTree = SOURCE_ROOT; };
 		4022FF071CA1A3876BA2A851 /* OscException.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = OscException.h; path = ../../addons/ofxOsc/libs/oscpack/src/osc/OscException.h; sourceTree = SOURCE_ROOT; };
 		40B5252A2E1E97E4FBB08840 /* warping.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = warping.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/ptr2d/warping.hpp; sourceTree = SOURCE_ROOT; };
 		40FA6EB56122C95578919F5E /* any.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = any.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/any.h; sourceTree = SOURCE_ROOT; };
@@ -661,7 +660,6 @@
 		D5140798F545D4A8444BF280 /* cudaimgproc.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cudaimgproc.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudaimgproc.hpp; sourceTree = SOURCE_ROOT; };
 		D52F41562660027C07387B65 /* libfreenect_registration.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = libfreenect_registration.h; path = ../../addons/ofxKinect/libs/libfreenect/include/libfreenect_registration.h; sourceTree = SOURCE_ROOT; };
 		D58DCB2C0AEFDE6171E29540 /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Syphon.framework; path = ../../addons/ofxSyphon/libs/Syphon/lib/osx/Syphon.framework; sourceTree = "<group>"; };
-		D59D49FB055D8840A51BB3FB /* PointProc.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = PointProc.hpp; path = src/PointProc.hpp; sourceTree = SOURCE_ROOT; };
 		D703ABBD78C56439D0BB7CCE /* PixelSourceBase.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = PixelSourceBase.h; path = src/PixelSourceBase.h; sourceTree = SOURCE_ROOT; };
 		D84500FB6969501365F37B6C /* lsh_table.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = lsh_table.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/lsh_table.h; sourceTree = SOURCE_ROOT; };
 		D8BD798E9880C52124CE020E /* deblurring.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = deblurring.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/videostab/deblurring.hpp; sourceTree = SOURCE_ROOT; };
@@ -2420,19 +2418,17 @@
 				9BADA06C344FC858243CEE18 /* AnalysisManager.cpp */,
 				304DE51EB07DE556B773CCD2 /* InputManager.cpp */,
 				3A6FF413662E627E5E3B20DA /* PixelRecorder.h */,
-				1FFA650B0AAE9B4A13E36A61 /* PixelPipeline.hpp */,
-				2FA08B7B6519D79095CAF77D /* PixelPipeline.cpp */,
 				A7456B97F5466AEFA492F780 /* PixelProc.hpp */,
-				59B2FB1FAF996F4907458CCB /* Base_PixelProc.hpp */,
+				2FA08B7B6519D79095CAF77D /* PixelPipeline.cpp */,
+				1FFA650B0AAE9B4A13E36A61 /* PixelPipeline.hpp */,
 				C03615B5ED79705EADD16C87 /* Base_PixelProc.cpp */,
+				59B2FB1FAF996F4907458CCB /* Base_PixelProc.hpp */,
+				4E53F491AC28E9DD05482B47 /* LinePipeline.cpp */,
+				954BB2D90887906C60D28EFB /* LinePipeline.hpp */,
+				ACCE4DD1F25B742F970C198A /* LineProc.hpp */,
 				9D01C965795DA7BB6D88BF6F /* Base_LineProc.cpp */,
 				ED65DC5CD8C9EB5E7B6AFC2F /* Base_LineProc.hpp */,
 				D703ABBD78C56439D0BB7CCE /* PixelSourceBase.h */,
-				ACCE4DD1F25B742F970C198A /* LineProc.hpp */,
-				4E53F491AC28E9DD05482B47 /* LinePipeline.cpp */,
-				954BB2D90887906C60D28EFB /* LinePipeline.hpp */,
-				D59D49FB055D8840A51BB3FB /* PointProc.hpp */,
-				401DE17B353BD754292942D3 /* DepthCameraBase.h */,
 				819DE2DDE9313C78735DB7FA /* KinectDepthCamera.cpp */,
 				B2D6F89E862CBB902D85F7E3 /* KinectDepthCamera.h */,
 			);

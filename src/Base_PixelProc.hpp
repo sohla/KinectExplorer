@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include "PixelProc.hpp"
+#include "ofxSyphon.h"
 
 class Base_PixelProc : public PixelProc {
     
@@ -133,6 +134,48 @@ class NearFar_PixelProc : public Base_PixelProc {
 
     };
     string title(){return "near far";};
+};
+
+
+//------------------------------------------------------------
+//
+//------------------------------------------------------------
+
+class Syphon_PixelProc : public Base_PixelProc {
+
+    ofTexture tex;
+    ofxSyphonServer keServer;
+
+
+    void setup(const DepthModel &model, ofxPanel &gui){
+        
+        ofParameterGroup group;
+        
+        group.setName("nearFar");
+        group.add(onParam);
+        group.add(drawParam);
+        gui.add(group);
+        
+        tex.allocate(model.kinectWidth, model.kinectHeight, GL_RGBA);
+        
+        keServer.setName("keServer");
+    }
+    ofPixels process(const DepthModel &model, const ofPixels &pixels){
+        
+        procImage.setFromPixels(pixels);
+
+        tex.loadData(procImage.getPixels());
+        keServer.publishScreen();
+//        keServer.publishTexture(&tex);
+
+        return procImage.getPixels();
+    }
+
+    void proc(){
+    };
+    
+    
+    string title(){return "syphon server";};
 };
 
 //------------------------------------------------------------
