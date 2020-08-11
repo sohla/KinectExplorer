@@ -10,7 +10,10 @@
 
 #include <stdio.h>
 #include "PixelProc.hpp"
+
 #include "ofxSyphon.h"
+#include "ofxNDISender.h"
+#include "ofxNDISendStream.h"
 
 class Base_PixelProc : public PixelProc {
     
@@ -151,7 +154,7 @@ class Syphon_PixelProc : public Base_PixelProc {
         
         ofParameterGroup group;
         
-        group.setName("nearFar");
+        group.setName("keServer");
         group.add(onParam);
         group.add(drawParam);
         gui.add(group);
@@ -179,6 +182,56 @@ class Syphon_PixelProc : public Base_PixelProc {
 };
 
 //------------------------------------------------------------
+
+//------------------------------------------------------------
+//
+//------------------------------------------------------------
+
+class NDI_PixelProc : public Base_PixelProc {
+
+    ofxNDISender sender;
+    ofxNDISendVideo video;
+//    ofPixels localPixels;
+
+    void setup(const DepthModel &model, ofxPanel &gui){
+        
+        ofParameterGroup group;
+        
+        group.setName("ndi server");
+        gui.add(group);
+        
+        if(sender.setup("keSender")) {
+            video.setup(sender);
+            video.setAsync(true);
+        }
+
+        auto pixelFormat = OF_PIXELS_BGRA;
+
+//        localPixels.allocate(model.kinectWidth, model.kinectHeight, pixelFormat);
+        
+    }
+    ofPixels process(const DepthModel &model, const ofPixels &pixels){
+        
+        procImage.setFromPixels(pixels);
+
+//        localPixels = pixels;
+        ofPixels p;
+        ofGetGLRenderer()->saveFullViewport(p);
+
+        video.send(p);
+
+        return procImage.getPixels();
+    }
+
+    void proc(){
+    };
+    
+    
+    string title(){return "ndi sender";};
+};
+
+//------------------------------------------------------------
+
 
 //• recorder proc
 //• idn proc
