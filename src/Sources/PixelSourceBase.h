@@ -22,4 +22,11 @@ public:
 };
 
 
+/*
+ source could be a web cam, depth cam, ndi stream, video
+ 
+ 
+ 
+ */
+
 #endif /* PixelSourceBase_hpp */

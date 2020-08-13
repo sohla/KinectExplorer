@@ -30,6 +30,8 @@ public:
         if(kinect.isFrameNew()) {
             updatedPixels(kinect.getDepthPixels());
         }
+        //• what about creating a mesh?`
+        
     }
 
 };
