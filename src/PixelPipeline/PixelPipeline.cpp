@@ -17,8 +17,8 @@ void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
     processors.push_back( new Erode_PixelProc());
     processors.push_back( new Dilate_PixelProc());
     processors.push_back( new LinePipeline());
-    processors.push_back( new Syphon_PixelProc());
-    processors.push_back( new NDI_PixelProc());
+//    processors.push_back( new Syphon_PixelProc());
+//    processors.push_back( new NDI_PixelProc());
 
     
     for_each(processors.begin(), processors.end(), [&](PixelProc* pp) {

@@ -7,7 +7,7 @@
 	var oscListener;
 
 	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/KinectExplorer/sccode/personalities/";
-	var persList = ["c","d","g","h","e","f","a","b"];
+	var persList = ["h","g","c","d","e","f","a","b"];
 
 	var paramModel = (
 		\prev: 0,
@@ -233,7 +233,7 @@
 		{graphView.refresh()}.defer;
 
 
-	}, '/blobi');
+	}, '/ke');
 	//------------------------------------------------------
 
 	window.onClose = ({

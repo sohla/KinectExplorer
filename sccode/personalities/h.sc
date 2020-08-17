@@ -12,7 +12,7 @@ var name = \h;
 		);
 	);
 
-	Pdef(name).set(\dur,0.25);
+	Pdef(name).set(\dur,0.5);
 	Pdef(name).set(\root,0);
 	// Pbindef(name, \root, Pseq([0,3,8,5].stutter(64),inf));
 	// Pbindef(name, \octave, 3);
@@ -36,13 +36,13 @@ var name = \h;
 
 ~update = {|blobs,i,midiOut|
 
-	var beat = 2.pow(blobs[0].pWidth.rateFiltered.explin(30,120,2,3).floor).reciprocal;
+	var beat = 2.pow(blobs[0].pWidth.rateFiltered.explin(30,120,1,4).floor).reciprocal * 2;
 	var oct = (blobs[0].pWidth.rateFiltered.linexp(30,120,1,4).floor);
 	var ca = (blobs[0].pWidth.rateFiltered.linlin(30,120,80,60).floor);
 	var cb = (blobs[0].pWidth.rateFiltered.linlin(30,120,80,60).floor);
 	var cc = (blobs[0].pWidth.rateFiltered.linlin(30,120,80,0).floor);
 	
-	// Pdef(name).set(\dur,beat);
+	Pdef(name).set(\dur,beat);
 	// Pdef(name).set(\octave, 3 + oct);
 
 
