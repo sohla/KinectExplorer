@@ -123,6 +123,8 @@ class OSCOut_LineProc : public Base_LineProc {
 
     ofxOscSender            sender;
     
+    
+    
     string title(){
         return "osc out";
     }
@@ -212,6 +214,15 @@ class OSCOut_LineProc : public Base_LineProc {
         }
         return procLines[index];
     }
+
+    public:
+        OSCOut_LineProc(string ip, string port){
+        
+            ipParam.set(ip);
+            portParam.set(port);
+            
+        };
+
 };
 
 
