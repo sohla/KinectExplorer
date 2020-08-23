@@ -213,8 +213,8 @@
 
 
 	oscListener = OSCFunc({ arg msg, time, addr, recvPort;
-		//[msg, time, addr, recvPort].postln;skkstt
 		var index = msg[1].asInteger;
+		// [msg, time, addr, recvPort].postln;
 
 		if(blobs[index] != nil,{
 			blobs[index][\dataSize] = msg[10].asInteger;

@@ -62,7 +62,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         int min = 1;
         int max = (model.kinectWidth * model.kinectHeight) / 1;
 
-        contourFinder.findContours(procImage, min, max, blobsParam.get(), true);
+        contourFinder.findContours(procImage, min, max, blobsParam.get(), false);
 
         // point pipeline begins.....
         
