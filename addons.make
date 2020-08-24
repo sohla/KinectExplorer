@@ -2,6 +2,7 @@ ofxControlPanel
 ofxOpenCv
 ofxCv
 ofxGui
+ofxICP
 ofxKinect
 ofxNDI
 ofxOsc

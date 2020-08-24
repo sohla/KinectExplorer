@@ -26,6 +26,8 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     
     processors.push_back(new Smooth_LineProc());
 //    processors.push_back(new Resample_LineProc());
+    
+    processors.push_back(new ICP_LineProc());
     processors.push_back(new OSCOut_LineProc("127.0.0.1","57120"));
     processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
 

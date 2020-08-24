@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include "LineProc.hpp"
 #include "ofxOscSender.h"
-
+#include "ofxICP.h"
 
 
 class Base_LineProc : public LineProc {
@@ -77,39 +77,131 @@ class Smooth_LineProc : public Base_LineProc {
 //
 //------------------------------------------------------------
 class Resample_LineProc : public Base_LineProc {
-
+    
     ofParameter<int> resampleParam = ofParameter<int>("resample",6,4,32);
-
+    
     string title(){
         return "resample";
     }
-
+    
     void setup(ofxPanel &gui){
-
+        
         ofParameterGroup group;
-
+        
         group.setName(title());
         group.add(onParam);
         group.add(drawParam);
         group.add(resampleParam);
         gui.add(group);
-
+        
         // default behaviour keeps group closed
         gui.getGroup(title()).minimize();
-
+        
         for(int i=0; i< MAX_BLOBS; i++){
             procLines.push_back(ofPolyline());
         }
     }
     
     ofPolyline process(const int &index, const ofPolyline &line){
-
+        
         if(onParam.get()){
             procLines[index] = line.getResampledByCount(resampleParam.get());
         }
         return procLines[index];
     }
 };
+//------------------------------------------------------------
+//
+//------------------------------------------------------------
+class ICP_LineProc : public Base_LineProc {
+    
+    //••• ONLY FOR 1 BLOB!!!!
+    
+    vector<ofPoint> target;
+
+    const int ppSize = 256;
+    
+    
+    ofxNearestNeighbour3D nn;
+    vector<NNIndex> indices;
+
+    
+    string title(){
+        return "icp";
+    }
+    
+    void setup(ofxPanel &gui){
+        
+        ofParameterGroup group;
+        
+        group.setName(title());
+        group.add(onParam);
+        group.add(drawParam);
+        gui.add(group);
+        
+        // default behaviour keeps group closed
+        gui.getGroup(title()).maximize();
+        
+        for(int i=0; i< MAX_BLOBS; i++){
+            procLines.push_back(ofPolyline());
+        }
+
+    }
+    
+    ofPolyline process(const int &index, const ofPolyline &line){
+        
+        if(onParam.get()){
+            
+            
+            procLines[index] = line.getResampledByCount(ppSize);
+            
+            // urgh! hand convert glm::vec3 to ofPoint!
+            vector<ofDefaultVec3> proLineVert = procLines[index].getVertices();
+            target.clear();
+            
+
+            
+            for(auto vert : proLineVert){
+                ofPoint lp = ofPoint(vert.x, vert.y, vert.z);
+                target.push_back(lp);
+            }
+
+            
+            ofVec2f mouse(ofGetMouseX(), ofGetMouseY());
+            vector<float> distsSq;
+            
+            nn.buildIndex(target);
+            nn.findNClosestPoints(mouse, ppSize, indices, distsSq);
+
+        }
+        return procLines[index];
+    }
+    
+    void draw(const DepthModel &model){
+        
+        if(drawParam.get()){
+            ofPushMatrix();
+            ofScale( model.kinectScale);
+            
+            for( auto &line : procLines ){
+                line.draw();
+            };
+
+            ofSetColor(0, 255, 0);
+            
+            for (unsigned i = 0; i < indices.size(); ++i)
+            {
+                ofSetColor(ofColor::fromHsb((255.0 / indices.size()) * i, 255, 255));
+                ofDrawCircle(target[indices[i]], 3);
+            }
+
+
+            ofPopMatrix();
+        }
+    }
+
+};
+
 
 
 //------------------------------------------------------------
