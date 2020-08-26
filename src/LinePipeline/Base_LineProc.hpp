@@ -314,7 +314,9 @@ class Reorder_LineProc : public Base_LineProc {
     ofPolyline previousLine;
     ofDefaultVec3 closestPnt;
     ofPolyline filtered;
-    const int ppSize = 64;
+    const int ppSize = 256;
+    
+    ofParameter<float> filterParam = ofParameter<float>("f",0.1,0.01,0.9);
     
     
     string title(){
@@ -328,6 +330,7 @@ class Reorder_LineProc : public Base_LineProc {
         group.setName(title());
         group.add(onParam);
         group.add(drawParam);
+        group.add(filterParam);
         gui.add(group);
         
         // default behaviour keeps group closed
@@ -370,52 +373,45 @@ class Reorder_LineProc : public Base_LineProc {
             previousLine = procLines[index];
             
             // find closest point in new line to start of prev line
-            ofDefaultVec3 prevPnt(ofGetMouseX(), ofGetMouseY(), 0.0);
-            //ofDefaultVec3 prevPnt = previousLine[0];
-            
-            // reduce ourselves?
-            //••
-            ofPolyline currLine = line.getResampledByCount(ppSize);
-            unsigned int ni = 0;
+            //ofDefaultVec3 prevPnt(ofGetMouseX(), ofGetMouseY(), 0.0);
+            ofDefaultVec3 previousPnt = previousLine[0];
             
             
-            // getResampledByCount doesn't always return a line with ppSize
-            if(currLine.size() == ppSize){
-
-                closestPnt = currLine.getClosestPoint(prevPnt, &ni);
-                closestPnt = currLine[ni];
-
-                auto it = find(currLine.begin(), currLine.end(), closestPnt);
-                unsigned int ci = ni;//std::distance(currLine.begin(), it);
-                
-                ofPolyline rol;
-                // copy from ci to end
-                for(auto itr = currLine.begin() + ci; itr < currLine.end(); itr++){
-                    ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
-                    rol.addVertex(p);
-                }
-                // copy from begin to ci
-                for(auto itr = currLine.begin(); itr < currLine.begin() + ci; itr++){
-                    ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
-                    rol.addVertex(p);
-                }
-
-                // rol is now index aligned with previousLine
-                float f = 0.35;
-                for (unsigned i = 0; i < rol.size(); ++i){
-                        filtered[i].x = (f * rol[i].x + ((1.0 - f) * filtered[i].x));
-                        filtered[i].y = (f * rol[i].y + ((1.0 - f) * filtered[i].y));
-                }
-
-
-                procLines[index] = rol;
-            }else{
-                
-                
+            // getResampledByCount can not gaurentee it will always return a line with ppSize
+            // ofPolyline currLine = line.getResampledByCount(ppSize);
+            
+            // so grab points using percentages
+            ofPolyline currLine;
+            for(float i = 0.0; i < 100.0; i+= (100.0/ppSize)){
+                float pi = line.getIndexAtPercent(i/100.0);
+                currLine.addVertex(line[floor(pi)]);
             }
-            
-            cout << currLine.size() << endl;
-            
+
+            // now get the index of the closest point to the first point (previousPnt) from previousLine
+            unsigned int ni = 0;
+            currLine.getClosestPoint(previousPnt, &ni);
+            closestPnt = currLine[ni]; // store for debug
+
+            ofPolyline rol;
+            // copy from ci to end
+            for(auto itr = currLine.begin() + ni; itr < currLine.end(); itr++){
+                ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
+                rol.addVertex(p);
+            }
+            // copy from begin to ci
+            for(auto itr = currLine.begin(); itr < currLine.begin() + ni; itr++){
+                ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
+                rol.addVertex(p);
+            }
+
+            // rol is now index aligned with previousLine
+            float f = filterParam.get();
+            for (unsigned i = 0; i < rol.size(); ++i){
+                    filtered[i].x = (f * rol[i].x + ((1.0 - f) * filtered[i].x));
+                    filtered[i].y = (f * rol[i].y + ((1.0 - f) * filtered[i].y));
+            }
+
+            procLines[index] = filtered;
 
         }else{
             procLines[index] = line;
@@ -429,28 +425,22 @@ class Reorder_LineProc : public Base_LineProc {
             ofPushMatrix();
             ofScale( model.kinectScale);
             
-            for( auto &line : procLines ){
-                line.draw();
-            };
+//            for( auto &line : procLines ){
+//                line.draw();
+//            };
 
             
-            ofDefaultVec2 prevPnt = previousLine[0];
-            ofDefaultVec2 currPnt = procLines[0][0];
+//            ofDefaultVec2 prevPnt = previousLine[0];
+//            ofDefaultVec2 currPnt = procLines[0][0];
             
-            
-//            for (unsigned i = 0; i < previousLine.size(); ++i){
-//                ofDrawBitmapStringHighlight(to_string(i), previousLine[i].x + (10 * i), previousLine[i].y, ofColor::black , ofColor::green);
-//            }
-
-
-            ofSetColor(250, 0, 0);
-            ofDrawCircle(prevPnt.x, prevPnt.y, 3);
-
-            ofSetColor(0, 250, 0);
-            ofDrawCircle(closestPnt.x, closestPnt.y, 3);
-
-            ofSetColor(0, 0, 150);
-            ofDrawLine(closestPnt.x, closestPnt.y, currPnt.x, currPnt.y);
+//            ofSetColor(250, 0, 0);
+//            ofDrawCircle(prevPnt.x, prevPnt.y, 3);
+//
+//            ofSetColor(0, 250, 0);
+//            ofDrawCircle(closestPnt.x, closestPnt.y, 3);
+//
+//            ofSetColor(0, 0, 150);
+//            ofDrawLine(closestPnt.x, closestPnt.y, currPnt.x, currPnt.y);
 
             ofSetColor(0, 250, 0);
             filtered.draw();
