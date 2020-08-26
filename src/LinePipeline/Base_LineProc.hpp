@@ -314,7 +314,7 @@ class Reorder_LineProc : public Base_LineProc {
     ofPolyline previousLine;
     ofDefaultVec3 closestPnt;
     ofPolyline filtered;
-    const int ppSize = 32;
+    const int ppSize = 64;
     
     
     string title(){
@@ -364,37 +364,57 @@ class Reorder_LineProc : public Base_LineProc {
         
         if(onParam.get()){
             
+            //can not assume line is same direction
+            
+            
             previousLine = procLines[index];
             
             // find closest point in new line to start of prev line
-            ofDefaultVec3 prevPnt = previousLine[0];
+            ofDefaultVec3 prevPnt(ofGetMouseX(), ofGetMouseY(), 0.0);
+            //ofDefaultVec3 prevPnt = previousLine[0];
+            
+            // reduce ourselves?
+            //••
             ofPolyline currLine = line.getResampledByCount(ppSize);
+            unsigned int ni = 0;
             
-            closestPnt = currLine.getClosestPoint(prevPnt);
-            auto it = find(currLine.begin(), currLine.end(), closestPnt);
-            unsigned int ci = std::distance(currLine.begin(), it);
             
-            ofPolyline rol;
-            // copy from ci to end
-            for(auto itr = currLine.begin() + ci; itr < currLine.end(); itr++){
-                ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
-                rol.addVertex(p);
-            }
-            // copy from begin to ci
-            for(auto itr = currLine.begin(); itr < currLine.begin() + ci; itr++){
-                ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
-                rol.addVertex(p);
-            }
+            // getResampledByCount doesn't always return a line with ppSize
+            if(currLine.size() == ppSize){
 
-            // rol is now index aligned with previousLine
-            float f = 0.1;
-            for (unsigned i = 0; i < rol.size(); ++i){
-                    filtered[i].x = (f * rol[i].x + ((1.0 - f) * filtered[i].x));
-                    filtered[i].y = (f * rol[i].y + ((1.0 - f) * filtered[i].y));
+                closestPnt = currLine.getClosestPoint(prevPnt, &ni);
+                closestPnt = currLine[ni];
+
+                auto it = find(currLine.begin(), currLine.end(), closestPnt);
+                unsigned int ci = ni;//std::distance(currLine.begin(), it);
+                
+                ofPolyline rol;
+                // copy from ci to end
+                for(auto itr = currLine.begin() + ci; itr < currLine.end(); itr++){
+                    ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
+                    rol.addVertex(p);
+                }
+                // copy from begin to ci
+                for(auto itr = currLine.begin(); itr < currLine.begin() + ci; itr++){
+                    ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
+                    rol.addVertex(p);
+                }
+
+                // rol is now index aligned with previousLine
+                float f = 0.35;
+                for (unsigned i = 0; i < rol.size(); ++i){
+                        filtered[i].x = (f * rol[i].x + ((1.0 - f) * filtered[i].x));
+                        filtered[i].y = (f * rol[i].y + ((1.0 - f) * filtered[i].y));
+                }
+
+
+                procLines[index] = rol;
+            }else{
+                
+                
             }
-
-
-            procLines[index] = rol;
+            
+            cout << currLine.size() << endl;
             
 
         }else{
@@ -418,10 +438,13 @@ class Reorder_LineProc : public Base_LineProc {
             ofDefaultVec2 currPnt = procLines[0][0];
             
             
-            
+//            for (unsigned i = 0; i < previousLine.size(); ++i){
+//                ofDrawBitmapStringHighlight(to_string(i), previousLine[i].x + (10 * i), previousLine[i].y, ofColor::black , ofColor::green);
+//            }
+
 
             ofSetColor(250, 0, 0);
-            ofDrawCircle(currPnt.x, currPnt.y, 3);
+            ofDrawCircle(prevPnt.x, prevPnt.y, 3);
 
             ofSetColor(0, 250, 0);
             ofDrawCircle(closestPnt.x, closestPnt.y, 3);
