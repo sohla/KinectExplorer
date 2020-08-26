@@ -20,7 +20,7 @@ void PixelPlayer::setup(string fileName){
     grayImage.allocate(int(player.getWidth()), int(player.getHeight()));
     
     player.setLoopState(OF_LOOP_NORMAL);
-    player.setSpeed(0.125);
+//    player.setSpeed(0.125);
     player.play();
     
     std::cout << "playing : " << fileName << int(player.getPixelFormat()) << std::endl;
