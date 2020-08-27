@@ -163,6 +163,7 @@ class ICP_LineProc : public Base_LineProc {
         
         if(onParam.get()){
             
+            //•• change to percent!!!!
             
             procLines[index] = line.getResampledByCount(ppSize);
             
@@ -185,6 +186,9 @@ class ICP_LineProc : public Base_LineProc {
             output.clear();
 
             ofMatrix4x4 transformation;
+            
+            //•• somethign happening with memory!!!! ca
+            //•• should be able to feed in target as inital
             icp.compute(initial, target, output, transformation, error, iterations);
 
             procLines[index].clear();
@@ -597,7 +601,17 @@ class OSCOut_LineProc : public Base_LineProc {
     ofPolyline process(const int &index, const ofPolyline &line){
 
         if(onParam.get()){
-            procLines[index] = line.getResampledByCount(resampleParam.get());
+//            procLines[index] = line.getResampledByCount(resampleParam.get());
+            
+            // so grab points using percentages
+            ofPolyline currLine;
+            for(float i = 0.0; i < 100.0; i+= (100.0/ resampleParam.get() )){
+                float pi = line.getIndexAtPercent(i/100.0);
+                currLine.addVertex(line[floor(pi)]);
+            }
+            currLine.setClosed(true);
+
+            procLines[index] = currLine;
             
             if( procLines[index].size() > 0){
                 float area = ofMap(procLines[index].getArea(), 0, -130000, 0.0, 1.0);
@@ -655,6 +669,9 @@ class OSCOut_LineProc : public Base_LineProc {
             }else{
                 procLines[index] = line;
             }
+            
+            // pass thru
+            procLines[index] = line;
         }
         return procLines[index];
     }
