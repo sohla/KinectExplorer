@@ -309,15 +309,11 @@ class NN_LineProc : public Base_LineProc {
 //------------------------------------------------------------
 class Reorder_LineProc : public Base_LineProc {
     
-    //••• ONLY FOR 1 BLOB!!!!
+//    const int ppSize = 256;
     
-    ofPolyline previousLine;
-    ofDefaultVec3 closestPnt;
-    ofPolyline filtered;
-    const int ppSize = 256;
-    
-    ofParameter<float> filterParam = ofParameter<float>("f",0.1,0.01,0.9);
-    
+    ofParameter<float> filterParam = ofParameter<float>("lag",0.1,0.01,0.9);
+    ofParameter<int> reduceParam = ofParameter<int>("reduce",256,4,512);
+
     
     string title(){
         return "reorder";
@@ -331,6 +327,7 @@ class Reorder_LineProc : public Base_LineProc {
         group.add(onParam);
         group.add(drawParam);
         group.add(filterParam);
+        group.add(reduceParam);
         gui.add(group);
         
         // default behaviour keeps group closed
@@ -338,16 +335,11 @@ class Reorder_LineProc : public Base_LineProc {
         
         for(int i=0; i< MAX_BLOBS; i++){
             ofPolyline pl;
-            pl.addVertex(ofDefaultVec3(0,0,0));
+            pl.resize(reduceParam.get()+1);
             procLines.push_back(pl);
         }
-        
-        for(int i=0; i< ppSize; i++){
-            filtered.addVertex(0,0);
-        }
-        previousLine.addVertex(ofDefaultVec3(0,0,0));
-
     }
+    
     ofDefaultVec2 closestPoint(ofPolyline line, ofDefaultVec2 p) {
 
         float rd = 10000000.0;
@@ -365,32 +357,31 @@ class Reorder_LineProc : public Base_LineProc {
 
     ofPolyline process(const int &index, const ofPolyline &line){
         
+        // check if we need to resize storage
+        if(reduceParam.get() != procLines[index].size()+1){
+            procLines[index].resize(reduceParam.get()+1);
+        }
+        
         if(onParam.get()){
-            
-            //can not assume line is same direction
-            
-            
-            previousLine = procLines[index];
             
             // find closest point in new line to start of prev line
             //ofDefaultVec3 prevPnt(ofGetMouseX(), ofGetMouseY(), 0.0);
-            ofDefaultVec3 previousPnt = previousLine[0];
-            
+            ofDefaultVec3 previousPnt = procLines[index][0];
             
             // getResampledByCount can not gaurentee it will always return a line with ppSize
             // ofPolyline currLine = line.getResampledByCount(ppSize);
             
             // so grab points using percentages
             ofPolyline currLine;
-            for(float i = 0.0; i < 100.0; i+= (100.0/ppSize)){
+            for(float i = 0.0; i < 100.0; i+= (100.0/ reduceParam.get() )){
                 float pi = line.getIndexAtPercent(i/100.0);
                 currLine.addVertex(line[floor(pi)]);
             }
-
+            currLine.setClosed(true);
+            
             // now get the index of the closest point to the first point (previousPnt) from previousLine
             unsigned int ni = 0;
             currLine.getClosestPoint(previousPnt, &ni);
-            closestPnt = currLine[ni]; // store for debug
 
             ofPolyline rol;
             // copy from ci to end
@@ -403,15 +394,15 @@ class Reorder_LineProc : public Base_LineProc {
                 ofDefaultVec3 p = ofDefaultVec3( itr->x , itr->y, 0);
                 rol.addVertex(p);
             }
+            rol.addVertex(*rol.begin());
+            rol.setClosed(true);
 
             // rol is now index aligned with previousLine
             float f = filterParam.get();
             for (unsigned i = 0; i < rol.size(); ++i){
-                    filtered[i].x = (f * rol[i].x + ((1.0 - f) * filtered[i].x));
-                    filtered[i].y = (f * rol[i].y + ((1.0 - f) * filtered[i].y));
+                    procLines[index][i].x = (f * rol[i].x + ((1.0 - f) * procLines[index][i].x));
+                    procLines[index][i].y = (f * rol[i].y + ((1.0 - f) * procLines[index][i].y));
             }
-
-            procLines[index] = filtered;
 
         }else{
             procLines[index] = line;
@@ -425,25 +416,9 @@ class Reorder_LineProc : public Base_LineProc {
             ofPushMatrix();
             ofScale( model.kinectScale);
             
-//            for( auto &line : procLines ){
-//                line.draw();
-//            };
-
-            
-//            ofDefaultVec2 prevPnt = previousLine[0];
-//            ofDefaultVec2 currPnt = procLines[0][0];
-            
-//            ofSetColor(250, 0, 0);
-//            ofDrawCircle(prevPnt.x, prevPnt.y, 3);
-//
-//            ofSetColor(0, 250, 0);
-//            ofDrawCircle(closestPnt.x, closestPnt.y, 3);
-//
-//            ofSetColor(0, 0, 150);
-//            ofDrawLine(closestPnt.x, closestPnt.y, currPnt.x, currPnt.y);
-
-            ofSetColor(0, 250, 0);
-            filtered.draw();
+            for( auto &line : procLines ){
+                line.draw();
+            };
             
             ofPopMatrix();
         }
