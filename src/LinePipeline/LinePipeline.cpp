@@ -27,8 +27,6 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     processors.push_back(new Smooth_LineProc());
 //    processors.push_back(new Resample_LineProc());
     
-    processors.push_back(new ICP_LineProc());
-    processors.push_back(new NN_LineProc());
     processors.push_back(new Reorder_LineProc());
 //    processors.push_back(new Ordered_LineProc());
 

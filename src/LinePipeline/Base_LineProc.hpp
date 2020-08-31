@@ -435,7 +435,10 @@ class Reorder_LineProc : public Base_LineProc {
 //------------------------------------------------------------
 class Ordered_LineProc : public Base_LineProc {
     
+    
+    //••• TODO :NEEDS WORK 
     //••• ONLY FOR 1 BLOB!!!!
+    
     
     ofParameter<float> filterParam = ofParameter<float>("f",0.1,0.01,0.5);
 

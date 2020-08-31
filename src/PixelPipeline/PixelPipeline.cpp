@@ -13,6 +13,8 @@
 void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
     
     processors.push_back( new NearFar_PixelProc());
+//    processors.push_back( new Syphon_PixelProc());
+        processors.push_back( new NDI_PixelProc());
     processors.push_back( new Blur_PixelProc());
     processors.push_back( new Erode_PixelProc());
     processors.push_back( new Dilate_PixelProc());
