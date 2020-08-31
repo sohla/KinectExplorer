@@ -71,3 +71,7 @@ Desktop.ini
 
 # Android
 .csettings
+
+
+# assets
+*.mov
