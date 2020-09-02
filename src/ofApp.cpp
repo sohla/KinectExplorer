@@ -7,7 +7,8 @@ float ofApp::scale{1.65};
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofSetFrameRate(30);
+    ofSetFrameRate(60);
+    
     ofSetVerticalSync(true);
     ofSetBackgroundColorHex(0x111111);
 
