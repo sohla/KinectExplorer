@@ -68,7 +68,20 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
 
         contourFinder.findContours(procImage, min, max, blobsParam.get(), false);
 
+        
+        
         // point pipeline begins.....
+
+        
+        // hack for clearing out all lines fro all blobs for the whole processors. expensive
+        for(int i=0; i< MAX_BLOBS; i++){
+            ofPolyline line;
+            line.addVertex(0,0,0);
+            for( auto &proc : processors ){
+                proc->process(i, line);
+            }
+        }
+
         
         // itr through the blobs, pass i
         int i = 0;
