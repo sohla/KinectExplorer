@@ -21,6 +21,7 @@
             "draw": "1",
             "on": "1"
         },
+        "ndi_server": null,
         "nearFar": {
             "cv-threshold": "0",
             "draw": "0",
@@ -35,7 +36,7 @@
             "resample": "32"
         },
         "pixel_to_point": {
-            "blobs": "4",
+            "blobs": "1",
             "draw": "0",
             "on": "1"
         },

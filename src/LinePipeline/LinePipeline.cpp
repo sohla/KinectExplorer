@@ -31,7 +31,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 //    processors.push_back(new Ordered_LineProc());
 
     processors.push_back(new OSCOut_LineProc("127.0.0.1","57120"));
-    processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
+//    processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
 
     //
     //
@@ -81,11 +81,16 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 proc->process(i, line);
             }
         }
-
+        //• all this needs to be fixed. need to check if each blob found is updated, else we don't need to
+        //• do we need to track blobs?
+        
         
         // itr through the blobs, pass i
         int i = 0;
         for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
+
+            
+            cout << "blob count : " << i << endl;
 
             // generate a polyline from blob points
             ofPolyline line;
@@ -99,6 +104,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
 
             i++;
         });
+        
         
 
     }

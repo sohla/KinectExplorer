@@ -135,7 +135,9 @@ class NearFar_PixelProc : public Base_PixelProc {
             }
         }
         
-        procImage.mirror(false, true);
+        //• its own proc!
+        procImage.mirror(true, true);
+        
 
     };
     string title(){return "near far";};
