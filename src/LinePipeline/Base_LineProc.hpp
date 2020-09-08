@@ -603,7 +603,8 @@ class OSCOut_LineProc : public Base_LineProc {
     
     ofPolyline process(const int &index, const ofPolyline &line){
 
-        if(onParam.get()){
+        
+        if(onParam.get() && line.size() > 1 ){
 //            procLines[index] = line.getResampledByCount(resampleParam.get());
             
             // so grab points using percentages
