@@ -27,7 +27,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     processors.push_back(new Smooth_LineProc());
 //    processors.push_back(new Resample_LineProc());
     
-    processors.push_back(new Reorder_LineProc());
+//    processors.push_back(new Reorder_LineProc());
 //    processors.push_back(new Ordered_LineProc());
 
     processors.push_back(new OSCOut_LineProc("127.0.0.1","57120"));
@@ -88,9 +88,6 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         // itr through the blobs, pass i
         int i = 0;
         for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
-
-            
-            cout << "blob count : " << i << endl;
 
             // generate a polyline from blob points
             ofPolyline line;

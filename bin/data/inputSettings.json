@@ -25,7 +25,7 @@
         "nearFar": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "149",
+            "far": "119",
             "near": "254",
             "on": "1"
         },
@@ -33,7 +33,7 @@
             "ip": "127.0.0.1",
             "on": "1",
             "port": "57130",
-            "resample": "32"
+            "resample": "231"
         },
         "pixel_to_point": {
             "blobs": "1",
@@ -67,9 +67,9 @@
             "smooth": "0"
         },
         "smooth": {
-            "draw": "0",
+            "draw": "1",
             "on": "1",
-            "smooth": "10"
+            "smooth": "2"
         },
         "switches": {
             "ApplyFilter": "0",

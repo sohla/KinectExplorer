@@ -202,6 +202,7 @@ class NDIInput_PixelProc : public Base_PixelProc {
     
     void proc(){
 
+        // this is rather CPU intense
         if(receiver.isConnected()) {
             ndiVideo.update();
             if(ndiVideo.isFrameNew()) {

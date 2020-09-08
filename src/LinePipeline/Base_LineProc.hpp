@@ -57,8 +57,7 @@ class Smooth_LineProc : public Base_LineProc {
         group.add(smoothParam);
         gui.add(group);
 
-        // default behaviour keeps group closed
-        gui.getGroup(title()).minimize();
+        gui.getGroup(title()).maximize();
 
         for(int i=0; i< MAX_BLOBS; i++){
             procLines.push_back(ofPolyline());
@@ -596,16 +595,19 @@ class OSCOut_LineProc : public Base_LineProc {
             procLines.push_back(ofPolyline());
         }
         
-        string::size_type sz;
-        int portInt = stoi( portParam.get(),&sz);
-        sender.setup(ipParam.get(), portInt );
     }
     
     ofPolyline process(const int &index, const ofPolyline &line){
 
         
         if(onParam.get() && line.size() > 1 ){
-//            procLines[index] = line.getResampledByCount(resampleParam.get());
+
+            string::size_type sz;
+            int portInt = stoi( portParam.get(),&sz);
+            sender.setup(ipParam.get(), portInt + index );
+
+            
+            //            procLines[index] = line.getResampledByCount(resampleParam.get());
             
             // so grab points using percentages
             ofPolyline currLine;
@@ -667,7 +669,7 @@ class OSCOut_LineProc : public Base_LineProc {
                     m.addDoubleArg(vert.y);
                     //std::cout << vert.x << " , " << vert.y;
                 }
-              //  std::cout << m << std::endl;
+//                std::cout << m << std::endl;
                 
                 sender.sendMessage(m, false);
             }else{
