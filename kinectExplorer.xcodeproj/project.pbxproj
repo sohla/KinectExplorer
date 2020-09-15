@@ -855,6 +855,20 @@
 		EF11994C2D6524D377C3C554 /* world.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = world.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/world.hpp; sourceTree = SOURCE_ROOT; };
 		EF4CE49E59F7962D3FC6D99F /* cv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cv.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h; sourceTree = SOURCE_ROOT; };
 		EF90C99802E1871C669E04BA /* binary_op.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = binary_op.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/expr/binary_op.hpp; sourceTree = SOURCE_ROOT; };
+		F03A648D25104D930088089E /* Dilate_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Dilate_PixelProc.hpp; path = PixelPipeline/Dilate_PixelProc.hpp; sourceTree = "<group>"; };
+		F03A649525104F4C0088089E /* Blur_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Blur_PixelProc.hpp; path = PixelPipeline/Blur_PixelProc.hpp; sourceTree = "<group>"; };
+		F03A649825104F7A0088089E /* NearFar_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NearFar_PixelProc.hpp; path = PixelPipeline/NearFar_PixelProc.hpp; sourceTree = "<group>"; };
+		F03A649A25104F970088089E /* Erode_PixelProc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Erode_PixelProc.hpp; path = PixelPipeline/Erode_PixelProc.hpp; sourceTree = "<group>"; };
+		F03A649C251050010088089E /* NDIInput_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NDIInput_PixelProc.hpp; path = PixelPipeline/NDIInput_PixelProc.hpp; sourceTree = "<group>"; };
+		F03A649F2510503B0088089E /* SyphonOutput_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = SyphonOutput_PixelProc.hpp; path = PixelPipeline/SyphonOutput_PixelProc.hpp; sourceTree = "<group>"; };
+		F03A64A2251050890088089E /* NDIOutput_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NDIOutput_PixelProc.hpp; path = PixelPipeline/NDIOutput_PixelProc.hpp; sourceTree = "<group>"; };
+		F03A64A5251051000088089E /* Smooth_LineProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Smooth_LineProc.hpp; path = LinePipeline/Smooth_LineProc.hpp; sourceTree = "<group>"; };
+		F03A64A8251051820088089E /* Resample_LineProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Resample_LineProc.hpp; path = LinePipeline/Resample_LineProc.hpp; sourceTree = "<group>"; };
+		F03A64AB251051B20088089E /* ICP_LineProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = ICP_LineProc.hpp; path = LinePipeline/ICP_LineProc.hpp; sourceTree = "<group>"; };
+		F03A64AE251051E40088089E /* NN_LineProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = NN_LineProc.hpp; path = LinePipeline/NN_LineProc.hpp; sourceTree = "<group>"; };
+		F03A64B1251052130088089E /* Reorder_LineProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Reorder_LineProc.hpp; path = LinePipeline/Reorder_LineProc.hpp; sourceTree = "<group>"; };
+		F03A64B4251052450088089E /* Ordered_LineProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Ordered_LineProc.hpp; path = LinePipeline/Ordered_LineProc.hpp; sourceTree = "<group>"; };
+		F03A64B72510527B0088089E /* OSCOut_LineProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = OSCOut_LineProc.hpp; path = LinePipeline/OSCOut_LineProc.hpp; sourceTree = "<group>"; };
 		F0DD72AEABD1E435D4F458D2 /* intrin.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = intrin.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/hal/intrin.hpp; sourceTree = SOURCE_ROOT; };
 		F0E9BE253D8418D7BE19C5EC /* warpers.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = warpers.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/stitching/warpers.hpp; sourceTree = SOURCE_ROOT; };
 		F1537A22E6AA2BFE5A24731D /* Processing.NDI.structs.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = Processing.NDI.structs.h; path = ../../addons/ofxNDI/libs/NDI/include/Processing.NDI.structs.h; sourceTree = SOURCE_ROOT; };
@@ -1501,11 +1515,18 @@
 		5FDB4915CBBDF83783DD0769 /* PixelPipeline */ = {
 			isa = PBXGroup;
 			children = (
-				B6930019B2334BFE52CD483C /* Base_PixelProc.hpp */,
 				8077708DC581FA976754B53F /* PixelPipeline.hpp */,
-				F43A75602D9CE66EEDF81C01 /* PixelProc.hpp */,
-				7AD72923BF7F245CE2F3705F /* Base_PixelProc.cpp */,
 				44F5C0ACC107CB40A7CC6DD9 /* PixelPipeline.cpp */,
+				F43A75602D9CE66EEDF81C01 /* PixelProc.hpp */,
+				B6930019B2334BFE52CD483C /* Base_PixelProc.hpp */,
+				7AD72923BF7F245CE2F3705F /* Base_PixelProc.cpp */,
+				F03A648D25104D930088089E /* Dilate_PixelProc.hpp */,
+				F03A649525104F4C0088089E /* Blur_PixelProc.hpp */,
+				F03A649A25104F970088089E /* Erode_PixelProc.hpp */,
+				F03A649825104F7A0088089E /* NearFar_PixelProc.hpp */,
+				F03A649C251050010088089E /* NDIInput_PixelProc.hpp */,
+				F03A64A2251050890088089E /* NDIOutput_PixelProc.hpp */,
+				F03A649F2510503B0088089E /* SyphonOutput_PixelProc.hpp */,
 			);
 			name = PixelPipeline;
 			sourceTree = "<group>";
@@ -2489,11 +2510,18 @@
 		E816FDDACC6746B6F6E88127 /* LinePipeline */ = {
 			isa = PBXGroup;
 			children = (
+				F280E4A9B4961172B64DF9DB /* LinePipeline.hpp */,
 				8A3B5A98B935AD7BFBB17F7C /* LinePipeline.cpp */,
+				ADE646D1B8AA7E840C41AE87 /* LineProc.hpp */,
 				C2DABA30E8EEADB4AC01A509 /* Base_LineProc.hpp */,
 				A1F571FB8D975D6688B77EC7 /* Base_LineProc.cpp */,
-				ADE646D1B8AA7E840C41AE87 /* LineProc.hpp */,
-				F280E4A9B4961172B64DF9DB /* LinePipeline.hpp */,
+				F03A64A5251051000088089E /* Smooth_LineProc.hpp */,
+				F03A64A8251051820088089E /* Resample_LineProc.hpp */,
+				F03A64AB251051B20088089E /* ICP_LineProc.hpp */,
+				F03A64AE251051E40088089E /* NN_LineProc.hpp */,
+				F03A64B1251052130088089E /* Reorder_LineProc.hpp */,
+				F03A64B4251052450088089E /* Ordered_LineProc.hpp */,
+				F03A64B72510527B0088089E /* OSCOut_LineProc.hpp */,
 			);
 			name = LinePipeline;
 			sourceTree = "<group>";

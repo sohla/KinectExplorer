@@ -7,7 +7,14 @@
 
 #include "PixelPipeline.hpp"
 
-#include "Base_PixelProc.hpp"
+#include "Dilate_PixelProc.hpp"
+#include "Erode_PixelProc.hpp"
+#include "Blur_PixelProc.hpp"
+#include "NearFar_PixelProc.hpp"
+#include "NDIInput_PixelProc.hpp"
+#include "NDIOutput_PixelProc.hpp"
+#include "SyphonOutput_PixelProc.hpp"
+
 #include "LinePipeline.hpp"
 
 void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
@@ -21,8 +28,11 @@ void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
 //    processors.push_back( new NDIOutput_PixelProc());
 
     processors.push_back( new Blur_PixelProc());
-//    processors.push_back( new Erode_PixelProc());
+
+    processors.push_back( new Erode_PixelProc());
+
 //    processors.push_back( new Dilate_PixelProc());
+
     processors.push_back( new LinePipeline());
 
     

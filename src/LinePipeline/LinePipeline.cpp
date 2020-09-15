@@ -6,7 +6,15 @@
 //
 
 #include "LinePipeline.hpp"
-#include "Base_LineProc.hpp"
+
+#include "Smooth_LineProc.hpp"
+#include "Resample_LineProc.hpp"
+#include "ICP_LineProc.hpp"
+#include "NN_LineProc.hpp"
+#include "Reorder_LineProc.hpp"
+#include "Ordered_LineProc.hpp"
+#include "OSCOut_LineProc.hpp"
+
 
 void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 
@@ -27,6 +35,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     processors.push_back(new Smooth_LineProc());
 //    processors.push_back(new Resample_LineProc());
     
+//
 //    processors.push_back(new Reorder_LineProc());
 //    processors.push_back(new Ordered_LineProc());
 
