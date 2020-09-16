@@ -10,6 +10,8 @@
 
 #include <stdio.h>
 #include "Base_LineProc.hpp"
+#include "ofxICP.h"
+
 
 //------------------------------------------------------------
 //

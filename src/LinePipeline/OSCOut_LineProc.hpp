@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include "Base_LineProc.hpp"
+#include "ofxOscSender.h"
 
 //------------------------------------------------------------
 //
@@ -26,7 +27,7 @@ class OSCOut_LineProc : public Base_LineProc {
     
     
     string title(){
-        return "osc out";
+        return "line osc out";
     }
 
     void setup(ofxPanel &gui){
@@ -97,7 +98,7 @@ class OSCOut_LineProc : public Base_LineProc {
                 */
                 
                 ofxOscMessage m;
-                m.setAddress("/ke");
+                m.setAddress("/ke/line");
                 
                 m.addIntArg(index);//0
 

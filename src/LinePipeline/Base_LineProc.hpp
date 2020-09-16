@@ -10,8 +10,6 @@
 
 #include <stdio.h>
 #include "LineProc.hpp"
-#include "ofxOscSender.h"
-#include "ofxICP.h"
 
 
 class Base_LineProc : public LineProc {
