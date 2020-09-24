@@ -33,7 +33,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     //
     
     processors.push_back(new Smooth_LineProc());
-//    processors.push_back(new Resample_LineProc());
+    processors.push_back(new Resample_LineProc());
     
 //
 //    processors.push_back(new Reorder_LineProc());

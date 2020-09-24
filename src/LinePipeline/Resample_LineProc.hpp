@@ -44,7 +44,7 @@ class Resample_LineProc : public Base_LineProc {
     ofPolyline process(const int &index, const ofPolyline &line){
         
         if(onParam.get()){
-            procLines[index] = line.getResampledByCount(resampleParam.get());
+            procLines[index] = line.getResampledByCount(resampleParam.get());//• by oercentage!!>!?
         }else{
             procLines[index] = line;
         }

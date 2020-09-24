@@ -10,6 +10,17 @@
 
 #include <stdio.h>
 #include "Base_PixelProc.hpp"
+/*
+ 
+    NOTES ON USE:
+ 
+    16-bit
+    60 fps
+    no alpha
+    640 x 480
+ 
+ 
+ */
 
 //------------------------------------------------------------
 //
