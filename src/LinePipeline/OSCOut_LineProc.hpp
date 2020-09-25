@@ -27,7 +27,7 @@ class OSCOut_LineProc : public Base_LineProc {
     
     
     string title(){
-        return "line osc out";
+        return "line osc out" + portParam.get();
     }
 
     void setup(ofxPanel &gui){
@@ -57,7 +57,8 @@ class OSCOut_LineProc : public Base_LineProc {
 
             string::size_type sz;
             int portInt = stoi( portParam.get(),&sz);
-            sender.setup(ipParam.get(), portInt + index );
+//            sender.setup(ipParam.get(), portInt + index );
+            sender.setup(ipParam.get(), portInt);
 
             
             //            procLines[index] = line.getResampledByCount(resampleParam.get());

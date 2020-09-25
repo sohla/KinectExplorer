@@ -28,6 +28,18 @@
             "port": "57130",
             "resample": "263"
         },
+        "line_osc_out57120": {
+            "ip": "127.0.0.1",
+            "on": "1",
+            "port": "57120",
+            "resample": "120"
+        },
+        "line_osc_out57130": {
+            "ip": "127.0.0.1",
+            "on": "1",
+            "port": "57130",
+            "resample": "263"
+        },
         "ndi_server": null,
         "nearFar": {
             "cv-threshold": "0",
@@ -64,7 +76,7 @@
         },
         "resample": {
             "draw": "0",
-            "on": "1",
+            "on": "0",
             "resample": "6"
         },
         "sliders": {
