@@ -38,7 +38,7 @@ var roots = [0,5,2].stutter(8);
 
 ~update = {|blobs,i,midiOut|
 
-	var beat = 2.pow(blobs[0].pWidth.rateFiltered.explin(30,120,1,4).floor).reciprocal;
+	var beat = 2.pow(blobs[0].pWidth.rateFiltered.explin(30,120,,4).floor).reciprocal;
 	var oct = (blobs[0].pWidth.rateFiltered.linexp(30,120,1,4).floor);
 	var ca = (blobs[0].pWidth.rateFiltered.linlin(30,120,110,30).floor);
 	var cb = (blobs[0].pWidth.rateFiltered.linlin(30,120,80,60).floor);

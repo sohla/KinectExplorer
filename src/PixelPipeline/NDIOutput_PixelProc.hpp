@@ -34,6 +34,8 @@ class NDIOutput_PixelProc : public Base_PixelProc {
 
         auto pixelFormat = OF_PIXELS_BGRA;
 
+        
+        
     }
 
     void proc(){

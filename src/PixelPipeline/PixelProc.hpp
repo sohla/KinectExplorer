@@ -22,6 +22,7 @@ struct DepthModel {
     int kinectAngle = -0;
     float kinectScale = 1.6;
 
+
 };
 
 class PixelProc {

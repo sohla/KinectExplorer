@@ -2492,9 +2492,9 @@
 				E816FDDACC6746B6F6E88127 /* LinePipeline */,
 				5FDB4915CBBDF83783DD0769 /* PixelPipeline */,
 				37D7F3A2B6080B41B3A3FFA9 /* PixelRecorder.cpp */,
+				3A6FF413662E627E5E3B20DA /* PixelRecorder.h */,
 				1874040572F7282A7CF79366 /* PixelPlayer.cpp */,
 				2E0741A42407FFCD829A1439 /* PixelPlayer.h */,
-				3A6FF413662E627E5E3B20DA /* PixelRecorder.h */,
 				4E239EE809BC1D4BE0F79F7D /* Sources */,
 			);
 			path = src;
@@ -2787,7 +2787,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "xcodebuild -project \"$OF_PATH/libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj\" -target openFrameworks -configuration \"${CONFIGURATION}\"";
+			shellScript = "xcodebuild -project \"$OF_PATH/libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj\" -target openFrameworks -configuration \"${CONFIGURATION}\"\n";
 		};
 		E4B6FFFD0C3F9AB9008CF71C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;

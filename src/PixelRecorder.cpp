@@ -17,7 +17,7 @@ void PixelRecorder::setup(){
     string ffmpegPath = ofFilePath::getUserHomeDir();
     ffmpegPath = ffmpegPath + "/../../usr/local/bin/ffmpeg";
     vidRecorder.setFfmpegLocation(ffmpegPath); // use this is you have ffmpeg installed in your data folder
-    ofAddListener(vidRecorder.outputFileCompleteEvent, this, &PixelRecorder::recordingComplete);
+    
 }
 
 void PixelRecorder::exit(){
