@@ -13,7 +13,6 @@
 #include "ofMain.h"
 #include "ofxVideoRecorder.h"
 
-#include "opencv2/opencv.hpp"
 
 
 class PixelRecorder {
@@ -36,8 +35,8 @@ private:
     void recordingComplete(ofxVideoRecorderOutputFileCompleteEventArgs& args);
 
     ofxVideoRecorder    vidRecorder;
-
-    cv::VideoCapture vc;
+    
+ 
     
 };
 

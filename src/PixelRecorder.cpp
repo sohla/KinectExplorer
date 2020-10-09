@@ -7,16 +7,16 @@
 
 #include "PixelRecorder.h"
 
-
 void PixelRecorder::setup(){
     
-    //
+
 //    string ffmpegPath = ofFilePath::getCurrentExePath();
 //    ffmpegPath = ffmpegPath + "/../../../../ffmpeg";
 
     string ffmpegPath = ofFilePath::getUserHomeDir();
     ffmpegPath = ffmpegPath + "/../../usr/local/bin/ffmpeg";
     vidRecorder.setFfmpegLocation(ffmpegPath); // use this is you have ffmpeg installed in your data folder
+
     
 }
 

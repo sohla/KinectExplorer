@@ -21,7 +21,7 @@
 void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
     
 
-    processors.push_back( new NDIInput_PixelProc());
+//    processors.push_back( new NDIInput_PixelProc());
 
     processors.push_back( new NearFar_PixelProc());
 
