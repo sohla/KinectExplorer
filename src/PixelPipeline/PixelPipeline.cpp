@@ -15,6 +15,7 @@
 #include "NDIOutput_PixelProc.hpp"
 #include "SyphonOutput_PixelProc.hpp"
 #include "OSCOut_PixelProc.hpp"
+#include "PixelRecorderProc.hpp"
 
 #include "LinePipeline.hpp"
 
@@ -24,6 +25,7 @@ void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
 //    processors.push_back( new NDIInput_PixelProc());
 
     processors.push_back( new NearFar_PixelProc());
+    processors.push_back( new PixelRecorderProc());
 
 //    processors.push_back( new SyphonOutput_PixelProc());
 //    processors.push_back( new NDIOutput_PixelProc());
@@ -33,8 +35,12 @@ void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
     processors.push_back( new Erode_PixelProc());
 
 //    processors.push_back( new Dilate_PixelProc());
+    
+    // TODO something up woth this proc's pixels post processing 
     processors.push_back( new OSCOut_PixelProc("127.0.0.1","57130"));
 
+
+    
     processors.push_back( new LinePipeline());
 
 
@@ -50,6 +56,12 @@ void PixelPipeline::draw(const DepthModel &model){
         pp->draw(model);
     });
 
+}
+
+void PixelPipeline::exit(){
+    for_each(processors.begin(), processors.end(), [&](PixelProc* pp) {
+        pp->exit();
+    });
 }
 
 void PixelPipeline::update(const DepthModel &model, const ofPixels &pixels){

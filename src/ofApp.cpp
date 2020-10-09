@@ -7,7 +7,7 @@ float ofApp::scale{1.65};
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofSetFrameRate(60);
+    ofSetFrameRate(30); // must be 30 for ffmpeg .mp4
     
     ofSetVerticalSync(true);
     ofSetBackgroundColorHex(0x111111);
@@ -26,12 +26,10 @@ void ofApp::setup(){
     gui.add(group);
 
     
-    pixelRecorder.setup();
-//    irRecorder.setup();
     pixelPlayer.setup("test2019-12-01-18-47-56-139.mov");
 
     
-    pipeline.setup(model, gui);
+    pixelPipeline.setup(model, gui);
 
     gui.loadFromFile("inputSettings.json");
 
@@ -49,15 +47,14 @@ void ofApp::update(){
         // update returns next frames pixels
         depthCamera->update([&](const ofPixels &pixels){
             
-            pipeline.update(model, pixels);
-            pixelRecorder.update(pixels);
-
+            pixelPipeline.update(model, pixels);
+  
         });
     }else{
 
         // play loaded video
         pixelPlayer.update([&](const ofPixels &pixels){
-            pipeline.update(model, pixels);
+            pixelPipeline.update(model, pixels);
         });
     }
 
@@ -72,30 +69,15 @@ void ofApp::draw(){
 
     gui.draw();
     
-    pipeline.draw(model);
+    pixelPipeline.draw(model);
     
-    pixelRecorder.draw();
 }
 
 //--------------------------------------------------------------
 void ofApp::exit(){
-    
-    pixelRecorder.exit();
-//    irRecorder.exit();
+    pixelPipeline.exit();
 }
 
-//--------------------------------------------------------------
-void ofApp::startRecording(){
-
-    pixelRecorder.start("ke_depth", model.kinectWidth, model.kinectHeight);
-//    irRecorder.start("ke_ir", depthCamera.kinect.width , kinectCamera.kinect.height);
-}
-//--------------------------------------------------------------
-void ofApp::stopRecording(){
-    
-    pixelRecorder.stop();
-//    irRecorder.stop();
-}
 
 //--------------------------------------------------------------
 void ofApp::updateOSC(){
@@ -112,11 +94,11 @@ void ofApp::updateOSC(){
 
             int isOn = m.getArgAsInt32(0);
             
-            if(isOn == 1){
-                startRecording();
-            }else{
-                stopRecording();
-            }
+//            if(isOn == 1){
+//                startRecording();
+//            }else{
+//                stopRecording();
+//            }
         }
     }
 }
@@ -124,13 +106,13 @@ void ofApp::updateOSC(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-    if(key == 'r'){
-        if(!pixelRecorder.isRecording()){
-            startRecording();
-        }else{
-            stopRecording();
-        }
-    }
+//    if(key == 'r'){
+//        if(!pixelRecorder.isRecording()){
+//            startRecording();
+//        }else{
+//            stopRecording();
+//        }
+//    }
     
     if(key == 'o'){
         ofFileDialogResult result = ofSystemLoadDialog();

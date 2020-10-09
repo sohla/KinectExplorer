@@ -25,7 +25,7 @@ class SyphonOutput_PixelProc : public Base_PixelProc {
         
         ofParameterGroup group;
         
-        group.setName("keServer");
+        group.setName(title());
         group.add(onParam);
         group.add(drawParam);
         gui.add(group);

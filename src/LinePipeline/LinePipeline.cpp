@@ -110,9 +110,6 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
 
             i++;
         });
-        
-        
-
     }
     
     return procImage.getPixels();

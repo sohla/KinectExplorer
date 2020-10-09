@@ -60,6 +60,7 @@ class OSCOut_PixelProc : public Base_PixelProc {
     
     void proc(){
 
+        // TODO procImage is getting mangled
         
         ofxCv::absdiff(procImage, previous, diff);
         diff.update();

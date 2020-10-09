@@ -27,7 +27,8 @@ public:
     void setup(const DepthModel &model, ofxPanel &gui);
     void draw(const DepthModel &model);
     ofPixels process(const DepthModel &model, const ofPixels &pixels);
-
+    void exit();
+    
 protected:
 
     ofParameter<bool> drawParam = ofParameter<bool>("draw",false);

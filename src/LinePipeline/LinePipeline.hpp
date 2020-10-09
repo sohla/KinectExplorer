@@ -31,6 +31,7 @@ public:
     void draw(const DepthModel &model);
     ofPixels process(const DepthModel &model, const ofPixels &pixel);
 
+    
 protected:
 
     ofxCvContourFinder contourFinder;

@@ -38,6 +38,10 @@ ofPixels Base_PixelProc::process(const DepthModel &model, const ofPixels &pixels
     return procImage.getPixels();
 }
 
+void Base_PixelProc::exit(){
+    
+}
+
 string Base_PixelProc::title(){
     return "pixel base";
 }

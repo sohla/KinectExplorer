@@ -40,7 +40,7 @@ class NDIInput_PixelProc : public Base_PixelProc {
         
         ofParameterGroup group;
         
-        group.setName("keNDIReceiver");
+        group.setName(title());
         group.add(onParam);
         group.add(drawParam);
         gui.add(group);

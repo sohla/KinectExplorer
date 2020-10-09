@@ -48,6 +48,13 @@
             "near": "254",
             "on": "1"
         },
+        "near_far": {
+            "cv-threshold": "0",
+            "draw": "1",
+            "far": "215",
+            "near": "255",
+            "on": "1"
+        },
         "osc_out": {
             "ip": "127.0.0.1",
             "on": "1",
@@ -59,6 +66,9 @@
             "ip": "127.0.0.1",
             "on": "1",
             "port": "57140"
+        },
+        "pixel_recorder": {
+            "recording": "0"
         },
         "pixel_to_point": {
             "blobs": "1",

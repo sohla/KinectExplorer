@@ -2,7 +2,6 @@
 
 #include "ofMain.h"
 #include "KinectDepthCamera.h"
-#include "PixelRecorder.h"
 #include "PixelPlayer.h"
 #include "ofxOsc.h"
 
@@ -15,13 +14,11 @@
 class ofApp : public ofBaseApp{
 
         PixelSourceBase*   depthCamera;
-        PixelRecorder   pixelRecorder;
-//        PixelRecorder   irRecorder;
         PixelPlayer     pixelPlayer;
 
         ofxOscReceiver  receiver;
     
-        PixelPipeline pipeline;
+        PixelPipeline pixelPipeline;
         ofxPanel                gui;
         ofxOscParameterSync     sync;
 
@@ -46,8 +43,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-        void startRecording();
-        void stopRecording();
         
         void updateOSC();
     

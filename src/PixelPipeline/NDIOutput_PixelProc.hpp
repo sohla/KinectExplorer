@@ -24,7 +24,7 @@ class NDIOutput_PixelProc : public Base_PixelProc {
         
         ofParameterGroup group;
         
-        group.setName("ndi server");
+        group.setName(title());
         gui.add(group);
         
         if(sender.setup("keNDIOutput")) {

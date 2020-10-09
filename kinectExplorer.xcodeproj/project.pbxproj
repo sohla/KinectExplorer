@@ -36,7 +36,6 @@
 		40F8E3F7627F83C74FD9086A /* ofxOscBundle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 673AFCBC7323D2A93120A7A2 /* ofxOscBundle.cpp */; };
 		413A3F52C6AC90B4F28A6A1C /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 448869D12B9D05298EF975CB /* ofxToggle.cpp */; };
 		42D0293A9567E4BBCEA2CA64 /* usb_libusb10.c in Sources */ = {isa = PBXBuildFile; fileRef = A6F963F1DDCC569A5A66042D /* usb_libusb10.c */; };
-		440A5C09844EB2854F6EE5E2 /* PixelRecorder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 37D7F3A2B6080B41B3A3FFA9 /* PixelRecorder.cpp */; };
 		44107A3F9067B7C65E00C624 /* ofxNDIRouter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C75F868AF169FCAA0D3FF8E7 /* ofxNDIRouter.cpp */; };
 		44294AA28529FBA7CCE61122 /* guiCallbackValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC73DA667C81093B915D355D /* guiCallbackValue.cpp */; };
 		447189475C7D8D0CC9C36B84 /* Utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C2049DA02804409E838C2852 /* Utilities.cpp */; };
@@ -254,13 +253,11 @@
 		36D34CA9E5F560518885952A /* reduce_to_column.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = reduce_to_column.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/grid/detail/reduce_to_column.hpp; sourceTree = SOURCE_ROOT; };
 		36F97D6A32B08AB180CBDF52 /* reduction.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = reduction.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/expr/reduction.hpp; sourceTree = SOURCE_ROOT; };
 		377DC4911D8323C5BCDE358C /* object_factory.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = object_factory.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/object_factory.h; sourceTree = SOURCE_ROOT; };
-		37D7F3A2B6080B41B3A3FFA9 /* PixelRecorder.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = PixelRecorder.cpp; path = src/PixelRecorder.cpp; sourceTree = SOURCE_ROOT; };
 		381F8D859A689863CEF5E190 /* usb_libusb10.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = usb_libusb10.h; path = ../../addons/ofxKinect/libs/libfreenect/src/usb_libusb10.h; sourceTree = SOURCE_ROOT; };
 		3982AB014E313024D4A2F550 /* opencl_core.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = opencl_core.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/opencl/runtime/opencl_core.hpp; sourceTree = SOURCE_ROOT; };
 		39891C13499497B9DA2D436F /* guiTypeVairableLister.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = guiTypeVairableLister.h; path = ../../addons/ofxControlPanel/src/guiTypeVairableLister.h; sourceTree = SOURCE_ROOT; };
 		399E53F69A5C4A371E8A819C /* simd_functions.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = simd_functions.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/cuda/simd_functions.hpp; sourceTree = SOURCE_ROOT; };
 		3A168CD9414BE70C575DD9AB /* cudev.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cudev.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev.hpp; sourceTree = SOURCE_ROOT; };
-		3A6FF413662E627E5E3B20DA /* PixelRecorder.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = PixelRecorder.h; path = src/PixelRecorder.h; sourceTree = SOURCE_ROOT; };
 		3A9F5284F9A1DD9676E7957D /* frame_source.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = frame_source.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/videostab/frame_source.hpp; sourceTree = SOURCE_ROOT; };
 		3AECEB6530E96FC89690CFF7 /* traits.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = traits.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/traits.hpp; sourceTree = SOURCE_ROOT; };
 		3B55723F27EAD8859CBAA6F7 /* MessageMappingOscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = MessageMappingOscPacketListener.h; path = ../../addons/ofxOsc/libs/oscpack/src/osc/MessageMappingOscPacketListener.h; sourceTree = SOURCE_ROOT; };
@@ -870,6 +867,7 @@
 		EF11994C2D6524D377C3C554 /* world.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = world.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/world.hpp; sourceTree = SOURCE_ROOT; };
 		EF4CE49E59F7962D3FC6D99F /* cv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cv.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h; sourceTree = SOURCE_ROOT; };
 		EF90C99802E1871C669E04BA /* binary_op.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = binary_op.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/expr/binary_op.hpp; sourceTree = SOURCE_ROOT; };
+		F0556930253013C60053F31F /* PixelRecorderProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PixelRecorderProc.hpp; sourceTree = "<group>"; };
 		F0DD72AEABD1E435D4F458D2 /* intrin.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = intrin.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/hal/intrin.hpp; sourceTree = SOURCE_ROOT; };
 		F0E9BE253D8418D7BE19C5EC /* warpers.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = warpers.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/stitching/warpers.hpp; sourceTree = SOURCE_ROOT; };
 		F1537A22E6AA2BFE5A24731D /* Processing.NDI.structs.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = Processing.NDI.structs.h; path = ../../addons/ofxNDI/libs/NDI/include/Processing.NDI.structs.h; sourceTree = SOURCE_ROOT; };
@@ -1518,17 +1516,18 @@
 			children = (
 				44F5C0ACC107CB40A7CC6DD9 /* PixelPipeline.cpp */,
 				8077708DC581FA976754B53F /* PixelPipeline.hpp */,
+				F43A75602D9CE66EEDF81C01 /* PixelProc.hpp */,
+				7AD72923BF7F245CE2F3705F /* Base_PixelProc.cpp */,
+				B6930019B2334BFE52CD483C /* Base_PixelProc.hpp */,
 				DFCD9E44C9B18228EE7EF7B0 /* OSCOut_PixelProc.hpp */,
 				0E214B8B24E8054FFB30A8CA /* SyphonOutput_PixelProc.hpp */,
 				AF9EADC5F04177605D34DAC9 /* Dilate_PixelProc.hpp */,
-				B6930019B2334BFE52CD483C /* Base_PixelProc.hpp */,
 				EDD6CA843A5D3992AAD09D0F /* Blur_PixelProc.hpp */,
 				00AB4B2F5FDA96F827E75BF6 /* Erode_PixelProc.hpp */,
-				F43A75602D9CE66EEDF81C01 /* PixelProc.hpp */,
-				7AD72923BF7F245CE2F3705F /* Base_PixelProc.cpp */,
 				EE49D439837BCE1FDA3CF745 /* NDIOutput_PixelProc.hpp */,
 				B9C667B81CD0C55F28EFEA62 /* NDIInput_PixelProc.hpp */,
 				31AE149F323B45FAF7A62849 /* NearFar_PixelProc.hpp */,
+				F0556930253013C60053F31F /* PixelRecorderProc.hpp */,
 			);
 			name = PixelPipeline;
 			sourceTree = "<group>";
@@ -2491,8 +2490,6 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				E816FDDACC6746B6F6E88127 /* LinePipeline */,
 				5FDB4915CBBDF83783DD0769 /* PixelPipeline */,
-				37D7F3A2B6080B41B3A3FFA9 /* PixelRecorder.cpp */,
-				3A6FF413662E627E5E3B20DA /* PixelRecorder.h */,
 				1874040572F7282A7CF79366 /* PixelPlayer.cpp */,
 				2E0741A42407FFCD829A1439 /* PixelPlayer.h */,
 				4E239EE809BC1D4BE0F79F7D /* Sources */,
@@ -2513,17 +2510,17 @@
 			isa = PBXGroup;
 			children = (
 				8A3B5A98B935AD7BFBB17F7C /* LinePipeline.cpp */,
+				F280E4A9B4961172B64DF9DB /* LinePipeline.hpp */,
+				ADE646D1B8AA7E840C41AE87 /* LineProc.hpp */,
+				A1F571FB8D975D6688B77EC7 /* Base_LineProc.cpp */,
+				C2DABA30E8EEADB4AC01A509 /* Base_LineProc.hpp */,
 				3DE778DCFA16F421DADDC543 /* Resample_LineProc.hpp */,
 				0555A3896E97AE849342152E /* OSCOut_LineProc.hpp */,
 				C2F1B943DE03C955D8BBA0A5 /* Ordered_LineProc.hpp */,
-				C2DABA30E8EEADB4AC01A509 /* Base_LineProc.hpp */,
 				75E8DA59A71A5A134505316E /* NN_LineProc.hpp */,
 				62427D88F1F30AE026FF3F45 /* ICP_LineProc.hpp */,
-				A1F571FB8D975D6688B77EC7 /* Base_LineProc.cpp */,
 				880835B9DF41D2CE40FAD7C0 /* Smooth_LineProc.hpp */,
 				20EB8FDE541846D84E9D43C5 /* Reorder_LineProc.hpp */,
-				ADE646D1B8AA7E840C41AE87 /* LineProc.hpp */,
-				F280E4A9B4961172B64DF9DB /* LinePipeline.hpp */,
 			);
 			name = LinePipeline;
 			sourceTree = "<group>";
@@ -2816,7 +2813,6 @@
 				7AACD0B8FA91463FAAF43AA4 /* PixelPlayer.cpp in Sources */,
 				1894428AD0F5790D7CBD89A8 /* Base_PixelProc.cpp in Sources */,
 				25D17BCCB67AECEDFAE65C85 /* PixelPipeline.cpp in Sources */,
-				440A5C09844EB2854F6EE5E2 /* PixelRecorder.cpp in Sources */,
 				C93BEFCA9749B6828638DD44 /* KinectDepthCamera.cpp in Sources */,
 				2A3B29AE61263132D0BE6FB9 /* guiBaseObject.cpp in Sources */,
 				46C66E49DCE107A0849744F7 /* guiCallback.cpp in Sources */,

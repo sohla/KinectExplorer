@@ -29,7 +29,7 @@ class NearFar_PixelProc : public Base_PixelProc {
         
         ofParameterGroup group;
         
-        group.setName("nearFar");
+        group.setName(title());
         group.add(onParam);
         group.add(drawParam);
         group.add(cvThreshParam);
