@@ -75,7 +75,6 @@ class OSCOut_PixelProc : public Base_PixelProc {
         // but it's eofxCv::toCvto make a Scalar from an int (shown here)
         diffMean *= cv::Scalar(10);
 
-        
         string::size_type sz;
          int portInt = stoi( portParam.get(),&sz);
          sender.setup(ipParam.get(), portInt);

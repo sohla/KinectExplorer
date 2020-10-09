@@ -1,8 +1,8 @@
 {
     "inputSettings": {
         "blur": {
-            "blur": "7",
-            "draw": "0",
+            "blur": "2",
+            "draw": "1",
             "on": "1"
         },
         "dilate": {
@@ -12,7 +12,7 @@
         "erode": {
             "amount": "3",
             "draw": "0",
-            "on": "1"
+            "on": "0"
         },
         "keNDIReceiver": {
             "draw": "0",

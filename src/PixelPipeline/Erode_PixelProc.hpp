@@ -17,7 +17,7 @@
 
 class Erode_PixelProc : public Base_PixelProc {
  
-    ofParameter<int> amountParam = ofParameter<int>("amount",1,1,32);
+    ofParameter<int> amountParam = ofParameter<int>("amount",1,1,6);
 
     void setup(const DepthModel &model, ofxPanel &gui){
         
