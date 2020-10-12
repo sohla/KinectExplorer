@@ -2,8 +2,8 @@
     "inputSettings": {
         "blur": {
             "blur": "2",
-            "draw": "1",
-            "on": "1"
+            "draw": "0",
+            "on": "0"
         },
         "dilate": {
             "draw": "0",
@@ -50,7 +50,7 @@
         },
         "near_far": {
             "cv-threshold": "0",
-            "draw": "1",
+            "draw": "0",
             "far": "215",
             "near": "255",
             "on": "1"
@@ -73,10 +73,10 @@
         "pixel_to_point": {
             "blobs": "1",
             "draw": "0",
-            "on": "1"
+            "on": "0"
         },
         "realtime": {
-            "realtime": "1"
+            "realtime": "0"
         },
         "reorder": {
             "draw": "1",
@@ -102,8 +102,8 @@
             "smooth": "0"
         },
         "smooth": {
-            "draw": "1",
-            "on": "1",
+            "draw": "0",
+            "on": "0",
             "smooth": "9"
         },
         "switches": {

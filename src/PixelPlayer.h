@@ -13,13 +13,16 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 
+#include "PixelProc.hpp"
+
+
 class PixelPlayer {
     
 public:
     
     void setup(string fileName);
     //void update();
-    void draw();
+    void draw(const DepthModel &model);
     void exit();
     
     template<typename F>

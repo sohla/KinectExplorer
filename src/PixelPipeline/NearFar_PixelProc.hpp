@@ -52,12 +52,12 @@ class NearFar_PixelProc : public Base_PixelProc {
             grayThreshFar.threshold(farParam.get());
             cvAnd(grayThreshNear.getCvImage(), grayThreshFar.getCvImage(), procImage.getCvImage(), NULL);
         } else {
-            // or we do it ourselves - show people how they can work with the pixels
             ofPixels & pix = procImage.getPixels();
             unsigned long numPixels = pix.size();
             for(int i = 0; i < numPixels; i++) {
                 if(pix[i] < nearParam.get() && pix[i] > farParam.get()) {
-                    pix[i] = 255;
+                    pix[i] = 255; // solid white
+                    //pix[i] = ofMap(pix[i], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
                 } else {
                     pix[i] = 0;
                 }

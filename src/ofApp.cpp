@@ -38,25 +38,35 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    if(realtimeParam.get() == true){
+    pixelPlayer.update([&](const ofPixels &pixels){
+        pixelPipeline.update(model, pixels);
+    });
 
-        //• split up pipelines : videoPixel and depthPixel : procs can be used on either
-        //• or is placed at the head of the pipeline
-        //• or there is a source : depth, video or player!!!
-        
-        // update returns next frames pixels
-        depthCamera->update([&](const ofPixels &pixels){
-            
-            pixelPipeline.update(model, pixels);
-  
-        });
-    }else{
+    depthCamera->update([&](const ofPixels &pixels){
+        pixelPipeline.update(model, pixels);
+    });
 
-        // play loaded video
-        pixelPlayer.update([&](const ofPixels &pixels){
-            pixelPipeline.update(model, pixels);
-        });
-    }
+    
+
+//    if(realtimeParam.get() == true){
+//
+//        //• split up pipelines : videoPixel and depthPixel : procs can be used on either
+//        //• or is placed at the head of the pipeline
+//        //• or there is a source : depth, video or player!!!
+//
+//        // update returns next frames pixels
+//        depthCamera->update([&](const ofPixels &pixels){
+//
+//            pixelPipeline.update(model, pixels);
+//
+//        });
+//    }else{
+//
+//        // play loaded video
+//        pixelPlayer.update([&](const ofPixels &pixels){
+//            pixelPipeline.update(model, pixels);
+//        });
+//    }
 
     // OSC receiver
     updateOSC();
@@ -69,8 +79,10 @@ void ofApp::draw(){
 
     gui.draw();
     
-    pixelPipeline.draw(model);
     
+    pixelPlayer.draw(model);
+        pixelPipeline.draw(model);
+
 }
 
 //--------------------------------------------------------------

@@ -31,9 +31,9 @@ void PixelPlayer::setup(string fileName){
 //    
 //}
 
-void PixelPlayer::draw(){
-    //player.draw(0,0);
-    grayImage.draw(0, 480);
+void PixelPlayer::draw(const DepthModel &model){
+    player.draw(0,0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+    //grayImage.draw(0, 480);
 }
 
 void PixelPlayer::exit(){
