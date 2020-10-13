@@ -18,6 +18,10 @@ void PixelPlayer::setup(string fileName){
     grayImage.clear();
     inputImage.allocate(int(player.getWidth()), int(player.getHeight()));
     grayImage.allocate(int(player.getWidth()), int(player.getHeight()));
+
+//    colorImage.allocate(int(player.getWidth()), int(player.getHeight()), OF_IMAGE_COLOR_ALPHA);
+//    colorPixels.allocate(int(player.getWidth()), int(player.getHeight()), OF_IMAGE_COLOR_ALPHA);
+    
     
     player.setLoopState(OF_LOOP_NORMAL);
 //    player.setSpeed(0.125);
@@ -32,8 +36,10 @@ void PixelPlayer::setup(string fileName){
 //}
 
 void PixelPlayer::draw(const DepthModel &model){
-    player.draw(0,0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
-    //grayImage.draw(0, 480);
+    
+    grayImage.draw(0,0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+//    player.draw(0,0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+//    colorImage.draw(0,0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
 }
 
 void PixelPlayer::exit(){

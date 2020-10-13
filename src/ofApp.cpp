@@ -38,35 +38,35 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    pixelPlayer.update([&](const ofPixels &pixels){
-        pixelPipeline.update(model, pixels);
-    });
+//    pixelPlayer.update([&](const ofPixels &pixels){
+//        pixelPipeline.update(model, pixels);
+//    });
 
-    depthCamera->update([&](const ofPixels &pixels){
-        pixelPipeline.update(model, pixels);
-    });
+//    depthCamera->update([&](const ofPixels &pixels){
+//        pixelPipeline.update(model, pixels);
+//    });
 
     
 
-//    if(realtimeParam.get() == true){
-//
-//        //• split up pipelines : videoPixel and depthPixel : procs can be used on either
-//        //• or is placed at the head of the pipeline
-//        //• or there is a source : depth, video or player!!!
-//
-//        // update returns next frames pixels
-//        depthCamera->update([&](const ofPixels &pixels){
-//
-//            pixelPipeline.update(model, pixels);
-//
-//        });
-//    }else{
-//
-//        // play loaded video
-//        pixelPlayer.update([&](const ofPixels &pixels){
-//            pixelPipeline.update(model, pixels);
-//        });
-//    }
+    if(realtimeParam.get() == true){
+
+        //• split up pipelines : videoPixel and depthPixel : procs can be used on either
+        //• or is placed at the head of the pipeline
+        //• or there is a source : depth, video or player!!!
+
+        // update returns next frames pixels
+        depthCamera->update([&](const ofPixels &pixels){
+
+            pixelPipeline.update(model, pixels);
+
+        });
+    }else{
+
+        // play loaded video
+        pixelPlayer.update([&](const ofPixels &pixels){
+            pixelPipeline.update(model, pixels);
+        });
+    }
 
     // OSC receiver
     updateOSC();
@@ -76,12 +76,15 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
+    
+    ofColor c = ofColor::fromHsb( ofGetFrameNum() % 255 , 255, 160);
+    ofBackground(c);
+    
     gui.draw();
+
+//    pixelPlayer.draw(model);
     
-    
-    pixelPlayer.draw(model);
-        pixelPipeline.draw(model);
+    pixelPipeline.draw(model);
 
 }
 

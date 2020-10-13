@@ -31,7 +31,36 @@ public:
         if(player.isLoaded()){
             
             player.update();
-            inputImage.setFromPixels(player.getPixels());
+            
+            // example of converting greyscale to color
+            // adding alpha channel and output
+ /*
+            ofPixels & pix = player.getPixels();
+                
+            unsigned long w = colorPixels.getWidth();
+            unsigned long h = colorPixels.getHeight();
+        
+            for(int i = 0; i < w; i++) {
+                for(int j = 0; j < h; j++) {
+
+                    ofColor pixCol = pix.getColor(i,j);
+                    
+                    if(pixCol.getBrightness() > 130){
+                        ofColor newCol = ofColor(255, 255);
+                        colorPixels.setColor(i, j, newCol);
+                    }else{
+                        ofColor newCol = ofColor(pixCol, 0);
+                        colorPixels.setColor(i, j, newCol);
+
+                    }
+                }
+            }
+
+            colorImage.setFromPixels(colorPixels);
+*/
+            ofPixels & pix = player.getPixels();
+            inputImage.setFromPixels(pix);
+
             grayImage = inputImage;
             next(grayImage.getPixels());
         }else{
@@ -44,6 +73,9 @@ private:
     ofVideoPlayer         player;
     ofxCvColorImage     inputImage;
     ofxCvGrayscaleImage grayImage;
+    
+//    ofImage colorImage;
+//    ofPixels colorPixels;
 };
 
 #endif /* PixelPlayer_hpp */

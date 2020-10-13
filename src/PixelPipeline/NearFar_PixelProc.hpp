@@ -24,6 +24,7 @@ class NearFar_PixelProc : public Base_PixelProc {
     ofxCvGrayscaleImage depthImage;
     ofxCvGrayscaleImage grayThreshNear;
     ofxCvGrayscaleImage grayThreshFar;
+    
 
     void setup(const DepthModel &model, ofxPanel &gui){
         
@@ -40,7 +41,7 @@ class NearFar_PixelProc : public Base_PixelProc {
         depthImage.allocate(model.kinectWidth, model.kinectHeight);
         grayThreshNear.allocate(model.kinectWidth, model.kinectHeight);
         grayThreshFar.allocate(model.kinectWidth, model.kinectHeight);
-
+        
     }
 
     void proc(){
@@ -62,6 +63,7 @@ class NearFar_PixelProc : public Base_PixelProc {
                     pix[i] = 0;
                 }
             }
+            procImage.setFromPixels(pix);
         }
         
         //• its own proc!
@@ -70,6 +72,15 @@ class NearFar_PixelProc : public Base_PixelProc {
 
     };
     string title(){return "near far";};
+    
+//    void draw(const DepthModel &model){
+//
+//        if(drawParam.get()){
+//            procImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+//        }
+//    }
+
+
 };
 
 #endif /* NearFar_PixelProc_hpp */
