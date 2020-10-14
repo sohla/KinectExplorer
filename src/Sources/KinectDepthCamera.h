@@ -27,13 +27,10 @@ public:
         
         kinect.update();
         
-        if(kinect.isFrameNew()) {
+        if(kinect.isFrameNewDepth()) {
             updatedPixels(kinect.getDepthPixels());
         }
-        //• what about creating a mesh?`
-        
     }
-
 };
 
 
