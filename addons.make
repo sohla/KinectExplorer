@@ -1,4 +1,3 @@
-ofxControlPanel
 ofxOpenCv
 ofxCv
 ofxGui
@@ -8,4 +7,3 @@ ofxNDI
 ofxOsc
 ofxSyphon
 ofxVideoRecorder
-ofxXmlSettings
