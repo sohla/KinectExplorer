@@ -3,24 +3,23 @@
 #include "ofMain.h"
 #include "KinectDepthCamera.h"
 #include "PixelPlayer.h"
-#include "ofxOsc.h"
 
 #include "PixelPipeline.hpp"
 #include "ofxGui.h"
 #include "ofxOscParameterSync.h"
 
 #define INPORT 57000
+#define SCPORT 57120
+
 
 class ofApp : public ofBaseApp{
 
         PixelSourceBase*   depthCamera;
         PixelPlayer     pixelPlayer;
 
-        ofxOscReceiver  receiver;
-    
         PixelPipeline pixelPipeline;
         ofxPanel                gui;
-        ofxOscParameterSync     sync;
+        ofxOscParameterSync     oscParamSync;
 
         ofParameter<bool> realtimeParam = ofParameter<bool>("realtime",true);
         DepthModel   model;

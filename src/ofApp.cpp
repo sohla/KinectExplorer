@@ -16,18 +16,21 @@ void ofApp::setup(){
     depthCamera->setup(model);
     
     gui.setup("inputSettings", "inputSettings.json", 1070, 0);
-//    sync.setup((ofParameterGroup&)gui.getParameter(),6667,"localhost",6666);
-    receiver.setup(INPORT);
+    
+    // gui with OSC
+    // can send msgs remotely (eg. from sc)
+    // b = NetAddr("127.0.0.1",57000);
+    // b.sendMsg("/inputSettings/blur/blur", 5);
+    // msg path: /inputSettings/xxGROUPxx/xxPARAMNAMExx
+    oscParamSync.setup((ofParameterGroup&)gui.getParameter(), INPORT, "localhost", SCPORT);
 
     
     ofParameterGroup group;
     group.setName("realtime");
     group.add(realtimeParam);
     gui.add(group);
-
     
     pixelPlayer.setup("test2019-12-01-18-47-56-139.mov");
-
     
     pixelPipeline.setup(model, gui);
 
@@ -69,7 +72,9 @@ void ofApp::update(){
     }
 
     // OSC receiver
-    updateOSC();
+//    updateOSC();
+    
+    oscParamSync.update();
     
     
 }
@@ -93,41 +98,8 @@ void ofApp::exit(){
     pixelPipeline.exit();
 }
 
-
-//--------------------------------------------------------------
-void ofApp::updateOSC(){
-
-    // check for waiting messages
-    while(receiver.hasWaitingMessages()){
-
-        // get the next message
-        ofxOscMessage m;
-        receiver.getNextMessage(m);
-
-        // check for mouse moved message
-        if(m.getAddress() == "/ke/record"){
-
-            int isOn = m.getArgAsInt32(0);
-            
-//            if(isOn == 1){
-//                startRecording();
-//            }else{
-//                stopRecording();
-//            }
-        }
-    }
-}
-
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
-//    if(key == 'r'){
-//        if(!pixelRecorder.isRecording()){
-//            startRecording();
-//        }else{
-//            stopRecording();
-//        }
-//    }
     
     if(key == 'o'){
         ofFileDialogResult result = ofSystemLoadDialog();
@@ -140,6 +112,7 @@ void ofApp::keyPressed(int key){
     }
     
     //•• FIX
+    // TODO move to kinect camera
     /*
     if(key == OF_KEY_UP){
         

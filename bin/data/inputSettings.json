@@ -1,7 +1,7 @@
 {
     "inputSettings": {
         "blur": {
-            "blur": "2",
+            "blur": "5",
             "draw": "0",
             "on": "0"
         },
@@ -40,6 +40,7 @@
             "port": "57130",
             "resample": "263"
         },
+        "ndi_sender": null,
         "ndi_server": null,
         "nearFar": {
             "cv-threshold": "0",
@@ -51,7 +52,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "215",
+            "far": "132",
             "near": "255",
             "on": "1"
         },
@@ -71,9 +72,9 @@
             "recording": "0"
         },
         "pixel_to_point": {
-            "blobs": "1",
+            "blobs": "2",
             "draw": "0",
-            "on": "0"
+            "on": "1"
         },
         "realtime": {
             "realtime": "0"
@@ -102,8 +103,8 @@
             "smooth": "0"
         },
         "smooth": {
-            "draw": "0",
-            "on": "0",
+            "draw": "1",
+            "on": "1",
             "smooth": "9"
         },
         "switches": {

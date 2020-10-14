@@ -57,8 +57,9 @@ class OSCOut_LineProc : public Base_LineProc {
 
             string::size_type sz;
             int portInt = stoi( portParam.get(),&sz);
-//            sender.setup(ipParam.get(), portInt + index );
-            sender.setup(ipParam.get(), portInt);
+
+            sender.setup(ipParam.get(), portInt + index );
+//            sender.setup(ipParam.get(), portInt);
 
             
             //            procLines[index] = line.getResampledByCount(resampleParam.get());
