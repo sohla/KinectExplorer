@@ -11,7 +11,6 @@
 #include <stdio.h>
 #include "PixelProc.hpp"
 
-#include "ofxSyphon.h"
 #include "ofxNDISender.h"
 #include "ofxNDISendStream.h"
 #include "ofxNDIReceiver.h"

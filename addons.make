@@ -5,5 +5,4 @@ ofxICP
 ofxKinect
 ofxNDI
 ofxOsc
-ofxSyphon
 ofxVideoRecorder
