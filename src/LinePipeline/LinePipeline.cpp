@@ -9,8 +9,6 @@
 
 #include "Smooth_LineProc.hpp"
 #include "Resample_LineProc.hpp"
-#include "ICP_LineProc.hpp"
-#include "NN_LineProc.hpp"
 #include "Reorder_LineProc.hpp"
 #include "Ordered_LineProc.hpp"
 #include "OSCOut_LineProc.hpp"
