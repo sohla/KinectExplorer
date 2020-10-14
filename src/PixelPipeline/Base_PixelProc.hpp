@@ -11,11 +11,6 @@
 #include <stdio.h>
 #include "PixelProc.hpp"
 
-#include "ofxNDISender.h"
-#include "ofxNDISendStream.h"
-#include "ofxNDIReceiver.h"
-#include "ofxNDIRecvStream.h"
-
 class Base_PixelProc : public PixelProc {
     
     virtual string title() = 0;
