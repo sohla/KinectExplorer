@@ -35,7 +35,7 @@
             "resample": "120"
         },
         "line_osc_out57130": {
-            "ip": "127.0.0.1",
+            "ip": "192.168.20.6",
             "on": "1",
             "port": "57130",
             "resample": "263"
@@ -77,7 +77,7 @@
             "on": "1"
         },
         "realtime": {
-            "realtime": "0"
+            "realtime": "1"
         },
         "reorder": {
             "draw": "1",
