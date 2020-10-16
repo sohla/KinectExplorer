@@ -37,7 +37,7 @@ class PixelRecorderProc : public Base_PixelProc {
         
         // ffmpeg
         string ffmpegPath = ofFilePath::getUserHomeDir();
-        ffmpegPath = ffmpegPath + "/../../usr/local/bin/ffmpeg";
+        ffmpegPath = ffmpegPath + "/../../usr/bin/ffmpeg";
         vidRecorder.setFfmpegLocation(ffmpegPath); // use this is you have ffmpeg installed in your data folder
 
         vidRecorder.setVideoCodec("mpeg4");
