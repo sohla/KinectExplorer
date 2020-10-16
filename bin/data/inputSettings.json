@@ -52,9 +52,11 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "132",
+            "far": "219",
+            "horz-invert": "0",
             "near": "255",
-            "on": "1"
+            "on": "1",
+            "vert-invert": "0"
         },
         "osc_out": {
             "ip": "127.0.0.1",

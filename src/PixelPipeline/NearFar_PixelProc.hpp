@@ -21,6 +21,10 @@ class NearFar_PixelProc : public Base_PixelProc {
     ofParameter<int> nearParam = ofParameter<int>("near",0,200,255);
     ofParameter<int> farParam = ofParameter<int>("far",0,50,255);
 
+    ofParameter<bool> horzInvertParam = ofParameter<bool>("horz-invert",false);
+    ofParameter<bool> vertInvertParam = ofParameter<bool>("vert-invert",false);
+
+
     ofxCvGrayscaleImage depthImage;
     ofxCvGrayscaleImage grayThreshNear;
     ofxCvGrayscaleImage grayThreshFar;
@@ -36,7 +40,9 @@ class NearFar_PixelProc : public Base_PixelProc {
         group.add(cvThreshParam);
         group.add(nearParam);
         group.add(farParam);
-        gui.add(group);
+        group.add(horzInvertParam);
+        group.add(vertInvertParam);
+       gui.add(group);
         
         depthImage.allocate(model.kinectWidth, model.kinectHeight);
         grayThreshNear.allocate(model.kinectWidth, model.kinectHeight);
@@ -66,9 +72,7 @@ class NearFar_PixelProc : public Base_PixelProc {
             procImage.setFromPixels(pix);
         }
         
-        //• its own proc!
-        procImage.mirror(true, false);
-        
+        procImage.mirror(horzInvertParam.get(), vertInvertParam.get());
 
     };
     string title(){return "near far";};
