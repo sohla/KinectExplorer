@@ -307,7 +307,6 @@
 		74BF72E7B8F9453F3BA98ED7 /* motion_stabilizing.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = motion_stabilizing.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/videostab/motion_stabilizing.hpp; sourceTree = SOURCE_ROOT; };
 		74ECCF92D7760CD636EBB881 /* NCVHaarObjectDetection.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = NCVHaarObjectDetection.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudalegacy/NCVHaarObjectDetection.hpp; sourceTree = SOURCE_ROOT; };
 		7580327005E2ED2C282261D4 /* objdetect.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = objdetect.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/objdetect/objdetect.hpp; sourceTree = SOURCE_ROOT; };
-		76A865DE96A4B11618EE0460 /* PixelRecorderProc.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = PixelRecorderProc.hpp; path = src/PixelRecorderProc.hpp; sourceTree = SOURCE_ROOT; };
 		773557946B0F648CB877EAB7 /* warp.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = warp.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/warp/warp.hpp; sourceTree = SOURCE_ROOT; };
 		77C5804FE62B44A0DAAD80AE /* ofxCvGrayscaleImage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxCvGrayscaleImage.h; path = ../../addons/ofxOpenCv/src/ofxCvGrayscaleImage.h; sourceTree = SOURCE_ROOT; };
 		797A8282101F29D144C57B64 /* core_c.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = core_c.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h; sourceTree = SOURCE_ROOT; };
@@ -710,6 +709,7 @@
 		EF11994C2D6524D377C3C554 /* world.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = world.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/world.hpp; sourceTree = SOURCE_ROOT; };
 		EF4CE49E59F7962D3FC6D99F /* cv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cv.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h; sourceTree = SOURCE_ROOT; };
 		EF90C99802E1871C669E04BA /* binary_op.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = binary_op.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/expr/binary_op.hpp; sourceTree = SOURCE_ROOT; };
+		F0B6E9782539304F00EB7183 /* PixelRecorderProc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PixelRecorderProc.hpp; path = PixelPipeline/PixelRecorderProc.hpp; sourceTree = "<group>"; };
 		F0DD72AEABD1E435D4F458D2 /* intrin.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = intrin.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/hal/intrin.hpp; sourceTree = SOURCE_ROOT; };
 		F0E9BE253D8418D7BE19C5EC /* warpers.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = warpers.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/stitching/warpers.hpp; sourceTree = SOURCE_ROOT; };
 		F1AF1560879BE32DDD7EE6F1 /* ofxCv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxCv.h; path = ../../addons/ofxCv/libs/ofxCv/include/ofxCv.h; sourceTree = SOURCE_ROOT; };
@@ -1210,6 +1210,7 @@
 		5FDB4915CBBDF83783DD0769 /* PixelPipeline */ = {
 			isa = PBXGroup;
 			children = (
+				F0B6E9782539304F00EB7183 /* PixelRecorderProc.hpp */,
 				DFCD9E44C9B18228EE7EF7B0 /* OSCOut_PixelProc.hpp */,
 				AF9EADC5F04177605D34DAC9 /* Dilate_PixelProc.hpp */,
 				B6930019B2334BFE52CD483C /* Base_PixelProc.hpp */,
@@ -2061,7 +2062,6 @@
 				1874040572F7282A7CF79366 /* PixelPlayer.cpp */,
 				5FDB4915CBBDF83783DD0769 /* PixelPipeline */,
 				2E0741A42407FFCD829A1439 /* PixelPlayer.h */,
-				76A865DE96A4B11618EE0460 /* PixelRecorderProc.hpp */,
 				4E239EE809BC1D4BE0F79F7D /* Sources */,
 			);
 			path = src;
