@@ -27,7 +27,7 @@ class OSCOut_LineProc : public Base_LineProc {
     
     
     string title(){
-        return "line osc out" + portParam.get();
+        return "line osc out " + portParam.get();
     }
 
     void setup(ofxPanel &gui){
@@ -82,22 +82,6 @@ class OSCOut_LineProc : public Base_LineProc {
 
                 // std::cout << i << " : " << procLines[index].size() << " : " << area << " : " << perimeter << center << " : " ;
                 
-                /*
-                Notes on OSC data
-                
-                0 /blobi
-                1 number of blobs
-                2 area
-                3 perimeter
-                4 center.x
-                5 center.y
-                6 rect.x
-                7 rect.y
-                8 rect.h
-                9 rect.w
-                10 size of line points (max = line 220)
-                11...n n=size of line points, data is interleaved (x0,y0,x1,y1...)
-                */
                 
                 ofxOscMessage m;
                 m.setAddress("/ke/line");
@@ -105,21 +89,21 @@ class OSCOut_LineProc : public Base_LineProc {
                 m.addIntArg(index);//0
 
                 m.addFloatArg(area);//1
-                m.addFloatArg(perimeter);
+                m.addFloatArg(perimeter);//2
 
-                m.addFloatArg(ofMap(center.x, 0, 1000, 0.0, 1.0));
-                m.addFloatArg(ofMap(center.y, 0, 1000, 0.0, 1.0));
+                m.addFloatArg(ofMap(center.x, 0, 1000, 0.0, 1.0));//3
+                m.addFloatArg(ofMap(center.y, 0, 1000, 0.0, 1.0));//4
 
-                m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));
-                m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));
+                m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));//5
+                m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));//6
 
-                m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));
-                m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));
+                m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//7
+                m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//8
 
-                m.addInt32Arg(procLines[index].size());
+                m.addInt32Arg(procLines[index].size());//9
                 
                 
-                for( auto &vert :  procLines[index].getVertices()){
+                for( auto &vert :  procLines[index].getVertices()){//10..(//9)
                     m.addDoubleArg(vert.x);
                     m.addDoubleArg(vert.y);
                     //std::cout << vert.x << " , " << vert.y;

@@ -34,7 +34,8 @@ public:
     
 protected:
 
-    ofxCvContourFinder contourFinder;
+//    ofxCvContourFinder contourFinder;
+    ofxCv::ContourFinder contourFinder;
 
 };
 
