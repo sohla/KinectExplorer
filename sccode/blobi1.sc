@@ -1,6 +1,6 @@
 
 			(
-			var numOfBlobs = 4;
+			var numOfBlobs = 1;
 
 			var window, routine;
 			var graphView, updateGraphView;
@@ -11,7 +11,7 @@
 			var makePopupMenu;
 
 			var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/KinectExplorer/sccode/personalities/";
-			var persList = ["h","g","c","d","e","f","a","b"];
+			var persList = ["i","h","g","c","d","e","f","a","b"];
 
 			var paramModel = (
 				\prev: 0,
@@ -228,8 +228,8 @@
 								blobs[index].center = filter.(Point(msg[4]* 1000,msg[5]* 1000), blobs[index].center, 0.3);
 
 								blobs[index].rect = Rect(msg[6] * 1000,msg[7]* 1000,msg[8]* 1000,msg[9]* 1000);
-
-								blobs[index].pWidth.raw = msg[8]* 1000;//???????
+								
+								blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
 
 								blobs[index][\dataSize] = msg[10].asInteger;
 								blobs[index].data = msg.copyRange(11,400);

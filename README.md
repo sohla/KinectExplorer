@@ -98,3 +98,19 @@ tegrastats --interval 2000
 scp sohla@192.168.20.14:~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/bin/data/ke_depth2020-10-16-11-50-26.mov ~/Movies
 
 
+
+
+
+
+## TODO
+
++ refactor contour finder using ofxCv::ContourFinder
++ add tracker and persist name
++ struct for each blob/line
++ find ordered line
++ top/bottom half of line
++ velocity of blob
+
++ player as a pixel proc?
+
+	
