@@ -22,6 +22,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     group.add(onParam);
     group.add(drawParam);
     group.add(blobsParam);
+    group.add(thresholdParam);
     gui.add(group);
 
     procImage.allocate(model.kinectWidth, model.kinectHeight);
@@ -30,7 +31,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     // •• PLAY Around with these settings
     contourFinder.setMinAreaRadius(30);
     contourFinder.setMaxAreaRadius(160);
-    contourFinder.setThreshold(55);
+    contourFinder.setThreshold(thresholdParam.get());
     // wait for half a second before forgetting something
     contourFinder.getTracker().setPersistence(15);
     // an object can move up to 32 pixels per frame
@@ -81,17 +82,43 @@ void LinePipeline::draw(const DepthModel &model){
     });
     
 }
-
+//ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
+//
+//
+//    procImage.setFromPixels(pixel);
+//
+//    if(onParam.get()){
+//
+//        contourFinder.findContours(procImage);
+//
+//        // clear out all lines....
+//        for(int i=0; i< MAX_BLOBS; i++){
+//            ofPolyline line;
+//            line.addVertex(0,0,0);
+//            for( auto &proc : processors ){
+//                proc->process(i, line);
+//            }
+//        }
+//
+//
+//    }
+//
+//    return procImage.getPixels();
+//}
 
 ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
     
     procImage.setFromPixels(pixel);
     if(onParam.get()){
 
+        
         int min = 1;
         int max = (model.kinectWidth * model.kinectHeight) / 1;
 
 //        contourFinder.findContours(procImage, min, max, blobsParam.get(), false);
+        
+        contourFinder.setThreshold(thresholdParam.get());
+        
         contourFinder.findContours(procImage);
         
         

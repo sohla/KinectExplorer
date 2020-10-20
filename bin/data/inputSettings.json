@@ -64,8 +64,9 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "125",
+            "far": "145",
             "horz-invert": "0",
+            "map": "0",
             "near": "255",
             "on": "1",
             "vert-invert": "0"
@@ -88,7 +89,8 @@
         "pixel_to_point": {
             "blobs": "2",
             "draw": "0",
-            "on": "1"
+            "on": "1",
+            "threshold": "127"
         },
         "realtime": {
             "realtime": "0"
