@@ -67,9 +67,12 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 void LinePipeline::draw(const DepthModel &model){
 
     if(drawParam.get()){
-        procImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
-//        contourFinder.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+        // dont think we need to draw the innput (procImage) here
+        //        procImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+        ofPushMatrix();
+        ofScale(model.kinectScale, model.kinectScale);
         contourFinder.draw();
+        ofPopMatrix();
     }
 
     // draw pipeline
