@@ -1,7 +1,7 @@
 {
     "inputSettings": {
         "blur": {
-            "blur": "5",
+            "blur": "38",
             "draw": "0",
             "on": "0"
         },
@@ -10,7 +10,7 @@
             "on": "1"
         },
         "erode": {
-            "amount": "3",
+            "amount": "6",
             "draw": "0",
             "on": "0"
         },
@@ -35,10 +35,22 @@
             "resample": "114"
         },
         "line_osc_out57130": {
-            "ip": "192.168.20.6",
+            "ip": "127.0.0.1",
             "on": "1",
             "port": "57130",
             "resample": "172"
+        },
+        "line_osc_out_57120": {
+            "ip": "127.0.0.1",
+            "on": "1",
+            "port": "57120",
+            "resample": "32"
+        },
+        "line_osc_out_57130": {
+            "ip": "127.0.0.1",
+            "on": "1",
+            "port": "57130",
+            "resample": "283"
         },
         "ndi_sender": null,
         "ndi_server": null,
@@ -54,6 +66,7 @@
             "draw": "0",
             "far": "120",
             "horz-invert": "0",
+            "map": "0",
             "near": "255",
             "on": "1",
             "vert-invert": "0"
@@ -76,7 +89,8 @@
         "pixel_to_point": {
             "blobs": "2",
             "draw": "0",
-            "on": "1"
+            "on": "1",
+            "threshold": "127"
         },
         "realtime": {
             "realtime": "0"
@@ -107,7 +121,7 @@
         "smooth": {
             "draw": "1",
             "on": "1",
-            "smooth": "9"
+            "smooth": "3"
         },
         "switches": {
             "ApplyFilter": "0",

@@ -19,6 +19,7 @@ class LinePipeline : public Base_PixelProc {
     string title(){return "pixel to point";};
     
     ofParameter<int> blobsParam = ofParameter<int>("blobs",1,0,MAX_BLOBS);
+    ofParameter<int> thresholdParam = ofParameter<int>("threshold",127,0,255);
 
     vector<LineProc*> processors;
 
@@ -34,7 +35,8 @@ public:
     
 protected:
 
-    ofxCvContourFinder contourFinder;
+//    ofxCvContourFinder contourFinder;
+    ofxCv::ContourFinder contourFinder;
 
 };
 

@@ -710,6 +710,7 @@
 		EF4CE49E59F7962D3FC6D99F /* cv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cv.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv/cv.h; sourceTree = SOURCE_ROOT; };
 		EF90C99802E1871C669E04BA /* binary_op.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = binary_op.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/expr/binary_op.hpp; sourceTree = SOURCE_ROOT; };
 		F0B6E9782539304F00EB7183 /* PixelRecorderProc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = PixelRecorderProc.hpp; path = PixelPipeline/PixelRecorderProc.hpp; sourceTree = "<group>"; };
+		F0B6E97E2539495B00EB7183 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		F0DD72AEABD1E435D4F458D2 /* intrin.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = intrin.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/hal/intrin.hpp; sourceTree = SOURCE_ROOT; };
 		F0E9BE253D8418D7BE19C5EC /* warpers.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = warpers.hpp; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/stitching/warpers.hpp; sourceTree = SOURCE_ROOT; };
 		F1AF1560879BE32DDD7EE6F1 /* ofxCv.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxCv.h; path = ../../addons/ofxCv/libs/ofxCv/include/ofxCv.h; sourceTree = SOURCE_ROOT; };
@@ -2042,6 +2043,7 @@
 		E4B69B4A0A3A1720003C02F2 = {
 			isa = PBXGroup;
 			children = (
+				F0B6E97E2539495B00EB7183 /* README.md */,
 				E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */,
 				E4EB6923138AFD0F00A09F29 /* Project.xcconfig */,
 				E4B69E1C0A3A1BDC003C02F2 /* src */,

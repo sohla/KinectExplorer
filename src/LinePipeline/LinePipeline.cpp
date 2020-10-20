@@ -22,9 +22,22 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     group.add(onParam);
     group.add(drawParam);
     group.add(blobsParam);
+    group.add(thresholdParam);
     gui.add(group);
 
     procImage.allocate(model.kinectWidth, model.kinectHeight);
+
+    // setup up countour finding and tracking
+    // •• PLAY Around with these settings
+    contourFinder.setMinAreaRadius(30);
+    contourFinder.setMaxAreaRadius(160);
+    contourFinder.setThreshold(thresholdParam.get());
+    // wait for half a second before forgetting something
+    contourFinder.getTracker().setPersistence(15);
+    // an object can move up to 32 pixels per frame
+    contourFinder.getTracker().setMaximumDistance(32);
+
+
 
     //
     // build line pipeline
@@ -45,6 +58,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     //
     //
     
+    
     for_each(processors.begin(), processors.end(), [&](LineProc* pp) {
         pp->setup(gui);
     });
@@ -54,8 +68,12 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 void LinePipeline::draw(const DepthModel &model){
 
     if(drawParam.get()){
-        procImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
-        contourFinder.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+        // dont think we need to draw the innput (procImage) here
+        //        procImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+        ofPushMatrix();
+        ofScale(model.kinectScale, model.kinectScale);
+        contourFinder.draw();
+        ofPopMatrix();
     }
 
     // draw pipeline
@@ -64,18 +82,44 @@ void LinePipeline::draw(const DepthModel &model){
     });
     
 }
-
+//ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
+//
+//
+//    procImage.setFromPixels(pixel);
+//
+//    if(onParam.get()){
+//
+//        contourFinder.findContours(procImage);
+//
+//        // clear out all lines....
+//        for(int i=0; i< MAX_BLOBS; i++){
+//            ofPolyline line;
+//            line.addVertex(0,0,0);
+//            for( auto &proc : processors ){
+//                proc->process(i, line);
+//            }
+//        }
+//
+//
+//    }
+//
+//    return procImage.getPixels();
+//}
 
 ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
     
     procImage.setFromPixels(pixel);
     if(onParam.get()){
 
+        
         int min = 1;
         int max = (model.kinectWidth * model.kinectHeight) / 1;
 
-        contourFinder.findContours(procImage, min, max, blobsParam.get(), false);
-
+//        contourFinder.findContours(procImage, min, max, blobsParam.get(), false);
+        
+        contourFinder.setThreshold(thresholdParam.get());
+        
+        contourFinder.findContours(procImage);
         
         
         // point pipeline begins.....
@@ -90,25 +134,27 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
             }
         }
         //• all this needs to be fixed. need to check if each blob found is updated, else we don't need to
-        //• do we need to track blobs?
-        
-        
-        // itr through the blobs, pass i
-        int i = 0;
-        for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
+        //• do we need to track blobs? YES WE DO!@
+  
+//        std::cout << contourFinder.size() << std::endl;
 
+        // itr through the blobs, pass i
+//        int i = 0;
+//        for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
+        for(int i = 0; i < contourFinder.size(); i++) {
             // generate a polyline from blob points
-            ofPolyline line;
-            line.addVertices(blob.pts);
-            line.setClosed(true);
+            ofPolyline line = contourFinder.getPolyline(i);
+//            line.addVertices(blob.pts);
+//            line.setClosed(true);
 
             // itr through procs passing polyline
             for( auto &proc : processors ){
                 line = proc->process(i, line);
             };
 
-            i++;
-        });
+//            i++;
+        };
+ 
     }
     
     return procImage.getPixels();

@@ -20,6 +20,7 @@ class NearFar_PixelProc : public Base_PixelProc {
     ofParameter<bool> cvThreshParam = ofParameter<bool>("cv-threshold",false);
     ofParameter<int> nearParam = ofParameter<int>("near",0,200,255);
     ofParameter<int> farParam = ofParameter<int>("far",0,50,255);
+    ofParameter<bool> mapParam = ofParameter<bool>("map",false);
 
     ofParameter<bool> horzInvertParam = ofParameter<bool>("horz-invert",false);
     ofParameter<bool> vertInvertParam = ofParameter<bool>("vert-invert",false);
@@ -40,6 +41,7 @@ class NearFar_PixelProc : public Base_PixelProc {
         group.add(cvThreshParam);
         group.add(nearParam);
         group.add(farParam);
+        group.add(mapParam);
         group.add(horzInvertParam);
         group.add(vertInvertParam);
        gui.add(group);
@@ -63,8 +65,11 @@ class NearFar_PixelProc : public Base_PixelProc {
             unsigned long numPixels = pix.size();
             for(int i = 0; i < numPixels; i++) {
                 if(pix[i] < nearParam.get() && pix[i] > farParam.get()) {
-                    pix[i] = 255; // solid white
-                    //pix[i] = ofMap(pix[i], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
+                    if(mapParam.get()){
+                        pix[i] = ofMap(pix[i], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
+                    }else{
+                        pix[i] = 255; // solid white
+                    }
                 } else {
                     pix[i] = 0;
                 }
