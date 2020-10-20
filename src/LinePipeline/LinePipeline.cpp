@@ -32,10 +32,11 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     contourFinder.setMinAreaRadius(30);
     contourFinder.setMaxAreaRadius(160);
     contourFinder.setThreshold(thresholdParam.get());
+
     // wait for half a second before forgetting something
-    contourFinder.getTracker().setPersistence(15);
-    // an object can move up to 32 pixels per frame
-    contourFinder.getTracker().setMaximumDistance(32);
+//    contourFinder.getTracker().setPersistence(15);
+//    // an object can move up to 32 pixels per frame
+//    contourFinder.getTracker().setMaximumDistance(32);
 
 
 
@@ -136,25 +137,27 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         //• all this needs to be fixed. need to check if each blob found is updated, else we don't need to
         //• do we need to track blobs? YES WE DO!@
   
-//        std::cout << contourFinder.size() << std::endl;
+        std::cout << contourFinder.size() << std::endl;
 
         // itr through the blobs, pass i
 //        int i = 0;
 //        for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
-        for(int i = 0; i < contourFinder.size(); i++) {
-            // generate a polyline from blob points
-            ofPolyline line = contourFinder.getPolyline(i);
-//            line.addVertices(blob.pts);
-//            line.setClosed(true);
+        
+        if(contourFinder.size() < MAX_BLOBS){
+            for(int i = 0; i < contourFinder.size(); i++) {
+                // generate a polyline from blob points
+                ofPolyline line = contourFinder.getPolyline(i);
+    //            line.addVertices(blob.pts);
+    //            line.setClosed(true);
 
-            // itr through procs passing polyline
-            for( auto &proc : processors ){
-                line = proc->process(i, line);
+                // itr through procs passing polyline
+                for( auto &proc : processors ){
+                    line = proc->process(i, line);
+                };
+
+    //            i++;
             };
-
-//            i++;
         };
- 
     }
     
     return procImage.getPixels();

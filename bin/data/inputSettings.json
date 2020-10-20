@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "120",
+            "far": "194",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -90,10 +90,10 @@
             "blobs": "2",
             "draw": "0",
             "on": "1",
-            "threshold": "127"
+            "threshold": "9"
         },
         "realtime": {
-            "realtime": "0"
+            "realtime": "1"
         },
         "reorder": {
             "draw": "1",
@@ -121,7 +121,7 @@
         "smooth": {
             "draw": "1",
             "on": "1",
-            "smooth": "3"
+            "smooth": "4"
         },
         "switches": {
             "ApplyFilter": "0",
