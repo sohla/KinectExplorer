@@ -29,16 +29,16 @@
             "resample": "263"
         },
         "line_osc_out57120": {
-            "ip": "127.0.0.1",
+            "ip": "192.168.20.6",
             "on": "1",
             "port": "57120",
-            "resample": "120"
+            "resample": "114"
         },
         "line_osc_out57130": {
             "ip": "192.168.20.6",
             "on": "1",
             "port": "57130",
-            "resample": "263"
+            "resample": "172"
         },
         "ndi_sender": null,
         "ndi_server": null,
@@ -52,7 +52,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "219",
+            "far": "120",
             "horz-invert": "0",
             "near": "255",
             "on": "1",
@@ -79,7 +79,7 @@
             "on": "1"
         },
         "realtime": {
-            "realtime": "1"
+            "realtime": "0"
         },
         "reorder": {
             "draw": "1",
