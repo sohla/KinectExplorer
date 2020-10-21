@@ -20,7 +20,7 @@ public:
     
     void setup(ofxPanel &gui);
     void draw(const DepthModel &model);
-    ofPolyline process(const int &index, const ofPolyline &line);
+    ofPolyline process(const BlobModel &blob);
 
 protected:
 

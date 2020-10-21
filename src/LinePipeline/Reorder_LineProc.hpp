@@ -63,18 +63,18 @@ class Reorder_LineProc : public Base_LineProc {
         return op;
     }
 
-    ofPolyline process(const int &index, const ofPolyline &line){
+    ofPolyline process(const BlobModel &blob){
         
         // check if we need to resize storage
-        if(reduceParam.get() != procLines[index].size()+1){
-            procLines[index].resize(reduceParam.get()+1);
+        if(reduceParam.get() != procLines[blob.index].size()+1){
+            procLines[blob.index].resize(reduceParam.get()+1);
         }
         
         if(onParam.get()){
             
             // find closest point in new line to start of prev line
             //ofDefaultVec3 prevPnt(ofGetMouseX(), ofGetMouseY(), 0.0);
-            ofDefaultVec3 previousPnt = procLines[index][0];
+            ofDefaultVec3 previousPnt = procLines[blob.index][0];
             
             // getResampledByCount can not gaurentee it will always return a line with ppSize
             // ofPolyline currLine = line.getResampledByCount(ppSize);
@@ -82,8 +82,8 @@ class Reorder_LineProc : public Base_LineProc {
             // so grab points using percentages
             ofPolyline currLine;
             for(float i = 0.0; i < 100.0; i+= (100.0/ reduceParam.get() )){
-                float pi = line.getIndexAtPercent(i/100.0);
-                currLine.addVertex(line[floor(pi)]);
+                float pi = blob.line.getIndexAtPercent(i/100.0);
+                currLine.addVertex(blob.line[floor(pi)]);
             }
             currLine.setClosed(true);
             
@@ -108,14 +108,14 @@ class Reorder_LineProc : public Base_LineProc {
             // rol is now index aligned with previousLine
             float f = filterParam.get();
             for (unsigned i = 0; i < rol.size(); ++i){
-                    procLines[index][i].x = (f * rol[i].x + ((1.0 - f) * procLines[index][i].x));
-                    procLines[index][i].y = (f * rol[i].y + ((1.0 - f) * procLines[index][i].y));
+                    procLines[blob.index][i].x = (f * rol[i].x + ((1.0 - f) * procLines[blob.index][i].x));
+                    procLines[blob.index][i].y = (f * rol[i].y + ((1.0 - f) * procLines[blob.index][i].y));
             }
 
         }else{
-            procLines[index] = line;
+            procLines[blob.index] = blob.line;
         }
-        return procLines[index];
+        return procLines[blob.index];
     }
     
     void draw(const DepthModel &model){

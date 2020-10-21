@@ -82,7 +82,8 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    ofColor c = ofColor::fromHsb( ofGetFrameNum() % 255 , 55, 55);
+    ofColor c = ofColor::grey;
+    c.setBrightness(25);
     ofBackground(c);
     
     gui.draw();

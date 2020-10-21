@@ -40,14 +40,14 @@ class Smooth_LineProc : public Base_LineProc {
         }
     }
     
-    ofPolyline process(const int &index, const ofPolyline &line){
+    ofPolyline process(const BlobModel &blob){
 
         if(onParam.get()){
-            procLines[index] = line.getSmoothed(smoothParam.get());
+            procLines[blob.index] = blob.line.getSmoothed(smoothParam.get());
         }else{
-            procLines[index] = line;
+            procLines[blob.index] = blob.line;
         }
-        return procLines[index];
+        return procLines[blob.index];
     }
 };
 #endif /* Smooth_LineProc_hpp */

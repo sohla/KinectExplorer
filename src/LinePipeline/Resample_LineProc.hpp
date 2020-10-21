@@ -41,14 +41,14 @@ class Resample_LineProc : public Base_LineProc {
         }
     }
     
-    ofPolyline process(const int &index, const ofPolyline &line){
+    ofPolyline process(const BlobModel &blob){
         
         if(onParam.get()){
-            procLines[index] = line.getResampledByCount(resampleParam.get());//• by oercentage!!>!?
+            procLines[blob.index] = blob.line.getResampledByCount(resampleParam.get());//• by oercentage!!>!?
         }else{
-            procLines[index] = line;
+            procLines[blob.index] = blob.line;
         }
-        return procLines[index];
+        return procLines[blob.index];
     }
 };
 #endif /* Resample_LineProc_hpp */

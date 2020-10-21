@@ -64,12 +64,12 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "194",
+            "far": "233",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
             "on": "1",
-            "vert-invert": "0"
+            "vert-invert": "1"
         },
         "osc_out": {
             "ip": "127.0.0.1",
@@ -87,10 +87,14 @@
             "recording": "0"
         },
         "pixel_to_point": {
-            "blobs": "2",
+            "blobs": "4",
+            "distance": "128",
             "draw": "0",
+            "maxRadius": "160",
+            "minRadius": "30",
             "on": "1",
-            "threshold": "9"
+            "persistance": "300",
+            "threshold": "251"
         },
         "realtime": {
             "realtime": "1"

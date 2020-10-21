@@ -115,3 +115,8 @@ a = Synth.new(\help_Buffer,[\bufnum, b], target: s);
 a.free
 s.reboot
 s.quit
+
+
+
+
+

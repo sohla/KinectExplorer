@@ -18,13 +18,37 @@
 
 #define MAX_BLOBS 4
 
+
+// handy model for collecting data from tracker and procs
+// gets passed to everything for each frame
+
+struct BlobModel {
+
+    ofPolyline line;
+    
+    unsigned int label;
+    unsigned int index;
+
+    ofVec2f previousPosition;
+    ofVec2f currentPosition;
+    ofVec2f velocity;
+    int age;
+    
+    
+    void debug(){
+        std::cout << "label:" << ofToString(label) << " index:" << ofToString(index) << std::endl;
+    }
+    
+};
+
+
 class LineProc {
     
 public:
     
     virtual void setup(ofxPanel &gui) = 0;
     virtual void draw(const DepthModel &model) = 0;
-    virtual ofPolyline process(const int &index, const ofPolyline &line) = 0;
+    virtual ofPolyline process(const BlobModel &blob) = 0;
 };
 
 #endif /* LineProc_hpp */

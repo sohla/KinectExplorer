@@ -50,15 +50,15 @@ class OSCOut_LineProc : public Base_LineProc {
         
     }
     
-    ofPolyline process(const int &index, const ofPolyline &line){
+    ofPolyline process(const BlobModel &blob){
 
         
-        if(onParam.get() && line.size() > 1 ){
+        if(onParam.get() && blob.line.size() > 0 ){
 
             string::size_type sz;
             int portInt = stoi( portParam.get(),&sz);
 
-            sender.setup(ipParam.get(), portInt + index );
+            sender.setup(ipParam.get(), portInt + blob.index );
 //            sender.setup(ipParam.get(), portInt);
 
             
@@ -67,18 +67,18 @@ class OSCOut_LineProc : public Base_LineProc {
             // so grab points using percentages
             ofPolyline currLine;
             for(float i = 0.0; i < 100.0; i+= (100.0/ resampleParam.get() )){
-                float pi = line.getIndexAtPercent(i/100.0);
-                currLine.addVertex(line[floor(pi)]);
+                float pi = blob.line.getIndexAtPercent(i/100.0);
+                currLine.addVertex(blob.line[floor(pi)]);
             }
             currLine.setClosed(true);
 
-            procLines[index] = currLine;
+            procLines[blob.index] = currLine;
             
-            if( procLines[index].size() > 0){
-                float area = ofMap(procLines[index].getArea(), 0, -130000, 0.0, 1.0);
-                float perimeter = ofMap(procLines[index].getPerimeter(), 0, 3000, 0.0, 1.0);
-                glm::vec2 center = procLines[index].getCentroid2D();
-                ofRectangle bounds = procLines[index].getBoundingBox();
+            if( procLines[blob.index].size() > 0){
+                float area = ofMap(procLines[blob.index].getArea(), 0, -130000, 0.0, 1.0);
+                float perimeter = ofMap(procLines[blob.index].getPerimeter(), 0, 3000, 0.0, 1.0);
+                glm::vec2 center = procLines[blob.index].getCentroid2D();
+                ofRectangle bounds = procLines[blob.index].getBoundingBox();
 
                 // std::cout << i << " : " << procLines[index].size() << " : " << area << " : " << perimeter << center << " : " ;
                 
@@ -86,7 +86,7 @@ class OSCOut_LineProc : public Base_LineProc {
                 ofxOscMessage m;
                 m.setAddress("/ke/line");
                 
-                m.addIntArg(index);//0
+                m.addIntArg(blob.index);//0
 
                 m.addFloatArg(area);//1
                 m.addFloatArg(perimeter);//2
@@ -100,10 +100,11 @@ class OSCOut_LineProc : public Base_LineProc {
                 m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//7
                 m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//8
 
-                m.addInt32Arg(procLines[index].size());//9
+                m.addInt32Arg(blob.label);//9
                 
-                
-                for( auto &vert :  procLines[index].getVertices()){//10..(//9)
+                m.addInt32Arg(procLines[blob.index].size());//10
+
+                for( auto &vert :  procLines[blob.index].getVertices()){//11..(//10)
                     m.addDoubleArg(vert.x);
                     m.addDoubleArg(vert.y);
                     //std::cout << vert.x << " , " << vert.y;
@@ -112,13 +113,13 @@ class OSCOut_LineProc : public Base_LineProc {
                 
                 sender.sendMessage(m, false);
             }else{
-                procLines[index] = line;
+                procLines[blob.index] = blob.line;
             }
             
             // pass thru
-            procLines[index] = line;
+            procLines[blob.index] = blob.line;
         }
-        return procLines[index];
+        return procLines[blob.index];
     }
 
     public:

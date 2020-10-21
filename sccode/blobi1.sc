@@ -1,6 +1,6 @@
 
 			(
-			var numOfBlobs = 1;
+			var numOfBlobs = 3;
 
 			var window, routine;
 			var graphView, updateGraphView;
@@ -10,7 +10,7 @@
 
 			var makePopupMenu;
 
-			var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/KinectExplorer/sccode/personalities/";
+			var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myapps/KinectExplorer/sccode/personalities/";
 			var persList = ["i","h","g","c","d","e","f","a","b"];
 
 			var paramModel = (
@@ -27,6 +27,8 @@
 						\rect: Rect(0,0,20,20),
 
 						\pWidth: Event.new(proto:paramModel),
+
+						\label: 0,
 
 						\data: [[0,0]],
 						\isNoteOn: false,
@@ -93,6 +95,8 @@
 
 				var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
 
+				// blobs.sortBy(\label);
+
 				blobs.do({|blob,i|
 
 					var prev = [];
@@ -128,7 +132,7 @@
 
 						Pen.strokeRect(blob.rect);
 
-						Pen.stringAtPoint(i.asString,blob.center.x + 20@blob.center.y);
+						Pen.stringAtPoint(i.asString + ":" + blob.label.asString, blob.center.x + 20@blob.center.y);
 
 						prev = blob.data.reshape(1,2)[0];
 						blob.data.reshape(blob.data.size,2).do({|o,j|
@@ -228,11 +232,15 @@
 								blobs[index].center = filter.(Point(msg[4]* 1000,msg[5]* 1000), blobs[index].center, 0.3);
 
 								blobs[index].rect = Rect(msg[6] * 1000,msg[7]* 1000,msg[8]* 1000,msg[9]* 1000);
-								
-								blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
 
-								blobs[index][\dataSize] = msg[10].asInteger;
-								blobs[index].data = msg.copyRange(11,400);
+								blobs[index][\label] = msg[10].asInteger;
+								
+
+								blobs[index][\dataSize] = msg[11].asInteger;
+								blobs[index].data = msg.copyRange(12,400);
+
+								// experimental
+								blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
 
 							});
 							{graphView.refresh()}.defer;

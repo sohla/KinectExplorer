@@ -39,12 +39,12 @@ void Base_LineProc::draw(const DepthModel &model){
     }
 }
 
-ofPolyline Base_LineProc::process(const int &index, const ofPolyline &line){
+ofPolyline Base_LineProc::process(const BlobModel &blob){
 
     if(onParam.get()){
-        procLines[index] = line;
+        procLines[blob.index] = blob.line;
     }
-    return procLines[index];
+    return procLines[blob.index];
 }
 
 string Base_LineProc::title(){

@@ -45,7 +45,6 @@ var name = \i;
 	
 	Pdef(name).set(\dur,beat);
 	Pdef(name).set(\octave, 1 + oct);
-blobs[0].center.y.postln;
 
 	 midiOut.control(channel, 1, ca);
 	// midiOut.control(channel, 23, cb);

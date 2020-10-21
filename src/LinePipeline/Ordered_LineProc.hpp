@@ -78,19 +78,19 @@ class Ordered_LineProc : public Base_LineProc {
     }
     
     
-    ofPolyline process(const int &index, const ofPolyline &line){
+    ofPolyline process(const BlobModel &blob){
         
         if(onParam.get()){
             
-            previousLine = procLines[index];
+            previousLine = procLines[blob.index];
             
             // new line
-            procLines[index] = line.getResampledByCount(ppSize);
+            procLines[blob.index] = blob.line.getResampledByCount(ppSize);
             
             // order by finding closest of each point point from previos line
             ordered.clear();
             float f = filterParam.get();
-            for( auto p : procLines[index]) {
+            for( auto p : procLines[blob.index]) {
                 ofDefaultVec2 op = closestPoint(previousLine, p);
                 ordered.addVertex(op.x, op.y);
             }
@@ -102,9 +102,9 @@ class Ordered_LineProc : public Base_LineProc {
             }
 
         }else{
-            procLines[index] = line;
+            procLines[blob.index] = blob.line;
         }
-        return procLines[index];
+        return procLines[blob.index];
     }
     
     void draw(const DepthModel &model){
