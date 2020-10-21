@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "233",
+            "far": "238",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -89,11 +89,11 @@
         "pixel_to_point": {
             "blobs": "4",
             "distance": "128",
-            "draw": "0",
+            "draw": "1",
             "maxRadius": "160",
             "minRadius": "30",
             "on": "1",
-            "persistance": "300",
+            "persistance": "0",
             "threshold": "251"
         },
         "realtime": {

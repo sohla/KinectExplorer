@@ -35,10 +35,12 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     contourFinder.setMinAreaRadius(minRadiusParam.get());
     contourFinder.setMaxAreaRadius(maxRadiusParam.get());
     contourFinder.setThreshold(thresholdParam.get());
-
+    contourFinder.setSortBySize(true);
+    
     contourFinder.getTracker().setPersistence(persistanceParam.get()); //in frames?
     contourFinder.getTracker().setMaximumDistance(distanceParam.get());
 
+    
 
 
     //
@@ -154,9 +156,43 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         tracker.setPersistence(persistanceParam.get());
         tracker.setMaximumDistance(distanceParam.get());
 
-        std::cout << tracker.getCurrentLabels().size() << std::endl;
+        blobs.clear();
         
+//        for(auto &to : tracker.getCurrentLabels()){
+//
+//            BlobModel bm;
+//            bm.label = to;
+//            bm.line = tracker.get
+//            blobs.insert(pair<int,int>(to, bm));
+//
+//        }
 
+        
+        for(int i=0; i< MAX_BLOBS; i++){
+
+            
+            unsigned int label = tracker.getLabelFromIndex(i);
+            
+            if(tracker.existsCurrent(label)){
+                BlobModel bm;
+                bm.label = label;
+                bm.index = i;
+                bm.line.addVertices(contourFinder.getPolyline(i).getVertices());
+                blobs.insert(std::make_pair(label, bm));
+
+                for( auto &proc : processors ){
+                    bm.line = proc->process(bm);
+                };
+            }
+        }
+        
+//        std::cout
+//            << " dead:" << tracker.getDeadLabels().size()
+//            << " current:" << tracker.getCurrentLabels().size()
+//            << " size:" << contourFinder.size()
+//            << std::endl;
+        
+/*
         
         // point pipeline begins.....
         
@@ -201,9 +237,11 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 for( auto &proc : processors ){
                     blob.line = proc->process(blob);
                 };
+                
             };
         };
-    }
+ */
+    };
     
     return procImage.getPixels();
 }

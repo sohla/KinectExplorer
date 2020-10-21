@@ -12,6 +12,7 @@
 #include "Base_PixelProc.hpp"
 #include "Base_LineProc.hpp"
 
+#include <map>
 
 
 class LinePipeline : public Base_PixelProc {
@@ -26,8 +27,10 @@ class LinePipeline : public Base_PixelProc {
     ofParameter<int> distanceParam = ofParameter<int>("distance",32,0,255);
 
     vector<Base_LineProc*> processors;
-
+    map<int, BlobModel> blobs;
+    
     void proc(){};
+
     
     
 public:
