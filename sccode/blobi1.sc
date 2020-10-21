@@ -95,7 +95,7 @@
 
 					var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
 
-					// blobs.sortBy(\label);
+					blobs.sortBy(\label);
 
 					blobs.do({|blob,i|
 
@@ -132,7 +132,7 @@
 
 							Pen.strokeRect(blob.rect);
 
-							Pen.stringAtPoint(i.asString + ":" + blob.label.asString, blob.center.x + 20@blob.center.y);
+							Pen.stringAtPoint(	g, blob.center.x + 20@blob.center.y);
 
 							prev = blob.data.reshape(1,2)[0];
 							blob.data.reshape(blob.data.size,2).do({|o,j|

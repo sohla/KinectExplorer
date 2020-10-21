@@ -47,8 +47,10 @@ class LineProc {
 public:
     
     virtual void setup(ofxPanel &gui) = 0;
-    virtual void draw(const DepthModel &model) = 0;
-    virtual ofPolyline process(const BlobModel &blob) = 0;
+    virtual void draw(const DepthModel &model, const BlobModel &blob) = 0;
+    virtual void process(BlobModel &blob) = 0;
+    
+
 };
 
 #endif /* LineProc_hpp */

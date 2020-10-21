@@ -35,19 +35,13 @@ class Smooth_LineProc : public Base_LineProc {
 
         gui.getGroup(title()).maximize();
 
-        for(int i=0; i< MAX_BLOBS; i++){
-            procLines.push_back(ofPolyline());
-        }
     }
     
-    ofPolyline process(const BlobModel &blob){
+    void process(BlobModel &blob){
 
         if(onParam.get()){
-            procLines[blob.index] = blob.line.getSmoothed(smoothParam.get());
-        }else{
-            procLines[blob.index] = blob.line;
+            blob.line = blob.line.getSmoothed(smoothParam.get());
         }
-        return procLines[blob.index];
     }
 };
 #endif /* Smooth_LineProc_hpp */

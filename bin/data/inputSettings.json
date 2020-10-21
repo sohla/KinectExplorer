@@ -1,9 +1,9 @@
 {
     "inputSettings": {
         "blur": {
-            "blur": "38",
+            "blur": "3",
             "draw": "0",
-            "on": "0"
+            "on": "1"
         },
         "dilate": {
             "draw": "0",
@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "238",
+            "far": "194",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -88,13 +88,13 @@
         },
         "pixel_to_point": {
             "blobs": "4",
-            "distance": "128",
+            "distance": "92",
             "draw": "1",
-            "maxRadius": "160",
-            "minRadius": "30",
+            "maxRadius": "255",
+            "minRadius": "36",
             "on": "1",
             "persistance": "0",
-            "threshold": "251"
+            "threshold": "218"
         },
         "realtime": {
             "realtime": "1"
@@ -106,9 +106,9 @@
             "reduce": "252"
         },
         "resample": {
-            "draw": "0",
-            "on": "0",
-            "resample": "6"
+            "draw": "1",
+            "on": "1",
+            "resample": "100"
         },
         "sliders": {
             "bgAlpha": "0.862182",
@@ -123,9 +123,9 @@
             "smooth": "0"
         },
         "smooth": {
-            "draw": "1",
+            "draw": "0",
             "on": "1",
-            "smooth": "4"
+            "smooth": "10"
         },
         "switches": {
             "ApplyFilter": "0",

@@ -19,32 +19,20 @@ void Base_LineProc::setup(ofxPanel &gui){
     // default behaviour keeps group closed
     gui.getGroup(title()).minimize();
     
-    for(int i=0; i< MAX_BLOBS; i++){
-        procLines.push_back(ofPolyline());
-    }
-
 }
 
-void Base_LineProc::draw(const DepthModel &model){
+void Base_LineProc::draw(const DepthModel &model, const BlobModel &blob){
     
     if(drawParam.get()){
         ofPushMatrix();
         ofScale( model.kinectScale);
-        
-        for( auto &line : procLines ){
-            line.draw();
-        };
-
+        blob.line.draw();
         ofPopMatrix();
     }
 }
 
-ofPolyline Base_LineProc::process(const BlobModel &blob){
+void Base_LineProc::process(BlobModel &blob){
 
-    if(onParam.get()){
-        procLines[blob.index] = blob.line;
-    }
-    return procLines[blob.index];
 }
 
 string Base_LineProc::title(){

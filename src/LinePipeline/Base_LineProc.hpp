@@ -19,16 +19,14 @@ class Base_LineProc : public LineProc {
 public:
     
     void setup(ofxPanel &gui);
-    void draw(const DepthModel &model);
-    ofPolyline process(const BlobModel &blob);
+    void draw(const DepthModel &model, const BlobModel &blob);
+    void process(BlobModel &blob);
 
 protected:
 
     ofParameter<bool> drawParam = ofParameter<bool>("draw",false);
     ofParameter<bool> onParam = ofParameter<bool>("on",true);
 
-    vector<ofPolyline> procLines;
-    
 };
 
 

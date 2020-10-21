@@ -47,10 +47,6 @@ class Ordered_LineProc : public Base_LineProc {
         // default behaviour keeps group closed
         gui.getGroup(title()).maximize();
         
-        for(int i=0; i< MAX_BLOBS; i++){
-            procLines.push_back(ofPolyline());
-        }
-        
         for(int i=0; i< ppSize; i++){
             filtered.addVertex(0,0);
         }
@@ -78,49 +74,39 @@ class Ordered_LineProc : public Base_LineProc {
     }
     
     
-    ofPolyline process(const BlobModel &blob){
+    void process(BlobModel &blob){
         
         if(onParam.get()){
             
-            previousLine = procLines[blob.index];
+            previousLine = blob.line;
             
             // new line
-            procLines[blob.index] = blob.line.getResampledByCount(ppSize);
+            blob.line = blob.line.getResampledByCount(ppSize);
             
             // order by finding closest of each point point from previos line
             ordered.clear();
             float f = filterParam.get();
-            for( auto p : procLines[blob.index]) {
-                ofDefaultVec2 op = closestPoint(previousLine, p);
-                ordered.addVertex(op.x, op.y);
-            }
-            
+//÷??            ofDefaultVec2 op = closestPoint(previousLine, blob.line);
+     //       ordered.addVertex(op.x, op.y);
+
             // filter
             for (unsigned i = 0; i < ordered.size(); ++i){
                     filtered[i].x = (f * ordered[i].x + ((1.0 - f) * filtered[i].x));
                     filtered[i].y = (f * ordered[i].y + ((1.0 - f) * filtered[i].y));
             }
 
-        }else{
-            procLines[blob.index] = blob.line;
         }
-        return procLines[blob.index];
     }
     
-    void draw(const DepthModel &model){
+    void draw(const DepthModel &model, const BlobModel &blob){
         
         if(drawParam.get()){
             ofPushMatrix();
             ofScale( model.kinectScale);
             
-            for( auto &line : procLines ){
-                line.draw();
-//                for (unsigned i = 0; i < line.size(); ++i){
-//                    ofDrawBitmapStringHighlight(to_string(i), line[i].x, line[i].y, ofColor::black, ofColor::white);
-//                }
-            };
+            blob.line.draw();
 
-            ofDrawCircle(procLines[0][0].x, procLines[0][0].y, 3);
+            ofDrawCircle(blob.line[0].x, blob.line[0].y, 3);
 
 //            ofSetColor(99, 0, 0);
 //            previousLine.draw();

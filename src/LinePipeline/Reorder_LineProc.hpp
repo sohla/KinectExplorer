@@ -41,11 +41,6 @@ class Reorder_LineProc : public Base_LineProc {
         // default behaviour keeps group closed
         gui.getGroup(title()).maximize();
         
-        for(int i=0; i< MAX_BLOBS; i++){
-            ofPolyline pl;
-            pl.resize(reduceParam.get()+1);
-            procLines.push_back(pl);
-        }
     }
     
     ofDefaultVec2 closestPoint(ofPolyline line, ofDefaultVec2 p) {
@@ -63,18 +58,18 @@ class Reorder_LineProc : public Base_LineProc {
         return op;
     }
 
-    ofPolyline process(const BlobModel &blob){
+    void process(BlobModel &blob){
         
         // check if we need to resize storage
-        if(reduceParam.get() != procLines[blob.index].size()+1){
-            procLines[blob.index].resize(reduceParam.get()+1);
+        if(reduceParam.get() != blob.line.size()+1){
+            blob.line.resize(reduceParam.get()+1);
         }
         
         if(onParam.get()){
             
             // find closest point in new line to start of prev line
             //ofDefaultVec3 prevPnt(ofGetMouseX(), ofGetMouseY(), 0.0);
-            ofDefaultVec3 previousPnt = procLines[blob.index][0];
+            ofDefaultVec3 previousPnt = blob.line[0];
             
             // getResampledByCount can not gaurentee it will always return a line with ppSize
             // ofPolyline currLine = line.getResampledByCount(ppSize);
@@ -108,26 +103,19 @@ class Reorder_LineProc : public Base_LineProc {
             // rol is now index aligned with previousLine
             float f = filterParam.get();
             for (unsigned i = 0; i < rol.size(); ++i){
-                    procLines[blob.index][i].x = (f * rol[i].x + ((1.0 - f) * procLines[blob.index][i].x));
-                    procLines[blob.index][i].y = (f * rol[i].y + ((1.0 - f) * procLines[blob.index][i].y));
+                blob.line[i].x = (f * rol[i].x + ((1.0 - f) * blob.line[i].x));
+                blob.line[i].y = (f * rol[i].y + ((1.0 - f) * blob.line[i].y));
             }
 
-        }else{
-            procLines[blob.index] = blob.line;
         }
-        return procLines[blob.index];
     }
     
-    void draw(const DepthModel &model){
+    void draw(const DepthModel &model, const BlobModel &blob){
         
         if(drawParam.get()){
             ofPushMatrix();
             ofScale( model.kinectScale);
-            
-            for( auto &line : procLines ){
-                line.draw();
-            };
-            
+            blob.line.draw();
             ofPopMatrix();
         }
     }

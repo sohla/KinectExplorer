@@ -17,7 +17,7 @@
 
 class Resample_LineProc : public Base_LineProc {
     
-    ofParameter<int> resampleParam = ofParameter<int>("resample",6,4,32);
+    ofParameter<int> resampleParam = ofParameter<int>("resample",6,4,100);
     
     string title(){
         return "resample";
@@ -36,19 +36,22 @@ class Resample_LineProc : public Base_LineProc {
         // default behaviour keeps group closed
         gui.getGroup(title()).minimize();
         
-        for(int i=0; i< MAX_BLOBS; i++){
-            procLines.push_back(ofPolyline());
-        }
     }
     
-    ofPolyline process(const BlobModel &blob){
+    void process(BlobModel &blob){
         
         if(onParam.get()){
-            procLines[blob.index] = blob.line.getResampledByCount(resampleParam.get());//• by oercentage!!>!?
-        }else{
-            procLines[blob.index] = blob.line;
+//            blob.line = blob.line.getResampledByCount(resampleParam.get());//• by oercentage!!>!?
+            
+            // so grab points using percentages
+            ofPolyline currLine;
+            for(float i = 0.0; i < 100.0; i+= (100.0/ resampleParam.get() )){
+                float pi = blob.line.getIndexAtPercent(i/100.0);
+                currLine.addVertex(blob.line[floor(pi)]);
+            }
+            currLine.setClosed(true);
+            blob.line = currLine;
         }
-        return procLines[blob.index];
     }
 };
 #endif /* Resample_LineProc_hpp */

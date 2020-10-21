@@ -18,7 +18,7 @@
 
 class OSCOut_LineProc : public Base_LineProc {
 
-    ofParameter<int> resampleParam = ofParameter<int>("resample",32,4,512);
+    ofParameter<int> resampleParam = ofParameter<int>("resample",32,4,100);
     ofParameter<string> ipParam = ofParameter<string>("ip","127.0.0.1");
     ofParameter<string> portParam = ofParameter<string>("port","57120");
 
@@ -44,13 +44,9 @@ class OSCOut_LineProc : public Base_LineProc {
         // default behaviour keeps group closed
         gui.getGroup(title()).minimize();
 
-        for(int i=0; i< MAX_BLOBS; i++){
-            procLines.push_back(ofPolyline());
-        }
-        
     }
     
-    ofPolyline process(const BlobModel &blob){
+    void process(BlobModel &blob){
 
         
         if(onParam.get() && blob.line.size() > 0 ){
@@ -72,15 +68,16 @@ class OSCOut_LineProc : public Base_LineProc {
             }
             currLine.setClosed(true);
 
-            procLines[blob.index] = currLine;
             
-            if( procLines[blob.index].size() > 0){
-                float area = ofMap(procLines[blob.index].getArea(), 0, -130000, 0.0, 1.0);
-                float perimeter = ofMap(procLines[blob.index].getPerimeter(), 0, 3000, 0.0, 1.0);
-                glm::vec2 center = procLines[blob.index].getCentroid2D();
-                ofRectangle bounds = procLines[blob.index].getBoundingBox();
+            // USE currLine from now on. we are NOT changing blob.line
+                        
+            if( currLine.size() > 0){
+                float area = ofMap(blob.line.getArea(), 0, -130000, 0.0, 1.0);
+                float perimeter = ofMap(blob.line.getPerimeter(), 0, 3000, 0.0, 1.0);
+                glm::vec2 center = blob.line.getCentroid2D();
+                ofRectangle bounds = blob.line.getBoundingBox();
 
-                // std::cout << i << " : " << procLines[index].size() << " : " << area << " : " << perimeter << center << " : " ;
+                // std::cout << i << " : " << blob.line.size() << " : " << area << " : " << perimeter << center << " : " ;
                 
                 
                 ofxOscMessage m;
@@ -102,9 +99,9 @@ class OSCOut_LineProc : public Base_LineProc {
 
                 m.addInt32Arg(blob.label);//9
                 
-                m.addInt32Arg(procLines[blob.index].size());//10
+                m.addInt32Arg(currLine.size());//10
 
-                for( auto &vert :  procLines[blob.index].getVertices()){//11..(//10)
+                for( auto &vert :  currLine.getVertices()){//11..(//10)
                     m.addDoubleArg(vert.x);
                     m.addDoubleArg(vert.y);
                     //std::cout << vert.x << " , " << vert.y;
@@ -112,14 +109,8 @@ class OSCOut_LineProc : public Base_LineProc {
 //                std::cout << m << std::endl;
                 
                 sender.sendMessage(m, false);
-            }else{
-                procLines[blob.index] = blob.line;
             }
-            
-            // pass thru
-            procLines[blob.index] = blob.line;
         }
-        return procLines[blob.index];
     }
 
     public:
