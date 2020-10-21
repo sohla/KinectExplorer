@@ -144,28 +144,19 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
     procImage.setFromPixels(pixel);
     if(onParam.get()){
 
-        
-        int min = 1;
-        int max = (model.kinectWidth * model.kinectHeight) / 1;
-
-//        contourFinder.findContours(procImage, min, max, blobsParam.get(), false);
-        
         contourFinder.setThreshold(thresholdParam.get());
         contourFinder.setMinAreaRadius(minRadiusParam.get());
         contourFinder.setMaxAreaRadius(maxRadiusParam.get());
 
         contourFinder.findContours(procImage);
         
-        
         ofxCv::RectTracker& tracker = contourFinder.getTracker();
-        
         tracker.setPersistence(persistanceParam.get());
         tracker.setMaximumDistance(distanceParam.get());
 
-        
-        
         std::cout << tracker.getCurrentLabels().size() << std::endl;
         
+
         
         // point pipeline begins.....
         
@@ -183,16 +174,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 }
             }
 //        }
-        
-        
-        //• all this needs to be fixed. need to check if each blob found is updated, else we don't need to
-        //• do we need to track blobs? YES WE DO!@
-  
-
-        // itr through the blobs, pass i
-//        int i = 0;
-//        for_each(contourFinder.blobs.begin(), contourFinder.blobs.end(), [&](ofxCvBlob blob) {
-        
+                
         if(contourFinder.size() < MAX_BLOBS){
             for(int i = 0; i < contourFinder.size(); i++) {
 
@@ -200,24 +182,13 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 blob.label = tracker.getLabelFromIndex(i); //contourFinder.getLabel(i);
                 blob.index = i;
                 
-                
                 ofPolyline line;
-                
                 std::vector<cv::Point> ch = contourFinder.getContour(i);
-                
                 for(auto &p : ch){
                     line.addVertex(ofPoint(p.x, p.y));
                 }
                 line.setClosed(true);
-                
                 blob.line = line;
-//                line.addVertices();
-                
-//                ofPolyline line = contourFinder.getPolyline(i);
-    //            line.addVertices(blob.pts);
-    //            line.setClosed(true);
-                
-
 
                 if(tracker.existsPrevious(blob.label)){
                     const cv::Rect& previous = tracker.getPrevious(blob.label);
@@ -225,15 +196,11 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                     blob.previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
                     blob.currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
                 }
-
                 
                 // itr through procs passing blob
                 for( auto &proc : processors ){
                     blob.line = proc->process(blob);
                 };
-                
-//                blob.debug();
-    //            i++;
             };
         };
     }
