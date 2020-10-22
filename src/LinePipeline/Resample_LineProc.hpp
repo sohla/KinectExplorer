@@ -17,7 +17,7 @@
 
 class Resample_LineProc : public Base_LineProc {
     
-    ofParameter<int> resampleParam = ofParameter<int>("resample",6,4,100);
+    ofParameter<int> resampleParam = ofParameter<int>("resample",6,4,400);
     
     string title(){
         return "resample";
@@ -41,16 +41,21 @@ class Resample_LineProc : public Base_LineProc {
     void process(BlobModel &blob){
         
         if(onParam.get()){
-//            blob.line = blob.line.getResampledByCount(resampleParam.get());//• by oercentage!!>!?
+            blob.line = blob.line.getResampledByCount(resampleParam.get());//• by oercentage!!>!?
             
-            // so grab points using percentages
-            ofPolyline currLine;
-            for(float i = 0.0; i < 100.0; i+= (100.0/ resampleParam.get() )){
-                float pi = blob.line.getIndexAtPercent(i/100.0);
-                currLine.addVertex(blob.line[floor(pi)]);
-            }
-            currLine.setClosed(true);
-            blob.line = currLine;
+//            // so grab points using percentages
+//            ofPolyline currLine;
+//
+////            float perc = blob.line.size() / resampleParam.get();
+//            for(float i = 0.0; i < 100.0; i++){
+//                float pi = blob.line.getIndexAtPercent(i);
+//                currLine.addVertex(blob.line[floor(pi)]);
+//            }
+//            currLine.setClosed(true);
+//
+//
+//            blob.line = currLine;
+            
         }
     }
 };
