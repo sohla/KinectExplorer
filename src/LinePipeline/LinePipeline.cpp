@@ -25,7 +25,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     group.add(thresholdParam);
     group.add(minRadiusParam);
     group.add(maxRadiusParam);
-    group.add(persistanceParam);
+//    group.add(persistanceParam);
     group.add(distanceParam);
     gui.add(group);
 
@@ -37,7 +37,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     contourFinder.setThreshold(thresholdParam.get());
 //    contourFinder.setSortBySize(true);
     
-    contourFinder.getTracker().setPersistence(persistanceParam.get()); //in frames?
+    contourFinder.getTracker().setPersistence(0); //in frames?
     contourFinder.getTracker().setMaximumDistance(distanceParam.get());
 
     
@@ -113,19 +113,36 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         contourFinder.findContours(procImage);
         
         ofxCv::RectTracker& tracker = contourFinder.getTracker();
-        tracker.setPersistence(persistanceParam.get());
+//        tracker.setPersistence(persistanceParam.get());
         tracker.setMaximumDistance(distanceParam.get());
 
         blobs.clear();
+        
+        // persistnace is 0, therefor dead can trigger a full clear of all blobs
+        if(tracker.getDeadLabels().size() > 0){
+            
+            for(int i=0; i< MAX_BLOBS; i++){
+                BlobModel blob;
+
+                // wip thru procs with no lines
+                blob.line.addVertex(0,0,0);
+                blob.index = i;
+                for( auto &proc : processors ){
+                    proc->process(blob);
+                };
+            }
+        }
         
         // first go through MAX_BLOBS and popultate blobs
         if(contourFinder.size() > 0){
         
             for(int i=0; i< MAX_BLOBS; i++){
 
+
                 unsigned int label = tracker.getLabelFromIndex(i);
                 
                 if(tracker.existsCurrent(label)){
+
                     BlobModel blob;
                     blob.label = label;
                     blob.line = contourFinder.getPolyline(i);
