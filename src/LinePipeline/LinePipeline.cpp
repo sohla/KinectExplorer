@@ -133,10 +133,14 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
             }
         }
         
+        // only itr the number of blobs we have this frame
+        int num = tracker.getCurrentLabels().size();
+        if(num >= MAX_BLOBS) num = MAX_BLOBS;
+        
         // first go through MAX_BLOBS and popultate blobs
         if(contourFinder.size() > 0){
         
-            for(int i=0; i< MAX_BLOBS; i++){
+            for(int i=0; i< num; i++){
 
 
                 unsigned int label = tracker.getLabelFromIndex(i);
