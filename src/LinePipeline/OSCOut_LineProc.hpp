@@ -59,7 +59,7 @@ class OSCOut_LineProc : public Base_LineProc {
 
             for(int i = 0; i < MAX_BLOBS; i++){
                 ofxOscSender *sender = new ofxOscSender();
-                sender->setup(ipParam.get(), portInt );
+                sender->setup(ipParam.get(), portInt + i);
                 ofxOscMessage m;
                 m.setAddress("/gyrosc/button");
                 m.addFloatArg(1.0);

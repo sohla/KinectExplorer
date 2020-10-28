@@ -55,7 +55,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 //    processors.push_back(new Ordered_LineProc());
 
     processors.push_back(new OSCOut_LineProc("127.0.0.1","57120"));
-//    processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
+    processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
 
     // TODO LineRecorderProc : render line into pixels for saving
     //
@@ -128,7 +128,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 blob.line.addVertex(0,0,0);
                 blob.index = i;
                 for( auto &proc : processors ){
-                    proc->process(blob);
+                    proc->process(blob);//• send pixels as well? 
                 };
             }
         }
