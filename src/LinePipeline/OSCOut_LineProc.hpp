@@ -84,16 +84,16 @@ class OSCOut_LineProc : public Base_LineProc {
             string::size_type sz;
             int portInt = stoi( portParam.get(),&sz);
 
+            // fast reduction
+            ofPolyline currLine = blob.line.getResampledByCount(resampleParam.get());
             
-            //            procLines[index] = line.getResampledByCount(resampleParam.get());
-            
-            // so grab points using percentages
-            ofPolyline currLine;
-            for(float i = 0.0; i < 100.0; i+= (100.0/ resampleParam.get() )){
-                float pi = blob.line.getIndexAtPercent(i/100.0);
-                currLine.addVertex(blob.line[floor(pi)]);
-            }
-            currLine.setClosed(true);
+//            // slow reduction by grab points using percentages
+//            ofPolyline currLine;
+//            for(float i = 0.0; i < 100.0; i+= (100.0/ resampleParam.get() )){
+//                float pi = blob.line.getIndexAtPercent(i/100.0);
+//                currLine.addVertex(blob.line[floor(pi)]);
+//            }
+//            currLine.setClosed(true);
 
             
             // USE currLine from now on. we are NOT changing blob.line
