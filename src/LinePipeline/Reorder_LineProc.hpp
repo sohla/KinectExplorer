@@ -39,7 +39,7 @@ class Reorder_LineProc : public Base_LineProc {
         gui.add(group);
         
         // default behaviour keeps group closed
-        gui.getGroup(title()).maximize();
+//        gui.getGroup(title()).maximize();
         
     }
     

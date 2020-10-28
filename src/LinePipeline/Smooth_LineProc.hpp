@@ -33,7 +33,7 @@ class Smooth_LineProc : public Base_LineProc {
         group.add(smoothParam);
         gui.add(group);
 
-        gui.getGroup(title()).maximize();
+//        gui.getGroup(title()).maximize();
 
     }
     

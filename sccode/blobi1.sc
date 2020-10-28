@@ -1,6 +1,6 @@
 
 				(
-				var numOfBlobs = 3;
+				var numOfBlobs = 4;
 
 				var window, routine;
 				var graphView, updateGraphView;
@@ -132,7 +132,7 @@
 
 							Pen.strokeRect(blob.rect);
 
-							Pen.stringAtPoint(	g, blob.center.x + 20@blob.center.y);
+							Pen.stringAtPoint(i.asString + ":" + blob.label.asString, blob.center.x + 20@blob.center.y);
 
 							prev = blob.data.reshape(1,2)[0];
 							blob.data.reshape(blob.data.size,2).do({|o,j|
@@ -221,7 +221,7 @@
 							var index = msg[1].asInteger;
 							//0[msg, time, addr, recvPort].postln;
 							
-							if( i == index, {
+							// if( i == index, {
 								if(blobs[index] != nil,{
 
 									blobs[index].channel = index;
@@ -229,7 +229,7 @@
 									blobs[index].area = msg[2] * 100;
 									blobs[index].perimeter = msg[3] * 100;
 
-									blobs[index].center = filter.(Point(msg[4]* 1000,msg[5]* 1000), blobs[index].center, 0.3);
+									blobs[index].center = filter.(Point(msg[4]* 1000,msg[5]* 1000), blobs[index].center, 0.9);
 
 									blobs[index].rect = Rect(msg[6] * 1000,msg[7]* 1000,msg[8]* 1000,msg[9]* 1000);
 
@@ -237,7 +237,7 @@
 									
 
 									blobs[index][\dataSize] = msg[11].asInteger;
-									blobs[index].data = msg.copyRange(12,400);
+									blobs[index].data = msg.copyRange(12,256);
 
 									// experimental
 									blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
@@ -245,9 +245,9 @@
 								});
 								{graphView.refresh()}.defer;
 
-							});
+							// });
 
-							}, '/ke/line', recvPort: 57120 + i);
+							}, '/gyrosc/line', recvPort: 57120 + i);
 					);
 				};
 				//------------------------------------------------------

@@ -1,7 +1,7 @@
 #include "ofApp.h"
 
 
-float ofApp::scale{1.65};
+//float ofApp::scale{1.65};
 
 
 //--------------------------------------------------------------
@@ -15,7 +15,7 @@ void ofApp::setup(){
     depthCamera = new KinectDepthCamera();
     depthCamera->setup(model);
     
-    gui.setup("inputSettings", "inputSettings.json", 1070, 0);
+    gui.setup("inputSettings", "inputSettings.json", 640, 0);
     
     // gui with OSC
     // can send msgs remotely (eg. from sc)

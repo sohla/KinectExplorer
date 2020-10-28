@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "194",
+            "far": "239",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -106,9 +106,9 @@
             "reduce": "252"
         },
         "resample": {
-            "draw": "1",
-            "on": "1",
-            "resample": "100"
+            "draw": "0",
+            "on": "0",
+            "resample": "4"
         },
         "sliders": {
             "bgAlpha": "0.862182",
@@ -123,7 +123,7 @@
             "smooth": "0"
         },
         "smooth": {
-            "draw": "0",
+            "draw": "1",
             "on": "1",
             "smooth": "10"
         },

@@ -55,7 +55,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 //    processors.push_back(new Ordered_LineProc());
 
     processors.push_back(new OSCOut_LineProc("127.0.0.1","57120"));
-    processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
+//    processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
 
     // TODO LineRecorderProc : render line into pixels for saving
     //

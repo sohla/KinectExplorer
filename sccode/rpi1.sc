@@ -120,3 +120,9 @@ s.quit
 
 
 
+
+a = [(\a : 1, \b : "z"),(\a : 17, \b : "a")]
+
+a.sortBy(\b)	
+
+b = Collection.newFrom(a)

@@ -18,13 +18,13 @@
 
 class OSCOut_LineProc : public Base_LineProc {
 
-    ofParameter<int> resampleParam = ofParameter<int>("resample",32,4,100);
+    ofParameter<int> resampleParam = ofParameter<int>("resample",32,4,127);
     ofParameter<string> ipParam = ofParameter<string>("ip","127.0.0.1");
     ofParameter<string> portParam = ofParameter<string>("port","57120");
 
-    ofxOscSender            sender;
     
     
+    vector<ofxOscSender*>    senders;
     
     string title(){
         return "line osc out " + portParam.get();
@@ -44,8 +44,38 @@ class OSCOut_LineProc : public Base_LineProc {
         // default behaviour keeps group closed
         gui.getGroup(title()).minimize();
 
+        
+        onParam.addListener(this, &OSCOut_LineProc::onOnParam);
+
+        
     }
     
+    
+    void onOnParam(bool& val){
+        if(val){
+            
+            string::size_type sz;
+            int portInt = stoi( portParam.get(),&sz);
+
+            for(int i = 0; i < MAX_BLOBS; i++){
+                ofxOscSender *sender = new ofxOscSender();
+                sender->setup(ipParam.get(), portInt );
+                ofxOscMessage m;
+                m.setAddress("/gyrosc/button");
+                m.addFloatArg(1.0);
+                sender->sendMessage(m, false);
+                senders.push_back(sender);
+                
+            }
+        }else{
+            
+            for(auto &s : senders){
+                free(s);
+            }
+            senders.clear();
+        }
+    };
+
     void process(BlobModel &blob){
 
         
@@ -53,9 +83,6 @@ class OSCOut_LineProc : public Base_LineProc {
 
             string::size_type sz;
             int portInt = stoi( portParam.get(),&sz);
-
-            sender.setup(ipParam.get(), portInt + blob.index );
-//            sender.setup(ipParam.get(), portInt);
 
             
             //            procLines[index] = line.getResampledByCount(resampleParam.get());
@@ -81,7 +108,7 @@ class OSCOut_LineProc : public Base_LineProc {
                 
                 
                 ofxOscMessage m;
-                m.setAddress("/ke/line");
+                m.setAddress("/gyrosc/line");
                 
                 m.addIntArg(blob.index);//0
 
@@ -106,9 +133,8 @@ class OSCOut_LineProc : public Base_LineProc {
                     m.addDoubleArg(vert.y);
                     //std::cout << vert.x << " , " << vert.y;
                 }
-//                std::cout << m << std::endl;
-                
-                sender.sendMessage(m, false);
+                    
+                senders[blob.index]->sendMessage(m, false);
             }
         }
     }
@@ -120,6 +146,11 @@ class OSCOut_LineProc : public Base_LineProc {
             portParam.set(port);
             
         };
+
+    void exit(){
+        
+        onParam.removeListener(this, &OSCOut_LineProc::onOnParam);
+    }
 
 };
 
