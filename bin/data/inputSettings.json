@@ -44,7 +44,7 @@
             "ip": "127.0.0.1",
             "on": "1",
             "port": "57120",
-            "resample": "32"
+            "resample": "76"
         },
         "line_osc_out_57130": {
             "ip": "127.0.0.1",
@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "239",
+            "far": "177",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -123,9 +123,9 @@
             "smooth": "0"
         },
         "smooth": {
-            "draw": "1",
-            "on": "1",
-            "smooth": "10"
+            "draw": "0",
+            "on": "0",
+            "smooth": "78"
         },
         "switches": {
             "ApplyFilter": "0",
