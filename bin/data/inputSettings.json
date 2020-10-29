@@ -89,7 +89,7 @@
         "pixel_to_point": {
             "blobs": "4",
             "distance": "92",
-            "draw": "1",
+            "draw": "0",
             "maxRadius": "255",
             "minRadius": "36",
             "on": "1",
@@ -123,8 +123,8 @@
             "smooth": "0"
         },
         "smooth": {
-            "draw": "0",
-            "on": "0",
+            "draw": "1",
+            "on": "1",
             "smooth": "78"
         },
         "switches": {
