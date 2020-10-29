@@ -37,7 +37,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     contourFinder.setThreshold(thresholdParam.get());
 //    contourFinder.setSortBySize(true);
     
-    contourFinder.getTracker().setPersistence(0); //in frames?
+    contourFinder.getTracker().setPersistence(0); //in frames. 0 = deadFrames used as a trigger
     contourFinder.getTracker().setMaximumDistance(distanceParam.get());
 
     
@@ -47,7 +47,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     // build line pipeline
     //
     
-    processors.push_back(new Resample_LineProc());
+//    processors.push_back(new Resample_LineProc());
     processors.push_back(new Smooth_LineProc());
 
 //

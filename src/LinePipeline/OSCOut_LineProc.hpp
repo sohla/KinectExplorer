@@ -44,19 +44,16 @@ class OSCOut_LineProc : public Base_LineProc {
         // default behaviour keeps group closed
         gui.getGroup(title()).minimize();
 
-        
         onParam.addListener(this, &OSCOut_LineProc::onOnParam);
-
-        
     }
     
     
     void onOnParam(bool& val){
-        if(val){
-            
-            string::size_type sz;
-            int portInt = stoi( portParam.get(),&sz);
 
+        string::size_type sz;
+        int portInt = stoi( portParam.get(),&sz);
+
+        if(val){
             for(int i = 0; i < MAX_BLOBS; i++){
                 ofxOscSender *sender = new ofxOscSender();
                 sender->setup(ipParam.get(), portInt + i);
@@ -65,10 +62,20 @@ class OSCOut_LineProc : public Base_LineProc {
                 m.addFloatArg(1.0);
                 sender->sendMessage(m, false);
                 senders.push_back(sender);
-                
             }
         }else{
+
+            for(int i = 0; i < MAX_BLOBS; i++){
+                ofxOscSender *sender = new ofxOscSender();
+                sender->setup(ipParam.get(), portInt + i);
+                ofxOscMessage m;
+                m.setAddress("/gyrosc/button");
+                m.addFloatArg(0.0);
+                sender->sendMessage(m, false);
+                senders.push_back(sender);
+            }
             
+            // now remove it all
             for(auto &s : senders){
                 free(s);
             }
@@ -86,15 +93,6 @@ class OSCOut_LineProc : public Base_LineProc {
 
             // fast reduction
             ofPolyline currLine = blob.line.getResampledByCount(resampleParam.get());
-            
-//            // slow reduction by grab points using percentages
-//            ofPolyline currLine;
-//            for(float i = 0.0; i < 100.0; i+= (100.0/ resampleParam.get() )){
-//                float pi = blob.line.getIndexAtPercent(i/100.0);
-//                currLine.addVertex(blob.line[floor(pi)]);
-//            }
-//            currLine.setClosed(true);
-
             
             // USE currLine from now on. we are NOT changing blob.line
                         
