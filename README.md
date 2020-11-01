@@ -11,6 +11,50 @@ jetson nano : sohla@192.168.20.14
 
 * not static ip addresses
 
+
+## Installation
+
+https://openframeworks.cc/setup/linux-install/
+
+https://gist.github.com/madelinegannon/237733e6c114f156b31366f47c1f3d32
+
+https://gist.github.com/jvcleave/e49c0b52085d040a5cd8a3385121cb91
+
+
+
+OF
+install dependencies! in scripts/ubuntu/
+
+projectGenerator -o"~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release" -t"vscode" kinectExample/
+
+do we need to pass ofx addons paths : its seems not
+to add ofx : use
+-a"ofxGui ofxCv"
+
+
+
+
+ofxKinect
+
+install libfreenect
+add rules.d to /etc/udev to bypass permissions
+xbox 360 works
+kinect for Windows does not (yet)
+
+
+Libs to add :
+ffmpeg
+also need poco : check website for a build (needs restart)
+
+ofxVideoRecorder : set path to ffmpeg /  remove some audio calls : 
+framerate issues : machine not fast enough. can build ffmpeg for cuda? 
+
+
+install : lm-sensors for temp monitoring
+
+
+
+
 OF path
 ~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release
 
