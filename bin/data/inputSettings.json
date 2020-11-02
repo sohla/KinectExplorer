@@ -1,7 +1,7 @@
 {
     "inputSettings": {
         "blur": {
-            "blur": "3",
+            "blur": "4",
             "draw": "0",
             "on": "1"
         },
@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "241",
+            "far": "120",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -87,17 +87,17 @@
             "recording": "0"
         },
         "pixel_to_point": {
-            "blobs": "4",
+            "blobs": "1",
             "distance": "92",
             "draw": "0",
-            "maxRadius": "255",
-            "minRadius": "36",
+            "maxRadius": "178",
+            "minRadius": "62",
             "on": "1",
             "persistance": "0",
             "threshold": "218"
         },
         "realtime": {
-            "realtime": "1"
+            "realtime": "0"
         },
         "reorder": {
             "draw": "1",
@@ -125,7 +125,7 @@
         "smooth": {
             "draw": "1",
             "on": "1",
-            "smooth": "78"
+            "smooth": "2"
         },
         "switches": {
             "ApplyFilter": "0",
