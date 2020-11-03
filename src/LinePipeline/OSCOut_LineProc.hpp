@@ -91,18 +91,22 @@ class OSCOut_LineProc : public Base_LineProc {
             string::size_type sz;
             int portInt = stoi( portParam.get(),&sz);
 
-            // fast reduction
+            // fast reduction : using percentage was to expensive
             ofPolyline currLine = blob.line.getResampledByCount(resampleParam.get());
             
             // USE currLine from now on. we are NOT changing blob.line
                         
+            
             if( currLine.size() > 0){
-//                float area = blob.line.getArea();
-//                float perimeter = blob.line.getPerimeter();
-                float area = ofMap(blob.line.getArea(), 0, -100000, 0.0, 1.0);
-                float perimeter = ofMap(blob.line.getPerimeter(), 0, 5000, 0.0, 1.0);
-                glm::vec2 center = blob.line.getCentroid2D();
-                ofRectangle bounds = blob.line.getBoundingBox();
+
+                // all values have been adjusted to give normals for each
+                // this does not mean values are mapped from 0..1, but within 0..1
+                
+                float area = ofMap(blob.line.getArea(), 0, -100000, 0.0, 1.0); // range is approx
+                float perimeter = ofMap(blob.line.getPerimeter(), 0, 5000, 0.0, 1.0); // range is approx
+
+                glm::vec2 center = blob.line.getCentroid2D(); // range 0..640:0..480 (pixels of cam)
+                ofRectangle bounds = blob.line.getBoundingBox();  // range 0..640:0..480 (pixels of cam)
 
                 // std::cout << i << " : " << blob.line.size() << " : " << area << " : " << perimeter << center << " : " ;
                 
@@ -114,15 +118,6 @@ class OSCOut_LineProc : public Base_LineProc {
 
                 m.addFloatArg(area);//1
                 m.addFloatArg(perimeter);//2
-
-//                m.addFloatArg(center.x);//3
-//                m.addFloatArg(center.y);//4
-//
-//                m.addFloatArg(bounds.x);//5
-//                m.addFloatArg(bounds.y);//6
-//
-//                m.addFloatArg(bounds.width);//7
-//                m.addFloatArg(bounds.height);//8
 
                 m.addFloatArg(ofMap(center.x, 0, 1000, 0.0, 1.0));//3
                 m.addFloatArg(ofMap(center.y, 0, 1000, 0.0, 1.0));//4
