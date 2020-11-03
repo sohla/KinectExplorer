@@ -20,23 +20,12 @@
 void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
     
 
+
+    //------------------------------------------
+
     processors.push_back( new NearFar_PixelProc());
-
     processors.push_back( new Blur_PixelProc());
-
-    processors.push_back( new Erode_PixelProc());
-
-//    processors.push_back( new Dilate_PixelProc());
-
-
-    
-    // TODO something up woth this proc's pixels post processing 
-//    processors.push_back( new OSCOut_PixelProc("127.0.0.1","57130"));
-
-
-    
     processors.push_back( new LinePipeline());
-
     processors.push_back( new PixelRecorderProc());
 
     //------------------------------------------

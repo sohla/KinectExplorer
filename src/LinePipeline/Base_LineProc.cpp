@@ -25,7 +25,7 @@ void Base_LineProc::draw(const DepthModel &model, const BlobModel &blob){
     
     if(drawParam.get()){
         ofPushMatrix();
-        ofScale( model.kinectScale);
+        ofScale( model.depthCameraScale);
         blob.line.draw();
         ofPopMatrix();
     }

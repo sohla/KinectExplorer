@@ -29,7 +29,7 @@ class Blur_PixelProc : public Base_PixelProc {
         group.add(blurParam);
         gui.add(group);
 
-        procImage.allocate(model.kinectWidth, model.kinectHeight);
+        procImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
 
     }
 

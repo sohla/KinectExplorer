@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "KinectDepthCamera.h"
+#include "RealSenseDepthCamera.h"
+
 #include "PixelPlayer.h"
 
 #include "PixelPipeline.hpp"
@@ -15,6 +17,8 @@
 class ofApp : public ofBaseApp{
 
         PixelSourceBase*   depthCamera;
+    
+    
         PixelPlayer     pixelPlayer;
 
         PixelPipeline pixelPipeline;

@@ -20,14 +20,14 @@ void Base_PixelProc::setup(const DepthModel &model, ofxPanel &gui){
     // default behaviour keeps group closed
     gui.getGroup(title()).minimize();
     
-    procImage.allocate(model.kinectWidth, model.kinectHeight);
+    procImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
 
 }
 
 void Base_PixelProc::draw(const DepthModel &model){
 
     if(drawParam.get()){
-        procImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+        procImage.draw(0, 0, model.depthCameraWidth * model.depthCameraScale, model.depthCameraHeight * model.depthCameraScale);
     }
 }
 

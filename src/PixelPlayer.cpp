@@ -37,7 +37,7 @@ void PixelPlayer::setup(string fileName){
 
 void PixelPlayer::draw(const DepthModel &model){
     
-    grayImage.draw(0,0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+    grayImage.draw(0,0, model.depthCameraWidth * model.depthCameraScale, model.depthCameraHeight * model.depthCameraScale);
 //    player.draw(0,0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
 //    colorImage.draw(0,0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
 }

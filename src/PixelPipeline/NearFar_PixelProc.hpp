@@ -46,9 +46,9 @@ class NearFar_PixelProc : public Base_PixelProc {
         group.add(vertInvertParam);
        gui.add(group);
         
-        depthImage.allocate(model.kinectWidth, model.kinectHeight);
-        grayThreshNear.allocate(model.kinectWidth, model.kinectHeight);
-        grayThreshFar.allocate(model.kinectWidth, model.kinectHeight);
+        depthImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
+        grayThreshNear.allocate(model.depthCameraWidth, model.depthCameraHeight);
+        grayThreshFar.allocate(model.depthCameraWidth, model.depthCameraHeight);
         
     }
 

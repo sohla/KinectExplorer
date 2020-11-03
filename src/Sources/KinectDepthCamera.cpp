@@ -35,8 +35,8 @@ void KinectDepthCamera::setup(DepthModel &model){
         ofLogNotice() << "format: " << short(kinect.getPixelFormat());
     }
 
-    model.kinectWidth = kinect.width;
-    model.kinectHeight = kinect.height;
+    model.depthCameraWidth = kinect.width;
+    model.depthCameraHeight = kinect.height;
     
     kinect.setCameraTiltAngle(model.kinectAngle);
 
@@ -45,8 +45,8 @@ void KinectDepthCamera::setup(DepthModel &model){
 
 void KinectDepthCamera::draw(DepthModel &model){
     
-    int width = model.kinectWidth * model.kinectScale;
-    int height = model.kinectHeight * model.kinectScale;
+    int width = model.depthCameraWidth * model.depthCameraScale;
+    int height = model.depthCameraHeight * model.depthCameraScale;
 
     ofSetColor(255, 255, 255);
         

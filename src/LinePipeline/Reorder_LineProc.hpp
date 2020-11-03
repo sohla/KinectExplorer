@@ -114,7 +114,7 @@ class Reorder_LineProc : public Base_LineProc {
         
         if(drawParam.get()){
             ofPushMatrix();
-            ofScale( model.kinectScale);
+            ofScale( model.depthCameraScale);
             blob.line.draw();
             ofPopMatrix();
         }

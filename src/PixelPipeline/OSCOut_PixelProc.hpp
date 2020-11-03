@@ -42,7 +42,7 @@ class OSCOut_PixelProc : public Base_PixelProc {
         group.add(portParam);
         gui.add(group);
         
-        procImage.allocate(model.kinectWidth, model.kinectHeight);
+        procImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
 
         ofxCv::imitate(previous, procImage);
         ofxCv::imitate(diff, procImage);
@@ -51,7 +51,7 @@ class OSCOut_PixelProc : public Base_PixelProc {
     void draw(const DepthModel &model){
 
         if(drawParam.get()){
-            procImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+            procImage.draw(0, 0, model.depthCameraWidth * model.depthCameraScale, model.depthCameraHeight * model.depthCameraScale);
             
             diff.draw(0, 0);
         }

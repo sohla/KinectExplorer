@@ -47,12 +47,12 @@ class NearFarColor_PixelProc : public Base_PixelProc {
         group.add(vertInvertParam);
         gui.add(group);
         
-        depthImage.allocate(model.kinectWidth, model.kinectHeight);
-        grayThreshNear.allocate(model.kinectWidth, model.kinectHeight);
-        grayThreshFar.allocate(model.kinectWidth, model.kinectHeight);
+        depthImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
+        grayThreshNear.allocate(model.depthCameraWidth, model.depthCameraHeight);
+        grayThreshFar.allocate(model.depthCameraWidth, model.depthCameraHeight);
         
-        colorImage.allocate(model.kinectWidth, model.kinectHeight, OF_IMAGE_COLOR_ALPHA);
-        colorPixels.allocate(model.kinectWidth, model.kinectHeight, OF_IMAGE_COLOR_ALPHA);
+        colorImage.allocate(model.depthCameraWidth, model.depthCameraHeight, OF_IMAGE_COLOR_ALPHA);
+        colorPixels.allocate(model.depthCameraWidth, model.depthCameraHeight, OF_IMAGE_COLOR_ALPHA);
 
     }
 
@@ -114,7 +114,7 @@ class NearFarColor_PixelProc : public Base_PixelProc {
 
         if(drawParam.get()){
 //            procImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
-            colorImage.draw(0, 0, model.kinectWidth * model.kinectScale, model.kinectHeight * model.kinectScale);
+            colorImage.draw(0, 0, model.depthCameraWidth * model.depthCameraScale, model.depthCameraHeight * model.depthCameraScale);
         }
     }
 

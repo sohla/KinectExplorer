@@ -29,7 +29,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     group.add(distanceParam);
     gui.add(group);
 
-    procImage.allocate(model.kinectWidth, model.kinectHeight);
+    procImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
 
     // setup up countour finding and tracking
     contourFinder.setMinAreaRadius(minRadiusParam.get());
@@ -74,7 +74,7 @@ void LinePipeline::draw(const DepthModel &model){
     if(drawParam.get()){
 
         ofPushMatrix();
-            ofScale(model.kinectScale, model.kinectScale);
+            ofScale(model.depthCameraScale, model.depthCameraScale);
 
         contourFinder.draw();
 
