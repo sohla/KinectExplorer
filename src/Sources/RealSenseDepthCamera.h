@@ -22,6 +22,8 @@ public:
     void setup(DepthModel &model);
     void draw(DepthModel &model);
     void update(std::function<void(const ofPixels &pixels)> updatedPixels);
+    void exit();
+
 };
 
 

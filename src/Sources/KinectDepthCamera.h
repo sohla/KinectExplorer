@@ -31,6 +31,9 @@ public:
             updatedPixels(kinect.getDepthPixels());
         }
     }
+    
+    void exit(){};
+
 };
 
 

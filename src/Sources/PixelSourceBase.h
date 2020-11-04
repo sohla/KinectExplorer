@@ -18,7 +18,7 @@ public:
     virtual void setup(DepthModel &model) = 0;
     virtual void draw(DepthModel &model) = 0;
     virtual void update(std::function<void(const ofPixels &pixels)> updatedPixels) = 0;
-
+    virtual void exit() = 0;
 };
 
 
