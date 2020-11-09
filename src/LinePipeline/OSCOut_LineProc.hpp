@@ -18,7 +18,7 @@
 
 class OSCOut_LineProc : public Base_LineProc {
 
-    ofParameter<int> resampleParam = ofParameter<int>("resample",32,4,127);
+    ofParameter<int> resampleParam = ofParameter<int>("resample",32,4,255);
     ofParameter<string> ipParam = ofParameter<string>("ip","127.0.0.1");
     ofParameter<string> portParam = ofParameter<string>("port","57120");
 
