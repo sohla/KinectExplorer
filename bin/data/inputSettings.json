@@ -47,10 +47,10 @@
             "resample": "76"
         },
         "line_osc_out_57130": {
-            "ip": "127.0.0.1",
+            "ip": "192.168.20.13",
             "on": "1",
             "port": "57130",
-            "resample": "283"
+            "resample": "127"
         },
         "ndi_sender": null,
         "ndi_server": null,

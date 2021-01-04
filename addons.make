@@ -2,6 +2,6 @@ ofxOpenCv
 ofxCv
 ofxGui
 ofxKinect
-ofxLibRealSense2
 ofxOsc
 ofxVideoRecorder
+ofxLibRealSense2
