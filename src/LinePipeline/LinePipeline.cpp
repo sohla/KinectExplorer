@@ -137,6 +137,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         int num = tracker.getCurrentLabels().size();
         if(num >= MAX_BLOBS) num = MAX_BLOBS;
         
+        
         // first go through MAX_BLOBS and popultate blobs
         if(contourFinder.size() > 0){
         

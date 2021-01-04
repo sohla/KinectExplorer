@@ -7,7 +7,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofSetFrameRate(60); // must be 30 for ffmpeg .mp4
+    ofSetFrameRate(30); // must be 30 for ffmpeg .mp4
     
     ofSetVerticalSync(true);
     ofSetBackgroundColorHex(0x111111);
