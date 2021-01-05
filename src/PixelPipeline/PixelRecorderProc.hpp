@@ -144,8 +144,10 @@ private:
     void onRecordingParam(bool& val){
         if(val){
             start("ke_depth", procImage.width , procImage.height);
+            std::cout << "start recording..." << std::endl;
         }else{
             stop();
+            std::cout << "stop recording." << std::endl;
         }
     };
 
