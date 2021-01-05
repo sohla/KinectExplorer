@@ -64,12 +64,12 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "120",
+            "far": "217",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
             "on": "1",
-            "vert-invert": "1"
+            "vert-invert": "0"
         },
         "osc_out": {
             "ip": "127.0.0.1",
@@ -90,8 +90,8 @@
             "blobs": "1",
             "distance": "92",
             "draw": "0",
-            "maxRadius": "178",
-            "minRadius": "62",
+            "maxRadius": "217",
+            "minRadius": "15",
             "on": "1",
             "persistance": "0",
             "threshold": "218"
@@ -125,7 +125,7 @@
         "smooth": {
             "draw": "1",
             "on": "1",
-            "smooth": "2"
+            "smooth": "3"
         },
         "switches": {
             "ApplyFilter": "0",
