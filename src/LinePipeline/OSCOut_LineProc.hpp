@@ -22,6 +22,8 @@ class OSCOut_LineProc : public Base_LineProc {
     ofParameter<string> ipParam = ofParameter<string>("ip","127.0.0.1");
     ofParameter<string> portParam = ofParameter<string>("port","57120");
 
+    int numBlobs = 0;
+    
     vector<ofxOscSender*>    senders;
     
     string title(){
@@ -43,6 +45,7 @@ class OSCOut_LineProc : public Base_LineProc {
         gui.getGroup(title()).minimize();
 
         onParam.addListener(this, &OSCOut_LineProc::onOnParam);
+    
     }
     
     
@@ -117,8 +120,8 @@ class OSCOut_LineProc : public Base_LineProc {
                 m.addFloatArg(area);//1
                 m.addFloatArg(perimeter);//2
 
-                m.addFloatArg(ofMap(center.x, 0, 1000, 0.0, 1.0));//3
-                m.addFloatArg(ofMap(center.y, 0, 1000, 0.0, 1.0));//4
+                m.addFloatArg(ofMap(center.x, 0, 640, 0.0, 1.0));//3
+                m.addFloatArg(ofMap(center.y, 0, 480, 0.0, 1.0));//4
 
                 m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));//5
                 m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));//6

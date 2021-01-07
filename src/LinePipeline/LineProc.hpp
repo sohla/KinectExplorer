@@ -16,7 +16,7 @@
 
 #include "PixelProc.hpp"
 
-#define MAX_BLOBS 4
+#define MAX_BLOBS 1 //•
 
 
 // handy model for collecting data from tracker and procs
