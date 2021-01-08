@@ -21,7 +21,7 @@ class OSCOut_PixelProc : public Base_PixelProc {
     ofxOscSender            sender;
 
     ofParameter<string> ipParam = ofParameter<string>("ip","127.0.0.1");
-    ofParameter<string> portParam = ofParameter<string>("port","57140");
+    ofParameter<string> portParam = ofParameter<string>("port","57120");
 
     ofPixels previous;
     ofImage diff;
@@ -80,7 +80,7 @@ class OSCOut_PixelProc : public Base_PixelProc {
          sender.setup(ipParam.get(), portInt);
 
         ofxOscMessage m;
-        m.setAddress("/ke/pixel");
+        m.setAddress("/gyrosc/pixel");
         
         m.addDoubleArg(diffMean[0]);
         sender.sendMessage(m, false);

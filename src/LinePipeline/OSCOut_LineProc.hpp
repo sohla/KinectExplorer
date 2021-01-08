@@ -131,9 +131,12 @@ class OSCOut_LineProc : public Base_LineProc {
 
                 m.addInt32Arg(blob.label);//9
                 
-                m.addInt32Arg(currLine.size());//10
+                m.addInt32Arg(blob.velocity.x);//10
+                m.addInt32Arg(blob.velocity.y);//11
 
-                for( auto &vert :  currLine.getVertices()){//11..(//10)
+                m.addInt32Arg(currLine.size());//12
+
+                for( auto &vert :  currLine.getVertices()){//13..( size = //10)
                     m.addDoubleArg(vert.x);
                     m.addDoubleArg(vert.y);
                     //std::cout << vert.x << " , " << vert.y;

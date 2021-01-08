@@ -145,6 +145,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
 
 
                 unsigned int label = tracker.getLabelFromIndex(i);
+                cv::Vec2f vel = tracker.getVelocity(i);
                 
                 if(tracker.existsCurrent(label)){
 
