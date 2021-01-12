@@ -47,8 +47,8 @@ var note = notes[0];
 
 
 
-	if( blobs[0].area > 4, {
-		if( blobs[1].area > 4, {
+		if( blobs[0].area > 4, {
+			if( blobs[1].area > 4, {
 			isHit = false;
 		},{
 			if(isHit == false, {
