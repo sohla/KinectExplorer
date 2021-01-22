@@ -20,7 +20,7 @@ struct DepthModel {
     int depthCameraWidth = 0;
     int depthCameraHeight = 0;
     int kinectAngle = 20;
-    float depthCameraScale = 1.0;
+    float depthCameraScale = 1.6;
 
 
 };
