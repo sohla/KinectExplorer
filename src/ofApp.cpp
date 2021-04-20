@@ -7,7 +7,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofSetFrameRate(30); // must be 30 for ffmpeg .mp4
+    ofSetFrameRate(60); // must be 30 for ffmpeg .mp4
     
     ofSetVerticalSync(true);
     ofSetBackgroundColorHex(0x111111);
@@ -16,7 +16,7 @@ void ofApp::setup(){
 //    depthCamera = new RealSenseDepthCamera();
     depthCamera->setup(model);
     
-    gui.setup("inputSettings", "inputSettings.json", 640, 0);
+    gui.setup("inputSettings", "inputSettings.json", 1000, 0);
     
     // gui with OSC
     // can send msgs remotely (eg. from sc)

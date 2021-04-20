@@ -64,12 +64,12 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "224",
+            "far": "66",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
             "on": "1",
-            "vert-invert": "1"
+            "vert-invert": "0"
         },
         "osc_out": {
             "ip": "127.0.0.1",
@@ -91,7 +91,7 @@
             "distance": "239",
             "draw": "0",
             "maxRadius": "255",
-            "minRadius": "42",
+            "minRadius": "10",
             "on": "1",
             "persistance": "0",
             "threshold": "218"
