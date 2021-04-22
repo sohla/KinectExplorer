@@ -8,6 +8,9 @@
 	var midiOut;
 	var oscListeners = [];
 
+	var width = Window.screenBounds.width * 0.8;
+	var height = Window.screenBounds.height * 0.8;
+
 	var makePopupMenu;
 
 	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myapps/KinectExplorer/sccode/personalities/";
@@ -28,6 +31,7 @@
 
 				\pWidth: Event.new(proto:paramModel),
 
+				\velocity: Point(0,0),
 				\label: 0,
 
 				\data: [[0,0]],
@@ -126,11 +130,16 @@
 				Pen.fillColor = cols.at(i);
 				Pen.strokeColor = cols.at(i);
 
-				Pen.fillOval(Rect(blob.center.x, blob.center.y,12,12));
+				Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
 				Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
 				Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
 
 				Pen.strokeRect(blob.rect);
+
+			    Pen.moveTo(blob.center);
+			    Pen.lineTo(Point(blob.center.x+blob.velocity.x+6, blob.center.y+blob.velocity.y+6));
+				Pen.stroke;
+
 
 				Pen.stringAtPoint(i.asString + ":" + blob.label.asString, blob.center.x + 20@blob.center.y);
 
@@ -187,7 +196,7 @@
 
 	QtGUI.palette = QPalette.dark; 
 
-	window = Window("",Rect(0,0,Window.screenBounds.width * 0.5, Window.screenBounds.height * 0.5)
+	window = Window("",Rect(0,0,width, height)
 		.center_(Window.availableBounds.center)
 	).front;
 
@@ -230,14 +239,16 @@
 						blobs[index].area = msg[2] * 100;
 						blobs[index].perimeter = msg[3] * 100;
 
-						blobs[index].center = filter.(Point(msg[4]* 1000,msg[5]* 1000), blobs[index].center, 0.9);
+						// 640 & 480 are coming from Kinect Explorer
+						blobs[index].center = filter.(Point(msg[4]* 640,msg[5]* 480), blobs[index].center, 0.9);
 
 						blobs[index].rect = Rect(msg[6] * 1000,msg[7]* 1000,msg[8]* 1000,msg[9]* 1000);
 
-						blobs[index][\label] = msg[10].asInteger;
+						blobs[index].label = msg[10].asInteger;
 						
-						//11,12 velocity
-						blobs[index][\dataSize] = msg[13].asInteger;
+						blobs[index].velocity = Point(msg[11], msg[12]);
+
+						blobs[index].dataSize = msg[13].asInteger;
 						blobs[index].data = msg.copyRange(14,256);
 
 						// experimental
