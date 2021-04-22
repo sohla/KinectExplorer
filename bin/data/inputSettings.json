@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "66",
+            "far": "140",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -97,7 +97,7 @@
             "threshold": "218"
         },
         "realtime": {
-            "realtime": "1"
+            "realtime": "0"
         },
         "reorder": {
             "draw": "1",
