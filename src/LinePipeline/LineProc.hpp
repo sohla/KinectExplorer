@@ -16,30 +16,11 @@
 
 #include "PixelProc.hpp"
 
-#define MAX_BLOBS 1 //•
+#include "BlobModel.hpp"
+
+#define MAX_BLOBS 4 //•
 
 
-// handy model for collecting data from tracker and procs
-// gets passed to everything for each frame
-
-struct BlobModel {
-
-    ofPolyline line;
-    
-    unsigned int label;
-    unsigned int index;
-
-    ofVec2f previousPosition;
-    ofVec2f currentPosition;
-    ofVec2f velocity;
-    int age;
-    
-    
-    void debug(){
-        std::cout << "label:" << ofToString(label) << " index:" << ofToString(index) << std::endl;
-    }
-    
-};
 
 
 class LineProc {

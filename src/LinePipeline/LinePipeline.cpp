@@ -118,6 +118,9 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
 
         blobs.clear();
         
+        //• feels like a HACK!
+        //• use TrackerFollower to manage Blob model.....
+        
         // persistnace is 0, therefor dead can trigger a full clear of all blobs
         if(tracker.getDeadLabels().size() > 0){
             
@@ -138,7 +141,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         if(num >= MAX_BLOBS) num = MAX_BLOBS;
         
         
-        // first go through MAX_BLOBS and popultate blobs
+        // first go through MAX_BLOBS and populate blobs
         if(contourFinder.size() > 0){
         
             for(int i=0; i< num; i++){
@@ -152,6 +155,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                     BlobModel blob;
                     blob.label = label;
                     blob.line = contourFinder.getPolyline(i);
+                    blob.index = i;
                     
                     if(tracker.existsPrevious(blob.label)){
                         const cv::Rect& previous = tracker.getPrevious(blob.label);

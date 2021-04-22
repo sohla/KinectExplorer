@@ -741,6 +741,7 @@
 		EF419E34A6E9298A6A98C415 /* cap_winrt.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = cap_winrt.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/videoio/cap_winrt.hpp; sourceTree = SOURCE_ROOT; };
 		F0656B9018BCC041F81CD5AA /* videoio.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = videoio.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/videoio.hpp; sourceTree = SOURCE_ROOT; };
 		F070AF5E3926EB2CB7A15D1B /* params.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = params.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/params.h; sourceTree = SOURCE_ROOT; };
+		F07EE9AB2631567A006D89E9 /* BlobModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlobModel.hpp; sourceTree = "<group>"; };
 		F08B15785026958C81B7CEFA /* deriv.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = deriv.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/ptr2d/deriv.hpp; sourceTree = SOURCE_ROOT; };
 		F0E9ADA5A6ADE5F14B6AF8DD /* superres.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = superres.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/superres.hpp; sourceTree = SOURCE_ROOT; };
 		F0F66CDAF4F529BF3C91085B /* videoio.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = videoio.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/videoio/videoio.hpp; sourceTree = SOURCE_ROOT; };
@@ -2212,6 +2213,7 @@
 				880835B9DF41D2CE40FAD7C0 /* Smooth_LineProc.hpp */,
 				20EB8FDE541846D84E9D43C5 /* Reorder_LineProc.hpp */,
 				ADE646D1B8AA7E840C41AE87 /* LineProc.hpp */,
+				F07EE9AB2631567A006D89E9 /* BlobModel.hpp */,
 				F280E4A9B4961172B64DF9DB /* LinePipeline.hpp */,
 			);
 			name = LinePipeline;

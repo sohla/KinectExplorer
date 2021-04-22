@@ -31,7 +31,7 @@ void ofApp::setup(){
     group.add(realtimeParam);
     gui.add(group);
     
-    pixelPlayer.setup("mandg.mov");
+    pixelPlayer.setup("test2019-12-01-18-47-56-139.mov");
     
     pixelPipeline.setup(model, gui);
 
