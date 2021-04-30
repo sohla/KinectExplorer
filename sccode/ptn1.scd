@@ -30,9 +30,17 @@
 	    Out.ar(0, [snd + tone, snd + tone]);
 	}).add;
 
+	SynthDef(\simple, {|amp = 0.1, freq = 440, decay = 5, coef = 0.1, attack = 0.02|
+
+		var env, snd, tone;
+		env = EnvGen.kr(Env.linen(attack, 0, decay * 0.25), doneAction: 2);
+		tone = SinOsc.ar([freq, freq + 1.5],0, amp * 0.6).tanh * env;
+	    Out.ar(0, tone);
+	}).add;
+
 	Ndef(\pe,
 		Pbind(
-		    \instrument, \plucktone,
+		    \instrument, \simple,
 		    \octave,[3,4],
 		    \hash, Pwhite(0,1e10),
 		    \root, Pseq([0,3,-2,1,-4,-2].stutter(21), inf),
@@ -44,9 +52,11 @@
 		    // \dur, Prand([0.1, 0.2, 0.4] * 2, inf),
 		    \dur, Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,4).floor).reciprocal * 2},
 		    \attack, Pseq([0.02,0.11,0.02,0.17], inf),
+		    \type, \midi,
+		    \midiout, midiOut,
 			\osc, Pfunc{|e| 
 				//e.postln;
-				netAddr.sendBundle(0.0, ["/shadow", e.hash, e.note, e.dur, e.attack, e.decay, e.coef]);
+				netAddr.sendBundle(0.0, ["/shadow"+e.note, e.hash, e.note, e.dur, e.attack, e.decay, e.coef]);
 			},
 		);
 	).play;
