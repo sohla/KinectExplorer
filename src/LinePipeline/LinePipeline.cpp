@@ -120,6 +120,13 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         
         //• feels like a HACK!
         //• use TrackerFollower to manage Blob model.....
+        //• YEP this is all wrong
+        //• what we need
+        //• track each blob, ant its state, born, living, died
+        //• how do we descirbe this in OSC
+        
+        
+        
         
         // persistnace is 0, therefor dead can trigger a full clear of all blobs
         if(tracker.getDeadLabels().size() > 0){

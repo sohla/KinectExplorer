@@ -44,8 +44,9 @@
 		    \instrument, \simple,
 		    \octave,[3,4],
 		    \hash, Pwhite(0,1e10),
-		    \root, Pseq([0,3,-2,1,-4,-2].stutter(21), inf),
-		    \note, Pseq([0,2,4,9,7,11], inf),
+		    // \root, Pseq([0,3,-2,1,-4,-2].stutter(21), inf),
+		    \note, Pseq([0,3,7,2,6,4,1], inf),
+		    \id, Pseq([0,1,2,3,4,5,6,7], inf),
 		    \amp, Pwhite(0.1, 0.3),
 		    \decay, Pwhite(0.4, 4),
 		    // \coef, Pseq([0.7,0.4,0.5,0.1,0.9], inf),
@@ -57,10 +58,15 @@
 		    \midiout, midiOut,
 		    \tt, Ptime(inf), 
 			\osc, Pfunc{|e| 
+<<<<<<< HEAD
 				// e.postln;
 				var clock = ptn.source.asStream.clock;
 				clock.bar.mod(4).postln; //!! somewhere in the bar !!
 				netAddr.sendBundle(0.0, ["/shadow"+e.note, e.hash, e.note, e.dur, e.attack, e.decay, e.coef]);
+=======
+				 e.id.postln;
+				netAddr.sendBundle(0.0, ["/shadow"+e.note, 8, e.note, e.dur, e.attack, e.decay, e.coef]);
+>>>>>>> 9987946f9019459de81e466148c7fef96c841d1e
 			},
 		);
 	).play(quant:1);

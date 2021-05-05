@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "140",
+            "far": "124",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -87,7 +87,7 @@
             "recording": "0"
         },
         "pixel_to_point": {
-            "blobs": "1",
+            "blobs": "4",
             "distance": "239",
             "draw": "0",
             "maxRadius": "255",
