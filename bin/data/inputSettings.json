@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "140",
+            "far": "124",
             "horz-invert": "0",
             "map": "0",
             "near": "255",

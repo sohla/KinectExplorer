@@ -249,7 +249,7 @@
 						blobs[index].velocity = Point(msg[11], msg[12]);
 
 						blobs[index].dataSize = msg[13].asInteger;
-						blobs[index].data = msg.copyRange(14,256);
+						blobs[index].data = msg.copyRange(14,512 + 14);
 
 						// experimental
 						blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
