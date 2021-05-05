@@ -5,6 +5,7 @@
 	var o;
 	var mx = Bus.control(s,1);
 	var my = Bus.control(s,1);
+	var ptn;
 	//------------------------------------------------------
 	MIDIClient.init;
 	midiOut = MIDIOut.newByName("IAC Driver", "Bus 1", dieIfNotFound: true);
@@ -38,7 +39,7 @@
 	    Out.ar(0, tone);
 	}).add;
 
-	Ndef(\pe,
+	ptn = Ndef(\pe,
 		Pbind(
 		    \instrument, \simple,
 		    \octave,[3,4],
@@ -54,13 +55,15 @@
 		    \attack, Pseq([0.02,0.11,0.02,0.17], inf),
 		    \type, \midi,
 		    \midiout, midiOut,
+		    \tt, Ptime(inf), 
 			\osc, Pfunc{|e| 
-				//e.postln;
+				// e.postln;
+				var clock = ptn.source.asStream.clock;
+				clock.bar.mod(4).postln; //!! somewhere in the bar !!
 				netAddr.sendBundle(0.0, ["/shadow"+e.note, e.hash, e.note, e.dur, e.attack, e.decay, e.coef]);
 			},
 		);
-	).play;
-
+	).play(quant:1);
 	Synth(\mouseX, [\bus, mx.index]);
 	Synth(\mouseY, [\bus, my.index]);
 	//------------------------------------------------------
