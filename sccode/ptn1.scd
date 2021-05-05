@@ -43,8 +43,9 @@
 		    \instrument, \simple,
 		    \octave,[3,4],
 		    \hash, Pwhite(0,1e10),
-		    \root, Pseq([0,3,-2,1,-4,-2].stutter(21), inf),
-		    \note, Pseq([0,2,4,9,7,11], inf),
+		    // \root, Pseq([0,3,-2,1,-4,-2].stutter(21), inf),
+		    \note, Pseq([0,1,2,3,4,5,6,7], inf),
+		    \id, Pseq([0,1,2,3,4,5,6,7], inf),
 		    \amp, Pwhite(0.1, 0.3),
 		    \decay, Pwhite(0.4, 4),
 		    // \coef, Pseq([0.7,0.4,0.5,0.1,0.9], inf),
@@ -55,8 +56,8 @@
 		    \type, \midi,
 		    \midiout, midiOut,
 			\osc, Pfunc{|e| 
-				//e.postln;
-				netAddr.sendBundle(0.0, ["/shadow"+e.note, e.hash, e.note, e.dur, e.attack, e.decay, e.coef]);
+				// e.id.postln;
+				netAddr.sendBundle(0.0, ["/shadow",8, e.note, e.dur, e.attack, e.decay, e.coef]);
 			},
 		);
 	).play;
