@@ -87,7 +87,7 @@
             "recording": "0"
         },
         "pixel_to_point": {
-            "blobs": "1",
+            "blobs": "4",
             "distance": "239",
             "draw": "0",
             "maxRadius": "255",
