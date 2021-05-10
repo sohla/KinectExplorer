@@ -54,14 +54,15 @@
 		    // \dur, Prand([0.1, 0.2, 0.4] * 2, inf),
 		    \dur, Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,4).floor).reciprocal * 2},
 		    \attack, Pseq([0.02,0.11,0.02,0.17], inf),
-		    \type, \midi,
-		    \midiout, midiOut,
+		    // \type, \midi,
+		    // \midiout, midiOut,
 		    \tt, Ptime(inf), 
 			\osc, Pfunc{|e| 
 				// e.postln;
 				var clock = ptn.source.asStream.clock;
 				clock.bar.mod(4).postln; //!! somewhere in the bar !!
-				netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
+				// netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
+				netAddr.sendMsg("/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef);
 			},
 		);
 	).play(quant:1);
