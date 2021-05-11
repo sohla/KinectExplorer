@@ -48,14 +48,14 @@
 		    // \note, Pseq([0,2,4,9,7,11], inf),
 		    \note, Prand([0,2,4,5,7,9,11], inf),
 		    \amp, Pwhite(0.1, 0.3),
-		    \decay, Pwhite(0.4, 4),
+		    \decay, Pwhite(0.2, 7),
 		    // \coef, Pseq([0.7,0.4,0.5,0.1,0.9], inf),
 		    \coef, Pfunc{ my.getSynchronous.linlin(0,1.0,0.01,0.99)},
 		    // \dur, Prand([0.1, 0.2, 0.4] * 2, inf),
 		    \dur, Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,4).floor).reciprocal * 2},
-		    \attack, Pseq([0.02,0.11,0.02,0.17], inf),
-		    // \type, \midi,
-		    // \midiout, midiOut,
+		    \attack, Pseq([0.02,0.31,0.02,0.17], inf),
+		    \type, \midi,
+		    \midiout, midiOut,
 		    \tt, Ptime(inf), 
 			\osc, Pfunc{|e| 
 				// e.postln;
