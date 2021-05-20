@@ -64,7 +64,7 @@
 		    \release, Pwhite(0.02,1.3),//Pfunc{ my.getSynchronous.linlin(0,1.0,0.02,5.5)},//Pwhite(0.05,1.3),
 		    \rel, Pkey(\release),
 		    \param1, Pwhite(1,20),
-		    \param2, Pwhite(1,2),
+		    \param2, Pwhite(1,5),
 		    \param3, 5,//Pwhite(0,7),
 
 			\osc, Pfunc{|e| 
