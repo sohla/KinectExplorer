@@ -1,29 +1,29 @@
+
 (
-SynthDef(\axx, {|attack = 0.004, release = 0.9, freq = 120, gate = 1, vib|
+SynthDef(\axx, {|attack = 0.004, release = 0.9, freq = 120, gate = 1, vib = 1|
 
 	var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
-	var sig = SinOsc.ar(freq, 0, 0.3);
-	release.poll;
+	var sig = SinOsc.ar(freq * vib, 0, 0.3);
 	Out.ar(0, sig * env);
 
-}).send(s);
+}).add;
 
 )
 
-a = Synth.new(\a, [\release,20]);
+a = Synth.new(\axx, [\release,20]);
 
 (
-	Pdef(\pp,
+	Ndef(\pp,
 		Pbind(
-			\instrument, \axx,
+			\instrument, \simple,
 			\octave, Prand([2,5,6,7,8], inf),
-			\note, Prand([0,2,-2,-4,5,7], inf),
+			\note, 30,//Prand([0,2,-2,-4,5,7], inf),
 			\root, Pseq([0,12].stutter(12), inf),
-			// \dur, Prand([1/4,1/4,1/8], inf),
+			\dur, Prand([1/4,1/4,1/8], inf),
 			\dur, 1,
 			\amp, 0.5,
-			\release, Pwhite(0.5,6, inf),
-			\vib, 100
+			\attack, Pwhite(0.005,0.6, inf),
+			\vib, 2
 		)
 	).play;
 )
@@ -128,7 +128,7 @@ a.set(d[0],0.1)
 			\dur, Pseq([0.5,0.25,0.125,0.125], inf),
 			\amp, 0.5,
 			\coef, Pwhite(0.8,0.9),
-			\ring, Pwhite(0.1,1)
+			\ring, 0.1//Pwhite(0.1,1)
 		)
 	).play(quant:1);
 )

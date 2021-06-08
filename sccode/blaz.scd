@@ -11,7 +11,7 @@ SynthDef(\blaz, {|out = 0, freq = 120, attack = 0.01, decay = 0.3, sustain = 0.1
 	).tanh  * 0.5;
 	var vib = LFCub.ar(freq * Demand.kr(gate, 0, Drand([1,2,3,4,5,6,7], inf)), 0, env, 1);
 	Out.ar(out, LeakDC.ar(sig) * env * vib);
-}).send(s);
+}).add;
 )
 
 (
