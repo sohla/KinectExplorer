@@ -1,6 +1,43 @@
 (
+SynthDef(\axx, {|attack = 0.004, release = 0.9, freq = 120, gate = 1, vib|
+
+	var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
+	var sig = SinOsc.ar(freq, 0, 0.3);
+	release.poll;
+	Out.ar(0, sig * env);
+
+}).send(s);
+
+)
+
+a = Synth.new(\a, [\release,20]);
+
+(
+	Pdef(\pp,
+		Pbind(
+			\instrument, \axx,
+			\octave, Prand([2,5,6,7,8], inf),
+			\note, Prand([0,2,-2,-4,5,7], inf),
+			\root, Pseq([0,12].stutter(12), inf),
+			// \dur, Prand([1/4,1/4,1/8], inf),
+			\dur, 1,
+			\amp, 0.5,
+			\release, Pwhite(0.5,6, inf),
+			\vib, 100
+		)
+	).play;
+)
+
+Pdef(\pp).quant = 0; 
+FreqScope.new(1400, 700, 0, server: s);
+s.peakCPU
+s.meter
+Pdef.clear
+
+
+(
 {
-	var fs = Array.makeScaleCps(groundNote: 141.62556530114, type: 'major');
+	var fs = Array.makeScaleCps(groundNote: 440, type: 'major');
 	var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];//(1..8).reciprocal;
 	var rs = [1];//(1..8).reciprocal;
 
@@ -10,7 +47,7 @@
 
 			DynKlank.ar(
 				`[fs, as, rs], 
-				LPF.ar(PinkNoise.ar(0.007),400)
+				HPF.ar(PinkNoise.ar(0.007),400)
 			) * 0.5
 
 		},
@@ -26,7 +63,7 @@
 (
 SynthDef(\dk_blobi, {|a=100,b=100,c=100,d=100,e=100,f=100,g=100,h=100, amp = 0.5|
 
-	var as = (1..8).reciprocal * 0.1;//Array.makeScaleCps(groundNote: 141.62556530114, type: 'major');
+	var as = (1..8).reciprocal * 0.7;//Array.makeScaleCps(groundNote: 141.62556530114, type: 'major');
 	var fs = [a,b*2,c*4,d*8,e*16,f*32,g*64,h*128].lag(1) ;//(1..8).reciprocal;
 	var rs = [1];//(1..8).reciprocal;
 
@@ -111,3 +148,159 @@ a.set(d[0],0.1)
 		)
 	).play(quant:1);
 )
+
+
+
+
+
+
+
+
+
+(
+b = {
+	var trig, seq, demand, cricket;
+	
+	// instead of [metro], Impulse.kr is used here. Delta t = 17 ms equates to 58.82 Hz.
+	trig = Impulse.kr(MouseX.kr(2.5,26.0));
+	
+	// the main idea of the following line was to use an approach
+	// that uses the same coefficients as described in the pd patch
+	// seq = Dseq(Array.fill(41, {|i| if(i<41, {(i+2)/9},{0}) }),inf);
+	seq = Dseq(Array.rand(42,1,4),inf);
+	demand = Demand.kr(trig,0,seq);
+	
+	// Implementation of the pd code for pulses including amplitude grow:
+	// cricket = EnvGen.ar(Env.new([0, 1, 1, 0], [0.0001, 0.0001, 0]), trig) * demand;
+	
+	// 2nd implementation: pure data seemed to slightly disobey its own specifications, 
+	// so I analysed the waveform and came up with this:
+	cricket = EnvGen.ar(Env.new([0, 1, 0], [2/44100, 0]), trig) * demand;
+	
+	
+	cricket = OnePole.ar(cricket, exp(-2pi * (1000 * SampleDur.ir)));
+	cricket = (
+			// changed the Q factor of the first 3 BPFs to approximate farnells sound 
+			BPF.ar(cricket, MouseY.kr(200,19000) + ((0..2)*50), 400.reciprocal, 100)).sum 
+			+ BPF.ar(cricket, MouseY.kr(100,17000),250.reciprocal, 42
+	);		   
+	cricket = ((cricket - OnePole.ar(cricket, exp(-2pi * (400 * SampleDur.ir)))) * 0.5)!2;
+}.play;
+)
+
+
+
+
+
+{ MoogFF.ar(LFSaw.ar([164, 164.3], 1, 0.1),MouseX.kr(4, 3398),3) }.play(s);
+
+
+
+
+
+(
+    {
+    	Splay.ar({|i|
+    		var f = 37 * 2.pow(i+1) * 0.5;
+    		Pluck.ar(BrownNoise.ar(0.05), Impulse.kr(MouseY.kr(1,100)),  f.reciprocal, f.reciprocal, MouseX.kr(0.1,10),
+        coef:MouseX.kr(-0.999, 0.999, lag:1.6))} !2)
+
+    }.play(s)
+)
+
+
+
+(
+Ndef(\x,{
+	a = SinOsc.ar([437,437.1], Ndef(\x).ar * LFNoise1.ar(0.1,3) ,LFNoise1.ar(3,2)).tanh;
+	9.do{
+		a = AllpassL.ar(a,0.3,{0.2.rand+0.1}!2,5)
+	};
+	a.tanh * 0.5
+}).play
+
+)
+
+
+
+
+
+
+
+
+
+
+(
+SynthDef(\bell, {
+	|fs=1, t60=1, pitchy=1, amp=0.25, gate=1|
+	var sig, exciter;
+	//exciter = Impulse.ar(0);
+	exciter = WhiteNoise.ar() * EnvGen.ar(Env.perc(0.001, 0.05), gate) * 0.05;
+	sig = Klank.ar(
+		`[
+			[1, 2, 2.803, 3.871, 5.074, 7.81, 10.948, 14.421],   // freqs
+			[1, 0.044, 0.891, 0.0891, 0.794, 0.1, 0.281, 0.079], // amplitudes
+			[1, 0.205, 1, 0.196, 0.339, 0.047, 0.058, 0.047]*t60     // ring times
+		],
+		exciter,
+		freqscale:fs*pitchy);
+	// sig = FreeVerb.ar(sig) * amp;
+	DetectSilence.ar(sig * amp, 0.001, 0.5, doneAction:2);
+	Out.ar(0, sig!2);
+}).add
+)
+
+
+// 2. Test a single note
+x = Synth(\bell, [\fs, 60.midicps, \t60, 9.177, \pitchy, 8]);
+
+
+// 3. Test different textures
+
+// glokenspiel
+(
+Pbind(
+	\instrument, \bell,
+	\fs, Pseq( (60..72), 1).midicps,
+	\t60, 6,
+	\pitchy, 4,
+	\dur, 0.25
+).play;
+)
+
+// tubular bells
+(
+Pbind(
+	\instrument, \bell,
+	\fs, Pseq( (60..72), 1).midicps,
+	\t60, 9,
+	\pitchy, 1,
+	\dur, 1
+).play;
+)
+
+// xilophone
+(
+Pbind(
+	\instrument, \bell,
+	\fs, Pseq( (60..72), 1).midicps,
+	\t60, 1,
+	\pitchy, 4,
+	\dur, 0.25
+).play;
+)
+
+// marimba
+(
+Pbind(
+	\instrument, \bell,
+	\fs, Pseq( (60..72), inf).midicps,
+	\t60, 0.5,
+	\pitchy, 0.25,
+	\dur, 0.25
+).play;
+)
+
+
+
+
