@@ -73,8 +73,8 @@
 
 //------------------------------------------------------
 ~reload = {|model|
-	postf("reload : % \n", model.file);
-	Ndef(\blazPtn).stop;
+	postf("reload : % %\n", model.file, Ndef(\blazPtn).isPlaying);
+	if(Ndef(\blazPtn).isPlaying, {Ndef(\blazPtn).stop; ~init.(model) });
 };
 
 //------------------------------------------------------

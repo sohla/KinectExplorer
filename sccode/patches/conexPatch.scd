@@ -85,7 +85,8 @@
 //------------------------------------------------------
 ~reload = {|model|
 	postf("reload : % \n", model.file);
-	Ndef(\conexPtn).stop;
+	if(Ndef(\conexPtn).isPlaying, {Ndef(\conexPtn).stop; ~init.(model) });
+
 };
 
 //------------------------------------------------------

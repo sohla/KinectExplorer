@@ -1,13 +1,14 @@
 (
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
 	var netAddr = NetAddr.new("127.0.0.1", 10001);
-	var window;
-	var loadPatch;
+	var window, freqScope;
+	var loadPatch, unloadPatch, patchButton;
 
 
 //------------------------------------------------------
 	var freeAll = {
 
+		freqScope.kill;
 		Ndef.clear(0);
 		s.freeAll;
 		s.quit;
@@ -16,14 +17,20 @@
 
 
 	//------------------------------------------------------
+	var row = 2, col = 2;
 	var models = [
 		(\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		
+		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 
 	];
-	var currentModel = models[0];
 	//------------------------------------------------------
 
 	var bootBeeServer = {|f|
@@ -54,48 +61,76 @@
 		var path = PathName.new(patchesPath++model.file);
 		var file = File.new(path.asAbsolutePath,"r");
 		var str = file.readAllString;
-		model.env = Environment.make {
+		var env = Environment.make {
 			interpret(str);
 		};
-		if(reload == true,{
-			currentModel.env.use{~reload.(currentModel)};
+		// if(reload == true,{
+		// 	currentModel.env.use{~reload.(currentModel)};
 
-		},{
-			currentModel.env.use{~deinit.(currentModel)};
-		});
-		model.env.use{~init.(model)};
+		// },{
+		// 	currentModel.env.use{~deinit.(currentModel)};
+		// });
 
-		currentModel = model;
+		model.env = env;
+		// model.env.use{~init.(model)};
+
+		//currentModel = model;
 		// s.queryAllNodes;
 	};
 
 	//------------------------------------------------------
 
-	//------------------------------------------------------
+	// unloadPatch = {|model|
+	// 	model.env.use{~deinit.(model)};
+	// };
+	// //------------------------------------------------------
 
 	//------------------------------------------------------
-
+	patchButton = {|i|{|j|
+		// postf(">> % % : %\n",i,j, (i * models.size.half) + j);
+		var index = (i * col) + j;
+		var m = models[index];
+		if( m != nil,{
+			Button()
+				.states_([[m.file, Color.gray(0.2)],[m.file, Color.green(0.8)]])
+				.font_(Font(size:24))
+				.minHeight_(100)
+				.minWidth_(100)
+				.action_({|b|
+					if(b.value == 1,{
+						// loadPatch.(models[index]);
+						m.env.use{~init.(m)};
+					},{
+						// unloadPatch.(models[index]);
+						m.env.use{~deinit.(m)};
+					});
+				})
+		});
+	}!col}!row;
 
 	//------------------------------------------------------
 
 	QtGUI.palette = QPalette.dark; 
-	window = Window("",Rect(0,0,Window.screenBounds.width/4, Window.screenBounds.height/4)
+	window = Window("",Rect(0,0,Window.screenBounds.width/2, Window.screenBounds.height/2)
 		.center_(Window.availableBounds.leftBottom)
 	).front;
 	//------------------------------------------------------
 	window.onClose = ({ freeAll.() });
 	CmdPeriod.doOnce({ freeAll.() });
 
-	window.layout = HLayout(
-		PopUpMenu()
-			.items_(models.collect({|o,i| o.file}))
-			.action_({|p| loadPatch.(models[p.value]) })
-			.valueAction_(0),
+	window.layout = VLayout(
 		Button()
-			.states_([["reload"]])
+			.states_([["reload", Color.yellow]])
+			.maxWidth_(100)
 			.action_({|b|
-				loadPatch.(currentModel, true);
-			})
+				models.do({|m| m.env.use{~reload.(m)} })
+			}),
+		GridLayout.rows(*patchButton.()),	
+		freqScope = FreqScopeView()
+			.freqMode_(1)
+			.active_(true),
+
+		
 	);
 
 
@@ -105,12 +140,14 @@
 		SynthDef(\mouseX, { |bus| Out.kr(bus, MouseX.kr(0,1.0))}).add;
 		SynthDef(\mouseY, { |bus| Out.kr(bus, MouseY.kr(0,1.0))}).add;
 
-		currentModel = models[0];
-		loadPatch.(models[0]);
-
+		// currentModel = models[0];
+		// loadPatch.(models[0]);
+		models.do({|m| loadPatch.(m)});
 	});
 
 
 )
 
 
+
+{{2}!2}!2

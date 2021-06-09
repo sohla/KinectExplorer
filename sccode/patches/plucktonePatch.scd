@@ -1,16 +1,13 @@
-
-
-
-
 var mx = Bus.control(s,1);
 var my = Bus.control(s,1);
+var mxs, mys;
 
 //------------------------------------------------------
 ~init = {|model|
 	postf("init : % \n", model.file);
 
-	Synth(\mouseX, [\bus, mx.index]);
-	Synth(\mouseY, [\bus, my.index]);
+	mxs = Synth(\mouseX, [\bus, mx.index]);
+	mys = Synth(\mouseY, [\bus, my.index]);
 
 	SynthDef(\plucktone, {|amp = 0.1, freq = 440, release = 5, coef = 0.1, attack = 0.02|
 
@@ -95,7 +92,15 @@ var my = Bus.control(s,1);
 //------------------------------------------------------
 ~reload = {|model|
 	postf("reload : % \n", model.file);
-	Ndef(\plucktonePtn).stop;
+	if(Ndef(\plucktonePtn).isPlaying, {
+		Ndef(\plucktonePtn).stop; 
+		mxs.free;
+		mys.free;
+		mx.getSynchronous.free;
+		my.getSynchronous.free;
+		~init.(model); 
+	});
+
 };
 
 //------------------------------------------------------
