@@ -71,7 +71,7 @@
 		    \decay, Pwhite(0.02,1.2),
 		    \release, Pfunc{ my.getSynchronous.linlin(0,1.0,0.02,5.5)},//Pwhite(0.05,1.3),
 		    \rel, Pkey(\release),
-		    \vib, Pwhite(1.0,16.0),
+		    \vib, 50,//Pwhite(1.0,16.0),
 		    \vibamp, Pwhite(0.04,0.7),
 
 		    //visuals
