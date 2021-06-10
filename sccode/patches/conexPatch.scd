@@ -22,7 +22,7 @@
 			`[fs * LFCub.ar(ff,0,MouseY.kr(0.01,0.1)*env,1), as, rs], 
 			imp,
 			[1,1.012], 0 ,MouseX.kr(0.01,1.0)) ;
-		Out.ar(out, sig * amp * env * 30);
+		Out.ar(out, sig * amp * env * 50);
 
 	}).add;
 	

@@ -2,7 +2,7 @@
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
 	var netAddr = NetAddr.new("127.0.0.1", 10001);
 	var window, freqScope;
-	var loadPatch, unloadPatch, patchButton;
+	var loadPatch, patchButton;
 
 
 //------------------------------------------------------
@@ -18,7 +18,7 @@
 
 	//------------------------------------------------------
 	var row = 2, col = 2;
-	var models = [
+	var patches = [
 		(\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -33,7 +33,7 @@
 	];
 	//------------------------------------------------------
 
-	var bootBeeServer = {|f|
+	var bootServer = {|f|
 	
 		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
@@ -55,7 +55,7 @@
 			f.();
 		};
 	};
-	//------------------------------------------------------
+
 	//------------------------------------------------------------
 	loadPatch = {|model, reload = false|
 		var path = PathName.new(patchesPath++model.file);
@@ -64,32 +64,13 @@
 		var env = Environment.make {
 			interpret(str);
 		};
-		// if(reload == true,{
-		// 	currentModel.env.use{~reload.(currentModel)};
-
-		// },{
-		// 	currentModel.env.use{~deinit.(currentModel)};
-		// });
-
 		model.env = env;
-		// model.env.use{~init.(model)};
-
-		//currentModel = model;
-		// s.queryAllNodes;
 	};
 
 	//------------------------------------------------------
-
-	// unloadPatch = {|model|
-	// 	model.env.use{~deinit.(model)};
-	// };
-	// //------------------------------------------------------
-
-	//------------------------------------------------------
 	patchButton = {|i|{|j|
-		// postf(">> % % : %\n",i,j, (i * models.size.half) + j);
 		var index = (i * col) + j;
-		var m = models[index];
+		var m = patches[index];
 		if( m != nil,{
 			Button()
 				.states_([[m.file, Color.gray(0.2)],[m.file, Color.green(0.8)]])
@@ -97,23 +78,20 @@
 				.minHeight_(100)
 				.minWidth_(100)
 				.action_({|b|
-					if(b.value == 1,{
-						// loadPatch.(models[index]);
-						m.env.use{~init.(m)};
-					},{
-						// unloadPatch.(models[index]);
-						m.env.use{~deinit.(m)};
+					if(b.value == 1,
+						{m.env.use{~init.(m)}},
+						{m.env.use{~deinit.(m)}
 					});
 				})
 		});
 	}!col}!row;
 
 	//------------------------------------------------------
-
 	QtGUI.palette = QPalette.dark; 
 	window = Window("",Rect(0,0,Window.screenBounds.width/2, Window.screenBounds.height/2)
 		.center_(Window.availableBounds.leftBottom)
 	).front;
+
 	//------------------------------------------------------
 	window.onClose = ({ freeAll.() });
 	CmdPeriod.doOnce({ freeAll.() });
@@ -123,26 +101,21 @@
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
 			.action_({|b|
-				models.do({|m| m.env.use{~reload.(m)} })
+				patches.do({|m| m.env.use{~reload.(m)} })
 			}),
 		GridLayout.rows(*patchButton.()),	
 		freqScope = FreqScopeView()
 			.freqMode_(1)
-			.active_(true),
-
-		
+			.active_(true),	
 	);
 
-
-	bootBeeServer.({
-		"hi".postln;
+	bootServer.({
 
 		SynthDef(\mouseX, { |bus| Out.kr(bus, MouseX.kr(0,1.0))}).add;
 		SynthDef(\mouseY, { |bus| Out.kr(bus, MouseY.kr(0,1.0))}).add;
 
-		// currentModel = models[0];
-		// loadPatch.(models[0]);
-		models.do({|m| loadPatch.(m)});
+		// load all data into patches
+		patches.do({|m| loadPatch.(m)});
 	});
 
 
