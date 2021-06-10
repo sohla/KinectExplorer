@@ -17,14 +17,14 @@
 
 
 	//------------------------------------------------------
-	var row = 2, col = 2;
+	var row = 2, col = 3;
 	var patches = [
 		(\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		
-		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		(\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -36,9 +36,9 @@
 	var bootServer = {|f|
 	
 		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		// var output = ServerOptions.devices.indexOfEqual("SFandSC");
-		// var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		 // var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
+		var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 
 		o = Server.local.options;
@@ -57,7 +57,7 @@
 	};
 
 	//------------------------------------------------------------
-	loadPatch = {|model, reload = false|
+	loadPatch = {|model|
 		var path = PathName.new(patchesPath++model.file);
 		var file = File.new(path.asAbsolutePath,"r");
 		var str = file.readAllString;
@@ -101,7 +101,10 @@
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
 			.action_({|b|
-				patches.do({|m| m.env.use{~reload.(m)} })
+				patches.do({|m| 
+					loadPatch.(m);
+					m.env.use{~reload.(m)}; 
+				})
 			}),
 		GridLayout.rows(*patchButton.()),	
 		freqScope = FreqScopeView()

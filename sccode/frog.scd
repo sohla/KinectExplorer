@@ -12,11 +12,13 @@ SynthDef(\frog, {|attack = 0.004, release = 1.9, freq = 120, gate = 1, vib = 1|
 	);
 	var sub = SinOsc.ar(freq, [0,1.36], 0.5);
 	Out.ar(0, (sig + sub) * env);
-
 }).add;
 
 )
+
+s.avgCPU
 s.meter
+
 a = Synth.new(\frog, [\release,2]);
 
 (
@@ -26,7 +28,6 @@ a = Synth.new(\frog, [\release,2]);
 			\octave, Pseq([2,4,5,4,5], inf),
 			\note, Pseq([0,7,11,16], inf),
 			\root, Pseq([0,4,-1, 2].stutter(20), inf),
-			// \dur, Prand([1/4,1/4,1/8], inf),
 			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5], inf),
 			\amp, 0.5,
 			\attack, Pwhite(0.001,0.006, inf),

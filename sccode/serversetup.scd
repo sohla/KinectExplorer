@@ -5,8 +5,8 @@
 	 // var output = ServerOptions.devices.indexOfEqual("External Headphones");
 	// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 	var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-	var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-	// var output = ServerOptions.devices.indexOfEqual("SFandSC");
+	// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	var output = ServerOptions.devices.indexOfEqual("SFandSC");
 	// var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 	// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 
