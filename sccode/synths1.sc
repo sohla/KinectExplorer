@@ -37,7 +37,7 @@ Pdef.clear
 
 (
 {
-	var fs = Array.makeScaleCps(groundNote: 440, type: 'major');
+	var fs = Array.makeScaleCps(groundNote: 110, type: 'major');
 	var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];//(1..8).reciprocal;
 	var rs = [1];//(1..8).reciprocal;
 
@@ -192,7 +192,7 @@ b = {
 
 
 
-{ MoogFF.ar(LFSaw.ar([164, 164.3], 1, 0.1),MouseX.kr(4, 3398),3) }.play(s);
+{ MoogFF.ar(LFSaw.ar([55, 55.3], 1, 0.1),MouseX.kr(4, 3398),3) }.play(s);
 
 
 
@@ -201,7 +201,7 @@ b = {
 (
     {
     	Splay.ar({|i|
-    		var f = 37 * 2.pow(i+1) * 0.5;
+    		var f = 55 * 2.pow(i+1) * 0.5;
     		Pluck.ar(BrownNoise.ar(0.05), Impulse.kr(MouseY.kr(1,100)),  f.reciprocal, f.reciprocal, MouseX.kr(0.1,10),
         coef:MouseX.kr(-0.999, 0.999, lag:1.6))} !2)
 
@@ -212,7 +212,7 @@ b = {
 
 (
 Ndef(\x,{
-	a = SinOsc.ar([437,437.1], Ndef(\x).ar * LFNoise1.ar(0.1,3) ,LFNoise1.ar(3,2)).tanh;
+	a = SinOsc.ar([55,55.5], Ndef(\x).ar * LFNoise1.ar(0.1,3) ,LFNoise1.ar(3,2)).tanh;
 	9.do{
 		a = AllpassL.ar(a,0.3,{0.2.rand+0.1}!2,5)
 	};
@@ -221,6 +221,29 @@ Ndef(\x,{
 
 )
 
+(
+{
+	var fs = Array.makeScaleCps(groundNote: 440, type: 'major');
+	var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];//(1..8).reciprocal;
+	var rs = [1];//(1..8).reciprocal;
+
+	fs.size.postln;
+	Splay.arFill(16,
+		{
+
+			DynKlank.ar(
+				`[fs, as, rs], 
+				HPF.ar(PinkNoise.ar(0.007),400)
+			) * 0.5
+
+		},
+		1,
+		1,
+		0);
+
+
+}.play;
+)
 
 
 

@@ -21,7 +21,7 @@ SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.3, su
 			\note, Prand([0,4,5,7,10,12], inf),
 			\root, Pseq([0,3,-2].stutter(8*8), inf),
 			\dur, 1/8,
-			\amp, 0.5,
+			\amp, 0.3,
 			\harm, Prand([1,2,3,4,5,6,7,8], inf)
 		)
 	).play;
