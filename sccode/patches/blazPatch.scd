@@ -17,7 +17,7 @@
 			MouseY.kr(20,10900,\exponential) - freq)
 		).tanh  * 0.5;
 		var vib = LFCub.ar(freq * harm, 0, env, 1);
-		Out.ar(out, {LeakDC.ar(sig) * amp * env * vib} !4) ;
+		Out.ar(out, LeakDC.ar(sig) * amp * env * vib) ;
 	}).add;
 
 	Ndef(\blazPtn,

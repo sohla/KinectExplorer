@@ -19,7 +19,7 @@
 			-4
 		);
 		var sub = SinOsc.ar(freq, [0,1.36], 0.5);
-		Out.ar(0, ({sig}!4 + sub) * env);
+		Out.ar(0, (sig + sub) * env);
 	}).add;
 
 	
@@ -32,7 +32,7 @@
 			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5], inf),
 			\amp, 0.5,
 			\attack, Pwhite(0.001,0.006, inf),
-			\release, Pwhite(0.1,1.9, inf),
+			\release, Pwhite(0.3,1.9, inf),
 		    \rel, Pkey(\release),
 		    \vib, 50,//Pwhite(1.0,16.0),
 
@@ -43,13 +43,13 @@
 		    \param3, 3,
 		    \sx,  0,
 		    \sy,  0,
-		    \ex, Prand([0,-0.1,0.1], inf),
-		    \ey, Pseq([0,-0.1,0.1], inf),
+		    \ex, Prand([0,-0.8,0.8], inf),
+		    \ey, Pseq([0,-0.8,0.8], inf),
 
 		    // osc out
 			\osc, Pfunc{|e| 
 				//var clock = ptn.source.asStream.clock;
-				// e.rel.postln;
+				 // e.postln;
 				// clock.bar.mod(4).postln; //!! somewhere in the bar !!
 				// netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
 				//["/shadow",e.sh, e.dur, e.attack, e.rel, e.param1, e.octave.linlin(3,5,1,2).reciprocal * 2 , e.sx, e.sy, e.ex, e.ey].postln;

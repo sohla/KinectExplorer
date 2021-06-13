@@ -36,9 +36,9 @@
 	var bootServer = {|f|
 	
 		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 // var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
-		var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 
 		o = Server.local.options;

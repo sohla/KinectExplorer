@@ -24,7 +24,7 @@ var mxs, mys;
 		        coef: coef,
 		        amp: env * 0.001);
 		LocalOut.ar(snd + tone);
-	    Out.ar(0, [snd + tone, snd + tone]);
+	    Out.ar(0, snd + tone, snd + tone);
 	}).add;
 
 	Ndef(\plucktonePtn,
@@ -59,7 +59,7 @@ var mxs, mys;
 		    // osc out
 			\osc, Pfunc{|e| 
 				//var clock = ptn.source.asStream.clock;
-				// e.rel.postln;
+				e.proxy.key.postln;
 				// clock.bar.mod(4).postln; //!! somewhere in the bar !!
 				// netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
 				//["/shadow",e.sh, e.dur, e.attack, e.rel, e.param1, e.octave.linlin(3,5,1,2).reciprocal * 2 , e.sx, e.sy, e.ex, e.ey].postln;
