@@ -1,5 +1,5 @@
 (
-SynthDef(\frog, {|attack = 0.004, release = 1.9, freq = 120, gate = 1, vib = 1|
+SynthDef(\frog, {|attack = 0.004, release = 1.9, freq = 120, gate = 1, vib = 1, amp = 0.1|
 
 	var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
 	var sig = MoogFF.ar(
@@ -11,8 +11,8 @@ SynthDef(\frog, {|attack = 0.004, release = 1.9, freq = 120, gate = 1, vib = 1|
 		-4
 	);
 	var sub = SinOsc.ar(freq, [0,1.36], 0.5);
-	Out.ar(0, (sig + sub) * env);
-}).add;
+	Out.ar(0, (sig + sub) * env * amp);
+}).add
 
 )
 
@@ -25,13 +25,13 @@ a = Synth.new(\frog, [\release,2]);
 	Ndef(\frogPtn,
 		Pbind(
 			\instrument, \frog,
-			\octave, Pseq([2,4,5,4,5], inf),
-			\note, Pseq([0,7,11,16], inf),
+			\octave, Pseq([2,4,5,4,5] + 1, inf),
+			\note, Pseq([0,7,4], inf),
 			\root, Pseq([0,4,-1, 2].stutter(20), inf),
-			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5], inf),
-			\amp, 0.5,
-			\attack, Pwhite(0.001,0.006, inf),
-			\release, Pwhite(0.1,0.9, inf),
+			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5] * 10, inf),
+			\amp, 0.1,
+			\attack, Pwhite(2.001,0.006, inf),
+			\release, Pwhite(29.1,16.9, inf),
 		)
 	).play;
 )
