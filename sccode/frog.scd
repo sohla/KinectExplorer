@@ -29,9 +29,13 @@ a = Synth.new(\frog, [\release,2]);
 			\note, Pseq([0,7,4], inf),
 			\root, Pseq([0,4,-1, 2].stutter(20), inf),
 			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5] * 10, inf),
-			\amp, 0.1,
+			\amp, 0.03,
 			\attack, Pwhite(2.001,0.006, inf),
 			\release, Pwhite(29.1,16.9, inf),
 		)
 	).play;
 )
+
+
+Ndef(\frogPtn).fadeTime = 15;
+Ndef(\frogPtn).end;
