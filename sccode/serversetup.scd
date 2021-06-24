@@ -5,8 +5,13 @@
 	var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
 	 // var output = ServerOptions.devices.indexOfEqual("External Headphones");
 	// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+<<<<<<< HEAD
 	// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
 	// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+=======
+	var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+>>>>>>> f4c9f9ffc2a9fa402676af3132d941747d98a144
 	// var output = ServerOptions.devices.indexOfEqual("SFandSC");
 	// var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 	var output = ServerOptions.devices.indexOfEqual("Built-in Output");

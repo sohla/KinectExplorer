@@ -14,11 +14,11 @@
 			LFSaw.ar(
 				[freq, freq + (freq * LFCub.ar(freq*MouseY.kr(0.5, 3, lag: 0.3), 0, 0.49, 0.006) )], 
 				[0,0.5], 
-				0.5),
+				0.4),
 			env.linlin(0,1,500, MouseX.kr(100, 10000, lag: 0.3)),
 			-4
 		);
-		var sub = SinOsc.ar(freq, [0,1.36], 0.5);
+		var sub = SinOsc.ar(freq, [0,1.36], 0.4);
 		Out.ar(0, (sig + sub) * env);
 	}).add;
 
