@@ -2,7 +2,7 @@
 {
 var root, scale;
 		var trig, p, s, exc, x, freq;
-		root = 20;
+		root = 40;
 		// scale = #[0,7,9,11,14,16];
 			freq = (root).midicps;
 			exc = BrownNoise.ar([0.007,0.007]) * max(0, LFNoise1.kr(exprand(0.125,0.5), 0.6, 0.4));

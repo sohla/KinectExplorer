@@ -31,7 +31,7 @@ a = Synth.new(\drawing1, [\release,22]);
 	Ndef(\drawing1,
 		Pbind(
 			\instrument, \drawing1,
-			\octave, Pseq([2,4,5,4,5], inf),
+			\octave, Pseq([4,5,4,5], inf),
 			\note, Pseq([0,7,16], inf),
 			\root, Pseq([0,4,-1, 2].stutter(20), inf),
 			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5] * 10, inf),

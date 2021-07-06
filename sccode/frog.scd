@@ -39,3 +39,5 @@ a = Synth.new(\frog, [\release,2]);
 
 Ndef(\frogPtn).fadeTime = 15;
 Ndef(\frogPtn).end;
+
+

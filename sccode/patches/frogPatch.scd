@@ -86,3 +86,4 @@
 
 };
 
+FreqScope.new(400, 200, 0, server: s);

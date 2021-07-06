@@ -18,7 +18,23 @@ SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, rel
 
 }).add;
 )
+(	
+	Ndef(\ptn,
+		Pbind(
+			\instrument, \conex,
+			\octave, Prand([3,4,5,6,7], inf),
+			\note, Prand([0,2,-2,-4,5,7], inf),
+			\root, Pseq([0].stutter(12), inf),
+			\dur, Prand([1/4,1/4,1/8] * 4, inf),
+			// \dur, Prand([1/3], inf),
+			\amp, 0.2,
+			\attack, Pwhite(1.003,3.01),
+			\release, Pwhite(3.1,9.6),
+			\vib, Prand([1,2,20,200], inf)
+		)
+	).play;
 
+)
 
 
 (	

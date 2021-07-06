@@ -37,7 +37,7 @@ Pdef.clear
 
 (
 {
-	var fs = Array.makeScaleCps(groundNote: 110, type: 'major');
+	var fs = Array.makeScaleCps(groundNote: 55, type: 'major');
 	var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];//(1..8).reciprocal;
 	var rs = [1];//(1..8).reciprocal;
 
@@ -47,7 +47,7 @@ Pdef.clear
 
 			DynKlank.ar(
 				`[fs, as, rs], 
-				HPF.ar(PinkNoise.ar(0.007),400)
+				LPF.ar(PinkNoise.ar(0.007),4400)
 			) * 0.5
 
 		},
@@ -72,7 +72,7 @@ SynthDef(\dk_blobi, {|a=100,b=100,c=100,d=100,e=100,f=100,g=100,h=100, amp = 0.5
 
 		DynKlank.ar(
 			`[fs, as, rs], 
-			LPF.ar(PinkNoise.ar(0.007),400)
+			HPF.ar(PinkNoise.ar(0.007),400)
 		) * amp
 
 	},
@@ -93,8 +93,8 @@ a.set(d[0],0.1)
 (
     {
     	Splay.ar({|i|
-    		var f = 35 * 2.pow(i+1) * 0.5;
-    		Pluck.ar(BrownNoise.ar(0.2), Impulse.kr(MouseY.kr(1,100)),  f.reciprocal, f.reciprocal, MouseX.kr(0.1,10),
+    		var f = 200 * 2.pow(i+1) * 0.5;
+    		Pluck.ar(BrownNoise.ar(0.2), Impulse.kr(MouseY.kr(1,100).poll),  f.reciprocal, f.reciprocal, MouseX.kr(0.1,10),
         coef:MouseY.kr(-0.999, 0.999, lag:1.6))} !2)
 
     }.play(s)
@@ -128,7 +128,7 @@ a.set(d[0],0.1)
 			\dur, Pseq([0.5,0.25,0.125,0.125], inf),
 			\amp, 0.5,
 			\coef, Pwhite(0.8,0.9),
-			\ring, 0.1//Pwhite(0.1,1)
+			\ring, 0.9//Pwhite(0.1,1)
 		)
 	).play(quant:1);
 )

@@ -1,36 +1,51 @@
 (
-var a, c, d, s, z, y;
-// reverberated sine percussion
-d = 16; // number of percolators
-c = 15; // number of comb delays
-a = 12; // number of allpass delays
-f = 98.midicps ;
-p = 0;
+SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, sustain = 0.8, release = 0.9, gate = 1, wob = 0.023|
 
-play({
+	var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+	var sig;
+	var d = 4; 
+	var a = 8; 
+	var p = [freq, freq+0.1];
 
-	p = [f,f+1] * MouseX.kr(1,2);
-		// sine percolation sound :
-	s = Mix.ar(Array.fill(d, { |i| SinOsc.ar(p * 0.25,0, LFCub.ar(p,[0,1],0.003 ,0.003) * MouseY.kr(0.001,1,\exponential)) }) );
+	sig = Mix.ar(Array.fill(d, { |i| SinOsc.ar(p,0, LFCub.ar([p,p+1], (i+1) * pi/4, 0.003 ,0.003) * env) }));
+	y = Mix.ar(CombL.ar(sig, 0.3, SinOsc.kr( Array.fill(a, {|i| (i+1) * 0.03}), 0, wob, 0.21), 1));
 
-		// reverb predelay time :
-	z = DelayN.ar(s, 0.048);
+	sig = sig + (0.5*y);
 
-		// 7 length modulated comb delays in parallel :
-	y = Mix.ar(CombL.ar(z, 0.1, LFNoise1.kr(Array.fill(c,{0.03.rand}), 0.04, 0.05), MouseY.kr(1,20)));
+	Out.ar(out, LeakDC.ar(sig * amp * env));
 
-		// chain of 4 allpass delays on each of two channels (8 total) :
-	a.do({ y = AllpassN.ar(y, 0.050, [0.050.rand,0.050.rand], 1) });
+}).add;
 
-		// add original sound to reverb and play it :
-	s+(0.1*y)
-}))
+)
 
+(
+	Pdef(\a,
+		Pbind(
+			\instrument, \blaz,
+			\octave, Prand([2,3,4,5], inf),
+			\note, Prand([0,4,5,7,10,12], inf),
+			\root, Pseq([0,3,-2].stutter(8*8), inf),
+			\dur, 3,
+			\amp, 0.9,
+			\attack, 0.45,
+			\release, 4.0,
+			\wob, Pwhite(0.02,0.08),
+		)
+	).play;
+)
 
-
-// {SinOsc.ar([210,211],0, LFCub.ar([0.4,0.42],[0,1],0.03,0.03))}.play
-
- var notes = [31,33,35,36,38,40];
-	var trig = Impulse.kr(8);
-	var p = Dseq([1,0,1,0,1,0,0,1,0,0,1,0,0,1,0,0], inf);
-	var pch = Select.kr(MouseX.kr(0, 6).floor.asInteger, notes).midicps;//(31 
+(
+	Pdef(\b,
+		Pbind(
+			\instrument, \blaz,
+			\octave, Prand([2,3,4,5], inf),
+			\note, Prand([0,4,5,7,10,12], inf),
+			\root, Pseq([0,3,-2].stutter(8*8), inf),
+			\dur, 0.1,
+			\amp, 0.9,
+			\attack, 0.005,
+			\release, 1.3,
+			\wob, 0.03,
+		)
+	).play;
+)
