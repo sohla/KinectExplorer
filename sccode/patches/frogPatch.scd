@@ -58,7 +58,7 @@
 				// 	e.sx, e.sy, e.ex, e.ey
 				// );
 				model.netAddr.sendMsg("/shadow", 
-					"note", e.sh,
+					"shape", e.sh,
 					"duration", e.dur,
 					"attack", e.attack,
 					"release", e.rel,

@@ -1,5 +1,5 @@
 (
-SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, sustain = 0.8, release = 0.9, gate = 1, wobf = 0.023|
+SynthDef(\slido, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, sustain = 0.8, release = 0.9, gate = 1, wobf = 0.023|
 
 	var enva = EnvGen.ar(Env.adsr(attack / 2, decay / 2, sustain, release /2), gate);
 	var envb = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
@@ -22,13 +22,14 @@ SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, su
 (
 	Pdef(\a,
 		Pbind(
-			\instrument, \blaz,
+			\instrument, \slido,
 			\octave, Prand([2,3,4,5], inf),
 			\note, Prand([0,4,5,7,10,12], inf),
 			\root, Pseq([0,3,-2].stutter(8*8), inf),
 			\dur, 3,
 			\amp, 0.9,
 			\attack, 0.45,
+			\decay, 3,
 			\release, 4.0,
 			\wobf, Pwhite(0.01,0.03),
 		)
@@ -38,7 +39,7 @@ SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, su
 (
 	Pdef(\b,
 		Pbind(
-			\instrument, \blaz,
+			\instrument, \slido,
 			\octave, Prand([5,6,7], inf),
 			\note, Prand([0,4,5,7,10,12], inf),
 			\root, Pseq([0,3,-2].stutter(8*8), inf),
@@ -55,7 +56,7 @@ SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, su
 (
 	Pdef(\c,
 		Pbind(
-			\instrument, \blaz,
+			\instrument, \slido,
 			\octave, Prand([3,5,7], inf),
 			\note, Prand([0,10,4,6,2], inf),
 			\root, Pseq([0,2,4].stutter(8*8), inf),
