@@ -75,7 +75,7 @@
 		    \vibamp, Pwhite(0.04,0.7),
 
 		    //visuals
-		    \sh, Pseq([0,3,4].stutter(6), inf),
+		    \sh, Pseq([0,1,2,3,4].stutter(6), inf),
 		    \param1, Pkey(\vib),//Pwhite(0,10.0),
 		    \param2, Pkey(\vib),
 		    \param3, 1,//Pwhite(0,7),
@@ -91,10 +91,32 @@
 				// clock.bar.mod(4).postln; //!! somewhere in the bar !!
 				// netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
 				//["/shadow",e.sh, e.dur, e.attack, e.rel, e.param1, e.octave.linlin(3,5,1,2).reciprocal * 2 , e.sx, e.sy, e.ex, e.ey].postln;
-				netAddr.sendMsg("/shadow", e.sh, e.dur, e.attack, e.rel, 
-					e.param1, e.octave.linlin(3,7,0.5,4).reciprocal * 2,
-					e.sx, e.sy, e.ex, e.ey
+
+
+				// netAddr.sendMsg("/shadow", e.sh, e.dur, e.attack, e.rel, 
+				// 	e.param1, e.octave.linlin(3,7,0.5,4).reciprocal * 2,
+				// 	e.sx, e.sy, e.ex, e.ey
+				// );
+//	vals = [ 'note', 0, 'duration', 2, 'attack', 1, 'release', 1, 
+//'par1', random.random(), 'par2', random.random(), 'par3', random.random(), 'par4', random.random(), 'par5', random.random(), 'par6', random.random() ]
+
+				netAddr.sendMsg("/shadow", 
+					"note", e.sh,
+					"duration", e.dur,
+					"attack", e.attack,
+					"release", e.rel,
+					"par1", e.param1,
+					"par2", e.octave.linlin(3,7,0.5,4).reciprocal * 2,
+					"par3", e.sx,
+					"par4", e.sy,
+					"par5", e.ex,
+					"par6", e.ey,
+
+
 				);
+
+
+
 			},
 		);
 	);

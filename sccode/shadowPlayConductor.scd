@@ -79,7 +79,7 @@
 				.minHeight_(100)
 				.minWidth_(100)
 				.action_({|b|
-					if(b.value == 1,
+					if(b.value == 1,	
 						{m.env.use{~init.(m)}},
 						{m.env.use{~deinit.(m)}
 					});
