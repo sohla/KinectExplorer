@@ -48,3 +48,6 @@ a = Synth.new(\glow, [\release,7]);
 		)
 	).play;
 )
+
+
+{Blip.ar(1,30)}.scope
