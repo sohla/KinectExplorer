@@ -14,12 +14,12 @@ SynthDef(\sand, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, s
 
 a = Synth.new(\sand);
 s.peakCPU
-
+s.unmute
 (
 	Pdef(\a,
 		Pbind(
 			\instrument, \sand,
-			\octave, Prand([2,4,5,6,7], inf),
+			\octave, Prand([2,4,5,6], inf),
 			\note, Prand([0,4,5,7,10,12], inf),
 			\root, Pseq([0,3,-2].stutter(8*8), inf),
 			\dur, Pseq([0.1 ,Rest(0.1)], inf),

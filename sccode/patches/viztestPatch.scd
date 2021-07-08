@@ -9,48 +9,39 @@ var mxs, mys;
 	mxs = Synth(\mouseX, [\bus, mx.index]);
 	mys = Synth(\mouseY, [\bus, my.index]);
 
-	SynthDef(\plucktone, {|amp = 0.1, freq = 440, release = 5, coef = 0.1, attack = 0.02, vib = 0.2|
 
-		var env, snd, tone;
-		env = EnvGen.kr(Env.linen(attack, 0, release * 0.25), doneAction: 2);
-		tone = SinOsc.ar([freq, freq + 1.5] * LFCub.ar(vib,0,0.03,1), LocalIn.ar(1) * release, amp).tanh * env;
-		snd = Pluck.ar(
-		        in: WhiteNoise.ar(amp * env),
-		        trig: Impulse.kr(0),
+	SynthDef(\viztest, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9|
 
-		        maxdelaytime: 0.1,
-		        delaytime: freq.reciprocal,
-		        decaytime: release,
-		        coef: coef,
-		        amp: env * 0.001);
-		LocalOut.ar(snd + tone);
-	    Out.ar(0, snd + tone, snd + tone);
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = SinOsc.ar([freq,freq + 2.rand], [pi.rand, pi.rand], amp) * env;
+		Out.ar(out, sig);
+
 	}).add;
 
-	Ndef(\plucktonePtn,
+
+	Ndef(\viztestPtn,
 		Pbind(
 
 			// musics
-		    \instrument, Pseq([\plucktone].stutter(6),inf),
-		    \amp, Pwhite(0.05, 0.1),
-		    \coef, Pfunc{ my.getSynchronous.linlin(0,1.0,0.01,0.99)},
-		    \root, Pseq([0,3,-2,1,-4,-2].stutter(18), inf),
-		    \octave,Prand([3,5,4,5,5,5,5,6,6],inf),
-		    \note, Pseq([0,2,4,9,7,11], inf),
-		    \dur, Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,8).floor).reciprocal * 2.5},
+		    \instrument, Pseq([\viztest].stutter(6),inf),
+		    \amp, Pwhite(0.1, 0.2),
+		    \root, Pseq([0].stutter(18), inf),
+		    \octave,Prand([0,1,2,3,4,5,6,7,8,9,10].stutter(7),inf),
+		    \note, Prand([0,2,4,5,7,9,11], inf),
+		    \dur, Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
 		    \attack, Pwhite(0.001,0.01),
-		    \decay, Pwhite(0.02,1.2),
-		    \release, Pfunc{ my.getSynchronous.linlin(0,1.0,0.02,5.5)},//Pwhite(0.05,1.3),
+		    \decay, Pwhite(0.002,0.7),
+		    \release, Pfunc{ my.getSynchronous.linlin(0,1.0,0.02,4.5)},//Pwhite(0.05,1.3),
 		    \rel, Pkey(\release),
 		    \vib, Pwhite(1,6),
 		    \vibamp, Pwhite(0.04,0.7),
 
 
 		    //visuals
-		    \sh, 0,
-		    \param1, Pwhite(0,0.99),
-		    \param2, Pkey(\vib),
-		    \param3, 0.1,//Pwhite(0,7),
+		    \sh, 6,
+		    \param1, 1,
+		    \param2, 2,
+		    \param3, 3,
 		    \sx, 0,
 		    \sy, 0,
 		    \ex, Prand([-1.5,1.5], inf),
@@ -74,15 +65,15 @@ var mxs, mys;
 					"duration", e.dur,
 					"attack", e.attack * 1,
 					"release", e.rel * 1,
-					"par1", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),//e.param1,//colour
-					"par2", 0.1,//scale
-					"par3", (e.note + (e.octave * 12)).linlin(30,90,-1.5,1.5),//sx
+					"par1", (e.note + (e.octave * 12)).linlin(0,127,0,0.99),//e.param1,//colour
+					"par2", 0.3,//scale
+					"par3", (e.note + (e.octave * 12)).linlin(0,127,-1.5,1.5),//sx
 					"par4", 0,//sy
-					"par5", (e.note + (e.octave * 12)).linlin(30,90,-1.5,1.5),//ex
+					"par5", (e.note + (e.octave * 12)).linlin(0,127,-1.5,1.5),//ex
 					"par6", 0,//ey
-					"par7", 4,//e.param2.linlin(1,6,0.1,1), // wobble
+					"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
 					"par8", 5,//e.octave.linlin(3,6,28,10),
-					"par9", (e.note + (e.octave * 12)).linlin(30,90,6,1),
+					"par9", (e.note + (e.octave * 12)).linlin(0,127,6,1),
 				);
 			},
 
@@ -90,7 +81,7 @@ var mxs, mys;
 	    )
 	).play;
 
-	Ndef(\plucktonePtn).fadeTime = model.fade; 
+	Ndef(\viztestPtn).fadeTime = model.fade; 
 
 };
 
@@ -98,7 +89,7 @@ var mxs, mys;
 //------------------------------------------------------
 ~deinit = {|model|
 	postf("deinit : % \n", model.file);
-	Ndef(\plucktonePtn).end;
+	Ndef(\viztestPtn).end;
 	// Synth(\mouseX).free;
 	// Synth(\mouseY).free;
 	// mx.getSynchronous.free;
@@ -109,8 +100,8 @@ var mxs, mys;
 //------------------------------------------------------
 ~reload = {|model|
 	postf("reload : % \n", model.file);
-	if(Ndef(\plucktonePtn).isPlaying, {
-		Ndef(\plucktonePtn).stop; 
+	if(Ndef(\viztestPtn).isPlaying, {
+		Ndef(\viztestPtn).stop; 
 		mxs.free;
 		mys.free;
 		mx.getSynchronous.free;

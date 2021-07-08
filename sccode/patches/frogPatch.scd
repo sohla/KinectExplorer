@@ -99,4 +99,4 @@
 
 };
 
-FreqScope.new(400, 200, 0, server: s);
+// FreqScope.new(400, 200, 0, server: s);

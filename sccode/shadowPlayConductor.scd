@@ -1,7 +1,7 @@
 (
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
-	// var netAddr = NetAddr.new("127.0.0.1", 10001);
-	var netAddr = NetAddr.new("192.168.1.150", 10001);
+	var netAddr = NetAddr.new("127.0.0.1", 10001);
+	// var netAddr = NetAddr.new("192.168.1.150", 10001);
 	var window, freqScope;
 	var loadPatch, patchButton;
 
@@ -24,12 +24,12 @@
 		(\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		
+		(\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+
+		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 
 	];
 	//------------------------------------------------------
@@ -108,11 +108,17 @@
 					m.env.use{~reload.(m)}; 
 				})
 			}),
+		Button()
+			.states_([["mute", Color.white],["mute", Color.red]])
+			.maxWidth_(100)
+			.action_({|b|
+				if(b.value == 1,{s.mute},{s.unmute});
+			}),
 		GridLayout.rows(*patchButton.()),	
 		freqScope = FreqScopeView()
 			.freqMode_(1)
 			.active_(true),	
-	);
+		);
 
 	bootServer.({
 
