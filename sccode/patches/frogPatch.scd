@@ -37,7 +37,7 @@
 		    \vib, 50,//Pwhite(1.0,16.0),
 
 		 //    //visuals
-		    \sh, 1,
+		    \sh, 6,
 		    \param1, Prand([3,4,5,6,7], inf),
 		    \param2, 3 ,
 		    \param3, 3,
@@ -62,12 +62,16 @@
 					"duration", e.dur,
 					"attack", e.attack,
 					"release", e.rel,
-					"par1", e.param1,
+					"par1", (e.note + (e.octave * 12)).linlin(0,127,0,0.99),//e.param1,//colour
 					"par2", e.octave.linlin(3,7,0.5,4).reciprocal * 2,
-					"par3", e.sx,
+					"par3", (e.note + (e.octave * 12)).linlin(20,80,-1.5,1.5),//sx
 					"par4", e.sy,
-					"par5", e.ex,
+					"par5", (e.note + (e.octave * 12)).linlin(20,80,-1.5,1.5),//sx,
 					"par6", e.ey,
+					"par7", e.param2.linlin(1,6,0.1,1), // wobble
+					"par8", 5,//e.octave.linlin(3,6,28,10),
+					"par9", (e.note + (e.octave * 12)).linlin(0,127,6,1),
+
 				);
 				
 			},

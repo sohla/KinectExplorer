@@ -38,11 +38,11 @@
 		    \sh, 3,
 		    \param1, Pkey(\harm),//Pwhite(0,10.0),
 		    \param2, Pkey(\harm),
-		    \param3, 1,//Pwhite(0,7),
-		    \sx, Pseq([Prand([-1.2, 1.2], 1), 	Prand([-1, 1], 1), 	Pwhite(-1.3, 1.3, 1)	].stutter(6), inf),
-		    \sy, Pseq([Pwhite(-0.9,0.9,1), 		Pwhite(-0.5,0.5,1), 1.25 				].stutter(6), inf),
-		    \ex, Pseq([Pkey(\sx,1), 			Pkey(\sx,1).neg,	Pkey(\sx,1)		 	].stutter(6), inf),
-		    \ey, Pseq([Pwhite(0.0,0.2,1), 		0,					-1.25				].stutter(6), inf),
+		    \param3, 3,//Pwhite(0,7),
+		    \sx, Pseq([-1,-0.5,0,0.5,1], inf),
+		    \sy, 0,
+		    \ex, Pseq([Pkey(\sx,1)], inf),
+		    \ey, Pseq([Pwhite(-0.4,0.4)], inf),
 
 		    // osc out
 			\osc, Pfunc{|e| 
@@ -59,13 +59,16 @@
 					"shape", e.sh,
 					"duration", e.dur,
 					"attack", e.attack,
-					"release", e.rel,
-					"par1", e.param1,
-					"par2", e.octave.linlin(3,7,0.5,4).reciprocal * 2,
+					"release", e.rel * 0.5,
+					"par1", e.harm,
+					"par2", 1,
 					"par3", e.sx,
 					"par4", e.sy,
 					"par5", e.ex,
 					"par6", e.ey,
+					"par7", 0, // wobble
+					"par8", 5,//e.octave.linlin(3,6,28,10),
+					"par9", (e.note + (e.octave * 12)).linlin(0,127,6,1),
 				);
 
 			},

@@ -73,14 +73,14 @@ var mxs, mys;
 					"shape", e.sh,
 					"duration", e.dur,
 					"attack", e.attack * 1,
-					"release", e.rel * 1,
+					"release", e.rel * 0.3,
 					"par1", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),//e.param1,//colour
 					"par2", 0.1,//scale
 					"par3", (e.note + (e.octave * 12)).linlin(30,90,-1.5,1.5),//sx
 					"par4", 0,//sy
 					"par5", (e.note + (e.octave * 12)).linlin(30,90,-1.5,1.5),//ex
 					"par6", 0,//ey
-					"par7", 4,//e.param2.linlin(1,6,0.1,1), // wobble
+					"par7", e.param2.linlin(1,6,0.1,1), // wobble
 					"par8", 5,//e.octave.linlin(3,6,28,10),
 					"par9", (e.note + (e.octave * 12)).linlin(30,90,6,1),
 				);
