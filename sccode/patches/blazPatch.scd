@@ -26,8 +26,8 @@
 			\octave, Prand([2,3,4,5], inf),
 			\note, Prand([0,4,5,7,10,12], inf),
 			\root, Pseq([0,3,-2].stutter(8*8), inf),
-			\dur, 1/5,
-			\amp, 0.1,
+			\dur, 1/6,
+			\amp, 0.3,
 			\harm, Prand([1,2,3,4,5,6,7,8], inf),
 
 		    \attack, Pwhite(0.001,0.01),

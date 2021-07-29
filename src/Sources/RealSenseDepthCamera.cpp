@@ -11,7 +11,7 @@ void RealSenseDepthCamera::setup(DepthModel &model){
     
 
     model.depthCameraWidth = 640;
-    model.depthCameraHeight = 360;
+    model.depthCameraHeight = 480;
     
     _pixels.allocate(model.depthCameraWidth,
                      model.depthCameraHeight,

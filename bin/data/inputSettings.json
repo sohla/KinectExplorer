@@ -47,7 +47,7 @@
             "resample": "32"
         },
         "line_osc_out_57130": {
-            "ip": "192.168.20.13",
+            "ip": "192.168.20.3",
             "on": "1",
             "port": "57130",
             "resample": "127"
@@ -64,7 +64,7 @@
         "near_far": {
             "cv-threshold": "0",
             "draw": "0",
-            "far": "124",
+            "far": "132",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -91,13 +91,13 @@
             "distance": "239",
             "draw": "0",
             "maxRadius": "255",
-            "minRadius": "10",
+            "minRadius": "26",
             "on": "1",
             "persistance": "0",
             "threshold": "218"
         },
         "realtime": {
-            "realtime": "0"
+            "realtime": "1"
         },
         "reorder": {
             "draw": "1",

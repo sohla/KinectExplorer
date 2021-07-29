@@ -19,9 +19,9 @@
 		var venv = EnvGen.ar(Env.perc(attack * 2, release * 2));
 		var imp = BLowShelf.ar(HPF.ar( LPF.ar(PinkNoise.ar((0.007 * nenv)), 16000), 240), 40, 1, -2).clip;
 		var sig = DynKlank.ar(
-			`[fs * LFCub.ar(ff,0,MouseY.kr(0.01,0.1)*env,1), as, rs], 
+			`[fs * LFCub.ar(ff,0,MouseY.kr(0.01,0.9)*env*0.1,1), as, rs], 
 			imp,
-			[1,1.012], 0 ,MouseX.kr(0.01,1.0)) ;
+			[1,1.012], 0 ,MouseX.kr(0.01,0.99)) ;
 		Out.ar(out, sig * amp * env * 50);
 
 	}).add;
@@ -34,7 +34,7 @@
 			\root, Pseq([0].stutter(12), inf),
 			\dur, Prand([1/4,1/4,1/8] * 1.4, inf),
 			// \dur, Prand([1/3], inf),
-			\amp, 0.2,
+			\amp, 0.6,
 			\attack, Pwhite(0.003,0.01),
 			\release, Pwhite(0.1,5.6),
 			\vib, Prand([1,2,20,200], inf),
@@ -46,7 +46,7 @@
 
 		 //    //visuals
 		    \sh, 4,
-		    \param1, Pkey(\vib),//Pwhite(0,10.0),
+		    \param1, Pwhite(0.0,0.99),//Pwhite(0,10.0),
 		    \param2, Pkey(\vib),
 		    \param3, 1,//Pwhite(0,7),
 		    \sx, Pseq([Prand([-1.2, 1.2], 1), 	Prand([-1, 1], 1), 	Pwhite(-1.3, 1.3, 1)	].stutter(6), inf),

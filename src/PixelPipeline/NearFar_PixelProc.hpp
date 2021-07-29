@@ -19,7 +19,7 @@ class NearFar_PixelProc : public Base_PixelProc {
 
     ofParameter<bool> cvThreshParam = ofParameter<bool>("cv-threshold",false);
     ofParameter<int> nearParam = ofParameter<int>("near",0,200,255);
-    ofParameter<int> farParam = ofParameter<int>("far",0,50,255);
+    ofParameter<int> farParam = ofParameter<int>("far",0,5,255);
     ofParameter<bool> mapParam = ofParameter<bool>("map",false);
 
     ofParameter<bool> horzInvertParam = ofParameter<bool>("horz-invert",false);
@@ -63,17 +63,43 @@ class NearFar_PixelProc : public Base_PixelProc {
         } else {
             ofPixels & pix = procImage.getPixels();
             unsigned long numPixels = pix.size();
-            for(int i = 0; i < numPixels; i++) {
-                if(pix[i] < nearParam.get() && pix[i] > farParam.get()) {
-                    if(mapParam.get()){
-                        pix[i] = ofMap(pix[i], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
+            
+            unsigned long w = pix.getWidth();
+            unsigned long h = pix.getHeight();
+
+            // row / col implentation
+            for(int i = 0; i < w; i++) {
+                for(int j = 0; j < h; j++) {
+                    
+                    int index = i + (j * w);
+                    if( index > (h * 0.3 * w) && index < (h * 0.7 * w)){ //hack cropping
+                        
+                        if(pix[index] < nearParam.get() && pix[index] > farParam.get()) {
+                            if(mapParam.get()){
+                                pix[index] = ofMap(pix[index], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
+                            }else{
+                                pix[index] = 255; // solid white
+                            }
+                        } else {
+                            pix[index] = 0;
+                        }
                     }else{
-                        pix[i] = 255; // solid white
+                        pix[index] = 0; //hack cropping
                     }
-                } else {
-                    pix[i] = 0;
                 }
             }
+
+//            for(int i = 0; i < numPixels; i++) {
+//                if(pix[i] < nearParam.get() && pix[i] > farParam.get()) {
+//                    if(mapParam.get()){
+//                        pix[i] = ofMap(pix[i], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
+//                    }else{
+//                        pix[i] = 255; // solid white
+//                    }
+//                } else {
+//                    pix[i] = 0;
+//                }
+//            }
             procImage.setFromPixels(pix);
         }
         
