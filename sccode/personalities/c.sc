@@ -10,7 +10,7 @@ var note = notes[0];
 		Pbind(
 			\note, Pseq([0,4,7,4,7,12,16,7,12].stutter(1),inf),
 			\func, Pfunc({|e| bf.(e)}),
-			// \root, Pseq([0,3].stutter(36),inf),
+			\root, Pseq([0,-4,6,-3,3,1].stutter(36),inf),
 			//\root, Pseq([0,3].stutter(12),inf),
 			\args, #[],
 		);
@@ -42,38 +42,38 @@ var note = notes[0];
 	var oct = (blobs[0].center.x.linlin(130,600,0,4).floor).asInteger;
 
 
-	var a = blobs[0].rect;
-	var b = blobs[1].rect;
+	// var a = blobs[0].rect;
+	// var b = blobs[1].rect;
 
 
 
-		if( blobs[0].area > 4, {
-			if( blobs[1].area > 4, {
-			isHit = false;
-		},{
-			if(isHit == false, {
-				isHit = true;
+	// 	if( blobs[0].area > 4, {
+	// 		if( blobs[1].area > 4, {
+	// 		isHit = false;
+	// 	},{
+	// 		if(isHit == false, {
+	// 			isHit = true;
 
-				if(note == 12,{
-					roots = roots.rotate(-1);
-					blobs[0].root = roots[0];
-					blobs[1].root = roots[0];
+	// 			if(note == 12,{
+	// 				roots = roots.rotate(-1);
+	// 				blobs[0].root = roots[0];
+	// 				blobs[1].root = roots[0];
 
-				});
-				notes = notes.rotate(-1);
-				note = notes[0];
+	// 			});
+	// 			notes = notes.rotate(-1);
+	// 			note = notes[0];
 
-				midiOut.noteOn(5, 60 + note + blobs[0].root, 100);
-				{midiOut.allNotesOff(5)}.defer(0.1);
+	// 			midiOut.noteOn(5, 60 + note + blobs[0].root, 100);
+	// 			{midiOut.allNotesOff(5)}.defer(0.1);
 
-			});
+	// 		});
 
-		});
+	// 	});
 
-	},{
-		isHit = false;
+	// },{
+	// 	isHit = false;
 
-	});
+	// });
 
 	Pdef(\c).set(\octave,3+oct);
 	Pdef(\c).set(\dur,beat);

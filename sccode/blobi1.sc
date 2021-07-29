@@ -1,6 +1,6 @@
 
 	(
-	var numOfBlobs = 2;
+	var numOfBlobs = 1;
 
 	var window, routine;
 	var graphView, updateGraphView;
@@ -8,13 +8,13 @@
 	var midiOut;
 	var oscListeners = [];
 
-	var width = Window.screenBounds.width * 0.8;
-	var height = Window.screenBounds.height * 0.8;
+	var width = Window.screenBounds.width * 0.4;
+	var height = Window.screenBounds.height * 0.4;
 
 	var makePopupMenu;
 
 	var devicesDir = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myapps/KinectExplorer/sccode/personalities/";
-	var persList = ["d","c","g","h","i","e","f","a","b"];
+	var persList = ["c","d","g","h","i","e","f","a","b"];
 
 	var paramModel = (
 		\prev: 0,

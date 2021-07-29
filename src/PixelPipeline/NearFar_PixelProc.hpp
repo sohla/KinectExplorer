@@ -25,6 +25,8 @@ class NearFar_PixelProc : public Base_PixelProc {
     ofParameter<bool> horzInvertParam = ofParameter<bool>("horz-invert",false);
     ofParameter<bool> vertInvertParam = ofParameter<bool>("vert-invert",false);
 
+    ofParameter<float> cropTopParam = ofParameter<float>("cropTop",0.3,0.0,1.0);
+    ofParameter<float> cropBotParam = ofParameter<float>("cropBot",0.75,0.0,1.0);
 
     ofxCvGrayscaleImage depthImage;
     ofxCvGrayscaleImage grayThreshNear;
@@ -44,6 +46,8 @@ class NearFar_PixelProc : public Base_PixelProc {
         group.add(mapParam);
         group.add(horzInvertParam);
         group.add(vertInvertParam);
+        group.add(cropTopParam);
+        group.add(cropBotParam);
        gui.add(group);
         
         depthImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
@@ -72,7 +76,7 @@ class NearFar_PixelProc : public Base_PixelProc {
                 for(int j = 0; j < h; j++) {
                     
                     int index = i + (j * w);
-                    if( index > (h * 0.3 * w) && index < (h * 0.7 * w)){ //hack cropping
+                    if( index > (h * cropTopParam.get() * w) && index < (h * cropBotParam.get() * w)){ //hack cropping
                         
                         if(pix[index] < nearParam.get() && pix[index] > farParam.get()) {
                             if(mapParam.get()){
