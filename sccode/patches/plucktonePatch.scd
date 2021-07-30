@@ -24,6 +24,7 @@ var mxs, mys;
 		        coef: coef,
 		        amp: env * 0.001);
 		LocalOut.ar(snd + tone);
+		
 	    Out.ar(0, snd + tone, snd + tone);
 	}).add;
 

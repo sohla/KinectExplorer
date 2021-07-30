@@ -64,10 +64,10 @@ var mxs, mys;
 					"shape", e.sh,
 					"duration", e.dur,
 					"attack", e.attack * 1,
-					"release", e.rel * 1,
+					"release", e.rel * 4,
 					"par1", (e.note + (e.octave * 12)).linlin(0,127,0,0.99),//e.param1,//colour
-					"par2", 0.3,//scale
-					"par3", (e.note + (e.octave * 12)).linlin(0,127,-1.5,1.5),//sx
+					"par2",0.2,//scale
+					"par3", (e.note + (e.octave * 12)).linlin(0,127,-0.5,0.5),//sx
 					"par4", 0,//sy
 					"par5", (e.note + (e.octave * 12)).linlin(0,127,-1.5,1.5),//ex
 					"par6", 0,//ey

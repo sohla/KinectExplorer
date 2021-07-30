@@ -36,7 +36,7 @@ var name = \h;
 
 ~update = {|blobs,i,midiOut|
 
-	var beat = 2.pow(blobs[0].pWidth.rateFiltered.explin(30,120,1,4).floor).reciprocal * 2;
+	var beat = 2.pow(blobs[0].pWidth.rateFiltered.explin(30,120,1,4).floor).reciprocal * 4;
 	var oct = (blobs[0].pWidth.rateFiltered.linexp(30,120,1,4).floor);
 	var ca = (blobs[0].pWidth.rateFiltered.linlin(30,120,80,60).floor);
 	var cb = (blobs[0].pWidth.rateFiltered.linlin(30,120,80,60).floor);
