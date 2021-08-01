@@ -1,7 +1,7 @@
 (
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
 	// var netAddr = NetAddr.new("127.0.0.1", 10001);
-	var netAddr = NetAddr.new("192.168.20.2", 10001);
+	var netAddr = NetAddr.new("192.168.20.3", 10001);
 	var numOfBlobs = 1;
 
 
@@ -91,10 +91,10 @@
 		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
-		// var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
-		var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
-		var output = ServerOptions.devices.indexOfEqual("Built-in Output");
+		var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		var output = ServerOptions.devices.indexOfEqual("External Headphones");
+		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 
 		o = Server.local.options;
 		o.inDevice = ServerOptions.devices[input];
@@ -212,8 +212,8 @@
 
 	//------------------------------------------------------
 	QtGUI.palette = QPalette.dark; 
-	window = Window("",Rect(0,0,Window.screenBounds.width/2, Window.screenBounds.height)
-		.center_(Window.availableBounds.leftBottom)
+	window = Window("",Rect(0,0,Window.screenBounds.width/3, Window.screenBounds.height)
+		.center_(Window.screenBounds.width*0.85@100)
 	).front;
 
 	//------------------------------------------------------
@@ -241,7 +241,7 @@
 			.freqMode_(1)
 			.active_(true),	
 		graphView = UserView()
-			.minHeight_(400)
+			.minHeight_(700)
 			.drawFunc_(updateGraphView)
 			.animate_(false)
 			.clearOnRefresh_(true),

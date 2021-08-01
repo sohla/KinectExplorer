@@ -26,7 +26,7 @@
 			\octave, Prand([2,3,4,5], inf),
 			\note, Prand([0,4,5,7,10,12], inf),
 			\root, Pseq([0,3,-2].stutter(8*8), inf),
-			\dur, 1/6,
+			\dur, 1/6,//Prand([1/5,1/5,Rest(1/5),1/2.5], inf),
 			\amp, 0.3,
 			\harm, Prand([1,2,3,4,5,6,7,8], inf),
 
@@ -39,10 +39,10 @@
 		    \param1, Pkey(\harm),//Pwhite(0,10.0),
 		    \param2, Pkey(\harm),
 		    \param3, 3,//Pwhite(0,7),
-		    \sx, Pseq([-1,-0.5,0,0.5,1], inf),
-		    \sy, 0,
+		    \sx, Pseq([-1,-0.5,0,0.5,1]*1.5, inf),
+		    \sy, -1,
 		    \ex, Pseq([Pkey(\sx,1)], inf),
-		    \ey, Pseq([Pwhite(-0.4,0.4)], inf),
+		    \ey, Pseq([Pwhite(-0.8,-0.7)], inf),
 
 		    // osc out
 			\osc, Pfunc{|e| 
@@ -58,10 +58,10 @@
 				model.netAddr.sendMsg("/shadow", 
 					"shape", e.sh,
 					"duration", e.dur,
-					"attack", e.attack,
-					"release", e.rel * 0.5,
-					"par1", e.harm,
-					"par2", 1,
+					"attack", e.attack * 0.2,
+					"release", e.rel ,
+					"par1", e.harm.linlin(1,8,0.0,1.0),
+					"par2", 3,
 					"par3", e.sx,
 					"par4", e.sy,
 					"par5", e.ex,

@@ -24,7 +24,7 @@ var mxs, mys;
 		        coef: coef,
 		        amp: env * 0.001);
 		LocalOut.ar(snd + tone);
-		
+
 	    Out.ar(0, snd + tone, snd + tone);
 	}).add;
 
@@ -38,7 +38,7 @@ var mxs, mys;
 		    \root, Pseq([0,3,-2,1,-4,-2].stutter(18), inf),
 		    \octave,Prand([3,5,4,5,5,5,5,6,6],inf),
 		    \note, Pseq([0,2,4,9,7,11], inf),
-		    \dur, Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,8).floor).reciprocal * 2.5},
+		    \dur, Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.02,1.2),
 		    \release, Pfunc{ my.getSynchronous.linlin(0,1.0,0.02,5.5)},//Pwhite(0.05,1.3),
@@ -76,7 +76,7 @@ var mxs, mys;
 					"attack", e.attack * 1,
 					"release", e.rel * 0.3,
 					"par1", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),//e.param1,//colour
-					"par2", 0.1,//scale
+					"par2", (e.note + (e.octave * 12)).linexp(30,90,1,0.1),//scale
 					"par3", (e.note + (e.octave * 12)).linlin(30,90,-1.5,1.5),//sx
 					"par4", 0,//sy
 					"par5", (e.note + (e.octave * 12)).linlin(30,90,-1.5,1.5),//ex
@@ -95,10 +95,6 @@ var mxs, mys;
 
 };
 
-//------------------------------------------------------
-~update = {|blobs,i|
-
-};
 
 //------------------------------------------------------
 ~deinit = {|model|
