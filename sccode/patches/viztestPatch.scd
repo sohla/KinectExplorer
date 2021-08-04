@@ -66,10 +66,10 @@ var oct = 0;
 				model.netAddr.sendMsg("/shadow", 
 					"shape", e.sh,
 					"duration", e.dur,
-					"attack", e.attack * 1,
-					"release", e.rel *1,
+					"attack", e.attack * 2,
+					"release", e.rel * 2,
 					"par1", (e.note + (e.octave * 12)).linlin(0,127,0,0.99),//e.param1,//colour
-					"par2", 6,//(e.note + (oct * 12)).linexp(0,127,2,0.2),//scale
+					"par2", 4,//(e.note + (oct * 12)).linexp(0,127,2,0.2),//scale
 					"par3", (e.note + (e.octave * 12)).linlin(0,127,-1.5,2.5),//sx
 					"par4", 0,//sy
 					"par5", (e.note + (e.octave * 12)).linlin(0,127,-1.5,2.5),//ex
