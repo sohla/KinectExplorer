@@ -212,7 +212,7 @@ b = {
 
 (
 Ndef(\x,{
-	a = SinOsc.ar([55,55.5], Ndef(\x).ar * LFNoise1.ar(0.1,3) ,LFNoise1.ar(3,2)).tanh;
+	a = SinOsc.ar([64,64.5], Ndef(\x).ar * LFNoise1.ar(0.1,3) ,LFNoise1.ar(3,2)).tanh;
 	9.do{
 		a = AllpassL.ar(a,0.3,{0.2.rand+0.1}!2,5)
 	};

@@ -1,7 +1,7 @@
 (
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
-	// var netAddr = NetAddr.new("127.0.0.1", 10001);
-	var netAddr = NetAddr.new("192.168.20.3", 10001);
+	var netAddr = NetAddr.new("127.0.0.1", 10001);
+	// var netAddr = NetAddr.new("192.168.20.3", 10001);
 	var numOfBlobs = 1;
 
 
@@ -90,7 +90,7 @@
 	
 		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
+		// var output = ServerOptions.devices.indexOfEqual("Mac mini Speakers");
 		var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");

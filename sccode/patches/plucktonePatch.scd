@@ -50,8 +50,8 @@ var mxs, mys;
 		    //visuals
 		    \sh, 0,
 		    \param1, Pwhite(0,0.99),
-		    \param2, Pkey(\vib),
-		    \param3, 0.1,//Pwhite(0,7),
+		    \param2, 0.1,//Pkey(\vib),
+		    \param3, 0.02,//Pwhite(0,7),
 		    \sx, 0,
 		    \sy, 0,
 		    \ex, Prand([-1.5,1.5], inf),

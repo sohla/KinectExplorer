@@ -32,7 +32,7 @@ var oct = 0;
 		    \dur, 0.1,//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.002,0.7),
-		    \release, 0.02,//Pfunc{ my.getSynchronous.linlin(0,1.0,0.005,4.5)},//Pwhite(0.05,1.3),
+		    \release, 1.02,//Pfunc{ my.getSynchronous.linlin(0,1.0,0.005,4.5)},//Pwhite(0.05,1.3),
 		    \rel, Pkey(\release),
 		    \vib, Pwhite(1,6),
 		    \vibamp, Pwhite(0.04,0.7),
@@ -60,19 +60,19 @@ var oct = 0;
 				// 	e.sx, e.sy, e.ex, e.ey
 				// );
 				 // Ndef(\viztestPtn).set(\octave, 3);
-				oct.postln;
+				// oct.postln;
 
 
 				model.netAddr.sendMsg("/shadow", 
 					"shape", e.sh,
 					"duration", e.dur,
 					"attack", e.attack * 1,
-					"release", e.rel *12,
+					"release", e.rel * 0.3,
 					"par1", (e.note + (oct * 12)).linlin(0,127,0,0.99),//e.param1,//colour
-					"par2", 6,//(e.note + (oct * 12)).linexp(0,127,2,0.2),//scale
-					"par3", (e.note + (oct * 12)).linlin(0,127,-3.5,3.5),//sx
+					"par2", 2,//(e.note + (oct * 12)).linexp(0,127,2,0.2),//scale
+					"par3", (e.note + (oct * 12)).linlin(0,127,-2.0,2.0),//sx
 					"par4", 0,//sy
-					"par5", (e.note + (oct * 12)).linlin(0,127,-3.5,3.5),//ex
+					"par5", (e.note + (oct * 12)).linlin(0,127,-2.0,2.0),//ex
 					"par6", 0,//ey
 					"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
 					"par8", 5,//e.octave.linlin(3,6,28,10),

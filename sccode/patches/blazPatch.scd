@@ -40,7 +40,7 @@
 		    \param2, Pkey(\harm),
 		    \param3, 3,//Pwhite(0,7),
 		    \sx, Pseq([-1,-0.5,0,0.5,1]*1.5, inf),
-		    \sy, -1,
+		    \sy, 0,
 		    \ex, Pseq([Pkey(\sx,1)], inf),
 		    \ey, Pseq([Pwhite(-0.8,-0.7)], inf),
 

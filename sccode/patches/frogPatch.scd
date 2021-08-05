@@ -63,12 +63,12 @@
 					"attack", e.attack,
 					"release", e.rel,
 					"par1", (e.note + (e.octave * 12)).linlin(0,127,0,0.99),//e.param1,//colour
-					"par2", e.octave.linlin(3,7,0.5,4).reciprocal * 2,
+					"par2", e.octave.linlin(3,7,0.2,9).reciprocal * 2,
 					"par3", (e.note + (e.octave * 12)).linlin(20,80,-1.5,1.5),//sx
-					"par4", e.sy,
+					"par4", -1,//e.sy,
 					"par5", (e.note + (e.octave * 12)).linlin(20,80,-1.5,1.5),//sx,
-					"par6", e.ey,
-					"par7", e.param2.linlin(1,6,0.1,1), // wobble
+					"par6", -1,//e.ey,
+					"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
 					"par8", 5,//e.octave.linlin(3,6,28,10),
 					"par9", (e.note + (e.octave * 12)).linlin(0,127,6,1),
 
