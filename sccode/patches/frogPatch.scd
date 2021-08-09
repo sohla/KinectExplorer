@@ -44,7 +44,7 @@
 		    \sx,  0,
 		    \sy,  0,
 		    \ex, Prand([0,-0.8,0.8], inf),
-		    \ey, Pseq([0,-0.8,0.8], inf),
+		    \ey, 0,
 
 		    // osc out
 			\osc, Pfunc{|e| 
@@ -61,14 +61,14 @@
 					"shape", e.sh,
 					"duration", e.dur,
 					"attack", e.attack,
-					"release", e.rel,
-					"par1", (e.note + (e.octave * 12)).linlin(0,127,0,0.99),//e.param1,//colour
-					"par2", 1,//e.octave.linlin(3,7,0.5,9).reciprocal ,
-					"par3", (e.note + (e.octave * 12)).linlin(20,80,-1.5,1.5),//sx
-					"par4", -1,//e.sy,
-					"par5", (e.note + (e.octave * 12)).linlin(20,80,-1.5,1.5),//sx,
-					"par6", -1,//e.ey,
-					"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
+					"release", e.rel * 1,
+					"par1", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),//e.param1,//colour
+					"par2", e.octave.linlin(3,7,0.5,4).reciprocal * 8,
+					"par4", (e.note + (e.octave * 12)).linlin(20,80,-1.2,1.2),//sx
+					"par3", e.sy,
+					"par6", (e.note + (e.octave * 12)).linlin(20,80,-1.2,1.2),//sx,
+					"par5", e.ey,
+					"par7", 0,//e.param2.linlin(1,6,0.1,0.2), // wobble
 					"par8", 5,//e.octave.linlin(3,6,28,10),
 					"par9", (e.note + (e.octave * 12)).linlin(0,127,6,1),
 

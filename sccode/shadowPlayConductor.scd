@@ -70,7 +70,7 @@
 
 
 	//------------------------------------------------------
-	var row = 3, col = 3;
+	var row = 2, col = 3;
 	var patches = [
 		(\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -78,7 +78,6 @@
 		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		(\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "longPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 
 		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -89,13 +88,13 @@
 
 	var bootServer = {|f|
 	
-		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		// var output = ServerOptions.devices.indexOfEqual("Mac mini Speakers");
+		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
 		// var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
-		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
-		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
+		var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+		var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 
 		o = Server.local.options;
 		o.inDevice = ServerOptions.devices[input];
@@ -304,10 +303,7 @@
 
 
 )
-// s.meter
+
 
 // Ptpar
 // Pspawner
-
-
-
