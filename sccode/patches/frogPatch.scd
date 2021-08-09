@@ -63,7 +63,7 @@
 					"attack", e.attack,
 					"release", e.rel,
 					"par1", (e.note + (e.octave * 12)).linlin(0,127,0,0.99),//e.param1,//colour
-					"par2", e.octave.linlin(3,7,0.2,9).reciprocal * 2,
+					"par2", 1,//e.octave.linlin(3,7,0.5,9).reciprocal ,
 					"par3", (e.note + (e.octave * 12)).linlin(20,80,-1.5,1.5),//sx
 					"par4", -1,//e.sy,
 					"par5", (e.note + (e.octave * 12)).linlin(20,80,-1.5,1.5),//sx,

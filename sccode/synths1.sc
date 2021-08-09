@@ -201,9 +201,13 @@ b = {
 (
     {
     	Splay.ar({|i|
-    		var f = 55 * 2.pow(i+1) * 0.5;
-    		Pluck.ar(BrownNoise.ar(0.05), Impulse.kr(MouseY.kr(1,100)),  f.reciprocal, f.reciprocal, MouseX.kr(0.1,10),
-        coef:MouseX.kr(-0.999, 0.999, lag:1.6))} !2)
+    		//var f = 155 * 2.pow(i+1) * 0.5;
+    		var a = Dseq([0,2,3,7], inf);
+    		var t  = Impulse.kr(MouseY.kr(1,100));
+    		var d = Demand.kr(t,0,a);
+    		var f = (37 + d).midicps;
+    		Pluck.ar(BrownNoise.ar(0.1), t,  f.reciprocal, f.reciprocal, MouseX.kr(0.1,10),
+        coef:MouseX.kr(-0.999, 0.999, lag:1.6))}!2)
 
     }.play(s)
 )
@@ -212,7 +216,7 @@ b = {
 
 (
 Ndef(\x,{
-	a = SinOsc.ar([64,64.5], Ndef(\x).ar * LFNoise1.ar(0.1,3) ,LFNoise1.ar(3,2)).tanh;
+	a = SinOsc.ar([70,70.7], Ndef(\x).ar * LFNoise1.ar(0.1,3) ,LFNoise1.ar(3,2)).tanh;
 	9.do{
 		a = AllpassL.ar(a,0.3,{0.2.rand+0.1}!2,5)
 	};
@@ -223,17 +227,19 @@ Ndef(\x,{
 
 (
 {
-	var fs = Array.makeScaleCps(groundNote: 440, type: 'major');
-	var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];//(1..8).reciprocal;
+	var fs = [70,140,281,560]*0.5;//Array.makeScaleCps(groundNote: 70, type: 'minor');
+	var as = [1,0.1,0.2,0.02,1,0.3,0.2,0.5] * 0.2;//(1..8).reciprocal;
 	var rs = [1];//(1..8).reciprocal;
 
 	fs.size.postln;
-	Splay.arFill(16,
+	Splay.arFill(6,
 		{
 
 			DynKlank.ar(
 				`[fs, as, rs], 
-				HPF.ar(PinkNoise.ar(0.007),400)
+				// HPF.ar(PinkNoise.ar(0.07),100)
+				 MoogFF.ar(PinkNoise.ar(0.03),fs*2,3)
+
 			) * 0.5
 
 		},
@@ -245,8 +251,7 @@ Ndef(\x,{
 }.play;
 )
 
-
-
+s.meter
 
 
 
@@ -324,6 +329,100 @@ Pbind(
 ).play;
 )
 
+
+
+
+
+
+
+(
+{
+	var trig, snd, freqs;
+	trig = Impulse.ar(LFNoise2.kr(1).linexp(-1, 1, 1, 100));
+	freqs = (60.5 + [0, 2, 4, 5, 7, 9, 10]).midicps;
+	snd = Pluck.ar(Hasher.ar(Sweep.ar(trig)) * -10.dbamp, trig, freqs.reciprocal, freqs.reciprocal, 0.9, 0.5);
+	snd = LeakDC.ar(snd).sum;
+	snd = MoogFF.ar(snd, LFNoise2.kr(1).linexp(-1, 1, 500, 16000), 0);
+	snd = snd ! 2;
+	snd;
+}.play(fadeTime: 0);
+)
+
+
+
+
+(
+SynthDef(\fm, {
+	arg out=0, pan=0, amp=0.25, freq=111, atk=0.001, rel=0.2,
+	mInd1=0.5, mInd2=0.5, mInd3=0.5, mInd4=0.5, mInd5=0.5, mInd6=0.5;
+
+	var gainEnv = EnvGen.ar(Env.perc(atk, rel), \gt.kr(1), doneAction:Done.freeSelf);
+	var sig, cascade_0, cascade_1;
+
+	cascade_0 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio3.kr(1), pi * 0.5).range(0, mInd3) ) * \amp_3.kr(0.5);
+	cascade_0 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio2.kr(1), pi * 0.5).range(0, mInd2) + cascade_0.range(0,mInd2)) * \amp_2.kr(0.5);
+	cascade_0 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio1.kr(1), pi * 0.5).range(0, mInd1) + cascade_0.range(0,mInd1)) * \amp_1.kr(0.5);
+
+	cascade_1 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio6.kr(1), pi * 0.5).range(0, mInd6) + LocalIn.ar(1).range(0, mInd6)) * \amp_6.kr(0.5);
+	cascade_1 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio5.kr(1), pi * 0.5).range(0, mInd5) + cascade_1.range(0,mInd5)) * \amp_5.kr(0.5);
+	cascade_1 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio4.kr(1), pi * 0.5).range(0, mInd4) + cascade_1.range(0,mInd4)) * \amp_4.kr(0.5);
+
+	LocalOut.ar(cascade_1 * \fb.kr(0.9));
+
+	sig = Mix([cascade_0, cascade_1]);
+
+	sig = sig * gainEnv;
+
+	sig = Pan2.ar(sig, pan, amp);
+	sig = LeakDC.ar(sig);
+	OffsetOut.ar(out, sig)
+}).add;
+)
+
+(
+{
+	var trig, snd, freqs;
+	trig = Impulse.ar(LFNoise2.kr(1).linexp(-1, 1, 1, 100));
+	freqs = (60.5 + [0, 2, 4, 5, 7, 9, 10]).midicps;
+	snd = Pluck.ar(Hasher.ar(Sweep.ar(trig)) * -10.dbamp, trig, freqs.reciprocal, freqs.reciprocal, 0.9, 0.5);
+	snd = LeakDC.ar(snd).sum;
+	snd = MoogFF.ar(snd, LFNoise2.kr(1).linexp(-1, 1, 500, 16000), 0);
+	snd = snd ! 2;
+	snd;
+}.play(fadeTime: 0);
+)
+
+/////////////////////////////////////
+Quarks.gui
+({
+	var dur_up_down = MouseX.kr(1,5);
+	var ctl_maths = Maths2.ar(dur_up_down,dur_up_down, 0.9);
+
+	var trig_rate = ctl_maths[0].linexp(0,1,5,50);
+	var trig = Impulse.kr(trig_rate);
+
+	var snd_maths0 = Maths2.ar(0.001, min(0.2, 1/trig_rate), 0.99, 0, 1, trig)[0];
+	var freq0 = snd_maths0.linlin(0,1,50,300);
+	var sound0 = SinOsc.ar(freq0, 0.0, 0.5)*snd_maths0.sqrt;
+
+	var snd_maths = Maths2.ar(0.001, 0.018, 0.99, 0, 1, trig)[0];
+	var env = Lag.ar((snd_maths-0.001)>0, 0.02);
+
+	var freq1 = snd_maths.linlin(0,1,5300,6800);
+	var sound1 = SinOsc.ar(freq1*[1,4,8], 0.0, 0.075).sum*env;
+
+	var freq2 = snd_maths.linlin(0,1,3000,4100);
+	var sound2 = SinOsc.ar(freq1*[1,4,8], 0.0, 0.075).sum*env;
+
+	var mix = RLPF.ar(sound0+sound1+sound2, ctl_maths[0].linlin(0,1,400, 20000), ctl_maths[0].linlin(0,1,0.4,0.95), 1).dup;
+
+	var out = mix+DelayC.ar(mix, 0.1, 0.018, ctl_maths[0].linlin(0,1,0.25,0));
+
+	out = out;
+
+	out.tanh
+}.play
+)
 
 
 
