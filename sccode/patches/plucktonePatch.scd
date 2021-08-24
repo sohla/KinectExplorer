@@ -50,12 +50,12 @@ var mxs, mys;
 		    //visuals
 		    \sh, 0,
 		    \param1, Pwhite(0,0.99),
-		    \param2, 0.1,//Pkey(\vib),
+		    \param2, 1,//Pkey(\vib),
 		    \param3, 0.02,//Pwhite(0,7),
-		    \sx, 0,
-		    \sy, 0,
-		    \ex, Prand([-1.5,1.5], inf),
-		    \ey, Prand([-1.5,1.5], inf),
+		    \sx, Pwhite(-1.7,1.7),
+		    \sy, Pwhite(-1.3,1.3),
+		    \ex, Pkey(\sx),
+		    \ey, Pkey(\sy),
 
 		    // osc out
 			\osc, Pfunc{|e| 
@@ -76,11 +76,11 @@ var mxs, mys;
 					"attack", e.attack * 1,
 					"release", e.rel * 0.3,
 					"par1", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),//e.param1,//colour
-					"par2", (e.note + (e.octave * 12)).linexp(30,90,1,0.1),//scale
-					"par3", (e.note + (e.octave * 12)).linlin(30,90,-1.5,1.5),//sx
-					"par4", 0,//sy
-					"par5", (e.note + (e.octave * 12)).linlin(30,90,-1.5,1.5),//ex
-					"par6", 0,//ey
+					"par2", (e.note + (e.octave * 12)).linexp(30,90,3,0.3),//scale
+					"par3", e.sx,
+					"par4", e.sy,
+					"par5", e.ex,
+					"par6", e.ey,//ey
 					"par7", e.param2.linlin(1,6,0.1,1), // wobble
 					"par8", 5,//e.octave.linlin(3,6,28,10),
 					"par9", (e.note + (e.octave * 12)).linlin(30,90,6,1),
