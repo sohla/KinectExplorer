@@ -41,7 +41,6 @@ Pdef.clear
 	var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];//(1..8).reciprocal;
 	var rs = [1];//(1..8).reciprocal;
 
-	fs.size.postln;
 	Splay.arFill(16,
 		{
 
@@ -72,7 +71,7 @@ SynthDef(\dk_blobi, {|a=100,b=100,c=100,d=100,e=100,f=100,g=100,h=100, amp = 0.5
 
 		DynKlank.ar(
 			`[fs, as, rs], 
-			HPF.ar(PinkNoise.ar(0.007),400)
+			HPF.ar(PinkNoise.ar(0.007),40)
 		) * amp
 
 	},
@@ -85,7 +84,6 @@ SynthDef(\dk_blobi, {|a=100,b=100,c=100,d=100,e=100,f=100,g=100,h=100, amp = 0.5
 }).send(s);
 
 )
-
 a = Synth.new(\dk_blobi);
 d = [\a];
 a.set(d[0],0.1)

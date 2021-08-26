@@ -41,7 +41,7 @@ s.meter
 			\amp, 0.7,
 			\ff, Prand([1,1200], inf),
 			\rf, Pwhite(1,1200),
-			\attack, Pwhite(0.01,0.04),
+			\attack, Pwhite(0.003,0.01),
 			\decay, Pwhite(0.05,0.15),
 			\release, Pwhite(11,21),
 		)
