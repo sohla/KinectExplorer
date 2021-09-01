@@ -17,8 +17,8 @@ SynthDef(\dweep, {|out = 0, freq = 100.0, amp = 0.7, attack = 0.003, decay = 0.0
 	);
 	LocalOut.ar(sig.tanh);
 
-	sig = Splay.arFill(1, {|i|
-		AllpassN.ar(sig, 0.1, 0.05 * i, 0.5 + (0.1 * i));
+	sig = Splay.arFill(, {|i|
+		AllpassL.ar(sig, 0.1, 0.05 * i, 0.2 + (0.1 * i));
 
 	});
 
@@ -46,10 +46,7 @@ Pdef(\a,
 		\note, Prand([0,5,9].stutter(6), inf),
 		\root, Pseq([0,2,4].stutter(18), inf),
 		\dur, 0.3,
-		\amp, 0.6, 
+		\amp, 0.9, 
 	)
 ).play;
 )
-
-
-
