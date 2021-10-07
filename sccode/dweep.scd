@@ -17,7 +17,7 @@ SynthDef(\dweep, {|out = 0, freq = 100.0, amp = 0.7, attack = 0.003, decay = 0.0
 	);
 	LocalOut.ar(sig.tanh);
 
-	sig = Splay.arFill(, {|i|
+	sig = Splay.arFill(3, {|i|
 		AllpassL.ar(sig, 0.1, 0.05 * i, 0.2 + (0.1 * i));
 
 	});

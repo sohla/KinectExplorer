@@ -53,7 +53,7 @@ SynthDef(\slido, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, s
 )
 
 
-(
+( 
 	Pdef(\c,
 		Pbind(
 			\instrument, \slido,

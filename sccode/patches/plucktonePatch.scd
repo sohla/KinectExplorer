@@ -76,7 +76,7 @@ var mxs, mys;
 					"attack", e.attack * 1,
 					"release", e.rel * 0.3,
 					"par1", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),//e.param1,//colour
-					"par2", (e.note + (e.octave * 12)).linexp(30,90,3,0.3),//scale
+					"par2", (e.note + (e.octave * 12)).linexp(30,90,3,1),//scale
 					"par3", e.sx,
 					"par4", e.sy,
 					"par5", e.ex,

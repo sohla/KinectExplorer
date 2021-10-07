@@ -91,7 +91,7 @@ a.set(d[0],0.1)
 (
     {
     	Splay.ar({|i|
-    		var f = 200 * 2.pow(i+1) * 0.5;
+    		var f = 1111 * 2.pow(i+1) * 0.5;
     		Pluck.ar(BrownNoise.ar(0.2), Impulse.kr(MouseY.kr(1,100).poll),  f.reciprocal, f.reciprocal, MouseX.kr(0.1,10),
         coef:MouseY.kr(-0.999, 0.999, lag:1.6))} !2)
 
@@ -218,7 +218,7 @@ Ndef(\x,{
 	9.do{
 		a = AllpassL.ar(a,0.3,{0.2.rand+0.1}!2,5)
 	};
-	a.tanh * 0.5
+	a.tanh * 0.3
 }).play
 
 )
@@ -226,7 +226,7 @@ Ndef(\x,{
 (
 {
 	var fs = [70,140,281,560]*0.5;//Array.makeScaleCps(groundNote: 70, type: 'minor');
-	var as = [1,0.1,0.2,0.02,1,0.3,0.2,0.5] * 0.2;//(1..8).reciprocal;
+	var as = [1,0.1,0.2,0.02,1,0.3,0.2,0.5] * 0.1;//(1..8).reciprocal;
 	var rs = [1];//(1..8).reciprocal;
 
 	fs.size.postln;
