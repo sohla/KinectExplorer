@@ -30,3 +30,11 @@ o = OSCFunc({ |msg, time, addr, recvPort|
 }, '/gate0');
 
 o.free;
+
+
+
+o = OSCFunc({ |msg, time, addr, recvPort|
+	[msg, time, addr, recvPort].postln;
+}, '/poscr');
+
+o.free;
