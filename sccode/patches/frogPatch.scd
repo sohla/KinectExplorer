@@ -48,26 +48,23 @@
 
 		    // osc out
 			\osc, Pfunc{|e| 
-				//var clock = ptn.source.asStream.clock;
-				 // e.postln;
-				// clock.bar.mod(4).postln; //!! somewhere in the bar !!
-				// netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
-				//["/shadow",e.sh, e.dur, e.attack, e.rel, e.param1, e.octave.linlin(3,5,1,2).reciprocal * 2 , e.sx, e.sy, e.ex, e.ey].postln;
-				// model.netAddr.sendMsg("/shadow", e.sh, e.dur, e.attack, e.rel, 
-				// 	e.param1, e.param2,
-				// 	e.sx, e.sy, e.ex, e.ey
-				// );
+
 				model.netAddr.sendMsg("/shadow", 
+
 					"shape", e.sh,
+					
 					"duration", e.dur,
 					"attack", e.attack,
-					"release", e.rel * 1,
-					"par1", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),//e.param1,//colour
-					"par2", e.octave.linlin(3,7,0.5,4).reciprocal * 8,
-					"par4", (e.note + (e.octave * 12)).linlin(20,80,-1.2,1.2),//sx
-					"par3", e.sy,
-					"par6", (e.note + (e.octave * 12)).linlin(20,80,-1.2,1.2),//sx,
-					"par5", e.ey,
+					"release", e.rel * 0.6,
+					
+
+					"color", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),
+					"scale", e.octave.linlin(3,7,0.7,6).reciprocal * 1,
+					"sx", (e.note + (e.octave * 12)).linlin(20,80,-1.2,1.2),
+					"sy", e.sy,
+					"ex", (e.note + (e.octave * 12)).linlin(20,80,-1.2,1.2),
+					"ey", e.ey,
+					
 					"par7", 0,//e.param2.linlin(1,6,0.1,0.2), // wobble
 					"par8", 5,//e.octave.linlin(3,6,28,10),
 					"par9", (e.note + (e.octave * 12)).linlin(0,127,6,1),

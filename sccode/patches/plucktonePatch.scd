@@ -22,7 +22,7 @@ var mxs, mys;
 		        delaytime: freq.reciprocal,
 		        decaytime: release,
 		        coef: coef,
-		        amp: env * 0.001);
+		        mul: env * 0.001);
 		LocalOut.ar(snd + tone);
 
 	    Out.ar(0, snd + tone, snd + tone);
@@ -48,10 +48,7 @@ var mxs, mys;
 
 
 		    //visuals
-		    \sh, 0,
-		    \param1, Pwhite(0,0.99),
-		    \param2, 1,//Pkey(\vib),
-		    \param3, 0.02,//Pwhite(0,7),
+		    \sh, 7,
 		    \sx, Pwhite(-1.7,1.7),
 		    \sy, Pwhite(-1.3,1.3),
 		    \ex, Pkey(\sx),
@@ -59,31 +56,28 @@ var mxs, mys;
 
 		    // osc out
 			\osc, Pfunc{|e| 
-				//var clock = ptn.source.asStream.clock;
-				//e.proxy.key.postln;
-				// clock.bar.mod(4).postln; //!! somewhere in the bar !!
-				// netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
-				//["/shadow",e.sh, e.dur, e.attack, e.rel, e.param1, e.octave.linlin(3,5,1,2).reciprocal * 2 , e.sx, e.sy, e.ex, e.ey].postln;
-				// model.netAddr.sendMsg("/shadow", e.sh, e.dur, e.attack, e.rel, 
-				// 	e.param1, e.octave.linlin(3,7,0.5,4).reciprocal * 2,
-				// 	e.sx, e.sy, e.ex, e.ey
-				// );
-
-
 				model.netAddr.sendMsg("/shadow", 
+					
 					"shape", e.sh,
+					
 					"duration", e.dur,
 					"attack", e.attack * 1,
-					"release", e.rel * 0.3,
-					"par1", (e.note + (e.octave * 12)).linlin(30,90,0,0.99),//e.param1,//colour
-					"par2", (e.note + (e.octave * 12)).linexp(30,90,3,1),//scale
-					"par3", e.sx,
-					"par4", e.sy,
-					"par5", e.ex,
-					"par6", e.ey,//ey
-					"par7", e.param2.linlin(1,6,0.1,1), // wobble
+					"release", e.rel * 0.26,
+					
+					"color", (e.note + (e.octave * 12)).linlin(30,90,-0.11,0.99),//e.param1,//colour
+					"scale", (e.note + (e.octave * 12)).linexp(30,90,0.5,0.04),//scale
+					
+					"sx", 0,
+					"sy", (e.note + (e.octave * 12)).linlin(0,127,-2,2.5),
+					"ex", 0,
+					"ey", (e.note + (e.octave * 12)).linlin(0,127,-2,2.5),
+
+					"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
 					"par8", 5,//e.octave.linlin(3,6,28,10),
 					"par9", (e.note + (e.octave * 12)).linlin(30,90,6,1),
+					
+					"scx", (e.note + (e.octave * 12)).linlin(30,90,10, 1),
+					"scy", (e.note + (e.octave * 12)).linlin(30,90,3, 0.01),
 				);
 			},
 

@@ -37,7 +37,7 @@
 			\amp, 0.6,
 			\attack, Pwhite(0.003,0.01),
 			\release, Pwhite(0.1,5.6),
-			\vib, Prand([1,2,20,200], inf),
+			\vib, Pwhite(1,5),
 
 
 		    \attack, Pwhite(0.001,0.01),
@@ -56,26 +56,21 @@
 
 		    // osc out
 			\osc, Pfunc{|e| 
-				//var clock = ptn.source.asStream.clock;
-				// e.rel.postln;
-				// clock.bar.mod(4).postln; //!! somewhere in the bar !!
-				// netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
-				//["/shadow",e.sh, e.dur, e.attack, e.rel, e.param1, e.octave.linlin(3,5,1,2).reciprocal * 2 , e.sx, e.sy, e.ex, e.ey].postln;
-				// model.netAddr.sendMsg("/shadow", e.sh, e.dur, e.attack, e.rel, 
-				// 	e.param1, e.octave.linlin(3,7,0.5,4).reciprocal * 2,
-				// 	e.sx, e.sy, e.ex, e.ey
-				// );
 				model.netAddr.sendMsg("/shadow", 
+
 					"shape", e.sh,
 					"duration", e.dur,
 					"attack", e.attack,
-					"release", e.rel,
-					"par1", e.param1,
-					"par2", e.octave.linlin(3,7,0.5,4).reciprocal * 2,
-					"par3", e.sx,
-					"par4", e.sy,
-					"par5", e.ex,
-					"par6", e.ey,
+					"release", e.rel * 2,
+
+					"color", e.param1,
+					"scale", e.octave.linlin(3,7,2,9).reciprocal * 10,
+					"sy", 0,//((e.note + (e.octave * 12)).linlin(30,90,-4,4).floor / 8) * 0.2,
+					"sx", 0,
+					"ey", 0,//((e.note + (e.octave * 12)).linlin(30,90,-4,4).floor / 8) * 0.2,
+					"ex", 0,
+
+					"par7", e.vib
 				);
 			},
 

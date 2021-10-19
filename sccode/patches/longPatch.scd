@@ -29,12 +29,13 @@ var oct = 0;
 		    \instrument, Pseq([\long].stutter(6),inf),
 		    \amp, Pwhite(0.3, 0.4),
 		    \root, Pseq([6,2,4].stutter(46), inf),
-		     \octave, Prand([4,5,6].stutter(7),inf),
+		    \direction, Pseq([-1,1].stutter(46), inf),
+		    \octave, Prand([4,5,6].stutter(7),inf),
 		    \note, Prand([0,4,7,11], inf),
 		    \dur,Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,5).floor).reciprocal},
 		    \attack, Pwhite(0.001,0.005),
 		    \decay, Pwhite(0.002,0.3),
-		    \release, Pfunc{ my.getSynchronous.linlin(0,1.0,0.005,4.5)},//Pwhite(0.05,1.3),
+		    \release, Pfunc{ my.getSynchronous.linlin(0,1.0,0.1,4.5)},//Pwhite(0.05,1.3),
 		    \rel, Pkey(\release),
 		    \vibfreq, Pwhite(1,6),
 		    \vibamp, Pwhite(0.4,0.2),
@@ -43,29 +44,16 @@ var oct = 0;
 
 		    //visuals
 		    \sh, 3,
-		    \param1, 1,
-		    \param2, 2,
-		    \param3, 3,
-		    \sx, Pwhite(-2.0,2.0),
-		    \sy, Pwhite(0.1,1.0),
-		    \ex, Pkey(\sx),
-		    \ey, 0-1,
+		    \sx, Pseq(Array.fill(10*pi, {|i| sin(i*0.2) * 0.7}), inf),
+		    \sy, Pseq(Array.fill(10*pi, {|i| cos(i*0.2)} * 0.7), inf),
+		    \ex, Pseq(Array.fill(10*pi, {|i| sin((i+1) * 0.2) * 0.1}), inf),
+		    \ey, Pseq(Array.fill(10*pi, {|i| cos((i+1) * 0.2) * 0.1}), inf),
 		    \image, Pseq([0,1,2,3,4,5,6,7,8,9,0,11], inf),
 		    \angle, Pwhite(-70,70),
 
 		    // osc out
 			\osc, Pfunc{|e| 
-				//var clock = ptn.source.asStream.clock;
-				//e.proxy.key.postln;
-				// clock.bar.mod(4).postln; //!! somewhere in the bar !!
-				// netAddr.sendBundle(0.0, ["/shadow", 0, e.note, e.dur, e.attack, e.decay, e.coef]);
-				//["/shadow",e.sh, e.dur, e.attack, e.rel, e.param1, e.octave.linlin(3,5,1,2).reciprocal * 2 , e.sx, e.sy, e.ex, e.ey].postln;
-				// model.netAddr.sendMsg("/shadow", e.sh, e.dur, e.attack, e.rel, 
-				// 	e.param1, e.octave.linlin(3,7,0.5,4).reciprocal * 2,
-				// 	e.sx, e.sy, e.ex, e.ey
-				// );
-				 // Ndef(\viztestPtn).set(\octave, 3);
-				 // e.postln;
+
 				if(e.dur.class == Rest,{
 					// don't send a rest
 					"rest".postln;
@@ -74,15 +62,16 @@ var oct = 0;
 					model.netAddr.sendMsg("/shadow", 
 						"shape", e.sh,
 						"duration", e.dur,
-						"attack", e.attack * 3,
-						"release", e.rel * 0.7,
-						"par1", (e.note + (oct * 12)).linlin(0,127,0,0.99),//e.param1,//colour
-						"par2", 0.3,//(e.note + (oct * 12)).linexp(0,127,2,0.2),//scale
-						"par3", e.sx,//sx
-						"par4", e.sy,//sy
-						"par5", e.ex,//ex
-						"par6", e.ey,//ey
-						"par7", 10,//e.param2.linlin(1,6,0.1,1), // wobble
+						"attack", e.attack * 0.01,
+						"release", e.rel * 1,
+						"color", (e.note).linlin(0,12,0,0.99),//e.param1,//colour
+						"scale", 0.4,//(e.note + (oct * 12)).linexp(0,127,2,0.2),//scale
+						"sx", e.sx,//sx
+						"sy", e.sy,//sy
+						"ex", e.ex,//ex
+						"ey", e.ey,//ey
+						
+						"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
 						"par8", 5,//e.octave.linlin(3,6,28,10),
 						"par9", (e.note + (e.octave * 12)).linlin(0,127,6,1),
 						"img", e.image,

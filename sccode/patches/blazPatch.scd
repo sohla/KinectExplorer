@@ -38,14 +38,14 @@
 		    \rel, Pkey(\release),
 
 		 //    //visuals
-		    \sh, 1,
+		    \sh, 8,
 		    \param1, Pkey(\harm),//Pwhite(0,10.0),
 		    \param2, Pkey(\harm),
 		    \param3, 1,//Pwhite(0,7),
-		    \sx, Pwhite(-0.2,0.2),
-		    \sy, Pwhite(-0.2,0.2),
-		    \ex, Pkey(\sx) * 2,
-		    \ey, Pkey(\sy) * 2,
+		    \sx, 0,//Pwhite(-0.2,0.2),
+		    \sy, 0,//Pwhite(-0.2,0.2),
+		    \ex, 0,//Pkey(\sx) * 2,
+		    \ey, 0,//Pkey(\sy) * 2,
 		    \scal, Pwhite(15,9),
 
 		    // osc out
@@ -65,19 +65,23 @@
 				},{
 
 					model.netAddr.sendMsg("/shadow", 
+						
 						"shape", e.sh,
+						
 						"duration", e.dur,
 						"attack", e.attack * 1.2,
-						"release", e.rel ,
-						"par1", e.harm.linlin(1,8,0.0,1.0),
-						"par2", 4,
-						"par3", e.sx,
-						"par4", e.sy,
-						"par5", e.ex,
-						"par6", e.ey,
-						"par7", 1, // wobble
-						"par8", 5,//e.octave.linlin(3,6,28,10),
-						"par9", (e.note + (e.octave * 12)).linlin(0,127,6,1),
+						"release", e.rel * 0.7,
+						
+						"color", (e.note + (e.octave * 12)).linlin(20,70,0,0.99),
+						"scale", 0.5,
+						"sx", 0,
+						"sy", 0,
+						"ex", 0,
+						"ey", -0.2,
+						
+						"par7", 0.0, // wobble
+						"scx", (e.note + (e.octave * 12)).linlin(20,74,3,0.001),
+						"scy", (e.note + (e.octave * 12)).linlin(20,74,0.001,3),
 					);
 				});
 

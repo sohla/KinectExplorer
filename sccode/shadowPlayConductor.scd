@@ -6,12 +6,24 @@
 
 
 	var window, freqScope;
-	var loadPatch, patchButton;
+	var loadPatch, patchButton, reloadButton;
 	var graphView;
 
 	var oscListeners = [];
 
+	//------------------------------------------------------
+	var pfmt = 0; //store the sum of all patch files modification time since epoch 
 
+	var pfmtRout = Routine {|i|
+
+		loop{
+			var temp = 0;
+			patches.do({ |m,i| temp = temp + File.mtime(patchesPath.asAbsolutePath++m.file) });
+			if(temp != pfmt,{ {reloadButton.valueAction_(0)}.defer() });
+			pfmt = temp;				
+			0.1.yield;
+		}
+	}.play;
 	//------------------------------------------------------
 	var blobModel = (
 				\dataSize: 3,
@@ -56,7 +68,7 @@
 	//------------------------------------------------------
 	var freeAll = {
 
-
+		pfmtRout.stop;
 		patches.do({|m| m.env.use{~deinit.(m)} });
 
 		oscListeners.do{|l|l.free};
@@ -221,8 +233,14 @@
 	window.onClose = ({ freeAll.() });
 	CmdPeriod.doOnce({ freeAll.() });
 
+	window.view.keyDownAction_({|view,char,mods,uni,code,key|
+		if(uni==114,{//r
+			reloadButton.valueAction_(0);
+		});
+	});
+
 	window.layout = VLayout(
-		Button()
+		reloadButton = Button()
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
 			.action_({|b|
@@ -308,3 +326,13 @@
 
 // Ptpar
 // Pspawner
+// s.meters
+
+
+
+// (
+
+// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
+// var time = File.mtime(patchesPath.asAbsolutePath++"plucktonePatch.scd");
+// time
+// )

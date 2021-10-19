@@ -39,7 +39,7 @@ a = Synth.new(\glow, [\release,7]);
 			\octave, Prand([2,4,5,6], inf),
 			// \note, Prand([0,2,5,9,11], inf),
 			\note, Prand([0,4,7], inf),
-			\root, Pseq([0].stutter(12), inf),
+			\root, Pseq([0,2].stutter(16), inf),
 			\dur, Prand([0.5], inf),
 			\dur, 0.5,
 			\amp, 0.1,
