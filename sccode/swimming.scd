@@ -1,7 +1,7 @@
 (
 SynthDef(\swimming, {|attack = 0.004, release = 1.9, freq = 120, gate = 1, vib = 1|
 
-	var env = EnvGen.ar(Env.adsr(attack, 0.07, 0.7,release, 1, -7), gate, doneAction: 2);
+	var env = EnvGen.ar(Env.adsr(attack, 0.07, 0.7,release, 1, -7), doneAction: 2);
 	var sig = 0;
 	var p, z, trig;
 	p = 11;	// number of partials per channel
@@ -49,4 +49,7 @@ a = Synth.new(\swimming, [\release,2]);
 	).play;
 )
 
-Platform.userExtensionDir
+/*
+how to use : needs to go somewhere else / strange
+
+*/

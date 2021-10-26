@@ -2,7 +2,7 @@
 SynthDef(\slido, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, sustain = 0.8, release = 0.9, gate = 1, wobf = 0.023|
 
 	var enva = EnvGen.ar(Env.adsr(attack / 2, decay / 2, sustain, release /2), gate);
-	var envb = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+	var envb = EnvGen.ar(Env.adsr(attack, decay, sustain, release), doneAction: 2);
 	var sig;
 	var d = 4; 
 	var a = 4; 
@@ -68,3 +68,9 @@ SynthDef(\slido, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, s
 		)
 	).play;
 )
+
+/*
+further exploration
+mouse control
+
+*/

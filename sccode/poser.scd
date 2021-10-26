@@ -193,8 +193,3 @@ ID, l, r, t, b, numKeyPoints, ID, x, y, ID, x, y....., numLinks, ai, bi, ai, bi.
 
 
 
-
-b = Bus.control(s);
-b.value = 1.5
-
-b.plot

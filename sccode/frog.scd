@@ -36,7 +36,22 @@ a = Synth.new(\frog, [\release,2]);
 	).play;
 )
 
-
+(
+	Ndef(\frogPtn,
+		Pbind(
+			\instrument, \frog,
+			\octave, Pseq([2,4,5,4,5], inf),
+			\note, Pseq([0,7,11,16], inf),
+			\root, Pseq([0,4,-1, 2].stutter(20), inf),
+			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5], inf),
+			\amp, 0.5,
+			\attack, Pwhite(0.001,0.006, inf),
+			\release, Pwhite(0.3,1.9, inf),
+		    \rel, Pkey(\release),
+		    \vib, 50,//Pwhite(1.0,16.0),
+		)
+	).play;
+)
 Ndef(\frogPtn).fadeTime = 15;
 Ndef(\frogPtn).end;
 

@@ -1,7 +1,7 @@
 ( 
 SynthDef(\voiv, {|out = 0, attack = 0.01, decay = 0.3, sustain = 0.8, release = 0.9, freq = 120.0, gate = 1, amp = 1.0, wobf = 1, woba = 0.003, verb = 1, voice = 0.5|
 
-	var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+	var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), doneAction: 2);
 	var fe = EnvGen.ar(Env.perc(0.01,decay), gate);
 	var fd = EnvGen.ar(Env.perc(0.01,decay * 0.6), gate);
 	var fm = LFCub.ar(wobf * (1-fd),0,woba,1);//0.013
@@ -49,3 +49,9 @@ Pdef(\a,
 	)
 ).play;
 )
+
+/*
+mouse control : what params
+refine
+
+*/
