@@ -20,8 +20,8 @@
 		o.outDevice = ServerOptions.devices[output];
 		// o.sampleRate = 41000.000000;
 		o.memSize = 8192 * 2;
-		o.numInputBusChannels = 2
-;		o.numOutputBusChannels = 4;
+		o.numInputBusChannels = 2;
+		o.numOutputBusChannels = 2;
 		s.reboot;
 	)
 

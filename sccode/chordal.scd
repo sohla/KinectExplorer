@@ -55,8 +55,8 @@ a = Synth.new(\chordal,[\freq, 68 *2]);
 			\note, Pseq([0,2,0,2,-2,-5,-7,-3,-5], inf),
 			\root, Pseq([0].stutter(8*8), inf),
 			\dur, Pseq([1.5,Rest(1.5),1,1,2] * 0.125,inf),
-			\amp, 0.9,
-			\attack, Pwhite(0.5,1),
+			\amp, 0.4,
+			\attack, Prand([0.2,1.0,0.6,0.1,0.9],inf),
 			\release, Prand([4.9,2.2] * 0.25,inf),
 			\harm, Prand([1,2,3,4],inf)
 		)

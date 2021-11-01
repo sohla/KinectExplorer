@@ -32,7 +32,7 @@ var oct = 0;
 		    \direction, Pseq([-1,1].stutter(46), inf),
 		    \octave, Prand([4,5,6].stutter(7),inf),
 		    \note, Prand([0,4,7,11], inf),
-		    \dur,Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,5).floor).reciprocal},
+		    \dur,Pfunc{mx.getSynchronous.linlin(0,1.0,0.75,0.04)},//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,5).floor).reciprocal},
 		    \attack, Pwhite(0.001,0.005),
 		    \decay, Pwhite(0.002,0.3),
 		    \release, Pfunc{ my.getSynchronous.linlin(0,1.0,0.1,4.5)},//Pwhite(0.05,1.3),
