@@ -15,7 +15,7 @@
 		\b: 0
 	);
 
-	var object = (
+	var pose = (
 		\id: 0,
 		\l: 0,
 		\r: 0,
@@ -25,7 +25,7 @@
 		\links: Array.fill(0, {Event.new(proto:link)})
 	);
 
-	var objects = Array.fill(10, {Event.new(proto:object)});
+	var poses = Array.fill(10, {Event.new(proto:pose)});
 
 
 	//------------------------------------------------------
@@ -49,7 +49,7 @@
 			Pen.fillColor = Color.green;
 
 
-			objects.do({|o,i|
+			poses.do({|o,i|
 		
 				if(o.links.size > 0,{
 
@@ -123,35 +123,35 @@
 
 	lnkListener = OSCFunc({ |msg, time, addr, recvPort|
 		var objIndex = msg[1];
-		objects[objIndex].links = Array.fill(msg[2], {Event.new(proto:link)});
+		poses[objIndex].links = Array.fill(msg[2], {Event.new(proto:link)});
 		msg.copySeries(3,nil).reshape(msg[2],2).do({|o, i|
-			objects[objIndex].links[i].a = o[0];
-			objects[objIndex].links[i].b = o[1];
+			poses[objIndex].links[i].a = o[0];
+			poses[objIndex].links[i].b = o[1];
 		});
-		// ([objects[objIndex].links, objects[objIndex].points.size]).postln;
+		// ([poses[objIndex].links, poses[objIndex].points.size]).postln;
 	}, 'poscr/links');
 	
 	objListener = OSCFunc({ |msg, time, addr, recvPort|
 		// [msg, time, addr, recvPort].postln;
 		var objIndex = msg[1];
 
-		// objects = Array.fill(numPoints + 1, {Event.new(proto:object)});
-		objects[objIndex].id = msg[1];// need to store?
-		objects[objIndex].l = msg[2];
-		objects[objIndex].r = msg[3];
-		objects[objIndex].t = msg[4];
-		objects[objIndex].b = msg[5];
+		// poses = Array.fill(numPoints + 1, {Event.new(proto:pose)});
+		poses[objIndex].id = msg[1];// need to store?
+		poses[objIndex].l = msg[2];
+		poses[objIndex].r = msg[3];
+		poses[objIndex].t = msg[4];
+		poses[objIndex].b = msg[5];
 	}, '/poscr/obj');
 
 	pntListener = OSCFunc({ |msg, time, addr, recvPort|
 
 		var objIndex = msg[1];
 		var numPoints = msg[2];
-		objects[objIndex].points = Array.fill(numPoints, {Event.new(proto:point)});
+		poses[objIndex].points = Array.fill(numPoints, {Event.new(proto:point)});
 		msg.copySeries(3,nil).reshape(numPoints,3).do({|o, i|
-			objects[objIndex].points[i].id = o[0];
-			objects[objIndex].points[i].x = o[1];
-			objects[objIndex].points[i].y = o[2];
+			poses[objIndex].points[i].id = o[0];
+			poses[objIndex].points[i].x = o[1];
+			poses[objIndex].points[i].y = o[2];
 			{graphView.refresh()}.defer;
 		});
 	}, '/poscr/pnts');
