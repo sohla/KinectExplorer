@@ -138,9 +138,9 @@
 	var bootServer = {|f|
 	
 		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 // var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
-		var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
 		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
@@ -161,7 +161,7 @@
 	};
 
 	//------------------------------------------------------------
-	var updateGraphView = {|view|
+	var updateGraphViewXX = {|view|
 
 		Pen.fillColor = Color.black;
 		Pen.fillRect(window.view.bounds);
@@ -241,7 +241,7 @@
 
 	};
 	//------------------------------------------------------------
-	var updateGraphViewXX = {|view|
+	var updateGraphView = {|view|
 
 		var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
 
