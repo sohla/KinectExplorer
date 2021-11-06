@@ -11,23 +11,7 @@
 #include <stdio.h>
 #include "Base_PixelProc.hpp"
 #include "Base_LineProc.hpp"
-
 #include <map>
-
-class MyFollower : public ofxCv::RectFollower {
-
-protected:
-    float startedDying;
-
-public:
-    MyFollower()
-        :startedDying(0) {
-    }
-    void setup(const cv::Rect& track);
-    void update(const cv::Rect& track);
-    void kill();
-
-};
 
 class LinePipeline : public Base_PixelProc {
     
@@ -57,7 +41,7 @@ public:
 protected:
 
     ofxCv::ContourFinder contourFinder;
-    ofxCv::RectTrackerFollower<MyFollower> tracker;
+    ofxCv::RectTrackerFollower<BlobModel> tracker;
 };
 
 

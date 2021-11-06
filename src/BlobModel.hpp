@@ -8,11 +8,26 @@
 #ifndef BlobModel_h
 #define BlobModel_h
 
+#include "ofxCv.h"
+
 // handy model for collecting data from tracker and procs
 // gets passed to everything for each frame
 
-struct BlobModel {
+class BlobModel : public ofxCv::RectFollower {
 
+protected:
+    float startedDying;
+
+public:
+    
+    BlobModel()
+        :startedDying(0) {
+    }
+    void setup(const cv::Rect& track);
+    void update(const cv::Rect& track);
+    void kill();
+
+    //•• make below protected?
     ofPolyline line;
     
     unsigned int label;

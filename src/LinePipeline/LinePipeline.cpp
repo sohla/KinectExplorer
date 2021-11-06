@@ -13,36 +13,6 @@
 #include "Ordered_LineProc.hpp"
 #include "OSCOut_LineProc.hpp"
 
-const float dyingTime = 0.1;
-
-void MyFollower::setup(const cv::Rect& track) {
-    
-    // •• WARNING ••
-    // Tracker.h code needed a fix : setting label before calling setup (line 423)
-    
-    float curTime = ofGetElapsedTimef();
-    std::cout << curTime << ": " << getLabel() << ": setup" <<  std::endl;
-}
-
-void MyFollower::update(const cv::Rect& track) {
-    float curTime = ofGetElapsedTimef();
-    std::cout << curTime << ": " << getLabel() << ": update" << std::endl;
-    if(getDead()){
-        std::cout << getDead() << ": " << getLabel() << ": kill" << std::endl;
-    }
-}
-
-void MyFollower::kill() {
-
-    float curTime = ofGetElapsedTimef();
-    if(startedDying == 0) {
-        startedDying = curTime;
-    } else if(curTime - startedDying > dyingTime) {
-        dead = true;
-        std::cout << curTime << ": " << getLabel() << ": dead" <<  std::endl;
-    }
-}
-
 
 //------------------------------------------------------------------------
 //
@@ -129,9 +99,14 @@ void LinePipeline::draw(const DepthModel &model){
 
     // draw pipeline
     for_each(processors.begin(), processors.end(), [&](LineProc* pp) {
-        for(auto &blob: blobs){
-            pp->draw(model,blob.second);
+        vector<BlobModel>& followers = tracker.getFollowers();
+
+        for(int i = 0; i < followers.size(); i++) {
+            pp->draw(model,followers[i]);
         }
+
+
+
     });
 }
 
@@ -149,19 +124,27 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         
         tracker.setPersistence(15);
         tracker.setMaximumDistance(distanceParam.get());
-        
+
 //        ofxCv::RectTracker& tracker = contourFinder.getTracker();
         tracker.track(contourFinder.getBoundingRects());
         
             
-        vector<MyFollower>& followers = tracker.getFollowers();
+        vector<BlobModel>& followers = tracker.getFollowers();
+
         for(int i = 0; i < followers.size(); i++) {
+
+            followers[i].line = contourFinder.getPolyline(tracker.getIndexFromLabel(followers[i].label));//•• fails when it doesn't exist!
+
+            for( auto &proc : processors ){
+                proc->process(followers[i]);
+            };
 
         }
 
-
-//        tracker.setPersistence(persistanceParam.get());
-        tracker.setMaximumDistance(distanceParam.get());
+        
+        
+        
+        /*
 
         blobs.clear();
         
@@ -180,6 +163,8 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         //• think about life/death of a blob and triggering states
         
         // persistnace is 0, therefor dead can trigger a full clear of all blobs
+        
+        
         if(tracker.getDeadLabels().size() > 0){
             
             for(int i=0; i< MAX_BLOBS; i++){
@@ -239,7 +224,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 proc->process(blob.second);
             };
         }
- 
+         */
     };
     
     return procImage.getPixels();
