@@ -13,6 +13,41 @@
 #include "Ordered_LineProc.hpp"
 #include "OSCOut_LineProc.hpp"
 
+const float dyingTime = 0.1;
+
+void MyFollower::setup(const cv::Rect& track) {
+    
+    // •• WARNING ••
+    // Tracker.h code needed a fix : setting label before calling setup (line 423)
+    
+    float curTime = ofGetElapsedTimef();
+    std::cout << curTime << ": " << getLabel() << ": setup" <<  std::endl;
+}
+
+void MyFollower::update(const cv::Rect& track) {
+    float curTime = ofGetElapsedTimef();
+    std::cout << curTime << ": " << getLabel() << ": update" << std::endl;
+    if(getDead()){
+        std::cout << getDead() << ": " << getLabel() << ": kill" << std::endl;
+    }
+}
+
+void MyFollower::kill() {
+
+    float curTime = ofGetElapsedTimef();
+    if(startedDying == 0) {
+        startedDying = curTime;
+    } else if(curTime - startedDying > dyingTime) {
+        dead = true;
+        std::cout << curTime << ": " << getLabel() << ": dead" <<  std::endl;
+    }
+}
+
+
+//------------------------------------------------------------------------
+//
+//------------------------------------------------------------------------
+
 
 void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 
@@ -37,8 +72,8 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     contourFinder.setThreshold(thresholdParam.get());
 //    contourFinder.setSortBySize(true);
     
-    contourFinder.getTracker().setPersistence(0); //in frames. 0 = deadFrames used as a trigger
-    contourFinder.getTracker().setMaximumDistance(distanceParam.get());
+//    contourFinder.getTracker().setPersistence(0); //in frames. 0 = deadFrames used as a trigger
+//    contourFinder.getTracker().setMaximumDistance(distanceParam.get());
 
     
 
@@ -112,7 +147,19 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
 
         contourFinder.findContours(procImage);
         
-        ofxCv::RectTracker& tracker = contourFinder.getTracker();
+        tracker.setPersistence(15);
+        tracker.setMaximumDistance(distanceParam.get());
+        
+//        ofxCv::RectTracker& tracker = contourFinder.getTracker();
+        tracker.track(contourFinder.getBoundingRects());
+        
+            
+        vector<MyFollower>& followers = tracker.getFollowers();
+        for(int i = 0; i < followers.size(); i++) {
+
+        }
+
+
 //        tracker.setPersistence(persistanceParam.get());
         tracker.setMaximumDistance(distanceParam.get());
 
@@ -122,7 +169,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         //• use TrackerFollower to manage Blob model.....
         //• YEP this is all wrong
         //• what we need
-        //• track each blob, ant its state, born, living, died
+        //• track each blob, and its state, born, living, died
         //• how do we descirbe this in OSC
         
         //• TODO :
@@ -131,7 +178,6 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         //• fix everything else
         //• test
         //• think about life/death of a blob and triggering states
-        
         
         // persistnace is 0, therefor dead can trigger a full clear of all blobs
         if(tracker.getDeadLabels().size() > 0){
@@ -158,9 +204,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         
             for(int i=0; i< num; i++){
 
-
                 unsigned int label = tracker.getLabelFromIndex(i);
-                cv::Vec2f vel = tracker.getVelocity(i);
                 
                 if(tracker.existsCurrent(label)){
 
@@ -174,7 +218,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                         const cv::Rect& current = tracker.getCurrent(blob.label);
                         blob.previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
                         blob.currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
-                        blob.velocity = ofVec2f(tracker.getVelocity(i)[0], tracker.getVelocity(i)[1]);
+                        blob.velocity = blob.currentPosition - blob.previousPosition;
                     }
 
                     blobs.insert(std::make_pair(label, blob));
