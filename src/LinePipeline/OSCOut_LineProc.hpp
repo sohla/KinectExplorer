@@ -129,7 +129,7 @@ class OSCOut_LineProc : public Base_LineProc {
                 m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//7
                 m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//8
 
-                m.addInt32Arg(blob.label);//9
+                m.addInt32Arg(blob.getLabel());//9
                 
                 m.addInt32Arg(blob.velocity.x);//10
                 m.addInt32Arg(blob.velocity.y);//11

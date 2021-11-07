@@ -30,13 +30,15 @@ public:
     //•• make below protected?
     ofPolyline line;
     
-    unsigned int label;
-    unsigned int index;
+//    unsigned int label;
+    unsigned int index; //•• do we need this / always use label
 
     ofVec2f previousPosition;
     ofVec2f currentPosition;
     ofVec2f velocity;
     int age;
+    
+    unsigned int randomHue;
     
     
     void debug(){

@@ -19,6 +19,8 @@ void BlobModel::setup(const cv::Rect& track) {
     
     float curTime = ofGetElapsedTimef();
     std::cout << curTime << ": " << getLabel() << ": setup" <<  std::endl;
+    
+    randomHue = ofRandom(0,255);
 }
 
 void BlobModel::update(const cv::Rect& track) {

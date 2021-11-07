@@ -83,14 +83,16 @@ void LinePipeline::draw(const DepthModel &model){
 
         contourFinder.draw();
 
-            for(auto &blob: blobs){
-                
-                ofSetColor(ofColor::fromHsb(ofRandom(255), 255, 255));
-                ofDrawLine(blob.second.previousPosition, blob.second.currentPosition);
-                ofSetColor(ofColor(255));
-                ofDrawLine(blob.second.currentPosition, blob.second.currentPosition + (blob.second.velocity * 2.0));
-                ofDrawBitmapString(ofToString(blob.second.index) + ":" + ofToString(blob.second.label), blob.second.currentPosition);
-            }
+
+        vector<BlobModel>& followers = tracker.getFollowers();
+
+        for(int i = 0; i < followers.size(); i++) {
+
+            ofSetColor(ofColor::fromHsb(followers[i].randomHue, 255 ,255));
+            ofDrawLine(followers[i].previousPosition, followers[i].currentPosition);
+            ofDrawLine(followers[i].currentPosition, followers[i].currentPosition + (followers[i].velocity * 2.0));
+            ofDrawBitmapString(ofToString(followers[i].getLabel()), followers[i].currentPosition);
+        }
 
         ofPopMatrix();
 
@@ -104,9 +106,6 @@ void LinePipeline::draw(const DepthModel &model){
         for(int i = 0; i < followers.size(); i++) {
             pp->draw(model,followers[i]);
         }
-
-
-
     });
 }
 
@@ -125,19 +124,37 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         tracker.setPersistence(15);
         tracker.setMaximumDistance(distanceParam.get());
 
-//        ofxCv::RectTracker& tracker = contourFinder.getTracker();
+        ofxCv::RectTracker& contourTracker = contourFinder.getTracker();
         tracker.track(contourFinder.getBoundingRects());
         
             
         vector<BlobModel>& followers = tracker.getFollowers();
-
+        
         for(int i = 0; i < followers.size(); i++) {
+            
+            unsigned int label = followers[i].getLabel();
+            
+            // contourTracker has the polyline : so need to get it via this tracker
+            int index = contourTracker.getIndexFromLabel(label);
 
-            followers[i].line = contourFinder.getPolyline(tracker.getIndexFromLabel(followers[i].label));//•• fails when it doesn't exist!
+            if(index >= 0){
 
-            for( auto &proc : processors ){
-                proc->process(followers[i]);
-            };
+                followers[i].line = contourFinder.getPolyline(index);
+                
+                // but all the other details are in extended tracker with out Blob Model
+                if(tracker.existsPrevious(label)){
+                    const cv::Rect& previous = tracker.getPrevious(label);
+                    const cv::Rect& current = tracker.getCurrent(label);
+                    followers[i].previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
+                    followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
+                    followers[i].velocity = followers[i].currentPosition - followers[i].previousPosition;
+                }
+
+                for( auto &proc : processors ){
+                    proc->process(followers[i]);
+                };
+
+            }
 
         }
 
