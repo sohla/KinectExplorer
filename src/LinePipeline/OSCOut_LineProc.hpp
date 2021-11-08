@@ -50,7 +50,9 @@ class OSCOut_LineProc : public Base_LineProc {
     
     
     void onOnParam(bool& val){
-
+        
+        
+        //•• fix for new blob model sending data
         string::size_type sz;
         int portInt = stoi( portParam.get(),&sz);
 
@@ -85,10 +87,14 @@ class OSCOut_LineProc : public Base_LineProc {
     };
 
     void process(BlobModel &blob){
-
         
-        if(onParam.get() && blob.line.size() > 0 ){
-
+        
+        // blob model is now sending osc data!
+ 
+        
+        /*
+        if(onParam.get()){
+            
             string::size_type sz;
             int portInt = stoi( portParam.get(),&sz);
 
@@ -98,7 +104,7 @@ class OSCOut_LineProc : public Base_LineProc {
             // USE currLine from now on. we are NOT changing blob.line
                         
             
-            if( currLine.size() > 0){
+//            if( currLine.size() > 0){
 
                 // all values have been adjusted to give normals for each
                 // this does not mean values are mapped from 0..1, but within 0..1
@@ -109,43 +115,45 @@ class OSCOut_LineProc : public Base_LineProc {
                 glm::vec2 center = blob.line.getCentroid2D(); // range 0..640:0..480 (pixels of cam)
                 ofRectangle bounds = blob.line.getBoundingBox();  // range 0..640:0..480 (pixels of cam)
 
-                // std::cout << i << " : " << blob.line.size() << " : " << area << " : " << perimeter << center << " : " ;
+                 std::cout << " : " << blob.line.size() << " : " << area << " : " << perimeter << center << " : " ;
                 
                 
                 ofxOscMessage m;
                 m.setAddress("/gyrosc/line");
                 
                 m.addIntArg(blob.index);//0
+                m.addIntArg(blob.state);//1
+                std::cout << blob.state << std::endl;
+                m.addFloatArg(area);//2
+                m.addFloatArg(perimeter);//3
 
-                m.addFloatArg(area);//1
-                m.addFloatArg(perimeter);//2
+                m.addFloatArg(ofMap(center.x, 0, 640, 0.0, 1.0));//4
+                m.addFloatArg(ofMap(center.y, 0, 480, 0.0, 1.0));//5
 
-                m.addFloatArg(ofMap(center.x, 0, 640, 0.0, 1.0));//3
-                m.addFloatArg(ofMap(center.y, 0, 480, 0.0, 1.0));//4
+                m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));//6
+                m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));//7
 
-                m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));//5
-                m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));//6
+                m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//8
+                m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//9
 
-                m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//7
-                m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//8
-
-                m.addInt32Arg(blob.getLabel());//9
+                m.addInt32Arg(blob.getLabel());//10
                 
-                m.addInt32Arg(blob.velocity.x);//10
-                m.addInt32Arg(blob.velocity.y);//11
+                m.addInt32Arg(blob.velocity.x);//11
+                m.addInt32Arg(blob.velocity.y);//12
 
-                m.addInt32Arg(currLine.size());//12
+                m.addInt32Arg(currLine.size());//13
 
-                for( auto &vert :  currLine.getVertices()){//13..( size = //10)
+                for( auto &vert :  currLine.getVertices()){//14..( size = //10)
                     m.addDoubleArg(vert.x);
                     m.addDoubleArg(vert.y);
                     //std::cout << vert.x << " , " << vert.y;
                 }
                     
                 senders[blob.index]->sendMessage(m, false);
-            }
+//            }
         }
-    }
+*/
+  }
 
     public:
         OSCOut_LineProc(string ip, string port){

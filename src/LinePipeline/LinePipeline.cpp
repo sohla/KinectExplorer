@@ -59,8 +59,8 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 //    processors.push_back(new Reorder_LineProc());
 //    processors.push_back(new Ordered_LineProc());
 
-    processors.push_back(new OSCOut_LineProc("127.0.0.1","57120"));
-    processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
+//    processors.push_back(new OSCOut_LineProc("127.0.0.1","57120"));
+//    processors.push_back(new OSCOut_LineProc("127.0.0.1","57130"));
 
     // TODO LineRecorderProc : render line into pixels for saving
     //
@@ -84,7 +84,7 @@ void LinePipeline::draw(const DepthModel &model){
         ofNoFill();
         ofScale(model.depthCameraScale, model.depthCameraScale);
 
-        // custom draeing below for debug colors
+        // custom drawing below for debug colors
         //contourFinder.draw();
         
         vector<BlobModel>& followers = trackerFollower.getFollowers();
@@ -108,6 +108,7 @@ void LinePipeline::draw(const DepthModel &model){
 
     // draw pipeline
     for_each(processors.begin(), processors.end(), [&](LineProc* pp) {
+        
         vector<BlobModel>& followers = trackerFollower.getFollowers();
 
         for(int i = 0; i < followers.size(); i++) {
@@ -128,7 +129,8 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         contourFinder.setMaxAreaRadius(maxRadiusParam.get());
 
         contourFinder.findContours(procImage);
-        
+
+        //•• move this to OSC line proc
         trackerFollower.setPersistence(15);
         trackerFollower.setMaximumDistance(distanceParam.get());
 
@@ -142,116 +144,35 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
             
             unsigned int label = followers[i].getLabel();
             
-            // contourTracker has the polyline : so need to get it via this tracker
-//            int index = contourTracker.getIndexFromLabel(label);
+            // ok so contourTracker and trackerFollower persist different 'blobs'
+            // BUT they may contain the same RECTS, so look for them....
+            
+                const cv::Rect& current = trackerFollower.getCurrent(label);
 
-//            if(index >= 0){
-
-//                followers[i].line = contourFi nder.getPolyline(index);
-//                followers[i].index = index;
-                
-                // but all the other details are in extended tracker with out Blob Model
+                for(int j=0; j < contourFinder.getBoundingRects().size(); j++){
+                    const cv::Rect& c = contourFinder.getBoundingRects()[j];
+                    if(current == c){
+                        // so we found a rect that is in the list
+                        // assuming index also points to the coreesponding polyline
+                        followers[i].line = contourFinder.getPolyline(j);
+                    }
+                }
+                // let's populate the blobModel (followers)
+                followers[i].index = i;
+                followers[i].setLabel(label);
+                followers[i].currentRect = current;
+                followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
+    
                 if(trackerFollower.existsPrevious(label)){
                     const cv::Rect& previous = trackerFollower.getPrevious(label);
-                    const cv::Rect& current = trackerFollower.getCurrent(label);
-                    followers[i].currentRect = current;
                     followers[i].previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
-                    followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
                     followers[i].velocity = followers[i].currentPosition - followers[i].previousPosition;
                 }
 
-                for( auto &proc : processors ){
-                    proc->process(followers[i]);
-                };
-
-//            }
-
-        }
-
-        
-        
-        
-        /*
-
-        blobs.clear();
-        
-        //• feels like a HACK!
-        //• use TrackerFollower to manage Blob model.....
-        //• YEP this is all wrong
-        //• what we need
-        //• track each blob, and its state, born, living, died
-        //• how do we descirbe this in OSC
-        
-        //• TODO :
-        //• read tracker imp. and do some testing
-        //• refactor blob model
-        //• fix everything else
-        //• test
-        //• think about life/death of a blob and triggering states
-        
-        // persistnace is 0, therefor dead can trigger a full clear of all blobs
-        
-        
-        if(tracker.getDeadLabels().size() > 0){
-            
-            for(int i=0; i< MAX_BLOBS; i++){
-                BlobModel blob;
-
-                // wip thru procs with no lines
-                blob.line.addVertex(0,0,0);
-                blob.index = i;
-                for( auto &proc : processors ){
-                    proc->process(blob);//• send pixels as well? 
-                };
-            }
-        }
-        
-        // only itr the number of blobs we have this frame
-        int num = tracker.getCurrentLabels().size();
-        if(num >= MAX_BLOBS) num = MAX_BLOBS;
-        
-        
-        // first go through MAX_BLOBS and populate blobs
-        if(contourFinder.size() > 0){
-        
-            for(int i=0; i< num; i++){
-
-                unsigned int label = tracker.getLabelFromIndex(i);
-                
-                if(tracker.existsCurrent(label)){
-
-                    BlobModel blob;
-                    blob.label = label;
-                    blob.line = contourFinder.getPolyline(i);
-                    blob.index = i;
-                    
-                    if(tracker.existsPrevious(blob.label)){
-                        const cv::Rect& previous = tracker.getPrevious(blob.label);
-                        const cv::Rect& current = tracker.getCurrent(blob.label);
-                        blob.previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
-                        blob.currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
-                        blob.velocity = blob.currentPosition - blob.previousPosition;
-                    }
-
-                    blobs.insert(std::make_pair(label, blob));
-                }
-            }
-        }
-
-
-        // blobs now filled with current blobs, ordered according to label
-        // now we can assign an index
-        // nb: index will change when a blob disappears
-        int i = 0;
-        
-        for(auto &blob: blobs){
-            blob.second.index = i;
-            i++;
             for( auto &proc : processors ){
-                proc->process(blob.second);
+                proc->process(followers[i]);
             };
-        }
-         */
+        };
     };
     
     return procImage.getPixels();

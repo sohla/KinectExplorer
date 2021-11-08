@@ -9,13 +9,14 @@
 #define BlobModel_h
 
 #include "ofxCv.h"
+#include "ofxOscSender.h"
 
 // handy model for collecting data from tracker and procs
 // gets passed to everything for each frame
 
 enum BlobState {
 //    enum type {
-        initState, updateState, deinitState
+        initState = 1, updateState = 2, deinitState = 3
 //    };
 };
 
@@ -23,31 +24,29 @@ class BlobModel : public ofxCv::RectFollower {
 
 protected:
     float startedDying;
-
+    ofxOscSender sender;
 public:
     
     BlobModel()
         :startedDying(0){
+            sender.setup("127.0.0.1", 57120);
+
     }
     void setup(const cv::Rect& track);
     void update(const cv::Rect& track);
     void kill();
 
+    void sendData();
     //•• make below protected?
     ofPolyline line;
     
-//    unsigned int label;
-    unsigned int index; //•• do we need this / always use label
+    unsigned int index;
 
     ofVec2f previousPosition;
     ofVec2f currentPosition;
     ofVec2f velocity;
-//    int age;
-    
     cv::Rect currentRect;
-    
     unsigned int randomHue;
-    
     BlobState state;
     
     void debug(){

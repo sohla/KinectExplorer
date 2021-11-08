@@ -23,6 +23,7 @@ void BlobModel::setup(const cv::Rect& track) {
     float curTime = ofGetElapsedTimef();
     std::cout << curTime << ": " << getLabel() << ": init" <<  std::endl;
     
+    sendData();
 }
 
 void BlobModel::update(const cv::Rect& track) {
@@ -31,22 +32,73 @@ void BlobModel::update(const cv::Rect& track) {
 
     float curTime = ofGetElapsedTimef();
     std::cout << curTime << ": " << getLabel() << ": update" << std::endl;
+
+    sendData();
+
 }
 
 void BlobModel::kill() {
 
     float curTime = ofGetElapsedTimef();
-//
-//    if(startedDying == 0) {
-//
-//        startedDying = curTime;
-//
-//    } else if(curTime - startedDying > dyingTime) {
 
-        state = deinitState;
-        dead = true;
+    state = deinitState;
+    dead = true;
+    currentRect = cv::Rect(0,0,0,0);
+    line.clear();
+    line.addVertex(0,0,0);
+    previousPosition = ofVec2f(0,0);
+    currentPosition = ofVec2f(0,0);
         
-        std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
-//    }
+    sendData();
+    std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
+
 }
 
+void BlobModel::sendData(){
+
+    ofPolyline currLine = line.getResampledByCount(16);
+    
+    ofxOscMessage m;
+    m.setAddress("/gyrosc/line");
+
+    
+    float area = ofMap(line.getArea(), 0, -100000, 0.0, 1.0); // range is approx
+    float perimeter = ofMap(line.getPerimeter(), 0, 5000, 0.0, 1.0); // range is approx
+
+    glm::vec2 center = line.getCentroid2D(); // range 0..640:0..480 (pixels of cam)
+    ofRectangle bounds = line.getBoundingBox();  // range 0..640:0..480 (pixels of cam)
+
+//     std::cout << " : " << line.size() << " : " << area << " : " << perimeter << center << " : " ;
+    
+    
+    
+    m.addIntArg(index);//0
+    m.addIntArg(state);//1
+
+    m.addFloatArg(area);//2
+    m.addFloatArg(perimeter);//3
+
+    m.addFloatArg(ofMap(center.x, 0, 640, 0.0, 1.0));//4
+    m.addFloatArg(ofMap(center.y, 0, 480, 0.0, 1.0));//5
+
+    m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));//6
+    m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));//7
+
+    m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//8
+    m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//9
+
+    m.addInt32Arg(getLabel());//10
+    
+    m.addInt32Arg(velocity.x);//11
+    m.addInt32Arg(velocity.y);//12
+
+    m.addInt32Arg(currLine.size());//13
+
+    for( auto &vert :  currLine.getVertices()){//14..( size = //10)
+        m.addDoubleArg(vert.x);
+        m.addDoubleArg(vert.y);
+        //std::cout << vert.x << " , " << vert.y;
+    }
+
+    sender.sendMessage(m, false);
+}

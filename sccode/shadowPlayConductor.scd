@@ -2,7 +2,7 @@
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
 	var netAddr = NetAddr.new("127.0.0.1", 10001);
 	// var netAddr = NetAddr.new("192.168.20.3", 10001);
-	var numOfBlobs = 2;
+	var numOfBlobs = 4;
 
 
 	var window, freqScope;
@@ -31,6 +31,7 @@
 	//------------------------------------------------------
 	var blobModel = (
 				\dataSize: 3,
+				\state: 0,
 				\area: 0,
 				\perimeter: 0,	
 				\center: Point(0,0),
@@ -245,7 +246,9 @@
 
 		var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
 
-		blobs.sortBy(\label);
+			Pen.fillColor = Color.gray(0,1);
+			Pen.fillRect(window.view.bounds);
+		// blobs.sortBy(\label);
 
 		blobs.do({|blob,i|
 
@@ -255,10 +258,8 @@
 			var ax, ay, bx, by, mx, my;
 			var xdif, ydif, a1, b1, a2, b2;
 
-			Pen.fillColor = Color.gray(1,0.01);
-			Pen.fillRect(window.view.bounds);
 			
-			if( blob.area > 1, {
+			if( blob.state == 2, {
 
 				Pen.smoothing_(true);
 				Pen.width = 1;
@@ -277,7 +278,7 @@
 				Pen.stroke;
 
 
-				Pen.stringAtPoint(i.asString + ":" + blob.label.asString, blob.center.x + 20@blob.center.y);
+				Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
 
 				prev = blob.data.reshape(1,2)[0];
 				blob.data.reshape(blob.data.size,2).do({|o,j|
@@ -410,27 +411,27 @@
 				OSCFunc({ arg msg, time, addr, recvPort;
 			
 					var index = msg[1].asInteger;
-					//0[msg, time, addr, recvPort].postln;
-					
+					// [msg, time, addr, recvPort].postln;
 					// if( i == index, {
 						if(blobs[index] != nil,{
 
+							
 							blobs[index].channel = index;
-
-							blobs[index].area = msg[2] * 100;
-							blobs[index].perimeter = msg[3] * 100;
+							blobs[index].state = msg[2]; 
+							blobs[index].area = msg[3] * 100;
+							blobs[index].perimeter = msg[4] * 100;
 
 							// 640 & 480 are coming from Kinect Explorer
-							blobs[index].center = filter.(Point(msg[4]* 640,msg[5]* 480), blobs[index].center, 0.9);
+							blobs[index].center = filter.(Point(msg[5]* 640,msg[6]* 480), blobs[index].center, 0.9);
 
-							blobs[index].rect = Rect(msg[6] * 1000,msg[7]* 1000,msg[8]* 1000,msg[9]* 1000);
+							blobs[index].rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
 
-							blobs[index].label = msg[10].asInteger;
+							blobs[index].label = msg[11].asInteger;
 							
-							blobs[index].velocity = Point(msg[11], msg[12]);
+							blobs[index].velocity = Point(msg[12], msg[13]);
 
-							blobs[index].dataSize = msg[13].asInteger;
-							blobs[index].data = msg.copyRange(14,512 + 14);
+							blobs[index].dataSize = msg[14].asInteger;
+							blobs[index].data = msg.copyRange(15,512 + 15);
 
 							// experimental
 							// blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
@@ -489,6 +490,7 @@
 
 
 )
+
 
 
 // Ptpar

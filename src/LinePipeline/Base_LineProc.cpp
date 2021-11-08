@@ -26,6 +26,7 @@ void Base_LineProc::draw(const DepthModel &model, const BlobModel &blob){
     if(drawParam.get()){
         ofPushMatrix();
         ofScale( model.depthCameraScale);
+        ofSetColor(ofColor::fromHsb(blob.randomHue, 255 ,255));
         blob.line.draw();
         ofPopMatrix();
     }
