@@ -44,6 +44,8 @@ public:
     ofVec2f velocity;
 //    int age;
     
+    cv::Rect currentRect;
+    
     unsigned int randomHue;
     
     BlobState state;

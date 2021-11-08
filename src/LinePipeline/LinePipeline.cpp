@@ -93,7 +93,7 @@ void LinePipeline::draw(const DepthModel &model){
 
             if(followers[i].state == updateState){
                 ofSetColor(ofColor::fromHsb(followers[i].randomHue, 255 ,255));
-                ofDrawRectangle(followers[i].line.getBoundingBox());
+                ofDrawRectangle(followers[i].currentRect.x, followers[i].currentRect.y, followers[i].currentRect.width, followers[i].currentRect.height);
                 
                 ofDrawLine(followers[i].previousPosition, followers[i].currentPosition);
                 ofDrawLine(followers[i].currentPosition, followers[i].currentPosition + (followers[i].velocity * 2.0));
@@ -143,17 +143,18 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
             unsigned int label = followers[i].getLabel();
             
             // contourTracker has the polyline : so need to get it via this tracker
-            int index = contourTracker.getIndexFromLabel(label);
+//            int index = contourTracker.getIndexFromLabel(label);
 
-            if(index >= 0){
+//            if(index >= 0){
 
-                followers[i].line = contourFinder.getPolyline(index);
-                followers[i].index = index;
+//                followers[i].line = contourFi nder.getPolyline(index);
+//                followers[i].index = index;
                 
                 // but all the other details are in extended tracker with out Blob Model
                 if(trackerFollower.existsPrevious(label)){
                     const cv::Rect& previous = trackerFollower.getPrevious(label);
                     const cv::Rect& current = trackerFollower.getCurrent(label);
+                    followers[i].currentRect = current;
                     followers[i].previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
                     followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
                     followers[i].velocity = followers[i].currentPosition - followers[i].previousPosition;
@@ -163,7 +164,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                     proc->process(followers[i]);
                 };
 
-            }
+//            }
 
         }
 
