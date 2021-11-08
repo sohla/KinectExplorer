@@ -159,7 +159,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 }
                 // let's populate the blobModel (followers)
                 followers[i].index = i;
-                followers[i].setLabel(label);
+//                followers[i].setLabel(label);
                 followers[i].currentRect = current;
                 followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
     
@@ -173,6 +173,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 proc->process(followers[i]);
             };
         };
+        
     };
     
     return procImage.getPixels();

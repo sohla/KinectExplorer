@@ -23,6 +23,12 @@ void BlobModel::setup(const cv::Rect& track) {
     float curTime = ofGetElapsedTimef();
     std::cout << curTime << ": " << getLabel() << ": init" <<  std::endl;
     
+    ofxOscMessage m;
+    m.setAddress("/ke/init");
+    m.addIntArg(label);
+    sender.sendMessage(m, false);
+
+
     sendData();
 }
 
@@ -50,17 +56,22 @@ void BlobModel::kill() {
     currentPosition = ofVec2f(0,0);
         
     sendData();
+    
+    ofxOscMessage m;
+    m.setAddress("/ke/deinit");
+    m.addIntArg(label);
+    sender.sendMessage(m, false);
+
     std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
 
 }
 
 void BlobModel::sendData(){
 
-    ofPolyline currLine = line.getResampledByCount(16);
+    ofPolyline currLine = line.getResampledByCount(32);
     
     ofxOscMessage m;
-    m.setAddress("/gyrosc/line");
-
+    m.setAddress("/ke/update");
     
     float area = ofMap(line.getArea(), 0, -100000, 0.0, 1.0); // range is approx
     float perimeter = ofMap(line.getPerimeter(), 0, 5000, 0.0, 1.0); // range is approx
@@ -72,7 +83,7 @@ void BlobModel::sendData(){
     
     
     
-    m.addIntArg(index);//0
+    m.addIntArg(getLabel());//0
     m.addIntArg(state);//1
 
     m.addFloatArg(area);//2
@@ -87,7 +98,7 @@ void BlobModel::sendData(){
     m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//8
     m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//9
 
-    m.addInt32Arg(getLabel());//10
+    m.addInt32Arg(index);//10•••••
     
     m.addInt32Arg(velocity.x);//11
     m.addInt32Arg(velocity.y);//12

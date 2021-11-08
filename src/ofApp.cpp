@@ -31,8 +31,8 @@ void ofApp::setup(){
     group.add(realtimeParam);
     gui.add(group);
     
-    pixelPlayer.setup("upDownLeftRight.mov");
-    //    pixelPlayer.setup("ke_depth2021-07-31-11-02-03.mov");
+//    pixelPlayer.setup("upDownLeftRight.mov");
+        pixelPlayer.setup("ke_depth2021-07-31-11-02-03.mov");
 //        pixelPlayer.setup("ke_depth2021-07-31-10-54-18.mov");
     
     pixelPipeline.setup(model, gui);

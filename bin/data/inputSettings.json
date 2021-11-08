@@ -62,11 +62,11 @@
             "on": "1"
         },
         "near_far": {
-            "cropBot": "0.688776",
-            "cropTop": "0.265306",
+            "cropBot": "0.892857",
+            "cropTop": "0.0102041",
             "cv-threshold": "0",
             "draw": "0",
-            "far": "130",
+            "far": "68",
             "horz-invert": "0",
             "map": "0",
             "near": "255",

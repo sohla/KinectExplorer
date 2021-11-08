@@ -89,6 +89,15 @@ var scale = 1;
 	Ndef(\viztestPtn).fadeTime = model.fade; 
 };
 
+~play = {
+
+	Ndef(\viztestPtn).play;
+};
+
+~stop = {
+
+	Ndef(\viztestPtn).stop;
+};
 //------------------------------------------------------
 ~update = {|blobs,i|
 

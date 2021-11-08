@@ -11,6 +11,7 @@
 
 	var oscListeners = [];
 	var pntListener, objListener, lnkListener;
+	var initListener, updateListener, deinitListener;
 
 	var scale = 0.6;
 
@@ -51,6 +52,8 @@
 	);
 
 	var blobs = Array.fill(numOfBlobs,{Event.new(proto:blobModel)});
+
+	var blobsDict = Dictionary.new(numOfBlobs);
 
 	var initBlobs = {
 		blobs.do({|b,i|
@@ -107,6 +110,10 @@
 
 		pfmtRout.stop;
 		patches.do({|m| m.env.use{~deinit.(m)} });
+
+		initListener.free;
+		updateListener.free;
+		deinitListener.free;
 
 		oscListeners.do{|l|l.free};
 
@@ -246,20 +253,16 @@
 
 		var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
 
-			Pen.fillColor = Color.gray(0,1);
-			Pen.fillRect(window.view.bounds);
-		// blobs.sortBy(\label);
+		Pen.fillColor = Color.gray(0,1);
+		Pen.fillRect(window.view.bounds);
 
-		blobs.do({|blob,i|
+		blobsDict.do({|blob,i|
 
-			var prev = [];
-			var val = blob.rect.width * 10;
+				var prev = [];
+				var val = blob.rect.width * 10;
 
-			var ax, ay, bx, by, mx, my;
-			var xdif, ydif, a1, b1, a2, b2;
-
-			
-			if( blob.state == 2, {
+				var ax, ay, bx, by, mx, my;
+				var xdif, ydif, a1, b1, a2, b2;
 
 				Pen.smoothing_(true);
 				Pen.width = 1;
@@ -295,17 +298,71 @@
 					});
 				});
 
-				//•make the patch play
+		});
+		// blobsDict.values.postln;
+		patches.do({|m| m.env.use{
+			if(blobsDict.values.size > 0,{
+			~update.(blobsDict.values,0)});
+			}; 
+		});
+		// blobs.do({|blob,i|
 
-			},{ // area less than 1
-				//•make the patch stop
-			});
+		// 	var prev = [];
+		// 	var val = blob.rect.width * 10;
 
-		});// finish processing all the blobs
+		// 	var ax, ay, bx, by, mx, my;
+		// 	var xdif, ydif, a1, b1, a2, b2;
 
-		// update all the patches with all the blob data. 
-		//•• should this be in a UI draw call!?!?!
-		patches.do({|m| m.env.use{~update.(blobs,0)} });
+			
+		// 	if( blob.state == 2, {
+
+		// 		Pen.smoothing_(true);
+		// 		Pen.width = 1;
+
+		// 		Pen.fillColor = cols.at(i);
+		// 		Pen.strokeColor = cols.at(i);
+
+		// 		Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
+		// 		Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
+		// 		// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
+
+		// 		Pen.strokeRect(blob.rect);
+
+		// 	 	Pen.moveTo(blob.center);
+		// 		Pen.lineTo(Point(blob.center.x+blob.velocity.x+6, blob.center.y+blob.velocity.y+6));
+		// 		Pen.stroke;
+
+
+		// 		Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
+
+		// 		prev = blob.data.reshape(1,2)[0];
+		// 		blob.data.reshape(blob.data.size,2).do({|o,j|
+
+		// 			if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
+		// 				ax = prev[0];
+		// 				ay = prev[1];
+		// 				bx = o[0];
+		// 				by = o[1];
+		// 			 	Pen.moveTo(Point(ax, ay));
+		// 				Pen.lineTo(Point(bx, by));
+		// 				Pen.stroke;
+		// 				prev = o;
+		// 			});
+		// 		});
+
+		// 		//•make the patch play
+
+		// 	},{ // area less than 1
+		// 		//•make the patch stop
+		// 	});
+
+		// });// finish processing all the blobs
+
+		// // update all the patches with all the blob data. 
+		
+
+		// //•• should this be in a UI draw call!?!?!
+		// patches.do({|m| m.env.use{~update.(blobs,0)} });
 
 	};
 
@@ -333,8 +390,8 @@
 
 				.action_({|b|
 					if(b.value == 1,	
-						{m.env.use{~init.(m)}},
-						{m.env.use{~deinit.(m)}
+						{m.env.use{~init.(m)} }, //add this to a runningPatches list?
+						{m.env.use{~deinit.(m)} // remove this from the runningPatches list?
 					});
 				})
 		});
@@ -348,7 +405,7 @@
 
 	//------------------------------------------------------
 	window.onClose = ({ freeAll.() });
-	CmdPeriod.doOnce({ freeAll.() });
+	CmdPeriod.doOnce({ window.close });
 
 	window.view.keyDownAction_({|view,char,mods,uni,code,key|
 		if(uni==114,{//r
@@ -376,7 +433,7 @@
 		graphView = UserView()
 			.minHeight_(500)
 			.drawFunc_(updateGraphView)
-			.animate_(false)
+			.animate_(true)
 			.clearOnRefresh_(true),
 
 		plotView = UserView()
@@ -405,45 +462,109 @@
 		// start listening to OSC blob data
 		initBlobs.();
 
-		numOfBlobs.do{ |i|
+		initListener = OSCFunc({ |msg, time, addr, recvPort|
 
-			oscListeners.add(
-				OSCFunc({ arg msg, time, addr, recvPort;
+			var blob = Event.new(proto:blobModel);
+
+			blob.label = msg[1];
+			blobsDict.put(msg[1],blob);
+			// blobsDict.postln;
 			
-					var index = msg[1].asInteger;
-					// [msg, time, addr, recvPort].postln;
-					// if( i == index, {
-						if(blobs[index] != nil,{
+			patches.do({|m| m.env.use{
+				if(blobsDict.values.size > 0,{
+					~play.()});
+				}; 
+			});
+
+
+		}, '/ke/init', recvPort: 57120);
+
+		updateListener = OSCFunc({ |msg, time, addr, recvPort|
+
+			if(blobsDict.at(msg[1]) != nil,{
+
+					blobsDict.at(msg[1]).label = msg[1]; 
+					blobsDict.at(msg[1]).state = msg[2]; 
+					blobsDict.at(msg[1]).area = msg[3] * 100;
+					blobsDict.at(msg[1]).perimeter = msg[4] * 100;
+
+					// 640 & 480 are coming from Kinect Explorer
+					blobsDict.at(msg[1]).center = filter.(Point(msg[5]* 640,msg[6]* 480), blobsDict.at(msg[1]).center, 0.9);
+
+					blobsDict.at(msg[1]).rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
+
+					blobsDict.at(msg[1]).index = msg[11].asInteger;
+				
+					blobsDict.at(msg[1]).velocity = Point(msg[12], msg[13]);
+
+					blobsDict.at(msg[1]).dataSize = msg[14].asInteger;
+					blobsDict.at(msg[1]).data = msg.copyRange(15,512 + 15);
+
+
+			});
+			// blobsDict.postln;
+
+
+		}, '/ke/update', recvPort: 57120);
+
+		deinitListener = OSCFunc({ |msg, time, addr, recvPort|
+
+
+			patches.do({|m| m.env.use{
+				if(blobsDict.values.size > 0,{
+					~stop.()});
+				}; 
+			});
+
+			blobsDict.removeAt(msg[1]);
+			// blobsDict.postln;
+
+
+		}, '/ke/deinit', recvPort: 57120);
+		
+
+
+		//•• need to change all this!
+		// use a dict and label from blobs (index can change on us)
+		// numOfBlobs.do{ |i|
+
+		// 	oscListeners.add(
+		// 		OSCFunc({ arg msg, time, addr, recvPort;
+			
+		// 			var index = msg[1].asInteger;
+		// 			[time, addr, recvPort].postln;
+		// 			// if( i == index, {
+		// 				if(blobs[index] != nil,{
 
 							
-							blobs[index].channel = index;
-							blobs[index].state = msg[2]; 
-							blobs[index].area = msg[3] * 100;
-							blobs[index].perimeter = msg[4] * 100;
+		// 					blobs[index].channel = index;
+		// 					blobs[index].state = msg[2]; 
+		// 					blobs[index].area = msg[3] * 100;
+		// 					blobs[index].perimeter = msg[4] * 100;
 
-							// 640 & 480 are coming from Kinect Explorer
-							blobs[index].center = filter.(Point(msg[5]* 640,msg[6]* 480), blobs[index].center, 0.9);
+		// 					// 640 & 480 are coming from Kinect Explorer
+		// 					blobs[index].center = filter.(Point(msg[5]* 640,msg[6]* 480), blobs[index].center, 0.9);
 
-							blobs[index].rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
+		// 					blobs[index].rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
 
-							blobs[index].label = msg[11].asInteger;
+		// 					blobs[index].label = msg[11].asInteger;
 							
-							blobs[index].velocity = Point(msg[12], msg[13]);
+		// 					blobs[index].velocity = Point(msg[12], msg[13]);
 
-							blobs[index].dataSize = msg[14].asInteger;
-							blobs[index].data = msg.copyRange(15,512 + 15);
+		// 					blobs[index].dataSize = msg[14].asInteger;
+		// 					blobs[index].data = msg.copyRange(15,512 + 15);
 
-							// experimental
-							// blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
+		// 					// experimental
+		// 					// blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
 
-						});
-						{graphView.refresh()}.defer;
+		// 				});
+		// 				{graphView.refresh()}.defer;
 
-					// });
+		// 			// });
 
-					}, '/gyrosc/line', recvPort: 57120 + i);
-			);
-		};	
+		// 			}, '/gyrosc/line', recvPort: 57120 + i);
+		// 	);
+		// };	
 		//------------------------------------------------------
 
 		lnkListener = OSCFunc({ |msg, time, addr, recvPort|
