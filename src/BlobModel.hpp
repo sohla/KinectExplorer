@@ -13,6 +13,12 @@
 // handy model for collecting data from tracker and procs
 // gets passed to everything for each frame
 
+enum BlobState {
+//    enum type {
+        initState, updateState, deinitState
+//    };
+};
+
 class BlobModel : public ofxCv::RectFollower {
 
 protected:
@@ -21,7 +27,7 @@ protected:
 public:
     
     BlobModel()
-        :startedDying(0) {
+        :startedDying(0){
     }
     void setup(const cv::Rect& track);
     void update(const cv::Rect& track);
@@ -36,10 +42,11 @@ public:
     ofVec2f previousPosition;
     ofVec2f currentPosition;
     ofVec2f velocity;
-    int age;
+//    int age;
     
     unsigned int randomHue;
     
+    BlobState state;
     
     void debug(){
         std::cout << "label:" << ofToString(label) << " index:" << ofToString(index) << std::endl;

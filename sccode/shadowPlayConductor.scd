@@ -2,7 +2,7 @@
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
 	var netAddr = NetAddr.new("127.0.0.1", 10001);
 	// var netAddr = NetAddr.new("192.168.20.3", 10001);
-	var numOfBlobs = 1;
+	var numOfBlobs = 2;
 
 
 	var window, freqScope;

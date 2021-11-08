@@ -116,6 +116,21 @@ void ofApp::keyPressed(int key){
         }
         
     }
+
+    if(key == 'p'){
+        pixelPlayer.switchPlayerState();
+    }
+
+    if(key == OF_KEY_LEFT){
+        pixelPlayer.previousFrame();
+    }
+    
+    if(key == OF_KEY_RIGHT){
+        pixelPlayer.nextFrame();
+    }
+    
+    
+    
     
     //•• FIX
     // TODO move to kinect camera

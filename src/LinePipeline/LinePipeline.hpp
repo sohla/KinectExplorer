@@ -41,7 +41,8 @@ public:
 protected:
 
     ofxCv::ContourFinder contourFinder;
-    ofxCv::RectTrackerFollower<BlobModel> tracker;
+    ofxCv::RectTrackerFollower<BlobModel> trackerFollower;
+    
 };
 
 

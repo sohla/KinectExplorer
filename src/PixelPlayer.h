@@ -66,6 +66,29 @@ public:
         }else{
             //next(nothing);
         }
+    };
+
+    void switchPlayerState() {
+        
+        if(player.isPlaying()){
+            player.setPaused(true);
+        }else{
+            player.setPaused(false);
+        }
+    };
+
+    void nextFrame() {
+        
+        if(player.isPaused()){
+            player.nextFrame();
+        }
+    }
+
+    void previousFrame() {
+        
+        if(player.isPaused()){
+            player.previousFrame();
+        }
     }
 
 private:

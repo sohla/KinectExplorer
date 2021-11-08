@@ -74,34 +74,41 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 
     
 }
+
 void LinePipeline::draw(const DepthModel &model){
 
     if(drawParam.get()){
 
         ofPushMatrix();
-            ofScale(model.depthCameraScale, model.depthCameraScale);
 
-        contourFinder.draw();
+        ofNoFill();
+        ofScale(model.depthCameraScale, model.depthCameraScale);
 
-
-        vector<BlobModel>& followers = tracker.getFollowers();
+        // custom draeing below for debug colors
+        //contourFinder.draw();
+        
+        vector<BlobModel>& followers = trackerFollower.getFollowers();
 
         for(int i = 0; i < followers.size(); i++) {
 
-            ofSetColor(ofColor::fromHsb(followers[i].randomHue, 255 ,255));
-            ofDrawLine(followers[i].previousPosition, followers[i].currentPosition);
-            ofDrawLine(followers[i].currentPosition, followers[i].currentPosition + (followers[i].velocity * 2.0));
-            ofDrawBitmapString(ofToString(followers[i].getLabel()), followers[i].currentPosition);
+            if(followers[i].state == updateState){
+                ofSetColor(ofColor::fromHsb(followers[i].randomHue, 255 ,255));
+                ofDrawRectangle(followers[i].line.getBoundingBox());
+                
+                ofDrawLine(followers[i].previousPosition, followers[i].currentPosition);
+                ofDrawLine(followers[i].currentPosition, followers[i].currentPosition + (followers[i].velocity * 2.0));
+                ofDrawBitmapString(ofToString(followers[i].getLabel()), followers[i].currentPosition);
+            }
         }
 
+        ofFill();
         ofPopMatrix();
 
     }
 
-
     // draw pipeline
     for_each(processors.begin(), processors.end(), [&](LineProc* pp) {
-        vector<BlobModel>& followers = tracker.getFollowers();
+        vector<BlobModel>& followers = trackerFollower.getFollowers();
 
         for(int i = 0; i < followers.size(); i++) {
             pp->draw(model,followers[i]);
@@ -113,6 +120,7 @@ void LinePipeline::draw(const DepthModel &model){
 ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
     
     procImage.setFromPixels(pixel);
+    
     if(onParam.get()){
 
         contourFinder.setThreshold(thresholdParam.get());
@@ -121,14 +129,14 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
 
         contourFinder.findContours(procImage);
         
-        tracker.setPersistence(15);
-        tracker.setMaximumDistance(distanceParam.get());
+        trackerFollower.setPersistence(15);
+        trackerFollower.setMaximumDistance(distanceParam.get());
 
         ofxCv::RectTracker& contourTracker = contourFinder.getTracker();
-        tracker.track(contourFinder.getBoundingRects());
+        trackerFollower.track(contourFinder.getBoundingRects());
         
             
-        vector<BlobModel>& followers = tracker.getFollowers();
+        vector<BlobModel>& followers = trackerFollower.getFollowers();
         
         for(int i = 0; i < followers.size(); i++) {
             
@@ -140,11 +148,12 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
             if(index >= 0){
 
                 followers[i].line = contourFinder.getPolyline(index);
+                followers[i].index = index;
                 
                 // but all the other details are in extended tracker with out Blob Model
-                if(tracker.existsPrevious(label)){
-                    const cv::Rect& previous = tracker.getPrevious(label);
-                    const cv::Rect& current = tracker.getCurrent(label);
+                if(trackerFollower.existsPrevious(label)){
+                    const cv::Rect& previous = trackerFollower.getPrevious(label);
+                    const cv::Rect& current = trackerFollower.getCurrent(label);
                     followers[i].previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
                     followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
                     followers[i].velocity = followers[i].currentPosition - followers[i].previousPosition;

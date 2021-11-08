@@ -26,6 +26,7 @@ class ofApp : public ofBaseApp{
         ofxOscParameterSync     oscParamSync;
 
         ofParameter<bool> realtimeParam = ofParameter<bool>("realtime",true);
+    
         DepthModel   model;
     
 	public:
