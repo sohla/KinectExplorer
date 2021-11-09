@@ -89,12 +89,14 @@ var scale = 1;
 	Ndef(\viztestPtn).fadeTime = model.fade; 
 };
 
-~play = {
-
-	Ndef(\viztestPtn).play;
+~onInit = {
+	//•• simple hack
+	// if we have all the blobs
+	// we can asign a ptn to a label etc.
+	Ndef(\viztestPtn).play;	
 };
 
-~stop = {
+~onDeinit = {
 
 	Ndef(\viztestPtn).stop;
 };

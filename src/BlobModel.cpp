@@ -20,17 +20,18 @@ void BlobModel::setup(const cv::Rect& track) {
     state = initState;
     randomHue = ofRandom(0,255);
 
+    //build message
+    oscMessage.clear();
+    oscMessage.setAddress("/ke/init");
+    oscMessage.addIntArg(label);
+    
+    sendOSCMessage();
+
     float curTime = ofGetElapsedTimef();
     std::cout << curTime << ": " << getLabel() << ": init" <<  std::endl;
-    
-    ofxOscMessage m;
-    m.setAddress("/ke/init");
-    m.addIntArg(label);
-    sender.sendMessage(m, false);
 
-
-    sendData();
 }
+
 
 void BlobModel::update(const cv::Rect& track) {
 
@@ -39,39 +40,10 @@ void BlobModel::update(const cv::Rect& track) {
     float curTime = ofGetElapsedTimef();
     std::cout << curTime << ": " << getLabel() << ": update" << std::endl;
 
-    sendData();
-
-}
-
-void BlobModel::kill() {
-
-    float curTime = ofGetElapsedTimef();
-
-    state = deinitState;
-    dead = true;
-    currentRect = cv::Rect(0,0,0,0);
-    line.clear();
-    line.addVertex(0,0,0);
-    previousPosition = ofVec2f(0,0);
-    currentPosition = ofVec2f(0,0);
-        
-    sendData();
+    ofPolyline currLine = line.getResampledByCount(127);
     
-    ofxOscMessage m;
-    m.setAddress("/ke/deinit");
-    m.addIntArg(label);
-    sender.sendMessage(m, false);
-
-    std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
-
-}
-
-void BlobModel::sendData(){
-
-    ofPolyline currLine = line.getResampledByCount(32);
-    
-    ofxOscMessage m;
-    m.setAddress("/ke/update");
+    oscMessage.clear();
+    oscMessage.setAddress("/ke/update");
     
     float area = ofMap(line.getArea(), 0, -100000, 0.0, 1.0); // range is approx
     float perimeter = ofMap(line.getPerimeter(), 0, 5000, 0.0, 1.0); // range is approx
@@ -81,35 +53,68 @@ void BlobModel::sendData(){
 
 //     std::cout << " : " << line.size() << " : " << area << " : " << perimeter << center << " : " ;
     
+    oscMessage.addIntArg(getLabel());//0
+    oscMessage.addIntArg(state);//1
+
+    oscMessage.addFloatArg(area);//2
+    oscMessage.addFloatArg(perimeter);//3
+
+    oscMessage.addFloatArg(ofMap(center.x, 0, 640, 0.0, 1.0));//4
+    oscMessage.addFloatArg(ofMap(center.y, 0, 480, 0.0, 1.0));//5
+
+    oscMessage.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));//6
+    oscMessage.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));//7
+
+    oscMessage.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//8
+    oscMessage.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//9
+
+    oscMessage.addInt32Arg(index);//10•••••
     
-    
-    m.addIntArg(getLabel());//0
-    m.addIntArg(state);//1
+    oscMessage.addInt32Arg(velocity.x);//11
+    oscMessage.addInt32Arg(velocity.y);//12
 
-    m.addFloatArg(area);//2
-    m.addFloatArg(perimeter);//3
-
-    m.addFloatArg(ofMap(center.x, 0, 640, 0.0, 1.0));//4
-    m.addFloatArg(ofMap(center.y, 0, 480, 0.0, 1.0));//5
-
-    m.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));//6
-    m.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));//7
-
-    m.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//8
-    m.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//9
-
-    m.addInt32Arg(index);//10•••••
-    
-    m.addInt32Arg(velocity.x);//11
-    m.addInt32Arg(velocity.y);//12
-
-    m.addInt32Arg(currLine.size());//13
+    oscMessage.addInt32Arg(currLine.size());//13
 
     for( auto &vert :  currLine.getVertices()){//14..( size = //10)
-        m.addDoubleArg(vert.x);
-        m.addDoubleArg(vert.y);
+        oscMessage.addDoubleArg(vert.x);
+        oscMessage.addDoubleArg(vert.y);
         //std::cout << vert.x << " , " << vert.y;
     }
+    sendOSCMessage();
 
-    sender.sendMessage(m, false);
 }
+
+void BlobModel::kill() {
+
+    state = deinitState;
+    dead = true;
+    currentRect = cv::Rect(0,0,0,0);
+    line.clear();
+    line.addVertex(0,0,0);
+    previousPosition = ofVec2f(0,0);
+    currentPosition = ofVec2f(0,0);
+        
+    // build message
+    oscMessage.clear();
+    oscMessage.setAddress("/ke/deinit");
+    oscMessage.addIntArg(label);
+    
+    sendOSCMessage();
+
+    float curTime = ofGetElapsedTimef();
+    std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
+
+}
+
+void BlobModel::sendOSCMessage(){
+
+    scSender.setup("127.0.0.1", 57120);
+    scSender.sendMessage(oscMessage, false);
+
+    scSender.setup("127.0.0.1", 57130);
+    scSender.sendMessage(oscMessage, false);
+
+}
+
+
+

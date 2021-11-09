@@ -40,13 +40,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     contourFinder.setMinAreaRadius(minRadiusParam.get());
     contourFinder.setMaxAreaRadius(maxRadiusParam.get());
     contourFinder.setThreshold(thresholdParam.get());
-//    contourFinder.setSortBySize(true);
     
-//    contourFinder.getTracker().setPersistence(0); //in frames. 0 = deadFrames used as a trigger
-//    contourFinder.getTracker().setMaximumDistance(distanceParam.get());
-
-    
-
 
     //
     // build line pipeline
@@ -129,8 +123,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         contourFinder.setMaxAreaRadius(maxRadiusParam.get());
 
         contourFinder.findContours(procImage);
-
-        //•• move this to OSC line proc
+        
         trackerFollower.setPersistence(15);
         trackerFollower.setMaximumDistance(distanceParam.get());
 
@@ -157,9 +150,9 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                         followers[i].line = contourFinder.getPolyline(j);
                     }
                 }
+
                 // let's populate the blobModel (followers)
                 followers[i].index = i;
-//                followers[i].setLabel(label);
                 followers[i].currentRect = current;
                 followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
     

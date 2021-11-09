@@ -1,7 +1,7 @@
 {
     "inputSettings": {
         "blur": {
-            "blur": "6",
+            "blur": "3",
             "draw": "0",
             "on": "1"
         },
@@ -62,11 +62,11 @@
             "on": "1"
         },
         "near_far": {
-            "cropBot": "0.892857",
-            "cropTop": "0.0102041",
+            "cropBot": "0.836735",
+            "cropTop": "0",
             "cv-threshold": "0",
-            "draw": "0",
-            "far": "68",
+            "draw": "1",
+            "far": "77",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -90,13 +90,13 @@
         },
         "pixel_to_point": {
             "blobs": "1",
-            "distance": "239",
+            "distance": "227",
             "draw": "1",
-            "maxRadius": "255",
-            "minRadius": "20",
+            "maxRadius": "245",
+            "minRadius": "57",
             "on": "1",
             "persistance": "0",
-            "threshold": "209"
+            "threshold": "123"
         },
         "realtime": {
             "realtime": "0"
@@ -127,7 +127,7 @@
         "smooth": {
             "draw": "1",
             "on": "1",
-            "smooth": "2"
+            "smooth": "4"
         },
         "switches": {
             "ApplyFilter": "0",

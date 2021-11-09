@@ -51,22 +51,21 @@
 
 	);
 
-	var blobs = Array.fill(numOfBlobs,{Event.new(proto:blobModel)});
 
 	var blobsDict = Dictionary.new(numOfBlobs);
 
-	var initBlobs = {
-		blobs.do({|b,i|
-			b.channel = i;
-			b.dataSize = 0;
-			b.data = [];
-			b.area = 0;
-			b.perimeter = 0;
-			b.center = Point(0,0);
-			b.rect = Rect(0,0,0,0);
-			b.root = 0;
-		});
-	};
+	// var initBlobs = {
+	// 	blobs.do({|b,i|
+	// 		b.channel = i;
+	// 		b.dataSize = 0;
+	// 		b.data = [];
+	// 		b.area = 0;
+	// 		b.perimeter = 0;
+	// 		b.center = Point(0,0);
+	// 		b.rect = Rect(0,0,0,0);
+	// 		b.root = 0;
+	// 	});
+	// };
 
 	var point = (
 		\id: 0,
@@ -210,6 +209,7 @@
 				poseData.wr = filter.((rect.width - poseData.ow).abs * 10, poseData.wr, 0.3);
 
 				poseData.ow = rect.width;
+				
 				// plotter : updating the data in a gui updae call!!?!?!
 				plotter.value = plotter.value.flop;
 				plotter.value = plotter.value.insert(0, [rect.width, rect.height, poseData.wr]);
@@ -239,131 +239,82 @@
 				o.points = nil;
 				o.links = nil;
 			});
-
-
-
 		});
-
-
-
-
 	};
+
 	//------------------------------------------------------------
 	var updateGraphView = {|view|
 
 		var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
-
+		var vx = 0,vy = 0;
 		Pen.fillColor = Color.gray(0,1);
 		Pen.fillRect(window.view.bounds);
 
 		blobsDict.do({|blob,i|
 
-				var prev = [];
-				var val = blob.rect.width * 10;
+			var prev = [];
+			var val = blob.rect.width * 10;
 
-				var ax, ay, bx, by, mx, my;
-				var xdif, ydif, a1, b1, a2, b2;
+			var ax, ay, bx, by, mx, my;
+			var xdif, ydif, a1, b1, a2, b2;
 
-				Pen.smoothing_(true);
-				Pen.width = 1;
+			Pen.smoothing_(true);
+			Pen.width = 1;
 
-				Pen.fillColor = cols.at(i);
-				Pen.strokeColor = cols.at(i);
+			Pen.fillColor = cols.at(i);
+			Pen.strokeColor = cols.at(i);
 
-				Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
-				Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
-				// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
+			Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
+			Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
+			// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
 
-				Pen.strokeRect(blob.rect);
+			Pen.strokeRect(blob.rect);
 
-			 	Pen.moveTo(blob.center);
-				Pen.lineTo(Point(blob.center.x+blob.velocity.x+6, blob.center.y+blob.velocity.y+6));
-				Pen.stroke;
+		 	Pen.moveTo(blob.center);
+			Pen.lineTo(Point(blob.center.x+ (blob.velocity.x*2), blob.center.y+(blob.velocity.y*2)));
+			Pen.stroke;
 
 
-				Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
+			Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
 
-				prev = blob.data.reshape(1,2)[0];
-				blob.data.reshape(blob.data.size,2).do({|o,j|
+			prev = blob.data.reshape(1,2)[0];
+			blob.data.reshape(blob.data.size,2).do({|o,j|
 
-					if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
-						ax = prev[0];
-						ay = prev[1];
-						bx = o[0];
-						by = o[1];
-					 	Pen.moveTo(Point(ax, ay));
-						Pen.lineTo(Point(bx, by));
-						Pen.stroke;
-						prev = o;
-					});
+				if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
+					ax = prev[0];
+					ay = prev[1];
+					bx = o[0];
+					by = o[1];
+				 	Pen.moveTo(Point(ax, ay));
+					Pen.lineTo(Point(bx, by));
+					Pen.stroke;
+					prev = o;
 				});
+			});
 
 		});
-		// blobsDict.values.postln;
+
+
+		// hack value
+		if(blobsDict.values[0] != nil,{
+			vx = blobsDict.values[0].velocity.x;
+			vy = blobsDict.values[0].velocity.y;
+		});
+		//plotter
+		plotter.value = plotter.value.flop;
+		plotter.value = plotter.value.insert(0, [vx, vy]);
+		plotter.value = plotter.value.keep(50);
+		plotter.value = plotter.value.flop;
+
+		plotter.minval_(-10);
+		plotter.maxval_(10);
+
+		// move to a routine?
 		patches.do({|m| m.env.use{
 			if(blobsDict.values.size > 0,{
 			~update.(blobsDict.values,0)});
 			}; 
 		});
-		// blobs.do({|blob,i|
-
-		// 	var prev = [];
-		// 	var val = blob.rect.width * 10;
-
-		// 	var ax, ay, bx, by, mx, my;
-		// 	var xdif, ydif, a1, b1, a2, b2;
-
-			
-		// 	if( blob.state == 2, {
-
-		// 		Pen.smoothing_(true);
-		// 		Pen.width = 1;
-
-		// 		Pen.fillColor = cols.at(i);
-		// 		Pen.strokeColor = cols.at(i);
-
-		// 		Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
-		// 		Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
-		// 		// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
-
-		// 		Pen.strokeRect(blob.rect);
-
-		// 	 	Pen.moveTo(blob.center);
-		// 		Pen.lineTo(Point(blob.center.x+blob.velocity.x+6, blob.center.y+blob.velocity.y+6));
-		// 		Pen.stroke;
-
-
-		// 		Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
-
-		// 		prev = blob.data.reshape(1,2)[0];
-		// 		blob.data.reshape(blob.data.size,2).do({|o,j|
-
-		// 			if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
-		// 				ax = prev[0];
-		// 				ay = prev[1];
-		// 				bx = o[0];
-		// 				by = o[1];
-		// 			 	Pen.moveTo(Point(ax, ay));
-		// 				Pen.lineTo(Point(bx, by));
-		// 				Pen.stroke;
-		// 				prev = o;
-		// 			});
-		// 		});
-
-		// 		//•make the patch play
-
-		// 	},{ // area less than 1
-		// 		//•make the patch stop
-		// 	});
-
-		// });// finish processing all the blobs
-
-		// // update all the patches with all the blob data. 
-		
-
-		// //•• should this be in a UI draw call!?!?!
-		// patches.do({|m| m.env.use{~update.(blobs,0)} });
-
 	};
 
 	//------------------------------------------------------------
@@ -446,8 +397,8 @@
 
 	);
 
-	plotter = Plotter("plot", Rect(0, 0, plotView.bounds.width, plotView.bounds.height), plotView)
-		.value_((1..199));
+	plotter = Plotter("plot", Rect(0, 0, plotView.bounds.width / 3, plotView.bounds.height), plotView)
+		.value_((0..49));
 
 	plotter.superpose = true;
 	plotter.setProperties(\backgroundColor, Color.gray(0.25));
@@ -460,8 +411,9 @@
 		SynthDef(\mouseY, { |bus| Out.kr(bus, MouseY.kr(0,1.0))}).add;
 
 		// start listening to OSC blob data
-		initBlobs.();
+		//initBlobs.();
 
+		//------------------------------------------------------
 		initListener = OSCFunc({ |msg, time, addr, recvPort|
 
 			var blob = Event.new(proto:blobModel);
@@ -472,13 +424,14 @@
 			
 			patches.do({|m| m.env.use{
 				if(blobsDict.values.size > 0,{
-					~play.()});
+					~onInit.()});
 				}; 
 			});
 
 
 		}, '/ke/init', recvPort: 57120);
 
+		//------------------------------------------------------
 		updateListener = OSCFunc({ |msg, time, addr, recvPort|
 
 			if(blobsDict.at(msg[1]) != nil,{
@@ -502,17 +455,15 @@
 
 
 			});
-			// blobsDict.postln;
-
 
 		}, '/ke/update', recvPort: 57120);
 
+		//------------------------------------------------------
 		deinitListener = OSCFunc({ |msg, time, addr, recvPort|
-
 
 			patches.do({|m| m.env.use{
 				if(blobsDict.values.size > 0,{
-					~stop.()});
+					~onDeinit.()});
 				}; 
 			});
 
@@ -522,51 +473,9 @@
 
 		}, '/ke/deinit', recvPort: 57120);
 		
-
-
-		//•• need to change all this!
-		// use a dict and label from blobs (index can change on us)
-		// numOfBlobs.do{ |i|
-
-		// 	oscListeners.add(
-		// 		OSCFunc({ arg msg, time, addr, recvPort;
-			
-		// 			var index = msg[1].asInteger;
-		// 			[time, addr, recvPort].postln;
-		// 			// if( i == index, {
-		// 				if(blobs[index] != nil,{
-
-							
-		// 					blobs[index].channel = index;
-		// 					blobs[index].state = msg[2]; 
-		// 					blobs[index].area = msg[3] * 100;
-		// 					blobs[index].perimeter = msg[4] * 100;
-
-		// 					// 640 & 480 are coming from Kinect Explorer
-		// 					blobs[index].center = filter.(Point(msg[5]* 640,msg[6]* 480), blobs[index].center, 0.9);
-
-		// 					blobs[index].rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
-
-		// 					blobs[index].label = msg[11].asInteger;
-							
-		// 					blobs[index].velocity = Point(msg[12], msg[13]);
-
-		// 					blobs[index].dataSize = msg[14].asInteger;
-		// 					blobs[index].data = msg.copyRange(15,512 + 15);
-
-		// 					// experimental
-		// 					// blobs[index].pWidth.rateRaw = msg[8]* 1000;//???????
-
-		// 				});
-		// 				{graphView.refresh()}.defer;
-
-		// 			// });
-
-		// 			}, '/gyrosc/line', recvPort: 57120 + i);
-		// 	);
-		// };	
 		//------------------------------------------------------
-
+		//
+		//------------------------------------------------------
 		lnkListener = OSCFunc({ |msg, time, addr, recvPort|
 			var objIndex = msg[1];
 			poses[objIndex].links = Array.fill(msg[2], {Event.new(proto:link)});
@@ -577,6 +486,7 @@
 			// ([poses[objIndex].links, poses[objIndex].points.size]).postln;
 		}, 'poscr/links');
 		
+		//------------------------------------------------------
 		objListener = OSCFunc({ |msg, time, addr, recvPort|
 			// [msg, time, addr, recvPort].postln;
 			var objIndex = msg[1];
@@ -589,6 +499,7 @@
 			poses[objIndex].b = msg[5];
 		}, '/poscr/obj');
 
+		//------------------------------------------------------
 		pntListener = OSCFunc({ |msg, time, addr, recvPort|
 
 			var objIndex = msg[1];
@@ -603,7 +514,6 @@
 		}, '/poscr/pnts');
 
 		//------------------------------------------------------
-
 
 		// load all data into patches
 		patches.do({|m| loadPatch.(m)});

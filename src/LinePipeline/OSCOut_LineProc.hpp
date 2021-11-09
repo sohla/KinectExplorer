@@ -24,7 +24,8 @@ class OSCOut_LineProc : public Base_LineProc {
 
     int numBlobs = 0;
     
-    vector<ofxOscSender*>    senders;
+//    vector<ofxOscSender*>    senders;
+    ofxOscSender sender;
     
     string title(){
         return "line osc out " + portParam.get();
@@ -51,39 +52,38 @@ class OSCOut_LineProc : public Base_LineProc {
     
     void onOnParam(bool& val){
         
-        
-        //•• fix for new blob model sending data
-        string::size_type sz;
-        int portInt = stoi( portParam.get(),&sz);
-
-        if(val){
-            for(int i = 0; i < MAX_BLOBS; i++){
-                ofxOscSender *sender = new ofxOscSender();
-                sender->setup(ipParam.get(), portInt + i);
-                ofxOscMessage m;
-                m.setAddress("/gyrosc/button");
-                m.addFloatArg(1.0);
-                sender->sendMessage(m, false);
-                senders.push_back(sender);
-            }
-        }else{
-
-            for(int i = 0; i < MAX_BLOBS; i++){
-                ofxOscSender *sender = new ofxOscSender();
-                sender->setup(ipParam.get(), portInt + i);
-                ofxOscMessage m;
-                m.setAddress("/gyrosc/button");
-                m.addFloatArg(0.0);
-                sender->sendMessage(m, false);
-                senders.push_back(sender);
-            }
-            
-            // now remove it all
-            for(auto &s : senders){
-                free(s);
-            }
-            senders.clear();
-        }
+//        //•• fix for new blob model sending data
+//        string::size_type sz;
+//        int portInt = stoi( portParam.get(),&sz);
+//
+//        if(val){
+//            for(int i = 0; i < MAX_BLOBS; i++){
+//                ofxOscSender *sender = new ofxOscSender();
+//                sender->setup(ipParam.get(), portInt + i);
+//                ofxOscMessage m;
+//                m.setAddress("/gyrosc/button");
+//                m.addFloatArg(1.0);
+//                sender->sendMessage(m, false);
+//                senders.push_back(sender);
+//            }
+//        }else{
+//
+//            for(int i = 0; i < MAX_BLOBS; i++){
+//                ofxOscSender *sender = new ofxOscSender();
+//                sender->setup(ipParam.get(), portInt + i);
+//                ofxOscMessage m;
+//                m.setAddress("/gyrosc/button");
+//                m.addFloatArg(0.0);
+//                sender->sendMessage(m, false);
+//                senders.push_back(sender);
+//            }
+//
+//            // now remove it all
+//            for(auto &s : senders){
+//                free(s);
+//            }
+//            senders.clear();
+//        }
     };
 
     void process(BlobModel &blob){
@@ -91,6 +91,13 @@ class OSCOut_LineProc : public Base_LineProc {
         
         // blob model is now sending osc data!
  
+        if(onParam.get()){
+
+            string::size_type sz;
+            int portInt = stoi( portParam.get(),&sz);
+            sender.setup(ipParam.get(), portInt);
+            sender.sendMessage(blob.getOSCMessage(), false);
+        };
         
         /*
         if(onParam.get()){

@@ -24,19 +24,24 @@ class BlobModel : public ofxCv::RectFollower {
 
 protected:
     float startedDying;
-    ofxOscSender sender;
+    ofxOscSender scSender;
+    ofxOscSender tdSender;
+
 public:
     
     BlobModel()
         :startedDying(0){
-            sender.setup("127.0.0.1", 57120);
 
     }
     void setup(const cv::Rect& track);
     void update(const cv::Rect& track);
     void kill();
 
-    void sendData();
+    void sendOSCMessage();
+
+    ofxOscMessage getOSCMessage(){return oscMessage;};
+    
+    
     //•• make below protected?
     ofPolyline line;
     
@@ -49,6 +54,9 @@ public:
     unsigned int randomHue;
     BlobState state;
     
+private:
+    ofxOscMessage oscMessage;
+
     void debug(){
         std::cout << "label:" << ofToString(label) << " index:" << ofToString(index) << std::endl;
     }
