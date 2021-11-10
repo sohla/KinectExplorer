@@ -370,7 +370,7 @@
 
 	//------------------------------------------------------
 	QtGUI.palette = QPalette.dark; 
-	window = Window("",Rect(0,0,Window.screenBounds.width/2, Window.screenBounds.height)
+	window = Window("",Rect(0,0,Window.screenBounds.width/2, Window.screenBounds.height - 300)
 		.center_(Window.screenBounds.width*0.85@100)
 	).front;
 
@@ -402,22 +402,24 @@
 			}),
 		GridLayout.rows(*patchButton.()),	
 		graphView = UserView()
-			.minHeight_(500)
-			.drawFunc_(updateGraphView)
-			.animate_(true)
-			.clearOnRefresh_(true),
+				.minHeight_(500)
+				.drawFunc_(updateGraphView)
+				.animate_(true)
+				.clearOnRefresh_(true),
 
-		plotView = UserView()
-			.minHeight_(200),
+		HLayout(
+			plotView = UserView()
+				.minHeight_(200)
+				.minWidth_(300),
 
 
-		freqScope = FreqScopeView()
-			.freqMode_(1)
-			.active_(true),	
-
+			freqScope = FreqScopeView()
+				.freqMode_(1)
+				.active_(true),	
+		)
 	);
 
-	plotter = Plotter("plot", Rect(0, 0, plotView.bounds.width / 3, plotView.bounds.height), plotView)
+	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
 		.value_((0..49));
 
 	plotter.superpose = true;
