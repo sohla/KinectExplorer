@@ -248,16 +248,16 @@
 		var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
 		var vx = 0,vy = 0;
 		
-		//•• for now juts plot the first blob in blobsDict
 		var plotData = {
+
 			var data = [0];
+
 			if(blobsDict.values.size > 0,{
+				// for now, calling all patches
 				patches.do({|m| 
 					m.env.use{
-						if(blobsDict.values.size > 0,{
-							var d = ~onData.(blobsDict.values[0], blobsDict);
-							if(d != nil, {data = d});
-						});
+						var d = ~onData.(blobsDict);
+						if(d != nil, {data = d});
 					}; 
 				});
 			});
@@ -270,56 +270,49 @@
 
 		blobsDict.do({|blob,i|
 
-			var prev = [];
-			var val = blob.rect.width * 10;
+			if(blob.state == 2,{
 
-			var ax, ay, bx, by, mx, my;
-			var xdif, ydif, a1, b1, a2, b2;
+				var prev = [];
+				var val = blob.rect.width * 10;
 
-			Pen.smoothing_(true);
-			Pen.width = 1;
+				var ax, ay, bx, by, mx, my;
+				var xdif, ydif, a1, b1, a2, b2;
 
-			Pen.fillColor = cols.at(i);
-			Pen.strokeColor = cols.at(i);
+				Pen.smoothing_(true);
+				Pen.width = 1;
 
-			Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
-			Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
-			// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
+				Pen.fillColor = cols.at(i);
+				Pen.strokeColor = cols.at(i);
 
-			Pen.strokeRect(blob.rect);
+				Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
+				Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
+				// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
 
-		 	Pen.moveTo(blob.center);
-			Pen.lineTo(Point(blob.center.x+ (blob.velocity.x*2), blob.center.y+(blob.velocity.y*2)));
-			Pen.stroke;
+				Pen.strokeRect(blob.rect);
 
-			Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
+			 	Pen.moveTo(blob.center);
+				Pen.lineTo(Point(blob.center.x+ (blob.velocity.x*2), blob.center.y+(blob.velocity.y*2)));
+				Pen.stroke;
 
-			prev = blob.data.reshape(1,2)[0];
-			blob.data.reshape(blob.data.size,2).do({|o,j|
+				Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
 
-				if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
-					ax = prev[0];
-					ay = prev[1];
-					bx = o[0];
-					by = o[1];
-				 	Pen.moveTo(Point(ax, ay));
-					Pen.lineTo(Point(bx, by))
-;					Pen.stroke;
-					prev = o;
+				prev = blob.data.reshape(1,2)[0];
+				blob.data.reshape(blob.data.size,2).do({|o,j|
+
+					if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
+						ax = prev[0];
+						ay = prev[1];
+						bx = o[0];
+						by = o[1];
+					 	Pen.moveTo(Point(ax, ay));
+						Pen.lineTo(Point(bx, by))
+	;					Pen.stroke;
+						prev = o;
+					});
 				});
 			});
-
 		});
 
-		//{ data.env.use{ ~plot.()} };
-
-
-
-		// hack value
-		if(blobsDict.values[0] != nil,{
-			vx = blobsDict.values[0].velocity.x;
-			vy = blobsDict.values[0].velocity.y;
-		});
 		//plotter
 		plotter.value = plotter.value.flop;
 		plotter.value = plotter.value.insert(0, plotData.());
@@ -329,12 +322,6 @@
 		plotter.minval_(-10);
 		plotter.maxval_(10);
 
-		//•••• move to OSCListener
-		patches.do({|m| m.env.use{
-			if(blobsDict.values.size > 0,{
-			~onUpdate.(blobsDict.values[0], blobsDict)});//•• just using first blob for now
-			}; 
-		});
 	};
 
 	//------------------------------------------------------------
@@ -441,7 +428,27 @@
 			var blob = Event.new(proto:blobModel);
 
 			//•• label is unique : needs to be assigned to a synth/pattern
-			blob.label = msg[1];
+			// blob.label = msg[1];
+
+			blob.label = msg[1]; 
+			blob.state = msg[2]; 
+			blob.area = msg[3] * 100;
+			blob.perimeter = msg[4] * 100;
+
+			// 640 & 480 are coming from Kinect Explorer
+			blob.center = filter.(Point(msg[5]* 640,msg[6]* 480), blob.center, 0.9);
+
+			blob.rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
+
+			blob.index = msg[11].asInteger;
+		
+			blob.velocity = Point(msg[12], msg[13]);
+
+			blob.dataSize = msg[14].asInteger;
+			blob.data = msg.copyRange(15,512 + 15);
+
+
+
 			blobsDict.put(msg[1],blob);
 			// blobsDict.postln;
 			
@@ -459,29 +466,30 @@
 
 			if(blobsDict.at(msg[1]) != nil,{
 
-					blobsDict.at(msg[1]).label = msg[1]; 
-					blobsDict.at(msg[1]).state = msg[2]; 
-					blobsDict.at(msg[1]).area = msg[3] * 100;
-					blobsDict.at(msg[1]).perimeter = msg[4] * 100;
+				blobsDict.at(msg[1]).label = msg[1]; 
+				blobsDict.at(msg[1]).state = msg[2]; 
+				blobsDict.at(msg[1]).area = msg[3] * 100;
+				blobsDict.at(msg[1]).perimeter = msg[4] * 100;
 
-					// 640 & 480 are coming from Kinect Explorer
-					blobsDict.at(msg[1]).center = filter.(Point(msg[5]* 640,msg[6]* 480), blobsDict.at(msg[1]).center, 0.9);
+				// 640 & 480 are coming from Kinect Explorer
+				blobsDict.at(msg[1]).center = filter.(Point(msg[5]* 640,msg[6]* 480), blobsDict.at(msg[1]).center, 0.9);
 
-					blobsDict.at(msg[1]).rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
+				blobsDict.at(msg[1]).rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
 
-					blobsDict.at(msg[1]).index = msg[11].asInteger;
-				
-					blobsDict.at(msg[1]).velocity = Point(msg[12], msg[13]);
+				blobsDict.at(msg[1]).index = msg[11].asInteger;
+			
+				blobsDict.at(msg[1]).velocity = Point(msg[12], msg[13]);
 
-					blobsDict.at(msg[1]).dataSize = msg[14].asInteger;
-					blobsDict.at(msg[1]).data = msg.copyRange(15,512 + 15);
+				blobsDict.at(msg[1]).dataSize = msg[14].asInteger;
+				blobsDict.at(msg[1]).data = msg.copyRange(15,512 + 15);
 
-					//•• send data directly to patches
-					// patches.do({|m| m.env.use{
-					// 	if(blobsDict.values.size > 0,{
-					// 		~onUpdate.(blob, blobsDict)});
-					// 	}; 
-					// });
+				// update all patches for now
+				patches.do({|m| m.env.use{
+					if(blobsDict.values.size > 0,{
+						~onUpdate.(blobsDict.at(msg[1]), blobsDict);
+					}); 
+					};
+				});
 			});
 
 		}, '/ke/update', recvPort: 57120);

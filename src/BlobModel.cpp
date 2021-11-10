@@ -23,8 +23,7 @@ void BlobModel::setup(const cv::Rect& track) {
     //build message
     oscMessage.clear();
     oscMessage.setAddress("/ke/init");
-    oscMessage.addIntArg(label);
-    
+    addDataToOSCMessage();
     sendOSCMessage();
 
     float curTime = ofGetElapsedTimef();
@@ -40,10 +39,16 @@ void BlobModel::update(const cv::Rect& track) {
     float curTime = ofGetElapsedTimef();
     std::cout << curTime << ": " << getLabel() << ": update" << std::endl;
 
-    ofPolyline currLine = line.getResampledByCount(127);
-    
     oscMessage.clear();
     oscMessage.setAddress("/ke/update");
+    addDataToOSCMessage();
+    sendOSCMessage();
+
+}
+
+void BlobModel::addDataToOSCMessage(){
+
+    ofPolyline currLine = line.getResampledByCount(127);
     
     float area = ofMap(line.getArea(), 0, -100000, 0.0, 1.0); // range is approx
     float perimeter = ofMap(line.getPerimeter(), 0, 5000, 0.0, 1.0); // range is approx
@@ -80,8 +85,6 @@ void BlobModel::update(const cv::Rect& track) {
         oscMessage.addDoubleArg(vert.y);
         //std::cout << vert.x << " , " << vert.y;
     }
-    sendOSCMessage();
-
 }
 
 void BlobModel::kill() {

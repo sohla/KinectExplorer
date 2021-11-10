@@ -38,7 +38,9 @@ public:
     void kill();
 
     void sendOSCMessage();
-
+    void addDataToOSCMessage();
+    
+    
     ofxOscMessage getOSCMessage(){return oscMessage;};
     
     

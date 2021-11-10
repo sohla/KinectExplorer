@@ -90,36 +90,6 @@ var scale = 1;
 };
 
 //------------------------------------------------------
-~onInit = {
-	//•• simple hack
-	// if we have all the blobs
-	// we can asign a ptn to a label etc.
-	Ndef(\viztestPtn).play;	
-};
-
-//------------------------------------------------------
-~onDeinit = {
-
-	Ndef(\viztestPtn).stop;
-};
-//------------------------------------------------------
-~onUpdate = {|blob, blobsDict|
-
-	oct = blob.center.x.linlin(0,650,0,6).floor * 2;
-	Ndef(\viztestPtn).set(\note, oct);
-
-	scale = blob.area.linexp(0.0,10.0,0.1,12);
-	Ndef(\viztestPtn).set(\ff, blob.area.linexp(0.0,10.0,100,10000));
-	// blobs[0].area.linexp(0.0,10.0,100,10000).postln;
-};
-//------------------------------------------------------
-~onData = {|blob, blobsDict|
-	blob.label.postln;
-	[blob.velocity.x];
-};
-
-
-//------------------------------------------------------
 ~reload = {|model|
 	postf("reload : % \n", model.file);
 	if(Ndef(\viztestPtn).isPlaying, {
@@ -145,3 +115,35 @@ var scale = 1;
 	// my.getSynchronous.free;
 
 };
+
+//------------------------------------------------------
+~onInit = {|blob, blobsDict|
+	//•• simple hack
+	// if we have all the blobs
+	// we can asign a ptn to a label etc.
+	Ndef(\viztestPtn).play;	
+};
+
+//------------------------------------------------------
+~onDeinit = {|blob, blobsDict|
+
+	Ndef(\viztestPtn).stop;
+};
+
+//------------------------------------------------------
+~onUpdate = {|blob, blobsDict|
+
+	blob.label.postln;
+	// var blob = blobsDict.values[0]; //•• first one for now
+	oct = blob.center.x.linlin(0,650,0,6).floor * 2;
+	Ndef(\viztestPtn).set(\note, oct);
+
+	scale = blob.area.linexp(0.0,10.0,0.1,12);
+	Ndef(\viztestPtn).set(\ff, blob.area.linexp(0.0,10.0,100,10000));
+};
+
+//------------------------------------------------------
+~onData = {|blobsDict|
+	[blobsDict.values[0].velocity.x];
+};
+
