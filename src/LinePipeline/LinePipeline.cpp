@@ -157,9 +157,12 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
     
                 if(trackerFollower.existsPrevious(label)){
+                
                     const cv::Rect& previous = trackerFollower.getPrevious(label);
                     followers[i].previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
                     followers[i].velocity = followers[i].currentPosition - followers[i].previousPosition;
+                }else{
+                    followers[i].velocity = ofVec2f(0,0);
                 }
 
             for( auto &proc : processors ){

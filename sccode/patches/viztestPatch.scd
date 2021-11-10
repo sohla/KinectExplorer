@@ -89,6 +89,7 @@ var scale = 1;
 	Ndef(\viztestPtn).fadeTime = model.fade; 
 };
 
+//------------------------------------------------------
 ~onInit = {
 	//•• simple hack
 	// if we have all the blobs
@@ -96,31 +97,27 @@ var scale = 1;
 	Ndef(\viztestPtn).play;	
 };
 
+//------------------------------------------------------
 ~onDeinit = {
 
 	Ndef(\viztestPtn).stop;
 };
 //------------------------------------------------------
-~update = {|blobs,i|
+~onUpdate = {|blob, blobsDict|
 
-	oct = blobs[0].center.x.linlin(0,650,0,6).floor * 2;
+	oct = blob.center.x.linlin(0,650,0,6).floor * 2;
 	Ndef(\viztestPtn).set(\note, oct);
 
-	scale = blobs[0].area.linexp(0.0,10.0,0.1,12);
-	Ndef(\viztestPtn).set(\ff, blobs[0].area.linexp(0.0,10.0,100,10000));
+	scale = blob.area.linexp(0.0,10.0,0.1,12);
+	Ndef(\viztestPtn).set(\ff, blob.area.linexp(0.0,10.0,100,10000));
 	// blobs[0].area.linexp(0.0,10.0,100,10000).postln;
 };
-
 //------------------------------------------------------
-~deinit = {|model|
-	postf("deinit : % \n", model.file);
-	Ndef(\viztestPtn).end;
-	// Synth(\mouseX).free;
-	// Synth(\mouseY).free;
-	// mx.getSynchronous.free;
-	// my.getSynchronous.free;
-
+~onData = {|blob, blobsDict|
+	blob.label.postln;
+	[blob.velocity.x];
 };
+
 
 //------------------------------------------------------
 ~reload = {|model|
@@ -137,8 +134,14 @@ var scale = 1;
 
 };
 
+
 //------------------------------------------------------
-~onData = {
+~deinit = {|model|
+	postf("deinit : % \n", model.file);
+	Ndef(\viztestPtn).end;
+	// Synth(\mouseX).free;
+	// Synth(\mouseY).free;
+	// mx.getSynchronous.free;
+	// my.getSynchronous.free;
 
 };
-

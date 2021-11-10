@@ -247,6 +247,24 @@
 
 		var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
 		var vx = 0,vy = 0;
+		
+		//•• for now juts plot the first blob in blobsDict
+		var plotData = {
+			var data = [0];
+			if(blobsDict.values.size > 0,{
+				patches.do({|m| 
+					m.env.use{
+						if(blobsDict.values.size > 0,{
+							var d = ~onData.(blobsDict.values[0], blobsDict);
+							if(d != nil, {data = d});
+						});
+					}; 
+				});
+			});
+			data;
+		};
+
+
 		Pen.fillColor = Color.gray(0,1);
 		Pen.fillRect(window.view.bounds);
 
@@ -274,7 +292,6 @@
 			Pen.lineTo(Point(blob.center.x+ (blob.velocity.x*2), blob.center.y+(blob.velocity.y*2)));
 			Pen.stroke;
 
-
 			Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
 
 			prev = blob.data.reshape(1,2)[0];
@@ -286,13 +303,16 @@
 					bx = o[0];
 					by = o[1];
 				 	Pen.moveTo(Point(ax, ay));
-					Pen.lineTo(Point(bx, by));
-					Pen.stroke;
+					Pen.lineTo(Point(bx, by))
+;					Pen.stroke;
 					prev = o;
 				});
 			});
 
 		});
+
+		//{ data.env.use{ ~plot.()} };
+
 
 
 		// hack value
@@ -302,17 +322,17 @@
 		});
 		//plotter
 		plotter.value = plotter.value.flop;
-		plotter.value = plotter.value.insert(0, [vx, vy]);
+		plotter.value = plotter.value.insert(0, plotData.());
 		plotter.value = plotter.value.keep(50);
 		plotter.value = plotter.value.flop;
 
 		plotter.minval_(-10);
 		plotter.maxval_(10);
 
-		// move to a routine?
+		//•••• move to OSCListener
 		patches.do({|m| m.env.use{
 			if(blobsDict.values.size > 0,{
-			~update.(blobsDict.values,0)});
+			~onUpdate.(blobsDict.values[0], blobsDict)});//•• just using first blob for now
 			}; 
 		});
 	};
@@ -418,13 +438,14 @@
 
 			var blob = Event.new(proto:blobModel);
 
+			//•• label is unique : needs to be assigned to a synth/pattern
 			blob.label = msg[1];
 			blobsDict.put(msg[1],blob);
 			// blobsDict.postln;
 			
 			patches.do({|m| m.env.use{
 				if(blobsDict.values.size > 0,{
-					~onInit.()});
+					~onInit.(blob, blobsDict)});
 				}; 
 			});
 
@@ -453,7 +474,12 @@
 					blobsDict.at(msg[1]).dataSize = msg[14].asInteger;
 					blobsDict.at(msg[1]).data = msg.copyRange(15,512 + 15);
 
-
+					//•• send data directly to patches
+					// patches.do({|m| m.env.use{
+					// 	if(blobsDict.values.size > 0,{
+					// 		~onUpdate.(blob, blobsDict)});
+					// 	}; 
+					// });
 			});
 
 		}, '/ke/update', recvPort: 57120);
@@ -461,14 +487,20 @@
 		//------------------------------------------------------
 		deinitListener = OSCFunc({ |msg, time, addr, recvPort|
 
-			patches.do({|m| m.env.use{
-				if(blobsDict.values.size > 0,{
-					~onDeinit.()});
-				}; 
-			});
+			if(blobsDict.at(msg[1]) != nil,{
 
-			blobsDict.removeAt(msg[1]);
-			// blobsDict.postln;
+				var blob = blobsDict.at(msg[1]);
+
+				patches.do({|m| m.env.use{
+					if(blobsDict.values.size > 0,{
+						~onDeinit.(blob, blobsDict)});
+					}; 
+				});
+
+				blobsDict.removeAt(msg[1]);
+				// blobsDict.postln;
+
+			});
 
 
 		}, '/ke/deinit', recvPort: 57120);
