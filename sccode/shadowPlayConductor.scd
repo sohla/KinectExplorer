@@ -47,7 +47,8 @@
 				\isNoteOn: false,
 				\channel: 0,
 				\root: 60,
-				\env:  nil
+				\env:  nil,
+				\pattern: nil,
 
 	);
 
@@ -105,7 +106,7 @@
 	};
 
 	//------------------------------------------------------
-	var freeAll = {
+	var freeAll = {		
 
 		pfmtRout.stop;
 		patches.do({|m| m.env.use{~deinit.(m)} });
@@ -123,17 +124,17 @@
 
 	};
 
-
 	//------------------------------------------------------
 	var row = 3, col = 3;
 	var patches = [
-		(\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		(\file: "longPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		// (\file: "longPatch.sc
+		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 
 		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -305,8 +306,8 @@
 						bx = o[0];
 						by = o[1];
 					 	Pen.moveTo(Point(ax, ay));
-						Pen.lineTo(Point(bx, by))
-	;					Pen.stroke;
+						Pen.lineTo(Point(bx, by));
+						Pen.stroke;
 						prev = o;
 					});
 				});
@@ -348,8 +349,8 @@
 
 				.action_({|b|
 					if(b.value == 1,	
-						{m.env.use{~init.(m)} }, //add this to a runningPatches list?
-						{m.env.use{~deinit.(m)} // remove this from the runningPatches list?
+						{m.env.use{~init.(m)} },// tell KE (near far on/off) so it can create new bolbs straight away 
+						{m.env.use{~deinit.(m)} 
 					});
 				})
 		});
@@ -391,8 +392,9 @@
 		graphView = UserView()
 				.minHeight_(500)
 				.drawFunc_(updateGraphView)
+				.frameRate_(30)
 				.animate_(true)
-				.clearOnRefresh_(true),
+				.clearOnRefresh_(false),
 
 		HLayout(
 			plotView = UserView()
@@ -483,12 +485,14 @@
 				blobsDict.at(msg[1]).dataSize = msg[14].asInteger;
 				blobsDict.at(msg[1]).data = msg.copyRange(15,512 + 15);
 
-				// update all patches for now
-				patches.do({|m| m.env.use{
-					if(blobsDict.values.size > 0,{
-						~onUpdate.(blobsDict.at(msg[1]), blobsDict);
-					}); 
-					};
+				// if this blob is on tell all patches
+				if(blobsDict.at(msg[1]).state == 2,{
+					patches.do({|m| m.env.use{
+						if(blobsDict.values.size > 0,{
+							~onUpdate.(blobsDict.at(msg[1]), blobsDict);
+						}); 
+						};
+					});
 				});
 			});
 

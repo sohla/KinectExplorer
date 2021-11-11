@@ -133,13 +133,13 @@ var scale = 1;
 //------------------------------------------------------
 ~onUpdate = {|blob, blobsDict|
 
-	blob.label.postln;
+	// blob.label.postln;
 	// var blob = blobsDict.values[0]; //•• first one for now
-	oct = blob.center.x.linlin(0,650,0,6).floor * 2;
-	Ndef(\viztestPtn).set(\note, oct);
+	// oct = blob.center.x.linlin(0,650,0,6).floor * 2;
+	// Ndef(\viztestPtn).set(\note, oct);
 
-	scale = blob.area.linexp(0.0,10.0,0.1,12);
-	Ndef(\viztestPtn).set(\ff, blob.area.linexp(0.0,10.0,100,10000));
+	// scale = blob.area.linexp(0.0,10.0,0.1,12);
+	// Ndef(\viztestPtn).set(\ff, blob.area.linexp(0.0,10.0,100,10000));
 };
 
 //------------------------------------------------------

@@ -36,8 +36,8 @@ void BlobModel::update(const cv::Rect& track) {
 
     state = updateState;
 
-    float curTime = ofGetElapsedTimef();
-    std::cout << curTime << ": " << getLabel() << ": update" << std::endl;
+//    float curTime = ofGetElapsedTimef();
+//    std::cout << curTime << ": " << getLabel() << ": update" << std::endl;
 
     oscMessage.clear();
     oscMessage.setAddress("/ke/update");
