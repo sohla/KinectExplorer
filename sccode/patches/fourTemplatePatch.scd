@@ -1,6 +1,3 @@
-var mx = Bus.control(s,1);
-var my = Bus.control(s,1);
-var mxs, mys;
 var oct = 0;
 var scale = 1;
 
@@ -10,9 +7,6 @@ var bind;
 //------------------------------------------------------
 ~init = {|model|
 	postf("init : % \n", model.file);
-
-	mxs = Synth(\mouseX, [\bus, mx.index]);
-	mys = Synth(\mouseY, [\bus, my.index]);
 
 	SynthDef(\long, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9, vibamp = 1, vibfreq = 5|
 
@@ -93,8 +87,9 @@ var bind;
 	// •• do we just need a pool of patterns we can use...?
 	patterns = Array.with(
 		Ndef(\aaPtn, bind).quant_(0.2),
-		Ndef(\bbPtn, bind).quant_(0.2),
+		Ndef(\bbPtn, bind).quant_(0.2)
 		// Ndef(\ccPtn, bind).quant_(0.2),
+		// Ndef(\ddPtn, bind).quant_(0.2),
 		// Ndef(\ddPtn, bind).quant_(0.2)
 	);
 
@@ -113,10 +108,6 @@ var bind;
 	};
 	patterns.removeAll;
 	Ndef.clear(0.1);
-	mxs.free;
-	mys.free;
-	mx.getSynchronous.free;
-	my.getSynchronous.free;
 	~init.(model); 
 
 };
@@ -125,9 +116,9 @@ var bind;
 ~deinit = {|model|
 	postf("deinit : % \n", model.file);
 	// Ndef(\aaPtn).end;
-	patterns.do{|p|
-		p.end;
-	};
+	// patterns.do{|p|
+	// 	p.end();
+	// };
 	patterns = [];
 	Ndef.clear;
 	
@@ -137,8 +128,6 @@ var bind;
 ~onInit = {|blob, blobsDict|
 
 	("start :" + (blob.label.mod(patterns.size)) ).postln;
-	// patterns[(blob.label.mod(patterns.size))].set(\label, blob.label);
-
 	// simple use of label as an index to array of patterns
 	patterns[(blob.label.mod(patterns.size))].play(0.4);
 	patterns[(blob.label.mod(patterns.size))].set(\octave, blob.label.mod(3)+3);
@@ -153,25 +142,23 @@ var bind;
 
 	("stop :" + (blob.label.mod(patterns.size)) ).postln;
 
+	Ndef.all.values.do{|p|
+
+	}
+
 };
 //------------------------------------------------------
 ~onUpdate = {|blob, blobsDict|
 
-	// blob.label.postln;
-	// var blob = blobsDict.values[0]; //•• first one for now
-	// oct = blob.center.x.linlin(0,650,0,6).floor * 2;
-	// Ndef(\viztestPtn).set(\note, oct);
-
-	oct = blob.center.x.linlin(150,550,2,11).floor;
+	oct = blob.center.x.linlin(150,550,3,8).floor;
 
 	patterns[(blob.label.mod(patterns.size))].set(\octave, oct);
-	// patterns[(blob.label.mod(patterns.size))].set(\ff, blob.area.linexp(0.0,10.0,100,10000));
-
+	// patterns[(blob.label.mod(patterns.size))].set(\ff, blob.area.linexp(0.0,10.0,400,8000));
 
 };
 
 //------------------------------------------------------
 ~onData = {|blobsDict|
-	[blobsDict.values[0].center.x.linlin(150,550,1,10)];
+	[blobsDict.values[0].area.linexp(0.0,10.0,2,10)];
 };
 
