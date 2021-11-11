@@ -87,73 +87,82 @@ var bind;
 	// •• do we just need a pool of patterns we can use...?
 	patterns = Array.with(
 		Ndef(\aaPtn, bind).quant_(0.2),
-		Ndef(\bbPtn, bind).quant_(0.2)
-		// Ndef(\ccPtn, bind).quant_(0.2),
-		// Ndef(\ddPtn, bind).quant_(0.2),
-		// Ndef(\ddPtn, bind).quant_(0.2)
+		Ndef(\bbPtn, bind).quant_(0.2),
+		Ndef(\ccPtn, bind).quant_(0.2),
+		Ndef(\ddPtn, bind).quant_(0.2),
+		Ndef(\eePtn, bind).quant_(0.2)
 	);
 
-	// Ndef(\bbPtn).set(\root, 3);
-	// Ndef(\ccPtn).set(\root, 6);
-	// Ndef(\ddPtn).set(\root, -3);
+	Ndef(\bbPtn).set(\root, 3);
+	Ndef(\ccPtn).set(\root, 6);
+	Ndef(\ddPtn).set(\root, -3);
+	Ndef(\ddPtn).set(\root, 1);
 
 };
 
 //------------------------------------------------------
 ~reload = {|model|
+
 	postf("reload : % \n", model.file);
 
 	patterns.do{|p|
-		p.end;
+		p.end(0.1);
 	};
-	patterns.removeAll;
+
+	patterns = [];
 	Ndef.clear(0.1);
-	~init.(model); 
+
+	{~init.(model)}.defer(0.2);
 
 };
 
 //------------------------------------------------------
 ~deinit = {|model|
+
 	postf("deinit : % \n", model.file);
 	// Ndef(\aaPtn).end;
-	// patterns.do{|p|
-	// 	p.end();
-	// };
+	patterns.do{|p|
+		p.end(0.1);
+	};
+
 	patterns = [];
-	Ndef.clear;
+	Ndef.clear(0.1);
+
+	{~init.(model)}.defer(0.2);
 	
 };
 
 //---------------------------------------------------
 ~onInit = {|blob, blobsDict|
 
-	("start :" + (blob.label.mod(patterns.size)) ).postln;
-	// simple use of label as an index to array of patterns
-	patterns[(blob.label.mod(patterns.size))].play(0.4);
-	patterns[(blob.label.mod(patterns.size))].set(\octave, blob.label.mod(3)+3);
+	var l = (blob.label.mod(patterns.size));
+	postf("play : [%] % \n", l, patterns[l]);
+
+	patterns[l].play(0.1);
+	patterns[l].set(\octave, blob.label.mod(3)+3);
 
 
 };
 //------------------------------------------------------
 ~onDeinit = {|blob, blobsDict|
 
-	patterns[(blob.label.mod(patterns.size))].end(0.8);
-	patterns[(blob.label.mod(patterns.size))].set(\label, -1);	
+	var l = (blob.label.mod(patterns.size));
+	postf("ending : [%] % \n", l, patterns[l]);
 
-	("stop :" + (blob.label.mod(patterns.size)) ).postln;
+	patterns[l].end(0.8);
 
-	Ndef.all.values.do{|p|
-
-	}
+	// Ndef.all.values.do{|p|
+	// }
 
 };
 //------------------------------------------------------
 ~onUpdate = {|blob, blobsDict|
 
-	oct = blob.center.x.linlin(150,550,3,8).floor;
+	var l = (blob.label.mod(patterns.size));
+	oct = blob.center.x.linlin(150,550,4,7).floor;
 
-	patterns[(blob.label.mod(patterns.size))].set(\octave, oct);
-	// patterns[(blob.label.mod(patterns.size))].set(\ff, blob.area.linexp(0.0,10.0,400,8000));
+	patterns[l].set(\octave, oct);
+	patterns[l].set(\ff, blob.area.linexp(0.0,10.0,400,8000));
 
 };
 
