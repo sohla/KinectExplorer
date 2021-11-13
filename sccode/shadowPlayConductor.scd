@@ -134,7 +134,8 @@
 		// (\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "longPatch.sc
-		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
 		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -348,9 +349,12 @@
 				.minWidth_(100)
 
 				.action_({|b|
-					if(b.value == 1,	
-						{m.env.use{~init.(m)} },// tell KE (near far on/off) so it can create new bolbs straight away 
-						{m.env.use{~deinit.(m)} 
+					if(b.value == 1,{
+						m.isOn = true;
+						m.env.use{~init.(m)}; 
+					},{
+						m.env.use{~deinit.(m)}; 
+						m.isOn = false;
 					});
 				})
 		});
@@ -455,10 +459,12 @@
 			// blobsDict.postln;
 			
 			patches.do({|m| m.env.use{
-				if(blobsDict.values.size > 0,{
-					~onInit.(blob, blobsDict)});
-				}; 
-			});
+				if(m.isOn, {
+					if(blobsDict.values.size > 0,{
+						~onInit.(blob, blobsDict);
+					});
+				});
+			}});
 
 
 		}, '/ke/init', recvPort: 57120);
@@ -488,11 +494,12 @@
 				// if this blob is on tell all patches
 				if(blobsDict.at(msg[1]).state == 2,{
 					patches.do({|m| m.env.use{
-						if(blobsDict.values.size > 0,{
-							~onUpdate.(blobsDict.at(msg[1]), blobsDict);
-						}); 
-						};
-					});
+						if(m.isOn, {
+							if(blobsDict.values.size > 0,{
+								~onUpdate.(blobsDict.at(msg[1]), blobsDict);
+							}); 
+						});
+					}});
 				});
 			});
 
@@ -506,10 +513,12 @@
 				var blob = blobsDict.at(msg[1]);
 
 				patches.do({|m| m.env.use{
-					if(blobsDict.values.size > 0,{
-						~onDeinit.(blob, blobsDict)});
-					}; 
-				});
+					if(m.isOn, {
+						if(blobsDict.values.size > 0,{
+							~onDeinit.(blob, blobsDict)
+						});
+					}); 
+				}});
 
 				blobsDict.removeAt(msg[1]);
 				// blobsDict.postln;

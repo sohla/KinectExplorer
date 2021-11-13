@@ -14,7 +14,7 @@ var bind;
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var vib = LFCub.ar(vibfreq, 0, vibamp * env);
 
-		var sig = SinOsc.ar([freq,freq + 2.rand],0, amp) + Saw.ar([freq,freq + 7.rand], vib) * env * 0.5;
+		var sig = SinOsc.ar([freq,freq + 2.rand],0, amp) + Saw.ar([freq,freq + 7.rand], vib) * env * 0.4;
 		Out.ar(out, sig);
 
 	}).add;
@@ -31,7 +31,7 @@ var bind;
 	bind =	Pbind(
 			\args, #[],
 			// musics
-		    \instrument, \aa,
+		    \instrument, \long,
 		    \amp, Pwhite(0.3, 0.2),
 		    \root, 0,//Pseq([0,3,6,-3].stutter(27), inf),
 		    \scale, 3,
@@ -39,8 +39,8 @@ var bind;
 		    \note, Pseq([0], inf),
 		    \dur, 0.2,//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
 		    \attack, Pwhite(0.001,0.01),
-		    \decay, Pwhite(0.2,0.9),
-		    \release, 1.2,//Pfunc{ my.getSynchronous.linlin(0,1.0,0.005,4.5)},//Pwhite(0.05,1.3),
+		    \decay, Pwhite(0.1,0.2),
+		    \release, 0.3,//Pfunc{ my.getSynchronous.linlin(0,1.0,0.005,4.5)},//Pwhite(0.05,1.3),
 		    \rel, Pkey(\release),
 		    \ff, 700,//Pfunc{ mx.getSynchronous.linexp(0,1.0,100,12000)},
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),//Pfunc{ my.getSynchronous.linlin(0,1.0,0,4)},
@@ -87,18 +87,18 @@ var bind;
 
 	// •• do we just need a pool of patterns we can use...?
 	patterns = Array.with(
-		Ndef(\aaPtn, bind).quant_(0.2),
-		Ndef(\bbPtn, bind).quant_(0.2),
-		Ndef(\ccPtn, bind).quant_(0.2),
-		Ndef(\ddPtn, bind).quant_(0.2),
-		Ndef(\eePtn, bind).quant_(0.2)
+		Ndef(\aPtn, bind).quant_(0.2),
+		Ndef(\bPtn, bind).quant_(0.2),
+		Ndef(\cPtn, bind).quant_(0.2),
+		Ndef(\dPtn, bind).quant_(0.2),
+		Ndef(\ePtn, bind).quant_(0.2)
 	);
 
-	Ndef(\bbPtn).set(\dur, 0.1);
-	Ndef(\bbPtn).set(\release, 0.1);
-	Ndef(\ccPtn).set(\dur, 0.4);
-	Ndef(\ddPtn).set(\dur, 0.1);
-	Ndef(\ddPtn).set(\release, 0.1);
+	Ndef(\bPtn).set(\dur, 0.1);
+	Ndef(\bPtn).set(\release, 0.1);
+	Ndef(\cPtn).set(\dur, 0.4);
+	Ndef(\dPtn).set(\dur, 0.1);
+	Ndef(\dPtn).set(\release, 0.1);
 	// Ndef(\eePtn).set(\instrument, \long);
 
 };
@@ -131,7 +131,7 @@ var bind;
 	};
 
 	patterns = [];
-
+	
 	// need this for reloading or patterns after an edit
 	// Ndef.clear(0.1);
 
@@ -161,7 +161,7 @@ var bind;
 ~onUpdate = {|blob, blobsDict|
 
 	var l = (blob.label.mod(patterns.size));
-	note = blob.center.x.linlin(100,550,0,8).floor * 3;
+	note = 1 + (blob.center.x.linlin(100,550,0,7).floor * 4);
 	oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
 	patterns[l].set(\note, note);
 	patterns[l].set(\octave, oct);
