@@ -12,8 +12,8 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     ofSetBackgroundColorHex(0x111111);
 
-//    depthCamera = new KinectDepthCamera();
-    depthCamera = new RealSenseDepthCamera();
+    depthCamera = new KinectDepthCamera();
+//    depthCamera = new RealSenseDepthCamera();
     depthCamera->setup(model);
     
     gui.setup("inputSettings", "inputSettings.json", 1060, 0);

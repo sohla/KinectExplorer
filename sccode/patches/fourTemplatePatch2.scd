@@ -1,7 +1,7 @@
 var oct = 0;
 var note = 0;
 var scale = 1;
-
+var ssx = 0, eex = 0;
 var patterns = Array.new(4);
 
 var bind;
@@ -48,7 +48,7 @@ var bind;
 
 
 		    //visuals
-		    \sh, 3,
+		    \sh,6,
 		    \param1, 1,
 		    \param2, 2,
 		    \param3, 3,
@@ -62,7 +62,7 @@ var bind;
 			\osc, Pfunc{|e| 
 	
 				// a = {e.scale}.defer;
-				 // {e.pp.postln}.defer;
+				  {e.postln}.defer;
 
 				model.netAddr.sendMsg("/shadow", 
 					"shape", e.sh,
@@ -71,9 +71,9 @@ var bind;
 					"release", e.rel * 0.5,
 					"color", (note + (oct * 12)).linlin(30,80,0,0.99),//e.param1,//colour
 					"scale", scale,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
-					"sx", (note + (oct * 12)).linlin(30,80,-1.8,1.8),//sx
+					"sx", ssx,//(note + (oct * 12)).linlin(30,80,-1.8,1.8),//sx
 					"sy", 0,//sy
-					"ex", (note + (oct * 12)).linlin(30,80,-1.8,1.8),//ex
+					"ex", eex,//(note + (oct * 12)).linlin(30,80,-1.8,1.8),//ex
 					"ey", 0.2,//ey
 					
 					"par7", 10,//e.param2.linlin(1,6,0.1,1), // wobble
@@ -86,19 +86,21 @@ var bind;
 	    );
 
 	// •• do we just need a pool of patterns we can use...?
+	//••••••reload starts PLAYING!!!
+
 	patterns = Array.with(
-		Ndef(\aPtn, bind).quant_(0.2),
-		Ndef(\bPtn, bind).quant_(0.2),
-		Ndef(\cPtn, bind).quant_(0.2),
-		Ndef(\dPtn, bind).quant_(0.2),
-		Ndef(\ePtn, bind).quant_(0.2)
+		Ndef(\aPtn, bind).stop,
+		Ndef(\bPtn, bind).stop,
+		Ndef(\cPtn, bind).stop,
+		Ndef(\dPtn, bind).stop,
+		Ndef(\ePtn, bind).stop
 	);
 
-	Ndef(\bPtn).set(\dur, 0.1);
-	Ndef(\bPtn).set(\release, 0.1);
-	Ndef(\cPtn).set(\dur, 0.4);
-	Ndef(\dPtn).set(\dur, 0.1);
-	Ndef(\dPtn).set(\release, 0.1);
+	// Ndef(\bPtn).set(\dur, 0.1);
+	// Ndef(\bPtn).set(\release, 0.1);
+	// Ndef(\cPtn).set(\dur, 0.4);
+	// Ndef(\dPtn).set(\dur, 0.1);
+	// Ndef(\dPtn).set(\release, 0.1);
 	// Ndef(\eePtn).set(\instrument, \long);
 
 };
@@ -113,6 +115,7 @@ var bind;
 			p.end(0.1);
 		});
 	};
+	Ndef.clear(0.1);
 
 	patterns = [];
 	~init.(model);
@@ -133,7 +136,7 @@ var bind;
 	patterns = [];
 	
 	// need this for reloading or patterns after an edit
-	// Ndef.clear(0.1);
+	Ndef.clear(0.1);
 
 };
 
@@ -143,7 +146,7 @@ var bind;
 	var l = (blob.label.mod(patterns.size));
 	postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 
-	patterns[l].play(0.1);
+	// patterns[l].play(0.1);
 
 };
 
@@ -160,12 +163,14 @@ var bind;
 //------------------------------------------------------
 ~onUpdate = {|blob, blobsDict|
 
-	var l = (blob.label.mod(patterns.size));
-	note = 1 + (blob.center.x.linlin(100,550,0,7).floor * 4);
-	oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
-	patterns[l].set(\note, note);
-	patterns[l].set(\octave, oct);
-	patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
+	// var l = (blob.label.mod(patterns.size));
+	// note = 1 + (blob.center.x.linlin(100,550,0,7).floor * 4);
+	// oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
+	// patterns[l].set(\note, note);
+	// patterns[l].set(\octave, oct);
+	// patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
+	// ssx = blob.center.x.linlin(0,650,-1,1);
+	// eex = ssx;
 
 };
 

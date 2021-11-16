@@ -48,7 +48,7 @@ var bind;
 
 
 		    //visuals
-		    \sh, 3,
+		    \sh, 6,
 		    \param1, 1,
 		    \param2, 2,
 		    \param3, 3,
@@ -115,6 +115,9 @@ var bind;
 	};
 
 	patterns = [];
+
+	Ndef.clear(0.1);
+
 	~init.(model);
 
 };
@@ -133,7 +136,7 @@ var bind;
 	patterns = [];
 
 	// need this for reloading or patterns after an edit
-	// Ndef.clear(0.1);
+	Ndef.clear(0.1);
 
 };
 
@@ -143,7 +146,7 @@ var bind;
 	var l = (blob.label.mod(patterns.size));
 	postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 
-	patterns[l].play(0.1);
+	// patterns[l].play(0.1);
 
 };
 
@@ -161,6 +164,7 @@ var bind;
 ~onUpdate = {|blob, blobsDict|
 
 	var l = (blob.label.mod(patterns.size));
+	var notes = [0,7,12,16];
 	note = blob.center.x.linlin(100,550,0,8).floor * 3;
 	oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
 	patterns[l].set(\note, note);

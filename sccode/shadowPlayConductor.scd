@@ -134,7 +134,7 @@
 		// (\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "longPatch.sc
-		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		(\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
 		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -146,9 +146,10 @@
 
 	var bootServer = {|f|
 	
-		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
+		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
