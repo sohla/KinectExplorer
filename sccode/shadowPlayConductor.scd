@@ -134,8 +134,8 @@
 		// (\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "longPatch.sc
-		// (\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
 		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -384,7 +384,11 @@
 			.action_({|b|
 				patches.do({|m| 
 					loadPatch.(m);
-					m.env.use{~reload.(m)}; 
+					m.env.use{
+						// ~reload.(m);
+						~deinit.(m);
+						if(m.isOn == true,{~init.(m)});
+					}; 
 				})
 			}),
 		Button()
@@ -462,6 +466,7 @@
 			patches.do({|m| m.env.use{
 				if(m.isOn, {
 					if(blobsDict.values.size > 0,{
+						// ~init.(m);
 						~onInit.(blob, blobsDict);
 					});
 				});
@@ -516,7 +521,9 @@
 				patches.do({|m| m.env.use{
 					if(m.isOn, {
 						if(blobsDict.values.size > 0,{
-							~onDeinit.(blob, blobsDict)
+							~onDeinit.(blob, blobsDict);
+							// ~deinit.(m);
+
 						});
 					}); 
 				}});

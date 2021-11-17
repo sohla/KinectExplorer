@@ -71,9 +71,9 @@ var bind;
 					"release", e.rel * 0.5,
 					"color", (note + (oct * 12)).linlin(30,80,0,0.99),//e.param1,//colour
 					"scale", scale,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
-					"sx", (note + (oct * 12)).linlin(30,80,-1.8,1.8),//sx
+					"sx", (e.note + (oct * 12)).linlin(30,80,-1.8,1.8),//sx
 					"sy", 0,//sy
-					"ex", (note + (oct * 12)).linlin(30,80,-1.8,1.8),//ex
+					"ex", (e.note + (oct * 12)).linlin(30,80,-1.8,1.8),//ex
 					"ey", 0.2,//ey
 					
 					"par7", 10,//e.param2.linlin(1,6,0.1,1), // wobble
@@ -94,11 +94,25 @@ var bind;
 		Ndef(\eePtn, bind).quant_(0.2)
 	);
 
-	Ndef(\bbPtn).set(\dur, 0.1);
-	Ndef(\bbPtn).set(\release, 0.1);
-	Ndef(\ccPtn).set(\dur, 0.4);
-	Ndef(\ddPtn).set(\dur, 0.1);
-	Ndef(\ddPtn).set(\release, 0.1);
+
+	// problem is we need multi channels for data streams
+
+	// Ndef(\bbPtn).set(\dur, 0.1);
+	// Ndef(\bbPtn).set(\release, 0.1);
+	// Ndef(\ccPtn).set(\dur, 0.4);
+	// Ndef(\ddPtn).set(\dur, 0.1);
+	// Ndef(\ddPtn).set(\release, 0.1);
+
+	// patterns[0].set(\note, 0);
+	// patterns[1].set(\note, 1);
+	// patterns[2].set(\note, 2);
+	// patterns[3].set(\note, 3);
+	// patterns[4].set(\note, 4);
+	// Ndef(\aaPtn).set(\note, 0);
+	// Ndef(\bbPtn).set(\note, 4);
+	// Ndef(\ccPtn).set(\note, 7);
+	// Ndef(\ddPtn).set(\note, 10);
+	// Ndef(\aeePtn).set(\note, 12);
 	// Ndef(\eePtn).set(\instrument, \long);
 
 };
@@ -146,7 +160,7 @@ var bind;
 	var l = (blob.label.mod(patterns.size));
 	postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 
-	// patterns[l].play(0.1);
+	patterns[l].play(0.1);
 
 };
 
@@ -165,11 +179,21 @@ var bind;
 
 	var l = (blob.label.mod(patterns.size));
 	var notes = [0,7,12,16];
-	note = blob.center.x.linlin(100,550,0,8).floor * 3;
+	// note = blob.center.x.linlin(100,550,0,8).floor * 3;
 	oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
 	patterns[l].set(\note, note);
 	patterns[l].set(\octave, oct);
 	patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
+
+
+	/*
+	
+	inside a blob model we have a control bus
+		cb = Bus.control(s,1);
+	then we set 
+		patterns[l].set(\note, cb.getSynchronous());
+
+	*/
 
 };
 
