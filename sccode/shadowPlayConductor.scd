@@ -134,7 +134,8 @@
 		// (\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "longPatch.sc
-		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
 		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
 		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
@@ -147,11 +148,12 @@
 	
 		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
+		var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
-		var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
-		var output = ServerOptions.devices.indexOfEqual("Built-in Output");
+		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 
 		o = Server.local.options;
 		o.inDevice = ServerOptions.devices[input];
@@ -348,9 +350,12 @@
 				.minWidth_(100)
 
 				.action_({|b|
-					if(b.value == 1,	
-						{m.env.use{~init.(m)} },// tell KE (near far on/off) so it can create new bolbs straight away 
-						{m.env.use{~deinit.(m)} 
+					if(b.value == 1,{
+						m.isOn = true;
+						m.env.use{~init.(m)}; 
+					},{
+						m.env.use{~deinit.(m)}; 
+						m.isOn = false;
 					});
 				})
 		});
@@ -379,7 +384,11 @@
 			.action_({|b|
 				patches.do({|m| 
 					loadPatch.(m);
-					m.env.use{~reload.(m)}; 
+					m.env.use{
+						// ~reload.(m);
+						~deinit.(m);
+						if(m.isOn == true,{~init.(m)});
+					}; 
 				})
 			}),
 		Button()
@@ -455,10 +464,13 @@
 			// blobsDict.postln;
 			
 			patches.do({|m| m.env.use{
-				if(blobsDict.values.size > 0,{
-					~onInit.(blob, blobsDict)});
-				}; 
-			});
+				if(m.isOn, {
+					if(blobsDict.values.size > 0,{
+						// ~init.(m);
+						~onInit.(blob, blobsDict);
+					});
+				});
+			}});
 
 
 		}, '/ke/init', recvPort: 57120);
@@ -488,11 +500,12 @@
 				// if this blob is on tell all patches
 				if(blobsDict.at(msg[1]).state == 2,{
 					patches.do({|m| m.env.use{
-						if(blobsDict.values.size > 0,{
-							~onUpdate.(blobsDict.at(msg[1]), blobsDict);
-						}); 
-						};
-					});
+						if(m.isOn, {
+							if(blobsDict.values.size > 0,{
+								~onUpdate.(blobsDict.at(msg[1]), blobsDict);
+							}); 
+						});
+					}});
 				});
 			});
 
@@ -506,10 +519,14 @@
 				var blob = blobsDict.at(msg[1]);
 
 				patches.do({|m| m.env.use{
-					if(blobsDict.values.size > 0,{
-						~onDeinit.(blob, blobsDict)});
-					}; 
-				});
+					if(m.isOn, {
+						if(blobsDict.values.size > 0,{
+							~onDeinit.(blob, blobsDict);
+							// ~deinit.(m);
+
+						});
+					}); 
+				}});
 
 				blobsDict.removeAt(msg[1]);
 				// blobsDict.postln;
