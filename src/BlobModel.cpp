@@ -58,6 +58,7 @@ void BlobModel::addDataToOSCMessage(){
 
 //     std::cout << " : " << line.size() << " : " << area << " : " << perimeter << center << " : " ;
     
+    
     oscMessage.addIntArg(getLabel());//0
     oscMessage.addIntArg(state);//1
 
@@ -114,7 +115,7 @@ void BlobModel::sendOSCMessage(){
     scSender.setup("127.0.0.1", 57120);
     scSender.sendMessage(oscMessage, false);
 
-    scSender.setup("127.0.0.1", 57130);
+    scSender.setup("10.1.1.7", 57130);
     scSender.sendMessage(oscMessage, false);
 
 }

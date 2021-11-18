@@ -1,10 +1,13 @@
 var oct = 0;
 var note = 0;
 var scale = 1;
-
+var isPlayingBlob = Array.fill(4, false);
 var patterns = Array.new(4);
+var cb = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
+var binds = Array.new(4);
+var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
 
-var bind;
+
 //------------------------------------------------------
 ~init = {|model|
 	postf("init : % \n", model.file);
@@ -28,7 +31,10 @@ var bind;
 
 	}).add;
 
-	bind =	Pbind(
+	5.do({|i|
+	
+
+	b =	Pbind(
 			\args, #[],
 			// musics
 		    \instrument, \aa,
@@ -36,7 +42,7 @@ var bind;
 		    \root, 0,//Pseq([0,3,6,-3].stutter(27), inf),
 		    \scale, 3,
 		     \octave, 4,//Prand([0,1,2,3,4,5,6,7,8,9,10].stutter(7),inf),
-		    \note, Pseq([0], inf),
+		    \note, Pfunc{ notes[i].getSynchronous.()},//Pseq([0], inf),
 		    \dur, 0.2,//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.2,0.9),
@@ -44,7 +50,6 @@ var bind;
 		    \rel, Pkey(\release),
 		    \ff, 700,//Pfunc{ mx.getSynchronous.linexp(0,1.0,100,12000)},
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),//Pfunc{ my.getSynchronous.linlin(0,1.0,0,4)},
-		    \pp, Pwhite(100, 300),
 
 
 		    //visuals
@@ -52,46 +57,52 @@ var bind;
 		    \param1, 1,
 		    \param2, 2,
 		    \param3, 3,
-		    \sx, 0,
+		    \sx, 0,//Pfunc{ cb.getSynchronous.().linlin(0,8,-1,1)},//(Pkey(\note) + (Pkey(\octave) * 12)).linlin(30,80,-1.8,1.8),
 		    \sy, 0,
-		    \ex, Prand([-1.5,1.5], inf),
+		    \ex, Pkey(\sx),
 		    \ey, Prand([-1.5,1.5], inf),
 		    // \oct, Pkey(\octave),
+		    \pp, 999,
 
 		    // osc out
 			\osc, Pfunc{|e| 
 	
 				// a = {e.scale}.defer;
-				 // {e.pp.postln}.defer;
-
+if(isPlayingBlob[i] == true,{
+				  // {notes[i].postln}.defer;
 				model.netAddr.sendMsg("/shadow", 
 					"shape", e.sh,
 					"duration", e.dur,
 					"attack", e.attack * 1,
 					"release", e.rel * 0.5,
-					"color", (note + (oct * 12)).linlin(30,80,0,0.99),//e.param1,//colour
-					"scale", scale,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
-					"sx", (e.note + (oct * 12)).linlin(30,80,-1.8,1.8),//sx
+					"color", i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),//e.param1,//colour
+					"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
+					"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//sx
 					"sy", 0,//sy
-					"ex", (e.note + (oct * 12)).linlin(30,80,-1.8,1.8),//ex
+					"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//ex
 					"ey", 0.2,//ey
 					
 					"par7", 10,//e.param2.linlin(1,6,0.1,1), // wobble
 					"par8", 0,//e.octave.linlin(3,6,28,10),
 					// "par9", (e.note + (oct * 12)).linlin(0,127,6,1),
 				);
+				});
+				123;
 			},
 
 
 	    );
+		binds.add(b);
+
+	});
 
 	// •• do we just need a pool of patterns we can use...?
 	patterns = Array.with(
-		Ndef(\aaPtn, bind).quant_(0.2),
-		Ndef(\bbPtn, bind).quant_(0.2),
-		Ndef(\ccPtn, bind).quant_(0.2),
-		Ndef(\ddPtn, bind).quant_(0.2),
-		Ndef(\eePtn, bind).quant_(0.2)
+		Ndef(\aaPtn, binds[0]).quant_(0.2),
+		Ndef(\bbPtn, binds[1]).quant_(0.2),
+		Ndef(\ccPtn, binds[2]).quant_(0.2),
+		Ndef(\ddPtn, binds[3]).quant_(0.2),
+		// Ndef(\eePtn, binds[4]).quant_(0.2).set(\sx, Pfunc{ cb[4].getSynchronous.()}.asStream)
 	);
 
 
@@ -143,14 +154,14 @@ var bind;
 
 	patterns.do{|p|
 		if(p != nil,{
-			p.end(2);
+			p.end(0.1);
 		});
 	};
 
 	patterns = [];
 
 	// need this for reloading or patterns after an edit
-	Ndef.clear(0.1);
+	Ndef.clear(0.2);
 
 };
 
@@ -159,7 +170,7 @@ var bind;
 
 	var l = (blob.label.mod(patterns.size));
 	postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
-
+	isPlayingBlob[l] = true;
 	patterns[l].play(0.1);
 
 };
@@ -169,31 +180,24 @@ var bind;
 
 	var l = (blob.label.mod(patterns.size));
 	postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
-
+	isPlayingBlob[l] = false;
 	if(patterns[l] != nil,{patterns[l].end(0.8)});
 
 };
 
 //------------------------------------------------------
-~onUpdate = {|blob, blobsDict|
+~onUpdate = {|blob, blobsDict, model|
 
 	var l = (blob.label.mod(patterns.size));
-	var notes = [0,7,12,16];
-	// note = blob.center.x.linlin(100,550,0,8).floor * 3;
-	oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
-	patterns[l].set(\note, note);
-	patterns[l].set(\octave, oct);
-	patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
+	// var notes = [0,7,12,16];
+	notes[l].value = blob.center.x.linlin(100,550,0,24).floor * 1;
+	// oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
+	// patterns[l].set(\note, note);
+	// patterns[l].set(\octave, oct);
+	// patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
 
-
-	/*
+	cb[l].value = blob.center.x.linlin(0,600,-1,1);
 	
-	inside a blob model we have a control bus
-		cb = Bus.control(s,1);
-	then we set 
-		patterns[l].set(\note, cb.getSynchronous());
-
-	*/
 
 };
 
