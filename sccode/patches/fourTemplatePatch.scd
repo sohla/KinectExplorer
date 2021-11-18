@@ -41,7 +41,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 		    \amp, Pwhite(0.3, 0.2),
 		    \root, 0,//Pseq([0,3,6,-3].stutter(27), inf),
 		    \scale, 3,
-		     \octave, 4,//Prand([0,1,2,3,4,5,6,7,8,9,10].stutter(7),inf),
+		     \octave, Pfunc{ 3 + i },//Prand([0,1,2,3,4,5,6,7,8,9,10].stutter(7),inf),
 		    \note, Pfunc{ notes[i].getSynchronous.()},//Pseq([0], inf),
 		    \dur, 0.2,//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
 		    \attack, Pwhite(0.001,0.01),
@@ -80,9 +80,9 @@ if(isPlayingBlob[i] == true,{
 					"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//sx
 					"sy", 0,//sy
 					"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//ex
-					"ey", 0.2,//ey
+					"ey", 0.7,//ey
 					
-					"par7", 10,//e.param2.linlin(1,6,0.1,1), // wobble
+					"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
 					"par8", 0,//e.octave.linlin(3,6,28,10),
 					// "par9", (e.note + (oct * 12)).linlin(0,127,6,1),
 				);
@@ -108,11 +108,11 @@ if(isPlayingBlob[i] == true,{
 
 	// problem is we need multi channels for data streams
 
-	// Ndef(\bbPtn).set(\dur, 0.1);
-	// Ndef(\bbPtn).set(\release, 0.1);
-	// Ndef(\ccPtn).set(\dur, 0.4);
-	// Ndef(\ddPtn).set(\dur, 0.1);
-	// Ndef(\ddPtn).set(\release, 0.1);
+	Ndef(\bbPtn).set(\dur, 0.1);
+	Ndef(\bbPtn).set(\release, 0.1);
+	Ndef(\ccPtn).set(\dur, 0.4);
+	Ndef(\ddPtn).set(\dur, 0.1);
+	Ndef(\ddPtn).set(\release, 0.1);
 
 	// patterns[0].set(\note, 0);
 	// patterns[1].set(\note, 1);
@@ -196,7 +196,7 @@ if(isPlayingBlob[i] == true,{
 	// patterns[l].set(\octave, oct);
 	// patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
 
-	cb[l].value = blob.center.x.linlin(0,600,-1,1);
+	cb[l].value = blob.center.x.linlin(0,600,-2.4,2);
 	
 
 };
