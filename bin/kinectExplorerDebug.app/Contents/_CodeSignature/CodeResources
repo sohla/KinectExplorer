@@ -15,13 +15,17 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			TqGgLbrmYJn3Tk86zzJIMHxUpJk=
+			itLZ5u2bKMvn6Qunzt1t6yCbNIA=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"387a41b70e20a8fdf69c006d5e808259e9b96fe3" or cdhash H"4ea1a02dbae66099f74e4f3acf3248307c54a499"</string>
+			<string>cdhash H"321c5135a5be75a8618dbcdcdd18e951fd0d1b3f" or cdhash H"8ad2d9e6ed9b28cbe7e90ba7cedd6deb209b3480"</string>
 		</dict>
 		<key>Resources/icon-debug.icns</key>
 		<dict>
+			<key>hash</key>
+			<data>
+			PK/FgaLxSEW4pVQhtgMTghsTUq4=
+			</data>
 			<key>hash2</key>
 			<data>
 			3XSbGmlR3OhU9h6wZodURMhm0Su03tPkfZlW6khxq0g=

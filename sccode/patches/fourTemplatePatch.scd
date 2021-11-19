@@ -1,10 +1,11 @@
 var oct = 0;
 var note = 0;
 var scale = 1;
-var isPlayingBlob = Array.fill(4, false);
-var patterns = Array.new(4);
+var poolSize = 5;
+var isPlayingBlob = Array.fill(poolSize, false);
+var patterns = Array.new(poolSize);
 var cb = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
-var binds = Array.new(4);
+var binds = Array.new(poolSize);
 var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
 
 
@@ -31,11 +32,10 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 
 	}).add;
 
-	5.do({|i|
+	poolSize.do({|i|
 	
-
-	b =	Pbind(
-			\args, #[],
+		b =	Pbind(
+				\args, #[],
 			// musics
 		    \instrument, \aa,
 		    \amp, Pwhite(0.3, 0.2),
@@ -67,33 +67,29 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 		    // osc out
 			\osc, Pfunc{|e| 
 	
-				// a = {e.scale}.defer;
-if(isPlayingBlob[i] == true,{
-				  // {notes[i].postln}.defer;
-				model.netAddr.sendMsg("/shadow", 
-					"shape", e.sh,
-					"duration", e.dur,
-					"attack", e.attack * 1,
-					"release", e.rel * 0.5,
-					"color", i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),//e.param1,//colour
-					"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
-					"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//sx
-					"sy", 0,//sy
-					"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//ex
-					"ey", 0.7,//ey
-					
-					"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
-					"par8", 0,//e.octave.linlin(3,6,28,10),
-					// "par9", (e.note + (oct * 12)).linlin(0,127,6,1),
-				);
+				if(isPlayingBlob[i] == true,{
+					// {notes[i].postln}.defer;
+					model.netAddr.sendMsg("/shadow", 
+						"shape", e.sh,
+						"duration", e.dur,
+						"attack", e.attack * 1,
+						"release", e.rel * 0.5,
+						"color", i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),//e.param1,//colour
+						"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
+						"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//sx
+						"sy", 0,//sy
+						"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//ex
+						"ey", 0.7,//ey
+						
+						"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
+						"par8", 0,//e.octave.linlin(3,6,28,10),
+						// "par9", (e.note + (oct * 12)).linlin(0,127,6,1),
+					);
 				});
-				123;
 			},
-
-
 	    );
-		binds.add(b);
 
+		binds.add(b);
 	});
 
 	// •• do we just need a pool of patterns we can use...?
@@ -102,7 +98,7 @@ if(isPlayingBlob[i] == true,{
 		Ndef(\bbPtn, binds[1]).quant_(0.2),
 		Ndef(\ccPtn, binds[2]).quant_(0.2),
 		Ndef(\ddPtn, binds[3]).quant_(0.2),
-		// Ndef(\eePtn, binds[4]).quant_(0.2).set(\sx, Pfunc{ cb[4].getSynchronous.()}.asStream)
+		Ndef(\eePtn, binds[3]).quant_(0.2),
 	);
 
 
@@ -111,7 +107,9 @@ if(isPlayingBlob[i] == true,{
 	Ndef(\bbPtn).set(\dur, 0.1);
 	Ndef(\bbPtn).set(\release, 0.1);
 	Ndef(\ccPtn).set(\dur, 0.4);
-	Ndef(\ddPtn).set(\dur, 0.1);
+	Ndef(\ddPtn).set(\dur, 0.3);
+	Ndef(\ddPtn).set(\release, 0.1);
+	Ndef(\ddPtn).set(\dur, 0.2);
 	Ndef(\ddPtn).set(\release, 0.1);
 
 	// patterns[0].set(\note, 0);
@@ -196,7 +194,7 @@ if(isPlayingBlob[i] == true,{
 	// patterns[l].set(\octave, oct);
 	// patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
 
-	cb[l].value = blob.center.x.linlin(0,600,-2.4,2);
+	cb[l].value = blob.center.x.linlin(0,600,-2.0,1.6);
 	
 
 };
