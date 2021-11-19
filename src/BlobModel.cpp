@@ -98,7 +98,7 @@ void BlobModel::kill() {
     previousPosition = ofVec2f(0,0);
     currentPosition = ofVec2f(0,0);
         
-    // build message
+    // build messagez
     oscMessage.clear();
     oscMessage.setAddress("/ke/deinit");
     oscMessage.addIntArg(label);
@@ -115,7 +115,7 @@ void BlobModel::sendOSCMessage(){
     scSender.setup("127.0.0.1", 57120);
     scSender.sendMessage(oscMessage, false);
 
-    scSender.setup("10.1.1.7", 57130);
+    scSender.setup("127.0.0.1", 57130);
     scSender.sendMessage(oscMessage, false);
 
 }
