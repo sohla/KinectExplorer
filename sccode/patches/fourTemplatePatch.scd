@@ -40,10 +40,10 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 
 	poolSize.do({|i|
 	
-		b =	Pbind(
-				\args, #[],
+		var bi =	Pbind(
+				// \args, #[],
 			// musics
-		    \instrument, \aa,
+		    \instrument, \long,
 		    \amp, Pwhite(0.3, 0.2),
 		    \root, 0,//Pseq([0,3,6,-3].stutter(27), inf),
 		    \scale, 3,
@@ -97,42 +97,40 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 			},
 	    );
 
-		binds.add(b);
+		binds = binds.add(bi);
+
 	});
 
 
-
 	// •• do we just need a pool of patterns we can use...?
-	patterns = Array.with(
-		Ndef(\aaPtn, binds[0]).quant_(0.2),
-		Ndef(\bbPtn, binds[1]).quant_(0.2),
-		Ndef(\ccPtn, binds[2]).quant_(0.2),
-		Ndef(\ddPtn, binds[3]).quant_(0.2),
-		// Ndef(\eePtn, binds[4]).quant_(0.2),
-	);
 
+	n = [\aaPtn, \bbPtn, \ccPtn, \ddPtn];
+
+	patterns = Array.fill(poolSize, {|i|
+
+		Ndef(n[i], binds[i]);
+		// Ndef(\aaPtn, binds[0]),
+		// Ndef(\bbPtn, binds[1]),
+		// Ndef(\ccPtn, binds[2]),
+		// Ndef(\ddPtn, binds[3]),
+		// Ndef(\aaPtn, binds[i]).quant_(0.2),
+		// Ndef(\bbPtn, binds[1]).quant_(0.2),
+		// Ndef(\ccPtn, binds[2]).quant_(0.2),
+		// Ndef(\ddPtn, binds[3]).quant_(0.2),
+		// Ndef(\eePtn, binds[4]).quant_(0.2),
+	});
 	// problem is we need multi channels for data streams
 
-	Ndef(\bbPtn).set(\dur, 0.1);
-	Ndef(\bbPtn).set(\release, 0.1);
-	Ndef(\ccPtn).set(\dur, 0.4);
-	Ndef(\ddPtn).set(\dur, 0.3);
-	Ndef(\ddPtn).set(\release, 0.1);
-	Ndef(\ddPtn).set(\dur, 0.2);
-	Ndef(\ddPtn).set(\release, 0.1);
+	// Ndef(\bbPtn).set(\dur, 0.1);
+	// Ndef(\bbPtn).set(\release, 0.1);
+	// Ndef(\ccPtn).set(\dur, 0.4);
+	// Ndef(\ddPtn).set(\dur, 0.3);
+	// Ndef(\ddPtn).set(\release, 0.1);
+	// Ndef(\ddPtn).set(\dur, 0.2);
+	// Ndef(\ddPtn).set(\release, 0.1);
 
-	// patterns[0].set(\note, 0);
-	// patterns[1].set(\note, 1);
-	// patterns[2].set(\note, 2);
-	// patterns[3].set(\note, 3);
-	// patterns[4].set(\note, 4);
-	// Ndef(\aaPtn).set(\note, 0);
-	// Ndef(\bbPtn).set(\note, 4);
-	// Ndef(\ccPtn).set(\note, 7);
-	// Ndef(\ddPtn).set(\note, 10);
-	// Ndef(\aeePtn).set(\note, 12);
-	// Ndef(\eePtn).set(\instrument, \long);
-s.queryAllNodes;
+	// s.queryAllNodes;
+	// patterns.size.postln;
 
 };
 
@@ -177,9 +175,14 @@ s.queryAllNodes;
 ~onInit = {|blob, blobsDict|
 
 	var l = (blob.label.mod(patterns.size));
-	postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
+
 	isPlayingBlob[l] = true;
-	patterns[l].play;
+
+
+	if(patterns[l].isMonitoring == false,{
+		patterns[l].play(0.4);
+		postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
+	});
 
 };
 
@@ -187,9 +190,13 @@ s.queryAllNodes;
 ~onDeinit = {|blob, blobsDict|
 
 	var l = (blob.label.mod(patterns.size));
-	postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
+
 	isPlayingBlob[l] = false;
-	if(patterns[l] != nil,{patterns[l].end(0.8)});
+
+	if(patterns[l].isMonitoring == true,{
+		patterns[l].end(0.8);
+		postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
+	});
 
 };
 
