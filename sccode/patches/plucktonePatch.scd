@@ -48,7 +48,7 @@ var mxs, mys;
 
 
 		    //visuals
-		    \sh, 7,
+		    \sh, 6,
 		    \sx, Pwhite(-1.7,1.7),
 		    \sy, Pwhite(-1.3,1.3),
 		    \ex, Pkey(\sx),
