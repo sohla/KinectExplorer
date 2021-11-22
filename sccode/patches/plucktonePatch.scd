@@ -78,6 +78,10 @@ var mxs, mys;
 					
 					"scx", (e.note + (e.octave * 12)).linlin(30,90,10, 1),
 					"scy", (e.note + (e.octave * 12)).linlin(30,90,3, 0.01),
+					"tx", 0,
+					"ty", 0,
+					"tz", 0,
+					"imageindex", 0,
 				);
 			},
 
