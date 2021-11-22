@@ -94,10 +94,12 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 						// "par9", (e.note + (oct * 12)).linlin(0,127,6,1),
 					);
 				});
+				true
 			},
 	    );
 
 		binds = binds.add(bi);
+
 
 	});
 
@@ -107,18 +109,11 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 	n = [\aaPtn, \bbPtn, \ccPtn, \ddPtn];
 
 	patterns = Array.fill(poolSize, {|i|
-
-		Ndef(n[i], binds[i]);
-		// Ndef(\aaPtn, binds[0]),
-		// Ndef(\bbPtn, binds[1]),
-		// Ndef(\ccPtn, binds[2]),
-		// Ndef(\ddPtn, binds[3]),
-		// Ndef(\aaPtn, binds[i]).quant_(0.2),
-		// Ndef(\bbPtn, binds[1]).quant_(0.2),
-		// Ndef(\ccPtn, binds[2]).quant_(0.2),
-		// Ndef(\ddPtn, binds[3]).quant_(0.2),
-		// Ndef(\eePtn, binds[4]).quant_(0.2),
+		Ndef(n[i], binds[i]).quant_(0.2);
 	});
+
+
+
 	// problem is we need multi channels for data streams
 
 	// Ndef(\bbPtn).set(\dur, 0.1);
@@ -194,7 +189,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 	isPlayingBlob[l] = false;
 
 	if(patterns[l].isMonitoring == true,{
-		patterns[l].end(0.8);
+		patterns[l].end(0.1);
 		postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
 
