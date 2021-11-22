@@ -1,7 +1,7 @@
 var oct = 0;
 var note = 0;
 var scale = 1;
-var poolSize = 5;
+var poolSize = 4;
 var isPlayingBlob = Array.fill(poolSize, false);
 var patterns = Array.new(poolSize);
 var cb = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
@@ -12,6 +12,8 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 //------------------------------------------------------
 ~init = {|model|
 	postf("init : % \n", model.file);
+
+{
 
 	SynthDef(\long, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9, vibamp = 1, vibfreq = 5|
 
@@ -31,6 +33,10 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 		Out.ar(out, filter);
 
 	}).add;
+	
+	s.sync
+}.fork;
+
 
 	poolSize.do({|i|
 	
@@ -68,7 +74,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 			\osc, Pfunc{|e| 
 	
 				if(isPlayingBlob[i] == true,{
-					// {notes[i].postln}.defer;
+				
 					model.netAddr.sendMsg("/shadow", 
 						"shape", e.sh,
 						"duration", e.dur,
@@ -94,15 +100,16 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 		binds.add(b);
 	});
 
+
+
 	// •• do we just need a pool of patterns we can use...?
 	patterns = Array.with(
 		Ndef(\aaPtn, binds[0]).quant_(0.2),
 		Ndef(\bbPtn, binds[1]).quant_(0.2),
 		Ndef(\ccPtn, binds[2]).quant_(0.2),
 		Ndef(\ddPtn, binds[3]).quant_(0.2),
-		Ndef(\eePtn, binds[3]).quant_(0.2),
+		// Ndef(\eePtn, binds[4]).quant_(0.2),
 	);
-
 
 	// problem is we need multi channels for data streams
 
@@ -125,6 +132,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 	// Ndef(\ddPtn).set(\note, 10);
 	// Ndef(\aeePtn).set(\note, 12);
 	// Ndef(\eePtn).set(\instrument, \long);
+s.queryAllNodes;
 
 };
 
@@ -161,7 +169,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 	patterns = [];
 
 	// need this for reloading or patterns after an edit
-	Ndef.clear(0.2);
+	Ndef.clear;
 
 };
 
@@ -171,7 +179,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 	var l = (blob.label.mod(patterns.size));
 	postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 	isPlayingBlob[l] = true;
-	patterns[l].play(0.1);
+	patterns[l].play;
 
 };
 
