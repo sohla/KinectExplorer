@@ -88,7 +88,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 						"sy", 0,//sy
 						"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//ex
 						"ey", 0,//ey
-						"imageindex", 3,
+						"imageindex", 13,
 						"blur", 0.5,
 						
 						"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
