@@ -74,7 +74,7 @@ class NearFar_PixelProc : public Base_PixelProc {
             // row / col implentation
             for(int i = 0; i < w; i++) {
                 for(int j = 0; j < h; j++) {
-                if(i >= w*0.08 && i <= w*0.92){
+//                if(i >= w*0.08 && i <= w*0.92){
 
                     int index = i + (j * w);
                     if( index > (h * cropTopParam.get() * w) && index < (h * cropBotParam.get() * w)){ //hack cropping
@@ -95,7 +95,7 @@ class NearFar_PixelProc : public Base_PixelProc {
                     };
                 };
             
-                      };
+//                      };
 
                 };
 
