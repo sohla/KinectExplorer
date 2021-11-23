@@ -59,7 +59,9 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 
 
 		    //visuals
-		    \sh, 6,
+		    \sh, 9
+
+		    ,
 		    \param1, 1,
 		    \param2, 2,
 		    \param3, 3,
@@ -79,14 +81,14 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 						"shape", e.sh,
 						"duration", e.dur,
 						"attack", e.attack * 1,
-						"release", e.rel * 2,
+						"release", e.rel * 0.5,
 						"color", i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),//e.param1,//colour
-						"scale", 0.5,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
-						"sy", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//sx
-						"sx", -1,//sy
-						"ey", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//ex
-						"ex", 0,//ey
-						"imageIndex", 12,
+						"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
+						"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//sx
+						"sy", 0,//sy
+						"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//ex
+						"ey", 0,//ey
+						"imageindex", 3,
 						"blur", 0.5,
 						
 						"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
@@ -189,7 +191,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 	isPlayingBlob[l] = false;
 
 	if(patterns[l].isMonitoring == true,{
-		patterns[l].end(0.1);
+		patterns[l].end;
 		postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
 
