@@ -50,7 +50,7 @@ var oscSender;
 		    \scale, 1,
 		     \octave, Pfunc{ 3 + i },//Prand([0,1,2,3,4,5,6,7,8,9,10].stutter(7),inf),
 		    \note, Pfunc{ notes[i].getSynchronous.()},//Pseq([0], inf),
-		    \dur, Pseq([0.1], inf),//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
+		    \dur, Pseq([0.4], inf),//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.2,0.9),
 		    \release, 1.2,//Pfunc{ my.getSynchronous.linlin(0,1.0,0.005,4.5)},//Pwhite(0.05,1.3),
@@ -80,25 +80,29 @@ var oscSender;
 				
 					oscSender.sendMsg("/shadow", 
 
-						"shape", 6,
+						"shape", 10,
 
 						"duration", e.dur,
 						"attack", e.attack * 1,
-						"release", e.rel * 0.1,
+						"release", e.rel *1,
 
 						"color", 0.19 * i,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
 
-						"scale", 0.2 * i,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
+						"scale", 0.1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
 
 						"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
 						"sy", -0.0,
 						"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
 						"ey", -0.0,
 
-						"imageindex", 1,
+						"imageindex", 3,
 
-						"rotstart", 45,
-						"rotend", 135,
+						"rotstart",45,
+						"rotend", 45,
+
+						"amp", 0.05,
+						"speed", 5,
+						"freq", 5,
 
 						"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
 					);
@@ -190,30 +194,31 @@ var oscSender;
 		postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
 
-	oscSender.sendMsg("/shadow", 
+	// oscSender.sendMsg("/shadow", 
 
-						"shape", 9,
+	// 					"shape", 9,
 
-						"duration", 1,
-						"attack", 0,
-						"release", 0,
+	// 					"duration", 1,
+	// 					"attack", 0.1,
+	// 					"release", 1,
 
-						"color", 0,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
+	// 					"color", 0,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
 
-						"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
+	// 					"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
 
-						"sx", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
-						"sy", 0,
-						"ex", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
-						"ey", 0,
+	// 					"sx", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+	// 					"sy", 0,
+	// 					"ex", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+	// 					"ey", 0,
 
-						"imageindex", 13,
+	// 					"imageindex", 13,
 
-						"rotstart", 45,
-						"rotend", 135,
+	// 					"rotstart", 45,
+	// 					"rotend", 135,
 
-						"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
-					);
+
+	// 					"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
+	// 				);
 
 };
 
