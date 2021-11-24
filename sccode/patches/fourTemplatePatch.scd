@@ -159,7 +159,7 @@ var oscSender;
 	patterns = [];
 
 	// need this for reloading or patterns after an edit
-	Ndef.clear;
+	// Ndef.clear;
 
 };
 
@@ -225,7 +225,7 @@ var oscSender;
 
 	var l = (blob.label.mod(patterns.size));
 	// var notes = [0,7,12,16];
-	notes[l].value = blob.center.x.linlin(100,550,0,12).floor * 2;
+	notes[l].value = blob.center.x.linlin(100,550,0,12).floor * 1;
 	// oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
 	// patterns[l].set(\note, note);
 	// patterns[l].set(\octave, oct);

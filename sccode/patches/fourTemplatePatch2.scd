@@ -128,7 +128,7 @@ var vizMessage;
 
 	// •• do we just need a pool of patterns we can use...?
 
-	n = [\aaPtn, \bbPtn, \ccPtn, \ddPtn];
+	n = [\aPtn, \bPtn, \cPtn, \dPtn];
 
 	patterns = Array.fill(poolSize, {|i|
 		Ndef(n[i], binds[i]).quant_(0.2);
@@ -184,7 +184,7 @@ var vizMessage;
 	patterns = [];
 
 	// need this for reloading or patterns after an edit
-	Ndef.clear;
+	// Ndef.clear;
 
 };
 
