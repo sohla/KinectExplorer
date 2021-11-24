@@ -7,14 +7,13 @@ var patterns = Array.new(poolSize);
 var cb = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
 var binds = Array.new(poolSize);
 var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
-
 var oscSender;
 
 //------------------------------------------------------
 ~init = {|model|
 	postf("init : % \n", model.file);
 	oscSender = model.netAddr;
-{
+// {
 
 	SynthDef(\long, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9, vibamp = 1, vibfreq = 5|
 
@@ -35,8 +34,8 @@ var oscSender;
 
 	}).add;
 	
-	s.sync
-}.fork;
+// 	s.sync
+// }.fork;
 
 
 	poolSize.do({|i|
@@ -46,53 +45,39 @@ var oscSender;
 			// musics
 		    \instrument, \long,
 		    \amp, Pwhite(0.3, 0.2),
-		    \root, 0,//Pseq([0,3,6,-3].stutter(27), inf),
+		    \root, 0,
 		    \scale, 1,
-		     \octave, Pfunc{ 3 + i },//Prand([0,1,2,3,4,5,6,7,8,9,10].stutter(7),inf),
-		    \note, Pfunc{ notes[i].getSynchronous.()},//Pseq([0], inf),
-		    \dur, Pseq([0.4], inf),//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
+		     \octave, Pfunc{ 3 + i },
+		    \note, Pfunc{ notes[i].getSynchronous.()},
+		    \dur, Pseq([0.4], inf),
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.2,0.9),
-		    \release, 1.2,//Pfunc{ my.getSynchronous.linlin(0,1.0,0.005,4.5)},//Pwhite(0.05,1.3),
+		    \release, 1.2,
 		    \rel, Pkey(\release),
-		    \ff, 700,//Pfunc{ mx.getSynchronous.linexp(0,1.0,100,12000)},
-		    \rf, Pseq([3,0,3,1,1,3,1], inf),//Pfunc{ my.getSynchronous.linlin(0,1.0,0,4)},
+		    \ff, 700,
+		    \rf, Pseq([3,0,3,1,1,3,1], inf),
 
 
-		    //visuals
-		    \sh, 1
-
-		    ,
-		    \param1, 1,
-		    \param2, 2,
-		    \param3, 3,
-		    \sx, 0,//Pfunc{ cb.getSynchronous.().linlin(0,8,-1,1)},//(Pkey(\note) + (Pkey(\octave) * 12)).linlin(30,80,-1.8,1.8),
-		    \sy, 0,
-		    \ex, Pkey(\sx),
-		    \ey, Prand([-1.5,1.5], inf),
-		    // \oct, Pkey(\octave),
-		    \pp, 999,
-
-		    // osc out
+		    // osc out for viz
 			\osc, Pfunc{|e| 
 	
 				if(isPlayingBlob[i] == true,{
 				
 					oscSender.sendMsg("/shadow", 
 
-						"shape", 10,
+						"shape", 3,
 
 						"duration", e.dur,
 						"attack", e.attack * 1,
 						"release", e.rel *1,
 
-						"color", 0.19 * i,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
+						"color", i.linlin(0,3,0,0.99),
 
-						"scale", 0.1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
+						"scale", 1,
 
-						"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"sx", cb[i].getSynchronous.(),
 						"sy", -0.0,
-						"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"ex", cb[i].getSynchronous.(),
 						"ey", -0.0,
 
 						"imageindex", 3,
@@ -104,7 +89,7 @@ var oscSender;
 						"speed", 5,
 						"freq", 5,
 
-						"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
+						"wobble", 100,
 					);
 				});
 				true
@@ -112,7 +97,6 @@ var oscSender;
 	    );
 
 		binds = binds.add(bi);
-
 
 	});
 
