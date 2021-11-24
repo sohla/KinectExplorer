@@ -7,7 +7,7 @@
 
 	var window, freqScope;
 	var loadPatch, patchButton, reloadButton;
-	var graphView, plotView, plotter;
+	var graphView, plotView, plotter, serverView;
 
 	var oscListeners = [];
 	var pntListener, objListener, lnkListener;
@@ -165,7 +165,6 @@
 
 		s.waitForBoot{
 			"💫 welcome to shadow play 💫".postln;
-
 			f.();
 		};
 	};
@@ -364,7 +363,7 @@
 
 	//------------------------------------------------------
 	QtGUI.palette = QPalette.dark; 
-	window = Window("",Rect(0,0,Window.screenBounds.width/2, Window.screenBounds.height - 300)
+	window = Window("",Rect(0,0,Window.screenBounds.width * 0.7, Window.screenBounds.height - 300)
 		.center_(Window.screenBounds.width*0.85@100)
 	).front;
 
@@ -378,7 +377,9 @@
 		});
 	});
 
-	window.layout = VLayout(
+	window.layout = 
+		HLayout(
+		VLayout(
 		reloadButton = Button()
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
@@ -386,7 +387,7 @@
 				patches.do({|m| 
 					loadPatch.(m);
 					m.env.use{
-						// ~reload.(m);
+						// ~reload.(m);//•• turn off the on>>>/??
 						~deinit.(m);
 						if(m.isOn == true,{~init.(m)});
 					}; 
@@ -416,11 +417,17 @@
 				.freqMode_(1)
 				.active_(true),	
 		)
+		),
+		serverView = UserView()
+			// .minHeight_(500)
+			.minWidth_(400)
 	);
+
+
+	s.plotTreeView(0.5, serverView);
 
 	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
 		.value_((0..49));
-
 	plotter.superpose = true;
 	plotter.setProperties(\backgroundColor, Color.gray(0.25));
 	plotter.setProperties(\plotColor, [Color.yellow,Color.magenta,Color.cyan]).refresh;

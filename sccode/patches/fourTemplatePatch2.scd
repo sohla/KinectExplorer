@@ -202,7 +202,7 @@ var vizMessage;
 		patterns[l].play(0.1);
 		postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
-
+	patterns[l].group.postln;
 	// oscSender.sendMsg("/shadow", 
 
 	// 					"shape", 9,
