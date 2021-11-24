@@ -8,11 +8,12 @@ var cb = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bu
 var binds = Array.new(poolSize);
 var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
 
+var oscSender;
 
 //------------------------------------------------------
 ~init = {|model|
 	postf("init : % \n", model.file);
-
+	oscSender = model.netAddr;
 {
 
 	SynthDef(\long, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9, vibamp = 1, vibfreq = 5|
@@ -46,7 +47,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 		    \instrument, \long,
 		    \amp, Pwhite(0.3, 0.2),
 		    \root, 0,//Pseq([0,3,6,-3].stutter(27), inf),
-		    \scale, 6,
+		    \scale, 1,
 		     \octave, Pfunc{ 3 + i },//Prand([0,1,2,3,4,5,6,7,8,9,10].stutter(7),inf),
 		    \note, Pfunc{ notes[i].getSynchronous.()},//Pseq([0], inf),
 		    \dur, Pseq([0.1], inf),//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
@@ -77,23 +78,29 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 	
 				if(isPlayingBlob[i] == true,{
 				
-					model.netAddr.sendMsg("/shadow", 
-						"shape", 3,
+					oscSender.sendMsg("/shadow", 
+
+						"shape", 6,
+
 						"duration", e.dur,
 						"attack", e.attack * 1,
-						"release", e.rel * 0.2,
-						"color", 0.19 * i,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),//e.param1,//colour
-						"scale", 0.2,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
-						"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//sx
-						"sy", 0,//sy
-						"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),//ex
-						"ey", 0,//ey
-						"imageindex", 14,
-						"blur", 0.5,
-						
-						"par7", 0,//e.param2.linlin(1,6,0.1,1), // wobble
-						"par8", 0,//e.octave.linlin(3,6,28,10),
-						// "par9", (e.note + (oct * 12)).linlin(0,127,6,1),
+						"release", e.rel * 0.1,
+
+						"color", 0.19 * i,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
+
+						"scale", 0.2 * i,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
+
+						"sx", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"sy", -0.0,
+						"ex", cb[i].getSynchronous.(),//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"ey", -0.0,
+
+						"imageindex", 1,
+
+						"rotstart", 45,
+						"rotend", 135,
+
+						"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
 					);
 				});
 				true
@@ -177,9 +184,36 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 
 
 	if(patterns[l].isMonitoring == false,{
-		patterns[l].play(0.4);
+		// s.queryAllNodes;
+		// patterns[l].rebuild;
+		patterns[l].play(0.1);
 		postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
+
+	oscSender.sendMsg("/shadow", 
+
+						"shape", 9,
+
+						"duration", 1,
+						"attack", 0,
+						"release", 0,
+
+						"color", 0,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
+
+						"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
+
+						"sx", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"sy", 0,
+						"ex", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"ey", 0,
+
+						"imageindex", 13,
+
+						"rotstart", 45,
+						"rotend", 135,
+
+						"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
+					);
 
 };
 
@@ -191,7 +225,7 @@ var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)
 	isPlayingBlob[l] = false;
 
 	if(patterns[l].isMonitoring == true,{
-		patterns[l].end;
+		patterns[l].stop(0.3);
 		postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
 
