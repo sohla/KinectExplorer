@@ -16,24 +16,23 @@ var vizMessage;
 	postf("init : % \n", model.file);
 	oscSender = model.netAddr;
 
-
 	vizMessage = {|e, i|
 		oscSender.sendMsg("/shadow", 
 
 			"shape", e.sh,
 
-			"duration", e.dur,
+			"duration", e.dur * 0.1,
 			"attack", e.attack * 1,
-			"release", e.rel *1,
+			"release", e.rel *0.1,
 
 			"color", i.linlin(0,3,0,0.99),
 
-			"scale", 1,
+			"scale", e.sc,
 
 			"sx", cb[i].getSynchronous.(),
 			"sy", -0.0,
 			"ex", cb[i].getSynchronous.(),
-			"ey", -0.0,
+			"ey", -2.0,
 
 			"imageindex", e.ii,
 
@@ -101,17 +100,19 @@ var vizMessage;
 		    \scale, 1,
 		     \octave, Pfunc{ 2 + i },
 		    \note, Pfunc{ notes[i].getSynchronous.()},
-		    \dur, Pswitch([0.4, Pseq([0.2, 0.2, 0.4], inf), Pseq([0.2, 0.8, 0.4], inf), Pseq([0.8, 0.2, 0.2], inf)], i, inf),
-		    \attack, Pwhite(0.001,0.01),
-		    \decay, Pwhite(0.2,0.9),
+		    \dur, Pswitch([0.2, Pseq([0.2, 0.2, 0.4] * 0.5, inf), Pseq([0.2, 0.8, 0.4] * 0.5, inf), Pseq([0.8, 0.2, 0.2] * 0.5, inf)], i, inf),
+		    \attack, 0.02,//Pwhite(0.001,0.01),
+		    \decay, 0.1,//Pwhite(0.2,0.9),
 		    \release, 1.2,
 		    \rel, Pkey(\release),
 		    \ff, Pwhite(300, 7000),
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),
 
-		    \sh, 10,//Pswitch([3, 4, 6, 10], i, inf),
+		    \sh, Pswitch([3, 4, 6, 10], i, inf),
 
-		    \ii, Pswitch([1, 4, 7, 10], i, inf),
+		    \sc, Pswitch([8, 2, 4, 1], i, inf),
+
+		    \ii, Prand([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], inf),//Pswitch([1, 4, 7, 10], i, inf),
 
 		    // osc out for viz
 			\osc, Pfunc{|e| 
@@ -126,7 +127,6 @@ var vizMessage;
 
 
 
-	// •• do we just need a pool of patterns we can use...?
 
 	n = [\aPtn, \bPtn, \cPtn, \dPtn];
 
@@ -203,31 +203,32 @@ var vizMessage;
 		postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
 	patterns[l].group.postln;
-	// oscSender.sendMsg("/shadow", 
+	
+	oscSender.sendMsg("/shadow", 
 
-	// 					"shape", 9,
+						"shape", 9,
 
-	// 					"duration", 1,
-	// 					"attack", 0.1,
-	// 					"release", 1,
+						"duration", 3,
+						"attack", 1,
+						"release", 1,
 
-	// 					"color", 0,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
+						"color", 0,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
 
-	// 					"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
+						"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
 
-	// 					"sx", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
-	// 					"sy", 0,
-	// 					"ex", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
-	// 					"ey", 0,
+						"sx", -2,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"sy", 0,
+						"ex", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"ey", 0,
 
-	// 					"imageindex", 13,
+						"imageindex", 2,
 
-	// 					"rotstart", 45,
-	// 					"rotend", 135,
+						"rotstart", 90,
+						"rotend", 90,
 
 
-	// 					"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
-	// 				);
+						"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
+					);
 
 };
 
@@ -249,14 +250,8 @@ var vizMessage;
 ~onUpdate = {|blob, blobsDict, model|
 
 	var l = (blob.label.mod(patterns.size));
-	// var notes = [0,7,12,16];
 	notes[l].value = blob.center.x.linlin(100,550,0,12).floor * 4;
-	// oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
-	// patterns[l].set(\note, note);
-	// patterns[l].set(\octave, oct);
-	// patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
-
-	cb[l].value = blob.center.x.linlin(0,600,-1.5,1.5);
+	cb[l].value = blob.center.x.linlin(0,600,-3.8,3);
 	
 
 };
