@@ -115,7 +115,7 @@ void BlobModel::sendOSCMessage(){
     scSender.setup("127.0.0.1", 57120);
     scSender.sendMessage(oscMessage, false);
 
-    scSender.setup("127.0.0.1", 57130);
+    scSender.setup("192.168.0.132", 57130);
     scSender.sendMessage(oscMessage, false);
 
 }

@@ -24,7 +24,7 @@ var vizMessage;
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
-			"release", e.rel *1,
+			"release", e.rel *0.6,
 
 			"color", i.linlin(0,3,0,0.99),
 
@@ -90,6 +90,32 @@ var vizMessage;
 
 	}).add;
 
+	SynthDef(\frog, {|out = 0, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, freq = 120, gate = 1, vib = 1, amp = 0.3|
+
+		// var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = MoogFF.ar(
+			LFSaw.ar(
+				[freq, freq + (freq * LFCub.ar(freq*3, 0, 0.49, 0.006) )], 
+				[0,0.5], 
+				0.4),
+			env.linlin(0,1,500,4000),
+			-4
+		);
+		var sub = SinOsc.ar(freq, [0,1.36], 0.4);
+		Out.ar(0, (sig + sub) * env * amp);
+	}).add;
+
+	SynthDef(\long, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9, vibamp = 1, vibfreq = 5|
+
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+
+		var vib = LFCub.ar(vibfreq, 0, vibamp * env);
+
+		var sig = SinOsc.ar([freq,freq + 2.rand],0, amp) + Saw.ar([freq,freq + 7.rand], vib) * env * 0.5;
+		Out.ar(out, sig);
+
+	}).add;
 
 	poolSize.do({|i|
 	
@@ -97,19 +123,19 @@ var vizMessage;
 
 		    \instrument, Pswitch([\a, \b, \c, \d], i, inf),
 		    \amp, Pwhite(0.3, 0.2),
-		    \root, 0,
-		    \scale, 1,
+		    \root, Pfunc{ notes[i].getSynchronous.()},
+		    \scale, 2,
 		     \octave, Pfunc{ 2 + i },
-		    \note, Pfunc{ notes[i].getSynchronous.()},
-		    \dur, Pswitch([0.4, Pseq([0.2, 0.2, 0.4], inf), Pseq([0.2, 0.8, 0.4], inf), Pseq([0.8, 0.2, 0.2], inf)], i, inf),
+		    \note, Pseq([0,3,7,10],inf),
+		    \dur, Pswitch([0.4 * 0.5, Pseq([0.2, 0.2, 0.4]* 0.5, inf), Pseq([0.2, 0.2, 0.4]* 0.5, inf), Pseq([0.3, 0.2, 0.2]* 0.5, inf)], i, inf),
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.2,0.9),
-		    \release, 1.2,
+		    \release, 0.2,
 		    \rel, Pkey(\release),
 		    \ff, Pwhite(300, 7000),
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),
 
-		    \sh, 10,//Pswitch([3, 4, 6, 10], i, inf),
+		    \sh, Pswitch([3, 4, 6, 10], i, inf),
 
 		    \ii, Pswitch([1, 4, 7, 10], i, inf),
 
@@ -205,7 +231,7 @@ var vizMessage;
 	patterns[l].group.postln;
 	// oscSender.sendMsg("/shadow", 
 
-	// 					"shape", 9,
+	// 					"shape", 10,
 
 	// 					"duration", 1,
 	// 					"attack", 0.1,
@@ -251,18 +277,22 @@ var vizMessage;
 	var l = (blob.label.mod(patterns.size));
 	// var notes = [0,7,12,16];
 	notes[l].value = blob.center.x.linlin(100,550,0,12).floor * 4;
+
+	//blobsDict.values[0].rect.width.linlin(0,120,0,10)
+
 	// oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
 	// patterns[l].set(\note, note);
 	// patterns[l].set(\octave, oct);
-	// patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
+	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
+	// patterns[l].set(\dur, blobsDict.values[0].rect.width.linlin(0,120,1.3,0.06));
 
-	cb[l].value = blob.center.x.linlin(0,600,-1.5,1.5);
+	cb[l].value = blob.center.x.linlin(0,600,-3,3);
 	
 
 };
 
 //------------------------------------------------------
 ~onData = {|blobsDict|
-	[blobsDict.values[0].area.linexp(1.0,16.0,4,2).floor];
+	[blobsDict.values[0].rect.width.linlin(0,120,0,10)];
 };
 
