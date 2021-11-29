@@ -24,16 +24,16 @@ var vizMessage;
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
-			"release", e.rel * 1.6,
+			"release", e.rel * 1,
 
 			"color", i.linlin(0,3,0,0.99),
 
 			"scale", 1,
 
 			"sx", cb[i].getSynchronous.(),
-			"sy", -0.0,
+			"sy", 0.5,
 			"ex", cb[i].getSynchronous.(),
-			"ey", -0.0,
+			"ey", 0.5,
 
 			"imageindex", e.ii,
 
@@ -96,14 +96,14 @@ var vizMessage;
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var sig = MoogFF.ar(
 			LFSaw.ar(
-				[freq, freq + (freq * LFCub.ar(freq*3, 0, 0.49, 0.006) )], 
+				[freq, freq + (freq * LFCub.ar(freq*MouseY.kr(0.5, 3, lag: 0.3), 0, 0.49, 0.006) )], 
 				[0,0.5], 
 				0.4),
-			env.linlin(0,1,500,4000),
+			env.linlin(0,1,500, MouseX.kr(100, 10000, lag: 0.3)),
 			-4
 		);
 		var sub = SinOsc.ar(freq, [0,1.36], 0.4);
-		Out.ar(0, (sig + sub) * env * amp);
+		Out.ar(out, (sig + sub) * env * amp);
 	}).add;
 
 	SynthDef(\long, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9, vibamp = 1, vibfreq = 5|
@@ -121,7 +121,7 @@ var vizMessage;
 	
 		var bi =	Pbind(
 
-		    \instrument, Pswitch([\a, \b, \c, \d], i, inf),
+		    \instrument, \frog,//Pswitch([\frog, \b, \c, \d], i, inf),
 		    \amp, Pwhite(0.3, 0.2),
 		    \root, Pfunc{ notes[i].getSynchronous.()},
 		    \scale, 2,
@@ -135,7 +135,7 @@ var vizMessage;
 		    \ff, Pwhite(300, 7000),
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),
 
-		    \sh, 3,//Pswitch([3, 4, 6, 10], i, inf),
+		    \sh, 6,//Pswitch([3, 4, 6, 10], i, inf),
 
 		    \ii, Pswitch([1, 4, 7, 10], i, inf),
 
@@ -286,7 +286,7 @@ var vizMessage;
 	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
 	// patterns[l].set(\dur, blobsDict.values[0].rect.width.linlin(0,120,1.3,0.06));
 
-	cb[l].value = blob.center.x.linlin(0,600,-3,3);
+	cb[l].value = blob.center.x.linlin(0,600,-2.3,2);
 	
 
 };
