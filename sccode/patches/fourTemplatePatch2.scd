@@ -24,7 +24,7 @@ var vizMessage;
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
-			"release", e.rel *0.6,
+			"release", e.rel * 1.6,
 
 			"color", i.linlin(0,3,0,0.99),
 
@@ -135,7 +135,7 @@ var vizMessage;
 		    \ff, Pwhite(300, 7000),
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),
 
-		    \sh, Pswitch([3, 4, 6, 10], i, inf),
+		    \sh, 3,//Pswitch([3, 4, 6, 10], i, inf),
 
 		    \ii, Pswitch([1, 4, 7, 10], i, inf),
 
