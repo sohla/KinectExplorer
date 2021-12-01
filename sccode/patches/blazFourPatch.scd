@@ -111,20 +111,20 @@ var vizMessage;
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 
-		var vib = LFCub.ar(vibfreq, 0, vibamp * env);
+		var vib = LFCub.ar(vibfreq.lag(0.4), 0, vibamp.lag(0.4) * env);
 
 		var sig = SinOsc.ar([freq,freq + 2.rand],0, amp) + Saw.ar([freq,freq + 7.rand], vib) * env * 0.5;
-		Out.ar(out, sig);
+		Out.ar(out, sig * amp);
 
 	}).add;
 	
-	SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.3, sustain = 0.1, release = 0.9, gate = 1, harm = 1|
+	SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.3, sustain = 0.1, release = 0.9, gate = 1, harm = 1, fltrel = 0.3|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var sig = (BHiPass.ar(
 			LFNoise2.ar(2)**1.4,
 			[freq, freq + (freq * 0.01)],
-			MouseX.kr(0.001,0.3,\exponential),
+			fltrel.lag(0.3),//MouseX.kr(0.001,0.3,\exponential),
 			MouseY.kr(20,10900,\exponential) - freq)
 		).tanh  * 0.5;
 		var vib = LFCub.ar(freq * harm, 0, env, 1);
@@ -154,29 +154,42 @@ var vizMessage;
 	
 		var bi =	Pbind(
 
-		    \instrument, \frog, //Pswitch([\b, \c, \a, \d], i, inf),
+		    \instrument, \blaz, //Pswitch([\b, \c, \a, \d], i, inf),
 		    \amp, Pwhite(0.3, 0.2),
-		    \root, 0,//Pfunc{ notes[i].getSynchronous.()},
+		    \root, Pseq([0, -2].stutter(70), inf),//Pfunc{ notes[i].getSynchronous.()},
 		    \scale, 1,
-		     \octave, Pfunc{ notes[i].getSynchronous.()},//Prand([3,4,5,6],inf),
+
+		    \octave, Pswitch([3, 4, 5, 6], i, inf),
 
 		    \note, Pswitch(
 		    
-		    	[Pseq([0,4,2], inf), 
-		    	Pseq([4,7,4,5], inf), 
-		    	Pseq([7,10,4], inf), 
-		    	Pseq([10,12,7], inf)], i, inf),
-		    \stretch, 1.5,
+		    	[Pseq([0,5,10], inf), 
+		    	Pseq([5,4,0], inf), 
+		    	Pseq([0,7,2,5,4], inf), 
+		    	Pseq([0,12,10,2,4], inf)], i, inf),
+		    \stretch, 1.3,
 		    \dur, Pswitch(
 		    
-		    	[Pseq([0.2, 0.4, 0.2], inf), 
-		    	Pseq([0.2, 0.2, 0.2, 0.1, 0.1], inf), 
-		    	Pseq([0.2, 0.1, 0.1], inf), 
-		    	Pseq([0.2, 0.1, 0.1, 0.2], inf)], i, inf),
+		    	[Pseq([0.2], inf), 
+		    	Pseq([0.2, 0.4], inf), 
+		    	Pseq([0.4, 0.1, 0.1], inf), 
+		    	Pseq([0.2, 0.2, 0.2], inf)], i, inf),
 
-		    \attack, Pwhite(0.001,0.01),
-		    \decay, Pwhite(0.2,0.9),
-		    \release, 0.2,
+		    \harm, Pswitch([1, 3, 7, 11], i, inf),
+		    \attack, Pwhite(0.007,0.01),
+		    \decay, Pswitch(
+		    	[Pseq([0.1], inf), 
+		    	Pseq([0.3], inf), 
+		    	Pseq([0.2], inf), 
+		    	Pseq([1.3], inf)], i, inf),
+		    \release, Pswitch(
+		    	[Pseq([0.1], inf), 
+		    	Pseq([0.4], inf), 
+		    	Pseq([0.2], inf), 
+		    	Pseq([1.2], inf)], i, inf),
+
+
+
 		    \rel, Pkey(\release),
 		    \ff, Pwhite(300, 7000),
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),
@@ -331,7 +344,7 @@ var vizMessage;
 	// patterns[l].set(\note, note);
 	// patterns[l].set(\octave, oct);
 	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
-	patterns[l].set(\filter, blobsDict.values[0].rect.width.linlin(80,120,100,10000));
+	patterns[l].set(\fltrel, blobsDict.values[0].rect.width.linlin(0,120,0.2,0.001));
 
 	cb[l].value = blob.center.x.linlin(0,600,-3.5,2.5);
 
@@ -343,6 +356,6 @@ var vizMessage;
 
 //------------------------------------------------------
 ~onData = {|blobsDict|
-	[blobsDict.values[0].rect.width.linlin(0,120,0,10)];
+	[blobsDict.values[0].rect.width.linlin(80,120,0,10)];
 };
 

@@ -19,7 +19,7 @@
 	var pfmt = 0; //store the sum of all patch files modification time since epoch 
 
 	var pfmtRout = Routine {|i|
-
+		//•• add first time condition to remove calling ~deinit when exec.
 		loop{
 			var temp = 0;
 			patches.do({ |m,i| temp = temp + File.mtime(patchesPath.asAbsolutePath++m.file) });
@@ -140,16 +140,20 @@
 		(\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		(\file: "fourTemplatePatch3.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		
+		(\file: "frogFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "longFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "blazFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "conexFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
 	];
 	//------------------------------------------------------
 
 	var bootServer = {|f|
 	
-		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
-		var output = ServerOptions.devices.indexOfEqual("External Headphones");
+		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		// var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
+		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");

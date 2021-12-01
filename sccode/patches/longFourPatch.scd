@@ -111,10 +111,10 @@ var vizMessage;
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 
-		var vib = LFCub.ar(vibfreq, 0, vibamp * env);
+		var vib = LFCub.ar(vibfreq.lag(0.4), 0, vibamp.lag(0.4) * env);
 
 		var sig = SinOsc.ar([freq,freq + 2.rand],0, amp) + Saw.ar([freq,freq + 7.rand], vib) * env * 0.5;
-		Out.ar(out, sig);
+		Out.ar(out, sig * amp);
 
 	}).add;
 	
@@ -154,29 +154,31 @@ var vizMessage;
 	
 		var bi =	Pbind(
 
-		    \instrument, \frog, //Pswitch([\b, \c, \a, \d], i, inf),
-		    \amp, Pwhite(0.3, 0.2),
+		    \instrument, \long, //Pswitch([\b, \c, \a, \d], i, inf),
+		    \amp, Pwhite(0.3, 0.5),
 		    \root, 0,//Pfunc{ notes[i].getSynchronous.()},
 		    \scale, 1,
 		     \octave, Pfunc{ notes[i].getSynchronous.()},//Prand([3,4,5,6],inf),
 
 		    \note, Pswitch(
 		    
-		    	[Pseq([0,4,2], inf), 
-		    	Pseq([4,7,4,5], inf), 
-		    	Pseq([7,10,4], inf), 
-		    	Pseq([10,12,7], inf)], i, inf),
-		    \stretch, 1.5,
+		    	[Pseq([0,8,12], inf), 
+		    	Pseq([3,3,7], inf), 
+		    	Pseq([7,12], inf), 
+		    	Pseq([8,15], inf)], i, inf),
+		    \stretch, 1,
 		    \dur, Pswitch(
 		    
-		    	[Pseq([0.2, 0.4, 0.2], inf), 
-		    	Pseq([0.2, 0.2, 0.2, 0.1, 0.1], inf), 
-		    	Pseq([0.2, 0.1, 0.1], inf), 
-		    	Pseq([0.2, 0.1, 0.1, 0.2], inf)], i, inf),
+		    	[Pseq([0.2], inf), 
+		    	Pseq([0.3], inf), 
+		    	Pseq([0.4], inf), 
+		    	Pseq([0.6], inf)], i, inf),
 
+		    \vibamp, 0.2,
+		    \vibfreq, 1,
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.2,0.9),
-		    \release, 0.2,
+		    \release, 1.3,
 		    \rel, Pkey(\release),
 		    \ff, Pwhite(300, 7000),
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),
@@ -331,7 +333,8 @@ var vizMessage;
 	// patterns[l].set(\note, note);
 	// patterns[l].set(\octave, oct);
 	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
-	patterns[l].set(\filter, blobsDict.values[0].rect.width.linlin(80,120,100,10000));
+	patterns[l].set(\vibfreq, blobsDict.values[0].rect.width.linlin(80,120,1,10));
+	patterns[l].set(\vibamp, blobsDict.values[0].rect.width.linlin(80,120,0.1,1.0));
 
 	cb[l].value = blob.center.x.linlin(0,600,-3.5,2.5);
 

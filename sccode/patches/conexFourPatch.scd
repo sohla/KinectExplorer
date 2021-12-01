@@ -111,27 +111,27 @@ var vizMessage;
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 
-		var vib = LFCub.ar(vibfreq, 0, vibamp * env);
+		var vib = LFCub.ar(vibfreq.lag(0.4), 0, vibamp.lag(0.4) * env);
 
 		var sig = SinOsc.ar([freq,freq + 2.rand],0, amp) + Saw.ar([freq,freq + 7.rand], vib) * env * 0.5;
-		Out.ar(out, sig);
+		Out.ar(out, sig * amp);
 
 	}).add;
 	
-	SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.3, sustain = 0.1, release = 0.9, gate = 1, harm = 1|
+	SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.3, sustain = 0.1, release = 0.9, gate = 1, harm = 1, fltrel = 0.3|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var sig = (BHiPass.ar(
 			LFNoise2.ar(2)**1.4,
 			[freq, freq + (freq * 0.01)],
-			MouseX.kr(0.001,0.3,\exponential),
+			fltrel.lag(0.3),//MouseX.kr(0.001,0.3,\exponential),
 			MouseY.kr(20,10900,\exponential) - freq)
 		).tanh  * 0.5;
 		var vib = LFCub.ar(freq * harm, 0, env, 1);
 		Out.ar(out, LeakDC.ar(sig) * amp * env * vib * 0.5) ;
 	}).add;
 
-	SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, release = 0.9, vib = 2|
+	SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, release = 0.9, vib = 2, klang = 1|
 
 
 		var fs = Array.geom(5, freq, 2.01);
@@ -145,8 +145,8 @@ var vizMessage;
 		var sig = DynKlank.ar(
 			`[fs * LFCub.ar(ff,0,MouseY.kr(0.01,0.9)*env*0.1,1), as, rs], 
 			imp,
-			[1,1.012], 0 ,MouseX.kr(0.01,0.99)) ;
-		Out.ar(out, sig * amp * env * 150);
+			[1,1.012], 0, klang.lag(0.4));
+		Out.ar(out, sig * amp * env * 40);
 
 	}).add;
 
@@ -154,32 +154,42 @@ var vizMessage;
 	
 		var bi =	Pbind(
 
-		    \instrument, \frog, //Pswitch([\b, \c, \a, \d], i, inf),
-		    \amp, Pwhite(0.3, 0.2),
-		    \root, 0,//Pfunc{ notes[i].getSynchronous.()},
+		    \instrument, \conex, //Pswitch([\b, \c, \a, \d], i, inf),
+		    \amp, Pswitch([0.8, 0.4, 0.15, 0.13], i, inf),
+		    \root, Pseq([0,3,-2].stutter(30)+4, inf),//Pfunc{ notes[i].getSynchronous.()},
 		    \scale, 1,
-		     \octave, Pfunc{ notes[i].getSynchronous.()},//Prand([3,4,5,6],inf),
+
+		    \octave, Pswitch([2, 4, 5, 6], i, inf),
 
 		    \note, Pswitch(
 		    
-		    	[Pseq([0,4,2], inf), 
-		    	Pseq([4,7,4,5], inf), 
-		    	Pseq([7,10,4], inf), 
-		    	Pseq([10,12,7], inf)], i, inf),
-		    \stretch, 1.5,
+		    	[Pseq([0,0,0,-2,-2,-2], inf), 
+		    	Pseq([4,5,4,7], inf), 
+		    	Pseq([0,10,4,7,2,5,4].stutter(5), inf), 
+		    	Pseq([0,12,10], inf)], i, inf),
+		    \stretch, 1.0,
 		    \dur, Pswitch(
 		    
-		    	[Pseq([0.2, 0.4, 0.2], inf), 
-		    	Pseq([0.2, 0.2, 0.2, 0.1, 0.1], inf), 
-		    	Pseq([0.2, 0.1, 0.1], inf), 
-		    	Pseq([0.2, 0.1, 0.1, 0.2], inf)], i, inf),
+		    	[Pseq([0.6,Rest(0.15), 0.3,Rest(0.15)], inf), 
+		    	Pseq([0.3, 0.15,Rest(0.3) , 0.3,Rest(3)], inf), 
+		    	Pseq([0.15], inf), 
+		    	Pseq([0.3], inf)], i, inf),
 
-		    \attack, Pwhite(0.001,0.01),
-		    \decay, Pwhite(0.2,0.9),
-		    \release, 0.2,
-		    \rel, Pkey(\release),
-		    \ff, Pwhite(300, 7000),
-		    \rf, Pseq([3,0,3,1,1,3,1], inf),
+		    \klang, Pswitch(
+		    
+		    	[Pwhite(0.1, 0.03, inf), 
+		    	Pseq([0.06], inf), 
+		    	Pwhite(0.03,0.4, inf), 
+		    	Pwhite(0.8,0.4, inf)], i, inf),
+
+		    \attack, Pswitch(
+		    
+		    	[Pseq([0.01], inf), 
+		    	Pseq([0.002], inf), 
+		    	Pseq([0.03], inf), 
+		    	Pseq([0.01], inf)], i, inf),
+
+		    \rel, 0.2,//Pkey(\release),
 
 		    \sh, 6,//Pswitch([3, 4, 6, 10], i, inf),
 
@@ -330,8 +340,7 @@ var vizMessage;
 	// oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
 	// patterns[l].set(\note, note);
 	// patterns[l].set(\octave, oct);
-	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
-	patterns[l].set(\filter, blobsDict.values[0].rect.width.linlin(80,120,100,10000));
+	patterns[l].set(\vib, blobsDict.values[0].rect.width.linlin(80,120,0.0,12));
 
 	cb[l].value = blob.center.x.linlin(0,600,-3.5,2.5);
 
@@ -343,6 +352,6 @@ var vizMessage;
 
 //------------------------------------------------------
 ~onData = {|blobsDict|
-	[blobsDict.values[0].rect.width.linlin(0,120,0,10)];
+	[blobsDict.values[0].rect.width.linlin(80,120,0,10)];
 };
 
