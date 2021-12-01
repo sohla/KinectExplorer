@@ -137,8 +137,8 @@
 
 
 		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-
 		(\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "fourTemplatePatch3.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		
 
 	];
@@ -146,10 +146,10 @@
 
 	var bootServer = {|f|
 	
-		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		// var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
+		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
+		var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
@@ -158,7 +158,7 @@
 		o = Server.local.options;
 		o.inDevice = ServerOptions.devices[input];
 		o.outDevice = ServerOptions.devices[output];
-		// o.sampleRate = 41000.000000;
+		// o.sampleRate = 44100.000000;
 		o.memSize = 8192 * 2;
 		o.numInputBusChannels = 2;
 		o.numOutputBusChannels = 4;
@@ -170,9 +170,8 @@
 	};
 
 	//------------------------------------------------------------
-	var updateGraphViewXX = {|view|
-
-		Pen.fillColor = Color.black;
+	var updateGraphViewXX = {|view|	
+	Pen.fillColor = Color.black;
 		Pen.fillRect(window.view.bounds);
 		Pen.width = 1;
 		Pen.fillColor = Color.green;
@@ -424,7 +423,7 @@
 	);
 
 
-	s.plotTreeView(0.5, serverView);
+	// s.plotTreeView(0.5, serverView);
 
 	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
 		.value_((0..49));

@@ -24,29 +24,30 @@ var vizMessage;
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
-			"release", e.rel *1,
+			"release", e.rel * 0.4,
 
 			"color", i.linlin(0,3,0,0.99),
 
 			"scale", 1,
 
 			"sx", cb[i].getSynchronous.(),
-			"sy", -0.0,
+			"sy", 0,
 			"ex", cb[i].getSynchronous.(),
-			"ey", -0.0,
+			"ey", 0,
 
 			"imageindex", e.ii,
 
 			"rotstart",45,
 			"rotend", 45,
 
-			"amp", 0.13,
-			"speed", 3,
-			"freq", 4,
+			"amp", 0.43,
+			"speed", 2,
+			"freq", 3,
 
 			"wobble", 100,
 		);
 	};
+
 
 	SynthDef(\a, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
 
@@ -75,7 +76,7 @@ var vizMessage;
 		var sig = Pulse.ar([freq,freq + 3.rand], 0.5, amp) * env;
 		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
 		LocalOut.ar(sig);
-		Out.ar(out, filter);
+		Out.ar(out, filter * 0.7);
 
 	}).add;
 
@@ -83,33 +84,105 @@ var vizMessage;
 	SynthDef(\d, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
-		var sig = Blip.ar([freq,freq + 3.rand], LocalIn.ar(2) * LFNoise1.ar(20,1) * freq, amp) * env;
+		var sig = Blip.ar([freq,freq + 3.rand], LocalIn.ar(2) * LFNoise2.ar(0.2,40) * env, amp) * env;
 		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
-		LocalOut.ar(sig);
+		LocalOut.ar(filter);
 		Out.ar(out, filter);
 
 	}).add;
 
+	SynthDef(\frog, {|out = 0, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, freq = 120, gate = 1, vib = 1, amp = 0.3|
+
+		// var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = MoogFF.ar(
+			LFSaw.ar(
+				[freq, freq + (freq * LFCub.ar(freq*MouseY.kr(0.5, 3, lag: 0.3), 0, 0.49, 0.006) )], 
+				[0,0.5], 
+				0.4),
+			env.linlin(0,1,500, MouseX.kr(100, 10000, lag: 0.3)),
+			-4
+		);
+		var sub = SinOsc.ar(freq, [0,1.36], 0.4);
+		Out.ar(out, (sig + sub) * env * amp);
+	}).add;
+
+	SynthDef(\long, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9, vibamp = 1, vibfreq = 5|
+
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+
+		var vib = LFCub.ar(vibfreq, 0, vibamp * env);
+
+		var sig = SinOsc.ar([freq,freq + 2.rand],0, amp) + Saw.ar([freq,freq + 7.rand], vib) * env * 0.5;
+		Out.ar(out, sig);
+
+	}).add;
+	
+	SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.3, sustain = 0.1, release = 0.9, gate = 1, harm = 1|
+
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = (BHiPass.ar(
+			LFNoise2.ar(2)**1.4,
+			[freq, freq + (freq * 0.01)],
+			MouseX.kr(0.001,0.3,\exponential),
+			MouseY.kr(20,10900,\exponential) - freq)
+		).tanh  * 0.5;
+		var vib = LFCub.ar(freq * harm, 0, env, 1);
+		Out.ar(out, LeakDC.ar(sig) * amp * env * vib * 0.5) ;
+	}).add;
+
+	SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, release = 0.9, vib = 2|
+
+
+		var fs = Array.geom(5, freq, 2.01);
+		var as = [0.7,0.5,0.05,0.02,0.01,0.005];
+		var ff = Array.rand(5, vib, vib + (vib/4));
+		var rs = Array.series(5, 16, -1.3);
+		var env = EnvGen.ar(Env.perc(attack, release), gate, doneAction: 2);
+		var nenv = EnvGen.ar(Env.perc(attack * 0.01, release * 0.01));
+		var venv = EnvGen.ar(Env.perc(attack * 2, release * 2));
+		var imp = BLowShelf.ar(HPF.ar( LPF.ar(PinkNoise.ar((0.007 * nenv)), 16000), 240), 40, 1, -2).clip;
+		var sig = DynKlank.ar(
+			`[fs * LFCub.ar(ff,0,MouseY.kr(0.01,0.9)*env*0.1,1), as, rs], 
+			imp,
+			[1,1.012], 0 ,MouseX.kr(0.01,0.99)) ;
+		Out.ar(out, sig * amp * env * 150);
+
+	}).add;
 
 	poolSize.do({|i|
 	
 		var bi =	Pbind(
 
-		    \instrument, Pswitch([\a, \b, \c, \d], i, inf),
+		    \instrument, Pswitch([\b, \c, \a, \d], i, inf),
 		    \amp, Pwhite(0.3, 0.2),
-		    \root, 0,
+		    \root, 0,//Pfunc{ notes[i].getSynchronous.()},
 		    \scale, 1,
-		     \octave, Pfunc{ 2 + i },
-		    \note, Pfunc{ notes[i].getSynchronous.()},
-		    \dur, Pswitch([0.4, Pseq([0.2, 0.2, 0.4], inf), Pseq([0.2, 0.8, 0.4], inf), Pseq([0.8, 0.2, 0.2], inf)], i, inf),
+		     \octave, Pfunc{ notes[i].getSynchronous.()},//Prand([3,4,5,6],inf),
+
+		    \note, Pswitch(
+		    
+		    	[Pseq([0], inf), 
+		    	Pseq([4], inf), 
+		    	Pseq([7], inf), 
+		    	Pseq([10], inf)], i, inf),
+		    
+		    \dur, 0.3,
+		    // Pswitch(
+		    
+		    // 	[0.4 * 0.5, 
+		    // 	Pseq([0.2, 0.2, 0.4]* 0.5, inf), 
+		    // 	Pseq([0.2, 0.2, 0.4]* 0.5, inf), 
+		    // 	Pseq([0.3, 0.2, 0.2]* 0.5, inf)], i, inf),
+
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.2,0.9),
-		    \release, 1.2,
+		    \release, 0.2,
 		    \rel, Pkey(\release),
 		    \ff, Pwhite(300, 7000),
 		    \rf, Pseq([3,0,3,1,1,3,1], inf),
 
-		    \sh, 10,//Pswitch([3, 4, 6, 10], i, inf),
+		    \sh, 6,//Pswitch([3, 4, 6, 10], i, inf),
 
 		    \ii, Pswitch([1, 4, 7, 10], i, inf),
 
@@ -123,7 +196,6 @@ var vizMessage;
 		binds = binds.add(bi);
 
 	});
-
 
 
 	// •• do we just need a pool of patterns we can use...?
@@ -205,7 +277,7 @@ var vizMessage;
 	patterns[l].group.postln;
 	// oscSender.sendMsg("/shadow", 
 
-	// 					"shape", 9,
+	// 					"shape", 10,
 
 	// 					"duration", 1,
 	// 					"attack", 0.1,
@@ -243,6 +315,8 @@ var vizMessage;
 		postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
 
+
+
 };
 
 //------------------------------------------------------
@@ -250,19 +324,26 @@ var vizMessage;
 
 	var l = (blob.label.mod(patterns.size));
 	// var notes = [0,7,12,16];
-	notes[l].value = blob.center.x.linlin(100,550,0,12).floor * 2;
+	notes[l].value = blob.center.x.linlin(100,550,3,7).floor;
+
+	//blobsDict.values[0].rect.width.linlin(0,120,0,10)
+
 	// oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
 	// patterns[l].set(\note, note);
 	// patterns[l].set(\octave, oct);
-	// patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
+	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
+	patterns[l].set(\stretch, blobsDict.values[0].rect.width.linlin(80,120,0.8,0.2));
 
-	cb[l].value = blob.center.x.linlin(0,600,-1.5,1.5);
+	cb[l].value = blob.center.x.linlin(0,600,-3.5,2.5);
+
+	// patterns[l].set(\
+	
 	
 
 };
 
 //------------------------------------------------------
 ~onData = {|blobsDict|
-	[blobsDict.values[0].area.linexp(1.0,16.0,4,2).floor];
+	[blobsDict.values[0].rect.width.linlin(0,120,0,10)];
 };
 

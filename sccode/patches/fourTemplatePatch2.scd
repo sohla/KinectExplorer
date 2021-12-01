@@ -24,25 +24,25 @@ var vizMessage;
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
-			"release", e.rel * 1,
+			"release", e.rel * 0.4,
 
 			"color", i.linlin(0,3,0,0.99),
 
 			"scale", 1,
 
 			"sx", cb[i].getSynchronous.(),
-			"sy", 0.5,
+			"sy", 0,
 			"ex", cb[i].getSynchronous.(),
-			"ey", 0.5,
+			"ey", 0,
 
 			"imageindex", e.ii,
 
 			"rotstart",45,
 			"rotend", 45,
 
-			"amp", 0.13,
-			"speed", 3,
-			"freq", 4,
+			"amp", 0.43,
+			"speed", 2,
+			"freq", 3,
 
 			"wobble", 100,
 		);
@@ -75,7 +75,7 @@ var vizMessage;
 		var sig = Pulse.ar([freq,freq + 3.rand], 0.5, amp) * env;
 		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
 		LocalOut.ar(sig);
-		Out.ar(out, filter);
+		Out.ar(out, filter * 0.7);
 
 	}).add;
 
@@ -83,9 +83,9 @@ var vizMessage;
 	SynthDef(\d, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
-		var sig = Blip.ar([freq,freq + 3.rand], LocalIn.ar(2) * LFNoise1.ar(20,1) * freq, amp) * env;
+		var sig = Blip.ar([freq,freq + 3.rand], LocalIn.ar(2) * LFNoise2.ar(0.2,40) * env, amp) * env;
 		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
-		LocalOut.ar(sig);
+		LocalOut.ar(filter);
 		Out.ar(out, filter);
 
 	}).add;
@@ -116,18 +116,57 @@ var vizMessage;
 		Out.ar(out, sig);
 
 	}).add;
+	
+	SynthDef(\blaz, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.3, sustain = 0.1, release = 0.9, gate = 1, harm = 1|
+
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = (BHiPass.ar(
+			LFNoise2.ar(2)**1.4,
+			[freq, freq + (freq * 0.01)],
+			MouseX.kr(0.001,0.3,\exponential),
+			MouseY.kr(20,10900,\exponential) - freq)
+		).tanh  * 0.5;
+		var vib = LFCub.ar(freq * harm, 0, env, 1);
+		Out.ar(out, LeakDC.ar(sig) * amp * env * vib * 0.5) ;
+	}).add;
+
+	SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, release = 0.9, vib = 2|
+
+
+		var fs = Array.geom(5, freq, 2.01);
+		var as = [0.7,0.5,0.05,0.02,0.01,0.005];
+		var ff = Array.rand(5, vib, vib + (vib/4));
+		var rs = Array.series(5, 16, -1.3);
+		var env = EnvGen.ar(Env.perc(attack, release), gate, doneAction: 2);
+		var nenv = EnvGen.ar(Env.perc(attack * 0.01, release * 0.01));
+		var venv = EnvGen.ar(Env.perc(attack * 2, release * 2));
+		var imp = BLowShelf.ar(HPF.ar( LPF.ar(PinkNoise.ar((0.007 * nenv)), 16000), 240), 40, 1, -2).clip;
+		var sig = DynKlank.ar(
+			`[fs * LFCub.ar(ff,0,MouseY.kr(0.01,0.9)*env*0.1,1), as, rs], 
+			imp,
+			[1,1.012], 0 ,MouseX.kr(0.01,0.99)) ;
+		Out.ar(out, sig * amp * env * 150);
+
+	}).add;
 
 	poolSize.do({|i|
 	
 		var bi =	Pbind(
 
-		    \instrument, \frog,//Pswitch([\frog, \b, \c, \d], i, inf),
+		    \instrument, Pswitch([\a, \b, \c, \d], i, inf),
 		    \amp, Pwhite(0.3, 0.2),
 		    \root, Pfunc{ notes[i].getSynchronous.()},
 		    \scale, 2,
-		     \octave, Pfunc{ 2 + i },
+		     \octave, Pfunc{ 2 + i.mod(2) },
 		    \note, Pseq([0,3,7,10],inf),
-		    \dur, Pswitch([0.4 * 0.5, Pseq([0.2, 0.2, 0.4]* 0.5, inf), Pseq([0.2, 0.2, 0.4]* 0.5, inf), Pseq([0.3, 0.2, 0.2]* 0.5, inf)], i, inf),
+		    
+		    \dur, Pswitch(
+		    
+		    	[0.4 * 0.5, 
+		    	Pseq([0.2, 0.2, 0.4]* 0.5, inf), 
+		    	Pseq([0.2, 0.2, 0.4]* 0.5, inf), 
+		    	Pseq([0.3, 0.2, 0.2]* 0.5, inf)], i, inf),
+
 		    \attack, Pwhite(0.001,0.01),
 		    \decay, Pwhite(0.2,0.9),
 		    \release, 0.2,
@@ -149,7 +188,6 @@ var vizMessage;
 		binds = binds.add(bi);
 
 	});
-
 
 
 	// •• do we just need a pool of patterns we can use...?
@@ -286,7 +324,7 @@ var vizMessage;
 	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
 	// patterns[l].set(\dur, blobsDict.values[0].rect.width.linlin(0,120,1.3,0.06));
 
-	cb[l].value = blob.center.x.linlin(0,600,-2.3,2);
+	cb[l].value = blob.center.x.linlin(0,600,-3.5,2.5);
 	
 
 };
