@@ -20,7 +20,7 @@ var vizMessage;
 	vizMessage = {|e, i|
 		oscSender.sendMsg("/shadow", 
 
-			"shape", e.sh,
+			"shape", 10,
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
@@ -31,7 +31,7 @@ var vizMessage;
 			"scale", 1,
 
 			"sx", cb[i].getSynchronous.(),
-			"sy", 0,
+			"sy", 1,
 			"ex", cb[i].getSynchronous.(),
 			"ey", 0,
 
@@ -44,7 +44,7 @@ var vizMessage;
 			"speed", 2,
 			"freq", 3,
 
-			"wobble", 100,
+			"wobble", 6,
 		);
 	};
 

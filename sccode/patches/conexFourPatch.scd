@@ -20,11 +20,11 @@ var vizMessage;
 	vizMessage = {|e, i|
 		oscSender.sendMsg("/shadow", 
 
-			"shape", e.sh,
+			"shape", 0,
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
-			"release", e.rel * 0.4,
+			"release", e.rel * 1,
 
 			"color", i.linlin(0,3,0,0.99),
 
@@ -44,7 +44,7 @@ var vizMessage;
 			"speed", 2,
 			"freq", 3,
 
-			"wobble", 100,
+			"wobble", 20,
 		);
 	};
 
@@ -189,7 +189,7 @@ var vizMessage;
 		    	Pseq([0.03], inf), 
 		    	Pseq([0.01], inf)], i, inf),
 
-		    \rel, 0.2,//Pkey(\release),
+		    \rel, 0.01,//Pkey(\release),
 
 		    \sh, 6,//Pswitch([3, 4, 6, 10], i, inf),
 
@@ -342,7 +342,7 @@ var vizMessage;
 	// patterns[l].set(\octave, oct);
 	patterns[l].set(\vib, blobsDict.values[0].rect.width.linlin(80,120,0.0,12));
 
-	cb[l].value = blob.center.x.linlin(0,600,-3.5,2.5);
+	cb[l].value = blob.center.x.linlin(0,600,-2.5,2.5);
 
 	// patterns[l].set(\
 	
