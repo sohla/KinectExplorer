@@ -4,11 +4,11 @@ SynthDef(\dweep, {|out = 0, freq = 100.0, amp = 0.7, attack = 0.003, decay = 0.0
 	var enva = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 	var envb = EnvGen.ar(Env.adsr(attack * 26, decay * 16, sustain, release * 16), gate);
 
-	var buf = LocalBuf(2048, 2);
+	// var buf = LocalBuf(2048, 2);
 	var gb;
 	var l = LocalIn.ar(2);
 	var k = LFSaw.ar(l,0,1,1);
-	var j = LFCub.ar( MouseY.kr(0.1,140), 0, 0.02, 1);//Line.ar(3,1,1)
+	var j = LFCub.ar( MouseY.kr(0.1,140, \exponential), 0, 0.02, 1);//Line.ar(3,1,1)
 
 	var sig = PitchShift.ar(
 		SinOscFB.ar( [freq, freq + (freq * 0.006)], MouseX.kr(0,1.3)),//
