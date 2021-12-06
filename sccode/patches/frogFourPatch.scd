@@ -24,25 +24,25 @@ var vizMessage;
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
-			"release", e.rel * 0.4,
+			"release", e.rel * 1.4,
 
 			"color", i.linlin(0,3,0,0.99),
 
-			"scale", 1,
+			"scale", 0.5,
 
 			"sx", cb[i].getSynchronous.(),
-			"sy", 1,
+			"sy", -1,
 			"ex", cb[i].getSynchronous.(),
-			"ey", 0,
+			"ey", 1,
 
-			"imageindex", e.ii,
+			"imageindex", 8,
 
 			"rotstart",45,
 			"rotend", 45,
 
-			"amp", 0.43,
-			"speed", 2,
-			"freq", 3,
+			"amp", 0.0,
+			"speed", 1.0,
+			"freq", 1.0,
 
 			"wobble", 6,
 		);
@@ -346,3 +346,4 @@ var vizMessage;
 	[blobsDict.values[0].rect.width.linlin(0,120,0,10)];
 };
 
+//penumbraphone
