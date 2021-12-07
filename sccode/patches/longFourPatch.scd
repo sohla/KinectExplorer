@@ -20,7 +20,7 @@ var vizMessage;
 	vizMessage = {|e, i|
 		oscSender.sendMsg("/shadow", 
 
-			"shape", 7,
+			"shape", 3,
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
@@ -28,12 +28,12 @@ var vizMessage;
 
 			"color", i.linlin(0,3,0,0.99),
 
-			"scale", 1,
+			"scale", 2,
 
 			"sx", cb[i].getSynchronous.(),
-			"sy", 0,
+			"sy", -0.5,
 			"ex", cb[i].getSynchronous.(),
-			"ey", 0,
+			"ey", -0.5,
 
 			"imageindex", e.ii,
 
@@ -169,14 +169,14 @@ var vizMessage;
 		    \stretch, 1,
 		    \dur, Pswitch(
 		    
-		    	[Pseq([0.2], inf), 
-		    	Pseq([0.3], inf), 
-		    	Pseq([0.4], inf), 
-		    	Pseq([0.6], inf)], i, inf),
+		    	[Pseq([0.4], inf), 
+		    	Pseq([0.6], inf), 
+		    	Pseq([0.8], inf), 
+		    	Pseq([1.2], inf)], i, inf),
 
 		    \vibamp, 0.2,
 		    \vibfreq, 1,
-		    \attack, Pwhite(0.001,0.01),
+		    \attack, Pwhite(0.01,0.1),
 		    \decay, Pwhite(0.2,0.9),
 		    \release, 1.3,
 		    \rel, Pkey(\release),
@@ -334,9 +334,9 @@ var vizMessage;
 	// patterns[l].set(\octave, oct);
 	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
 	patterns[l].set(\vibfreq, blobsDict.values[0].rect.width.linlin(80,120,1,10));
-	patterns[l].set(\vibamp, blobsDict.values[0].rect.width.linlin(80,120,0.1,1.0));
+	patterns[l].set(\vibamp, blobsDict.values[0].rect.width.linlin(80,170,0.1,1.0));
 
-	cb[l].value = blob.center.x.linlin(0,600,-3.5,2.5);
+	cb[l].value = blob.center.x.linlin(0,600,-3.5,3.5);
 
 	// patterns[l].set(\
 	

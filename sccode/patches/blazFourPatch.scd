@@ -24,11 +24,11 @@ var vizMessage;
 
 			"duration", e.dur,
 			"attack", e.attack * 1,
-			"release", e.rel * 1.4,
+			"release", e.rel * 1,
 
 			"color", i.linlin(0,3,0,0.99),
 
-			"scale", 3.2,
+			"scale", 1,
 
 			"sx", cb[i].getSynchronous.(),
 			"sy", -1,
@@ -155,11 +155,17 @@ var vizMessage;
 		var bi =	Pbind(
 
 		    \instrument, \blaz, //Pswitch([\b, \c, \a, \d], i, inf),
-		    \amp, Pwhite(0.3, 0.2),
+		    \amp, Pwhite(0.5, 0.4),
 		    \root, Pseq([0, -2].stutter(70), inf),//Pfunc{ notes[i].getSynchronous.()},
 		    \scale, 1,
 
-		    \octave, Pswitch([3, 4, 5, 6], i, inf),
+		    // \octave, Pswitch([3, 4, 5, 6], i, inf),
+		    \octave, Pswitch(
+		    
+		    	[Prand([3,3,3,3,2], inf), 
+		    	Pseq([4,5,4,4,4], inf), 
+		    	Pseq([5,5,6], inf), 
+		    	Prand([6,6,6,6,7], inf)], i, inf),
 
 		    \note, Pswitch(
 		    
@@ -167,7 +173,7 @@ var vizMessage;
 		    	Pseq([5,4,0], inf), 
 		    	Pseq([0,7,2,5,4], inf), 
 		    	Pseq([0,12,10,2,4], inf)], i, inf),
-		    \stretch, 1.3,
+		    \stretch, 1.0,
 		    \dur, Pswitch(
 		    
 		    	[Pseq([0.2], inf), 
@@ -176,7 +182,7 @@ var vizMessage;
 		    	Pseq([0.2, 0.2, 0.2], inf)], i, inf),
 
 		    \harm, Pswitch([1, 3, 7, 11], i, inf),
-		    \attack, Pwhite(0.007,0.01),
+		    \attack, Pwhite(0.007,0.001),
 		    \decay, Pswitch(
 		    	[Pseq([0.1], inf), 
 		    	Pseq([0.3], inf), 
@@ -344,7 +350,7 @@ var vizMessage;
 	// patterns[l].set(\note, note);
 	// patterns[l].set(\octave, oct);
 	patterns[l].set(\ff, blobsDict.values[0].rect.width.linlin(0,120,400,12000));
-	patterns[l].set(\fltrel, blobsDict.values[0].rect.width.linlin(0,120,0.2,0.001));
+	patterns[l].set(\fltrel, blobsDict.values[0].rect.width.linlin(0,120,0.2,0.0001));
 
 	cb[l].value = blob.center.x.linlin(0,600,-3.5,2.5);
 

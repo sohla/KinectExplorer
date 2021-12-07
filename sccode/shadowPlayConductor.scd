@@ -1,7 +1,7 @@
 (
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
-	var netAddr = NetAddr.new("127.0.0.1", 10001);
-	// var netAddr = NetAddr.new("192.168.0.132", 10001);
+	// var netAddr = NetAddr.new("127.0.0.1", 10001);
+	var netAddr = NetAddr.new("192.168.0.143", 10001);
 	var numOfBlobs = 4;
 
 
@@ -136,14 +136,16 @@
 		// (\file: "longPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
 
-		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		(\file: "fourTemplatePatch3.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		
-		(\file: "frogFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "frogFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		(\file: "longFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "blazFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "conexFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "shapeVortex.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "conexFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "bodyElectric.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		(\file: "waterSoul.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
 	];
 	//------------------------------------------------------

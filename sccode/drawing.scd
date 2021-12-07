@@ -34,10 +34,10 @@ a = Synth.new(\drawing1, [\release,22]);
 			\octave, Pseq([4,5,4,5], inf),
 			\note, Pseq([0,7,16], inf),
 			\root, Pseq([0,4,-1, 2].stutter(20), inf),
-			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5] * 10, inf),
+			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5] * 3, inf),
 			\amp, 1,
-			\attack, Pwhite(5.001,10.006, inf),
-			\release, Pwhite(29.1,16.9, inf),
+			\attack, Pwhite(0.1,0.6, inf),
+			\release, Pwhite(4.1,6.9, inf),
 		)
 	).play;
 )

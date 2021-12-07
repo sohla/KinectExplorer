@@ -1,7 +1,5 @@
-
-
 (
-SynthDef(\glow, {|attack = 0.004, release = 0.9, freq = 100, gate = 1, vib = 1|
+SynthDef(\glow, {|attack = 0.004, release = 0.9, freq = 100, gate = 1, vib = 1, coef = 0.0|
 
 	var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
 	 var trig = Impulse.ar(XLine.ar(40, 1, attack + (release * 0.5)));
@@ -11,15 +9,10 @@ SynthDef(\glow, {|attack = 0.004, release = 0.9, freq = 100, gate = 1, vib = 1|
     	Pluck.ar(
     		BrownNoise.ar(0.2), 
     		trig,  
-    		// // Impulse.ar( LFCub.ar([0.31,0.312], 0, 50, 60)),  
-    		// // Impulse.ar( 55), Demand
-    		// BrownNoise.ar(0.2,0.19),
     		f.reciprocal, 
     		f.reciprocal, 
     		Demand.ar(trig, 0,Dwhite(1, 10)),
-    		// MouseX.kr(0.1,10),
-        	coef:MouseY.kr(-0.999, 0.999, lag:1.6)  
-        	// coef:Demand.ar(trig, 0,Dwhite(0.65, 0.85))
+        	coef: coef//MouseY.kr(-0.999, 0.999, lag:1.6)  
         )} !2);
 
 
@@ -30,7 +23,7 @@ SynthDef(\glow, {|attack = 0.004, release = 0.9, freq = 100, gate = 1, vib = 1|
 )
 s.meter
 s.peakCPU
-a = Synth.new(\glow, [\release,7]);
+a = Synth.new(\glow, [\release,2]);
 
 (
 	Ndef(\glowPtn,
@@ -50,4 +43,20 @@ a = Synth.new(\glow, [\release,7]);
 )
 
 
-{Blip.ar(1,30)}.scope
+
+(
+	Ndef(\glowPtn,
+		Pbind(
+			\instrument, \glow,
+			\octave, Prand([2,4,6], inf),
+			\note, Pseq([0,3,7,11,12], inf),
+			\root, Pseq([0,-3,2,-1].stutter(16), inf),
+			\dur, Prand([0.5], inf),
+			\dur, 0.2,
+			\amp, 0.1,
+			\attack, Pwhite(0.01,0.02, inf),
+			\release, Pwhite(0.3,0.6, inf),
+			\coef, Pwhite(0.6,0.01, inf)
+		)
+	).play;
+)
