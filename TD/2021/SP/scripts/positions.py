@@ -10,15 +10,21 @@ def onPulse(par):
 	return
 
 def onCook(s):
+	if ( s.numSamples <= s.inputs[0].numSamples):
+		parent(2).color = (0,0,0)
+	else:
+		parent(2).color = (1.,0,0)
 	s.clear()
 	if len(s.inputs[0].chans()) == 0:
 		parent(2).par.render = 0
+		
 		return
 	parent(2).par.render = 1
 	s.copy( s.inputs[0])
 	#startOp 	= s.inputs[1]
 	s.appendChan( "tx" )
 	s.appendChan( "ty" )
+	s.appendChan( "tz" )
 	s.appendChan( "tz" )
 	if s.chan("rotend") is not None:
 		s.appendChan( "rz" )
