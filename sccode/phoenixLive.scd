@@ -28,6 +28,12 @@
 		};
 	};
 
+	//------------------------------------------------------
+
+		MIDIClient.init;
+		MIDIClient.sources;
+
+		MIDIIn.connectAll;
 
 	//------------------------------------------------------
 	bootServer.({
@@ -170,11 +176,6 @@
 
 	//------------------------------------------------------
 
-		MIDIClient.init;
-		MIDIClient.sources;
-
-		MIDIIn.connectAll;
-
 			
 
 		//------------------------------------------------------
@@ -186,12 +187,12 @@
 		MIDIdef.cc(\glow2y,{|val| Ndef(\glowPtn2).set(\my,val.linlin(0,127,0,1)) }, 94, 0);
 
 		MIDIdef.cc(\windamp,{|val| Ndef(\wind).set(\amp,val.linlin(0,127,0,0.5)) }, 84, 0);
-		MIDIdef.cc(\windmx,{|val| Ndef(\wind).set(\mx,val.linlin(0,127,0,1)) }, 85, 0);
+		MIDIdef.cc(\windmx,{|val| Ndef(\wind).set(\mx,val.linlin(0,127,0,1)) }, 95, 0);
 		MIDIdef.cc(\windmy,{|val| Ndef(\wind).set(\my,val.linlin(0,127,0,1)) }, 94, 0);
 
-		MIDIdef.cc(\dweepamp,{|val| Ndef(\dweepPtn).set(\amp,val.linexp(0,127,0.0001,1.0)) }, 86, 0);
+		MIDIdef.cc(\dweepamp,{|val| Ndef(\dweepPtn).set(\amp,val.linexp(0,127,0.0001,1.0)) }, 85, 0);
 		MIDIdef.cc(\dweepmx,{|val| Ndef(\dweepPtn).set(\mx,val.linlin(0,127,0,1)) }, 94, 0);
-		MIDIdef.cc(\dweepmy,{|val| Ndef(\dweepPtn).set(\my,val.linlin(0,127,0,1)) }, 94, 0);
+		MIDIdef.cc(\dweepmy,{|val| Ndef(\dweepPtn).set(\my,val.linexp(0,127,0.35,1)) }, 86, 0);
 
 		MIDIdef.cc(\frogamp,{|val| Ndef(\frogPtn).set(\amp,val.linexp(0,127,0.0001,1.0)) }, 87, 0);
 		MIDIdef.cc(\frogmx,{|val| Ndef(\frogPtn).set(\mx,val.linlin(0,127,0,1)) }, 94, 0);
