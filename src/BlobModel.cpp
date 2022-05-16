@@ -58,6 +58,7 @@ void BlobModel::addDataToOSCMessage(){
 
 //     std::cout << " : " << line.size() << " : " << area << " : " << perimeter << center << " : " ;
     
+    
     oscMessage.addIntArg(getLabel());//0
     oscMessage.addIntArg(state);//1
 
@@ -97,7 +98,7 @@ void BlobModel::kill() {
     previousPosition = ofVec2f(0,0);
     currentPosition = ofVec2f(0,0);
         
-    // build message
+    // build messagez
     oscMessage.clear();
     oscMessage.setAddress("/ke/deinit");
     oscMessage.addIntArg(label);

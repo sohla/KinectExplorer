@@ -48,7 +48,7 @@ var mxs, mys;
 
 
 		    //visuals
-		    \sh, 7,
+		    \sh, 6,
 		    \sx, Pwhite(-1.7,1.7),
 		    \sy, Pwhite(-1.3,1.3),
 		    \ex, Pkey(\sx),
@@ -78,6 +78,10 @@ var mxs, mys;
 					
 					"scx", (e.note + (e.octave * 12)).linlin(30,90,10, 1),
 					"scy", (e.note + (e.octave * 12)).linlin(30,90,3, 0.01),
+					"tx", 0,
+					"ty", 0,
+					"tz", 0,
+					"imageindex", 0,
 				);
 			},
 

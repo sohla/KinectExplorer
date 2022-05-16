@@ -28,6 +28,9 @@ class NearFar_PixelProc : public Base_PixelProc {
     ofParameter<float> cropTopParam = ofParameter<float>("cropTop",0.3,0.0,1.0);
     ofParameter<float> cropBotParam = ofParameter<float>("cropBot",0.75,0.0,1.0);
 
+    ofParameter<float> cropRightParam = ofParameter<float>("cropRight",1.0,0.6,1.0);
+    ofParameter<float> cropLeftParam = ofParameter<float>("cropLeft",0.0,0.0,0.4);
+
     ofxCvGrayscaleImage depthImage;
     ofxCvGrayscaleImage grayThreshNear;
     ofxCvGrayscaleImage grayThreshFar;
@@ -48,7 +51,9 @@ class NearFar_PixelProc : public Base_PixelProc {
         group.add(vertInvertParam);
         group.add(cropTopParam);
         group.add(cropBotParam);
-       gui.add(group);
+        group.add(cropLeftParam);
+        group.add(cropRightParam);
+        gui.add(group);
         
         depthImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
         grayThreshNear.allocate(model.depthCameraWidth, model.depthCameraHeight);
@@ -74,24 +79,34 @@ class NearFar_PixelProc : public Base_PixelProc {
             // row / col implentation
             for(int i = 0; i < w; i++) {
                 for(int j = 0; j < h; j++) {
-                    
+
                     int index = i + (j * w);
-                    if( index > (h * cropTopParam.get() * w) && index < (h * cropBotParam.get() * w)){ //hack cropping
-                        
-                        if(pix[index] < nearParam.get() && pix[index] > farParam.get()) {
-                            if(mapParam.get()){
-                                pix[index] = ofMap(pix[index], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
-                            }else{
-                                pix[index] = 255; // solid white
-                            }
-                        } else {
-                            pix[index] = 0;
-                        }
+
+                    if(i >= (w * cropLeftParam.get()) && i <= (w * cropRightParam.get()) ){
+
+                        if( index > (h * cropTopParam.get() * w) && index < (h * cropBotParam.get() * w)){ //hack cropping
+                            
+                            
+                            if(pix[index] < nearParam.get() && pix[index] > farParam.get()) {
+                                if(mapParam.get()){
+                                    pix[index] = ofMap(pix[index], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
+                                }else{
+                                    pix[index] = 255; // solid white
+                                };
+                            } else {
+                                pix[index] = 0;
+                            };
+                            
+                        }else{
+                            pix[index] = 0; //hack cropping
+                        };
                     }else{
                         pix[index] = 0; //hack cropping
-                    }
-                }
-            }
+                    };
+                
+              };
+
+                };
 
 //            for(int i = 0; i < numPixels; i++) {
 //                if(pix[i] < nearParam.get() && pix[i] > farParam.get()) {

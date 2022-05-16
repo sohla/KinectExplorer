@@ -1,13 +1,13 @@
 (
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
-	var netAddr = NetAddr.new("127.0.0.1", 10001);
-	// var netAddr = NetAddr.new("192.168.20.3", 10001);
+	// var netAddr = NetAddr.new("127.0.0.1", 10001);
+	var netAddr = NetAddr.new("192.168.0.132", 10001);
 	var numOfBlobs = 4;
 
 
 	var window, freqScope;
 	var loadPatch, patchButton, reloadButton;
-	var graphView, plotView, plotter;
+	var graphView, plotView, plotter, serverView;
 
 	var oscListeners = [];
 	var pntListener, objListener, lnkListener;
@@ -127,28 +127,29 @@
 	//------------------------------------------------------
 	var row = 3, col = 3;
 	var patches = [
-		// (\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		// (\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		// (\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		// (\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		// (\file: "longPatch.sc
-		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// (\file: "longPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
-		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
-		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr),
+
+		(\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+
+		(\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		
 
 	];
 	//------------------------------------------------------
 
 	var bootServer = {|f|
 	
-		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//var output = ServerOptions.devices.indexOfEqual("SFandSC");
+		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
@@ -164,7 +165,6 @@
 
 		s.waitForBoot{
 			"💫 welcome to shadow play 💫".postln;
-
 			f.();
 		};
 	};
@@ -335,6 +335,7 @@
 			interpret(str);
 		};
 		model.env = env;
+		//• load synth here instead of init?
 	};
 
 	//------------------------------------------------------
@@ -362,7 +363,7 @@
 
 	//------------------------------------------------------
 	QtGUI.palette = QPalette.dark; 
-	window = Window("",Rect(0,0,Window.screenBounds.width/2, Window.screenBounds.height - 300)
+	window = Window("",Rect(0,0,Window.screenBounds.width * 0.7, Window.screenBounds.height - 300)
 		.center_(Window.screenBounds.width*0.85@100)
 	).front;
 
@@ -376,14 +377,20 @@
 		});
 	});
 
-	window.layout = VLayout(
+	window.layout = 
+		HLayout(
+		VLayout(
 		reloadButton = Button()
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
 			.action_({|b|
 				patches.do({|m| 
 					loadPatch.(m);
-					m.env.use{~reload.(m)}; 
+					m.env.use{
+						// ~reload.(m);//•• turn off the on>>>/??
+						~deinit.(m);
+						if(m.isOn == true,{~init.(m)});
+					}; 
 				})
 			}),
 		Button()
@@ -410,11 +417,17 @@
 				.freqMode_(1)
 				.active_(true),	
 		)
+		),
+		serverView = UserView()
+			// .minHeight_(500)
+			.minWidth_(300)
 	);
+
+
+	s.plotTreeView(0.5, serverView);
 
 	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
 		.value_((0..49));
-
 	plotter.superpose = true;
 	plotter.setProperties(\backgroundColor, Color.gray(0.25));
 	plotter.setProperties(\plotColor, [Color.yellow,Color.magenta,Color.cyan]).refresh;
@@ -461,6 +474,7 @@
 			patches.do({|m| m.env.use{
 				if(m.isOn, {
 					if(blobsDict.values.size > 0,{
+						// ~init.(m);
 						~onInit.(blob, blobsDict);
 					});
 				});
@@ -515,7 +529,9 @@
 				patches.do({|m| m.env.use{
 					if(m.isOn, {
 						if(blobsDict.values.size > 0,{
-							~onDeinit.(blob, blobsDict)
+							~onDeinit.(blob, blobsDict);
+							// ~deinit.(m);
+
 						});
 					}); 
 				}});

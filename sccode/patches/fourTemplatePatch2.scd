@@ -1,105 +1,153 @@
 var oct = 0;
 var note = 0;
 var scale = 1;
+var poolSize = 4;
+var isPlayingBlob = Array.fill(poolSize, false);
+var patterns = Array.new(poolSize);
+var cb = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
+var binds = Array.new(poolSize);
+var notes = [Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1),Bus.control(s,1)];
+var oscSender;
+var vizMessage;
 
-var patterns = Array.new(4);
-
-var bind;
 //------------------------------------------------------
 ~init = {|model|
+
 	postf("init : % \n", model.file);
+	oscSender = model.netAddr;
 
-	SynthDef(\long, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ns = 9, vibamp = 1, vibfreq = 5|
+	vizMessage = {|e, i|
+		oscSender.sendMsg("/shadow", 
+
+			"shape", e.sh,
+
+			"duration", e.dur * 0.1,
+			"attack", e.attack * 1,
+			"release", e.rel *0.1,
+
+			"color", i.linlin(0,3,0,0.99),
+
+			"scale", e.sc,
+
+			"sx", cb[i].getSynchronous.(),
+			"sy", -0.0,
+			"ex", cb[i].getSynchronous.(),
+			"ey", -2.0,
+
+			"imageindex", e.ii,
+
+			"rotstart",45,
+			"rotend", 45,
+
+			"amp", 0.13,
+			"speed", 3,
+			"freq", 4,
+
+			"wobble", 100,
+		);
+	};
+
+	SynthDef(\a, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
-		var vib = LFCub.ar(vibfreq, 0, vibamp * env);
-
-		var sig = SinOsc.ar([freq,freq + 2.rand],0, amp) + Saw.ar([freq,freq + 7.rand], vib) * env * 0.4;
-		Out.ar(out, sig);
-
-	}).add;
-
-	SynthDef(\aa, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
-
-		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
-		var sig = SinOsc.ar([freq,freq + 3.rand],0, amp) + Saw.ar([freq,freq + 6.rand], amp) * env;
+		var sig = SinOsc.ar([freq,freq + 7.rand], LocalIn.ar(2) * LFNoise1.ar(0.1,5), amp) * env;
 		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
+		LocalOut.ar(filter);
 		Out.ar(out, filter);
 
 	}).add;
 
-	bind =	Pbind(
-			\args, #[],
-			// musics
-		    \instrument, \long,
-		    \amp, Pwhite(0.3, 0.2),
-		    \root, 0,//Pseq([0,3,6,-3].stutter(27), inf),
-		    \scale, 3,
-		     \octave, 4,//Prand([0,1,2,3,4,5,6,7,8,9,10].stutter(7),inf),
-		    \note, Pseq([0], inf),
-		    \dur, 0.2,//Pfunc{ 2.pow(mx.getSynchronous.linlin(0,1.0,1,6).floor).reciprocal * 2.5},
-		    \attack, Pwhite(0.001,0.01),
-		    \decay, Pwhite(0.1,0.2),
-		    \release, 0.3,//Pfunc{ my.getSynchronous.linlin(0,1.0,0.005,4.5)},//Pwhite(0.05,1.3),
-		    \rel, Pkey(\release),
-		    \ff, 700,//Pfunc{ mx.getSynchronous.linexp(0,1.0,100,12000)},
-		    \rf, Pseq([3,0,3,1,1,3,1], inf),//Pfunc{ my.getSynchronous.linlin(0,1.0,0,4)},
-		    \pp, Pwhite(100, 300),
+	SynthDef(\b, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
 
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = Saw.ar([freq,freq + 2.rand], amp) * env;
+		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
+		LocalOut.ar(filter);
+		Out.ar(out, filter);
 
-		    //visuals
-		    \sh, 3,
-		    \param1, 1,
-		    \param2, 2,
-		    \param3, 3,
-		    \sx, 0,
-		    \sy, 0,
-		    \ex, Prand([-1.5,1.5], inf),
-		    \ey, Prand([-1.5,1.5], inf),
-		    // \oct, Pkey(\octave),
-
-		    // osc out
-			\osc, Pfunc{|e| 
+	}).add;
 	
-				// a = {e.scale}.defer;
-				 // {e.pp.postln}.defer;
 
-				model.netAddr.sendMsg("/shadow", 
-					"shape", e.sh,
-					"duration", e.dur,
-					"attack", e.attack * 1,
-					"release", e.rel * 0.5,
-					"color", (note + (oct * 12)).linlin(30,80,0,0.99),//e.param1,//colour
-					"scale", scale,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),//scale
-					"sx", (note + (oct * 12)).linlin(30,80,-1.8,1.8),//sx
-					"sy", 0,//sy
-					"ex", (note + (oct * 12)).linlin(30,80,-1.8,1.8),//ex
-					"ey", 0.2,//ey
-					
-					"par7", 10,//e.param2.linlin(1,6,0.1,1), // wobble
-					"par8", 0,//e.octave.linlin(3,6,28,10),
-					// "par9", (e.note + (oct * 12)).linlin(0,127,6,1),
-				);
+	SynthDef(\c, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
+
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = Pulse.ar([freq,freq + 3.rand], 0.5, amp) * env;
+		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
+		LocalOut.ar(sig);
+		Out.ar(out, filter);
+
+	}).add;
+
+
+	SynthDef(\d, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
+
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = Blip.ar([freq,freq + 3.rand], LocalIn.ar(2) * LFNoise1.ar(20,1) * freq, amp) * env;
+		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
+		LocalOut.ar(sig);
+		Out.ar(out, filter);
+
+	}).add;
+
+
+	poolSize.do({|i|
+	
+		var bi =	Pbind(
+
+		    \instrument, Pswitch([\a, \b, \c, \d], i, inf),
+		    \amp, Pwhite(0.3, 0.2),
+		    \root, 0,
+		    \scale, 1,
+		     \octave, Pfunc{ 2 + i },
+		    \note, Pfunc{ notes[i].getSynchronous.()},
+		    \dur, Pswitch([0.2, Pseq([0.2, 0.2, 0.4] * 0.5, inf), Pseq([0.2, 0.8, 0.4] * 0.5, inf), Pseq([0.8, 0.2, 0.2] * 0.5, inf)], i, inf),
+		    \attack, 0.02,//Pwhite(0.001,0.01),
+		    \decay, 0.1,//Pwhite(0.2,0.9),
+		    \release, 1.2,
+		    \rel, Pkey(\release),
+		    \ff, Pwhite(300, 7000),
+		    \rf, Pseq([3,0,3,1,1,3,1], inf),
+
+		    \sh, Pswitch([3, 4, 6, 10], i, inf),
+
+		    \sc, Pswitch([8, 2, 4, 1], i, inf),
+
+		    \ii, Prand([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], inf),//Pswitch([1, 4, 7, 10], i, inf),
+
+		    // osc out for viz
+			\osc, Pfunc{|e| 
+				if(isPlayingBlob[i] == true, { vizMessage.(e, i)});
+				true
 			},
-
-
 	    );
 
-	// •• do we just need a pool of patterns we can use...?
-	patterns = Array.with(
-		Ndef(\aPtn, bind).quant_(0.2),
-		Ndef(\bPtn, bind).quant_(0.2),
-		Ndef(\cPtn, bind).quant_(0.2),
-		Ndef(\dPtn, bind).quant_(0.2),
-		Ndef(\ePtn, bind).quant_(0.2)
-	);
+		binds = binds.add(bi);
 
-	Ndef(\bPtn).set(\dur, 0.1);
-	Ndef(\bPtn).set(\release, 0.1);
-	Ndef(\cPtn).set(\dur, 0.4);
-	Ndef(\dPtn).set(\dur, 0.1);
-	Ndef(\dPtn).set(\release, 0.1);
-	// Ndef(\eePtn).set(\instrument, \long);
+	});
+
+
+
+
+	n = [\aPtn, \bPtn, \cPtn, \dPtn];
+
+	patterns = Array.fill(poolSize, {|i|
+		Ndef(n[i], binds[i]).quant_(0.2);
+	});
+
+
+
+	// problem is we need multi channels for data streams
+
+	// Ndef(\bbPtn).set(\dur, 0.1);
+	// Ndef(\bbPtn).set(\release, 0.1);
+	// Ndef(\ccPtn).set(\dur, 0.4);
+	// Ndef(\ddPtn).set(\dur, 0.3);
+	// Ndef(\ddPtn).set(\release, 0.1);
+	// Ndef(\ddPtn).set(\dur, 0.2);
+	// Ndef(\ddPtn).set(\release, 0.1);
+
+	// s.queryAllNodes;
+	// patterns.size.postln;
 
 };
 
@@ -115,6 +163,9 @@ var bind;
 	};
 
 	patterns = [];
+
+	Ndef.clear(0.1);
+
 	~init.(model);
 
 };
@@ -126,14 +177,14 @@ var bind;
 
 	patterns.do{|p|
 		if(p != nil,{
-			p.end(2);
+			p.end(0.1);
 		});
 	};
 
 	patterns = [];
-	
+
 	// need this for reloading or patterns after an edit
-	// Ndef.clear(0.1);
+	// Ndef.clear;
 
 };
 
@@ -141,9 +192,43 @@ var bind;
 ~onInit = {|blob, blobsDict|
 
 	var l = (blob.label.mod(patterns.size));
-	postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 
-	patterns[l].play(0.1);
+	isPlayingBlob[l] = true;
+
+
+	if(patterns[l].isMonitoring == false,{
+		// s.queryAllNodes;
+		// patterns[l].rebuild;
+		patterns[l].play(0.1);
+		postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
+	});
+	patterns[l].group.postln;
+	
+	oscSender.sendMsg("/shadow", 
+
+						"shape", 9,
+
+						"duration", 3,
+						"attack", 1,
+						"release", 1,
+
+						"color", 0,//i.linlin(0,4,0,0.99),//(e.note + (e.octave * 12)).linlin(30,80,0,0.99),
+
+						"scale", 1,//(e.note + (e.oct * 12)).linexp(0,127,2,0.2),
+
+						"sx", -2,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"sy", 0,
+						"ex", 0,//(e.note + (e.octave * 12)).linlin(30,80,-1.8,1.8),
+						"ey", 0,
+
+						"imageindex", 2,
+
+						"rotstart", 90,
+						"rotend", 90,
+
+
+						"wobble", 100,//e.param2.linlin(1,6,0.1,1), // wobble
+					);
 
 };
 
@@ -151,21 +236,23 @@ var bind;
 ~onDeinit = {|blob, blobsDict|
 
 	var l = (blob.label.mod(patterns.size));
-	postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
 
-	if(patterns[l] != nil,{patterns[l].end(0.8)});
+	isPlayingBlob[l] = false;
+
+	if(patterns[l].isMonitoring == true,{
+		patterns[l].stop(0.3);
+		postf("ending : (%)[%] % \n", blob.label, l, patterns[l]);
+	});
 
 };
 
 //------------------------------------------------------
-~onUpdate = {|blob, blobsDict|
+~onUpdate = {|blob, blobsDict, model|
 
 	var l = (blob.label.mod(patterns.size));
-	note = 1 + (blob.center.x.linlin(100,550,0,7).floor * 4);
-	oct = blobsDict.values[0].area.linexp(1.0,16.0,6,3).floor;
-	patterns[l].set(\note, note);
-	patterns[l].set(\octave, oct);
-	patterns[l].set(\ff, blob.area.linexp(1.0,8.0,400,6000));
+	notes[l].value = blob.center.x.linlin(100,550,0,12).floor * 4;
+	cb[l].value = blob.center.x.linlin(0,600,-3.8,3);
+	
 
 };
 
