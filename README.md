@@ -1,4 +1,8 @@
-#  Kinect Explorer
+#  Explorer
+
+
+
+
 
 ## Installation
 
