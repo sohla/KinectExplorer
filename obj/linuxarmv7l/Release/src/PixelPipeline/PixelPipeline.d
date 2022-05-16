@@ -721,7 +721,8 @@ obj/linuxarmv7l/Release/src/PixelPipeline/PixelPipeline.o: \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/Base_PixelProc.hpp \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Base_LineProc.hpp \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/LineProc.hpp \
- /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/BlobModel.hpp
 
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelPipeline.hpp:
 
@@ -2198,3 +2199,5 @@ obj/linuxarmv7l/Release/src/PixelPipeline/PixelPipeline.o: \
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/LineProc.hpp:
 
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/BlobModel.hpp:

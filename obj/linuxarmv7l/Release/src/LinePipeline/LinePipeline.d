@@ -701,11 +701,7 @@ obj/linuxarmv7l/Release/src/LinePipeline/LinePipeline.o: \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Base_LineProc.hpp \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/LineProc.hpp \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp \
- /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Smooth_LineProc.hpp \
- /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Resample_LineProc.hpp \
- /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Reorder_LineProc.hpp \
- /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Ordered_LineProc.hpp \
- /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/OSCOut_LineProc.hpp \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/BlobModel.hpp \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscSender.h \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h \
@@ -716,7 +712,12 @@ obj/linuxarmv7l/Release/src/LinePipeline/LinePipeline.o: \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscBundle.h \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscMessage.h \
- /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscArg.h
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscArg.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Smooth_LineProc.hpp \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Resample_LineProc.hpp \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Reorder_LineProc.hpp \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Ordered_LineProc.hpp \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/OSCOut_LineProc.hpp
 
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/LinePipeline.hpp:
 
@@ -2152,15 +2153,7 @@ obj/linuxarmv7l/Release/src/LinePipeline/LinePipeline.o: \
 
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp:
 
-/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Smooth_LineProc.hpp:
-
-/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Resample_LineProc.hpp:
-
-/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Reorder_LineProc.hpp:
-
-/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Ordered_LineProc.hpp:
-
-/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/OSCOut_LineProc.hpp:
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/BlobModel.hpp:
 
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscSender.h:
 
@@ -2183,3 +2176,13 @@ obj/linuxarmv7l/Release/src/LinePipeline/LinePipeline.o: \
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscMessage.h:
 
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscArg.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Smooth_LineProc.hpp:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Resample_LineProc.hpp:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Reorder_LineProc.hpp:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Ordered_LineProc.hpp:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/OSCOut_LineProc.hpp:

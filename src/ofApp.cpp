@@ -14,6 +14,7 @@ void ofApp::setup(){
 
 //    depthCamera = new KinectDepthCamera();
     depthCamera = new RealSenseDepthCamera();
+    
     depthCamera->setup(model);
     
     gui.setup("inputSettings", "inputSettings.json", 1060, 0);
