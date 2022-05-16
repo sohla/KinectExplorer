@@ -745,6 +745,7 @@
 		F07EE9AB2631567A006D89E9 /* BlobModel.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BlobModel.hpp; sourceTree = "<group>"; };
 		F08B15785026958C81B7CEFA /* deriv.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = deriv.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/ptr2d/deriv.hpp; sourceTree = SOURCE_ROOT; };
 		F0BB69462736484E0014ECE4 /* BlobModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BlobModel.cpp; sourceTree = "<group>"; };
+		F0DFE406282A092300DD47DE /* Clear_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Clear_PixelProc.hpp; sourceTree = "<group>"; };
 		F0E9ADA5A6ADE5F14B6AF8DD /* superres.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = superres.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/superres.hpp; sourceTree = SOURCE_ROOT; };
 		F0F66CDAF4F529BF3C91085B /* videoio.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = videoio.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/videoio/videoio.hpp; sourceTree = SOURCE_ROOT; };
 		F0F97FDA25516FB700FBD370 /* RealSenseDepthCamera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = RealSenseDepthCamera.cpp; path = Sources/RealSenseDepthCamera.cpp; sourceTree = "<group>"; };
@@ -1264,6 +1265,7 @@
 				DFCD9E44C9B18228EE7EF7B0 /* OSCOut_PixelProc.hpp */,
 				AF9EADC5F04177605D34DAC9 /* Dilate_PixelProc.hpp */,
 				EDD6CA843A5D3992AAD09D0F /* Blur_PixelProc.hpp */,
+				F0DFE406282A092300DD47DE /* Clear_PixelProc.hpp */,
 				D2C45D8B167161F351A62036 /* NearFarColor_PixelProc.hpp */,
 				00AB4B2F5FDA96F827E75BF6 /* Erode_PixelProc.hpp */,
 				021042497D48EA006109E755 /* PixelRecorderProc.hpp */,

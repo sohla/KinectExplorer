@@ -152,10 +152,10 @@
 
 	var bootServer = {|f|
 	
-		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
-		var output = ServerOptions.devices.indexOfEqual("External Headphones");
+		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		// var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
+		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
@@ -292,7 +292,7 @@
 				Pen.strokeColor = cols.at(i);
 
 				Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
-				Pen.fillRect(Rect(0 + (i*22),550,10, blob.rect.width * -1));
+				Pen.fillRect(Rect(blob.center.x - 5,550,10, blob.rect.width * -1));
 				// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
 
 				Pen.strokeRect(blob.rect);
@@ -368,7 +368,7 @@
 
 	//------------------------------------------------------
 	QtGUI.palette = QPalette.dark; 
-	window = Window("",Rect(0,0,Window.screenBounds.width * 0.7, Window.screenBounds.height - 300)
+	window = Window("",Rect(0,0,Window.screenBounds.width * 0.5, Window.screenBounds.height - 300)
 		.center_(Window.screenBounds.width*0.85@100)
 	).front;
 
@@ -407,6 +407,7 @@
 		GridLayout.rows(*patchButton.()),	
 		graphView = UserView()
 				.minHeight_(500)
+				.minWidth_(500)
 				.drawFunc_(updateGraphView)
 				.frameRate_(30)
 				.animate_(true)

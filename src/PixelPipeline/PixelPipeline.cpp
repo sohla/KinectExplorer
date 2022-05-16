@@ -14,6 +14,7 @@
 #include "NearFarColor_PixelProc.hpp"
 #include "OSCOut_PixelProc.hpp"
 #include "PixelRecorderProc.hpp"
+//#include "Clear_PixelProc.hpp"
 
 #include "LinePipeline.hpp"
 
@@ -23,6 +24,7 @@ void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
 
     //------------------------------------------
 
+//    processors.push_back( new Clear_PixelProc());
     processors.push_back( new PixelRecorderProc());
     processors.push_back( new NearFar_PixelProc());
     processors.push_back( new Blur_PixelProc());

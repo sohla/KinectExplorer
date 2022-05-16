@@ -65,6 +65,12 @@ Data
 ~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/bin/data
 
 
+
+Realsense
+
+https://jetsonhacks.com/2019/12/22/install-realsense-camera-in-5-minutes-jetson-nano/
+
+
 ## OSC control
 
 GUI : 

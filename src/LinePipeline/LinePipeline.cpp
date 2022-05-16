@@ -115,13 +115,13 @@ void LinePipeline::draw(const DepthModel &model){
 ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
     
     procImage.setFromPixels(pixel);
-    
+
     if(onParam.get()){
 
         contourFinder.setThreshold(thresholdParam.get());
         contourFinder.setMinAreaRadius(minRadiusParam.get());
         contourFinder.setMaxAreaRadius(maxRadiusParam.get());
-
+        
         contourFinder.findContours(procImage);
         
         trackerFollower.setPersistence(15);

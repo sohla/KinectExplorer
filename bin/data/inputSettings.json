@@ -65,10 +65,10 @@
             "cropBot": "0.670182",
             "cropLeft": "0.194603",
             "cropRight": "0.833379",
-            "cropTop": "0.19059",
+            "cropTop": "0.331633",
             "cv-threshold": "0",
             "draw": "1",
-            "far": "102",
+            "far": "149",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -101,7 +101,7 @@
             "threshold": "249"
         },
         "realtime": {
-            "realtime": "1"
+            "realtime": "0"
         },
         "reorder": {
             "draw": "1",

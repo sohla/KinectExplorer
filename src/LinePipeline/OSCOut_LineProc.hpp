@@ -91,14 +91,14 @@ class OSCOut_LineProc : public Base_LineProc {
         
         // blob model is now sending osc data!
  
-        if(onParam.get()){
-
-            string::size_type sz;
-            int portInt = stoi( portParam.get(),&sz);
-            sender.setup(ipParam.get(), portInt);
-            sender.sendMessage(blob.getOSCMessage(), false);
-        };
-        
+//        if(onParam.get()){
+//
+//            string::size_type sz;
+//            int portInt = stoi( portParam.get(),&sz);
+//            sender.setup(ipParam.get(), portInt);
+//            sender.sendMessage(blob.getOSCMessage(), false);
+//        };
+//        
         /*
         if(onParam.get()){
             
