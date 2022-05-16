@@ -697,7 +697,19 @@ obj/linuxarmv7l/Release/src/LinePipeline/Base_LineProc.o: \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Flow.h \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h \
  /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Kalman.h \
- /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/BlobModel.hpp \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscSender.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscException.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscBundle.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscMessage.h \
+ /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscArg.h
 
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/Base_LineProc.hpp:
 
@@ -2126,3 +2138,27 @@ obj/linuxarmv7l/Release/src/LinePipeline/Base_LineProc.o: \
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Kalman.h:
 
 /home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/src/BlobModel.hpp:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscSender.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscException.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscBundle.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscMessage.h:
+
+/home/sohla/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/addons/ofxOsc/src/ofxOscArg.h:

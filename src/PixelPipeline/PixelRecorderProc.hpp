@@ -45,12 +45,6 @@ class PixelRecorderProc : public Base_PixelProc {
         #endif
 
         vidRecorder.setFfmpegLocation(ffmpegPath); // use this is you have ffmpeg installed in your data folder
-
-        vidRecorder.setVideoCodec("mpeg4");
-        vidRecorder.setVideoBitrate("800k");
-        vidRecorder.setPixelFormat("gray");
-
-        
     }
 
     void proc(){
