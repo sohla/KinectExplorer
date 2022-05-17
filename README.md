@@ -32,14 +32,16 @@ https://gist.github.com/jvcleave/e49c0b52085d040a5cd8a3385121cb91
 Follow install instructions OF and ofx addons.
 
 Build issues with fmod lib may require change Build phase script 
+```
 install_name_tool -change @rpath/libfmod.dylib @executable_path/../Frameworks/libfmodex.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
+```
 https://forum.openframeworks.cc/t/building-in-macos-11-0-big-sur/36581/4
 
 
 Realsense
 
 Build from source
-```shell
+```
 mkdir build && cd build
 sudo xcode-select –reset
 cmake .. -DBUILD_EXAMPLES=true -DBUILD_WITH_OPENMP=false -DBUILD_SHARED_LIBS=false -DHWM_OVER_XU=false -G Xcode
