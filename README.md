@@ -12,14 +12,7 @@ OSX and Linux arm7 (Jetson Nano)
 ### Dependencies
 
 openframeworks
-including :
-ofxOpenCv
-ofxCv
-ofxGui
-ofxKinect
-ofxOsc
-ofxVideoRecorder
-ofxLibRealSense2
+including : ofxOpenCv, ofxCv, ofxGui, ofxKinect, ofxOsc, ofxVideoRecorder, ofxLibRealSense2
 
 ### Installation
 
@@ -30,36 +23,50 @@ Build Examples for testing
 Download each ofx and test 
 
 
-
-
+Links : 
 https://openframeworks.cc/setup/linux-install/
-
 https://gist.github.com/madelinegannon/237733e6c114f156b31366f47c1f3d32
-
 https://gist.github.com/jvcleave/e49c0b52085d040a5cd8a3385121cb91
 
-```
-> code
-```
+**OSX**
+Follow install instructions OF and ofx addons.
 
-OF
+Build issues with fmod lib may require change Build phase script 
+install_name_tool -change @rpath/libfmod.dylib @executable_path/../Frameworks/libfmodex.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
+https://forum.openframeworks.cc/t/building-in-macos-11-0-big-sur/36581/4
+
+
+Realsense
+
+Build from source
+```
+mkdir build && cd build
+sudo xcode-select –reset
+cmake .. -DBUILD_EXAMPLES=true -DBUILD_WITH_OPENMP=false -DBUILD_SHARED_LIBS=false -DHWM_OVER_XU=false -G Xcode
+```
+open XCode project & build :
+libfw
+librealsense-file
+linrealsense2
+linrealsense2-gl (needed to build viewer for testing)
+
+
+**Jetson Nano (linux amr7)**
 install dependencies! in scripts/ubuntu/
 
+Project Generator cli
+```
 projectGenerator -o"~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release" -t"vscode" kinectExample/
-
+```
 do we need to pass ofx addons paths : its seems not
 to add ofx : use
 -a"ofxGui ofxCv"
-
-
-
 
 ofxKinect
 
 install libfreenect
 add rules.d to /etc/udev to bypass permissions
 xbox 360 works
-
 
 Libs to add :
 ffmpeg
@@ -68,22 +75,26 @@ also need poco : check website for a build (needs restart)
 ofxVideoRecorder : set path to ffmpeg /  remove some audio calls : 
 framerate issues : machine not fast enough. can build ffmpeg for cuda? 
 
-
 install : lm-sensors for temp monitoring
 
 OF path
+```
 ~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release
-
+```
 Project Path 
+```
 ~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer
-
+```
 Data
+```
 ~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/bin/data
+```
 
 Realsense
 https://jetsonhacks.com/2019/12/22/install-realsense-camera-in-5-minutes-jetson-nano/
 
-## OSC control
+
+## OSC GUI control
 
 GUI : 
     in port : 57000
@@ -97,15 +108,8 @@ b.sendMsg("/inputSettings/pixel_recorder/recording", true);
 b.sendMsg("/inputSettings/pixel_recorder/recording", false);
 b.free;
     
-Kinect Explorer : 
-    pixels : port 57140
-    lines : port 57130
 
-Example 
-
-
-    
-API :
+## OSC Output (deprciated)    
 
     /ke/pixel
         0 diffMean
@@ -139,40 +143,15 @@ Path : /ke/line
 9 rect.w
 10 size of line points (max = line 220)
 11...n n=size of line points, data is interleaved (x0,y0,x1,y1...)
-
     
-    
-    
-## Monitoring
-
+## Monitoring (linux)
 tegrastats --interval 2000
-
 * in ms. 
-
-
-
 
 
 ## Notes
 
-#!## copy movie files 
-
-scp sohla@192.168.20.14:~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/bin/data/ke_depth2020-10-16-11-50-26.mov ~/Movies
-
+Copy video files over 
+scp xxxx@192.168.20.14:~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/bin/data/ke_depth2020-10-16-11-50-26.mov ~/Movies
 
 
-
-
-
-## TODO
-
-+ refactor contour finder using ofxCv::ContourFinder
-+ add tracker and persist name
-+ struct for each blob/line
-+ find ordered line
-+ top/bottom half of line
-+ velocity of blob
-
-+ player as a pixel proc?
-
-	
