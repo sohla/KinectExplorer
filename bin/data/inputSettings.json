@@ -75,6 +75,20 @@
             "on": "1",
             "vert-invert": "0"
         },
+        "nearfar": {
+            "cropBot": "0.75",
+            "cropLeft": "0",
+            "cropRight": "1",
+            "cropTop": "0.3",
+            "cv-threshold": "0",
+            "draw": "0",
+            "far": "85",
+            "horz-invert": "0",
+            "map": "0",
+            "near": "255",
+            "on": "1",
+            "vert-invert": "0"
+        },
         "osc_out": {
             "ip": "127.0.0.1",
             "on": "1",
@@ -101,7 +115,7 @@
             "threshold": "249"
         },
         "realtime": {
-            "realtime": "0"
+            "realtime": "1"
         },
         "reorder": {
             "draw": "1",
