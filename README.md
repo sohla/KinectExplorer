@@ -1,15 +1,7 @@
-#  Kinect Explorer
+#  Explorer
 
 
 
-
-
-## Develpoment @Cabin
-
-developmachine : soh_la@192.168.20.6
-jetson nano : sohla@192.168.20.14
-
-* not static ip addresses
 
 
 ## Installation
@@ -20,7 +12,9 @@ https://gist.github.com/madelinegannon/237733e6c114f156b31366f47c1f3d32
 
 https://gist.github.com/jvcleave/e49c0b52085d040a5cd8a3385121cb91
 
-
+```
+> code
+```
 
 OF
 install dependencies! in scripts/ubuntu/
