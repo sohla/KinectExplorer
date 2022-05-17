@@ -125,7 +125,7 @@ class NearFar_PixelProc : public Base_PixelProc {
         procImage.mirror(horzInvertParam.get(), vertInvertParam.get());
 
     };
-    string title(){return "near far";};
+    string title(){return "nearfar";};
     
 //    void draw(const DepthModel &model){
 //
