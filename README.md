@@ -22,11 +22,9 @@ Build OF if needed
 Build Examples for testing
 Download each ofx and test 
 
-
-Links : 
-<https://openframeworks.cc/setup/linux-install/>
-<https://gist.github.com/madelinegannon/237733e6c114f156b31366f47c1f3d32>
-<https://gist.github.com/jvcleave/e49c0b52085d040a5cd8a3385121cb91>
+https://openframeworks.cc/setup/linux-install/
+https://gist.github.com/madelinegannon/237733e6c114f156b31366f47c1f3d32
+https://gist.github.com/jvcleave/e49c0b52085d040a5cd8a3385121cb91
 
 **OSX**
 Follow install instructions OF and ofx addons.
@@ -38,7 +36,7 @@ install_name_tool -change @rpath/libfmod.dylib @executable_path/../Frameworks/li
 ```
 
 
-Realsense
+**Realsense**
 
 Build from source
 ```
@@ -69,7 +67,7 @@ do we need to pass ofx addons paths : its seems not
 to add ofx : use
 -a"ofxGui ofxCv"
 
-ofxKinect
+**ofxKinect**
 
 install libfreenect
 add rules.d to /etc/udev to bypass permissions
