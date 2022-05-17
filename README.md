@@ -39,7 +39,7 @@ https://forum.openframeworks.cc/t/building-in-macos-11-0-big-sur/36581/4
 Realsense
 
 Build from source
-```
+```shell
 mkdir build && cd build
 sudo xcode-select –reset
 cmake .. -DBUILD_EXAMPLES=true -DBUILD_WITH_OPENMP=false -DBUILD_SHARED_LIBS=false -DHWM_OVER_XU=false -G Xcode
@@ -49,6 +49,11 @@ libfw
 librealsense-file
 linrealsense2
 linrealsense2-gl (needed to build viewer for testing)
+
+https://github.com/IntelRealSense/librealsense/blob/master/doc/installation_osx.md
+https://dev.intelrealsense.com/docs/build-configuration
+https://dev.intelrealsense.com/docs/macos-installation-for-intel-realsense-sdk#section-building-from-source
+https://github.com/IntelRealSense/librealsense/releases?page=1
 
 
 **Jetson Nano (linux amr7)**
