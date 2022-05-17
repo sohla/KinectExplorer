@@ -9,7 +9,7 @@ Realsense 400 series
 Platforms :
 OSX and Linux arm7 (Jetson Nano)
 
-## Dependencies
+### Dependencies
 
 openframeworks
 including :
@@ -21,7 +21,7 @@ ofxOsc
 ofxVideoRecorder
 ofxLibRealSense2
 
-## Installation
+### Installation
 
 Download openframeworks 
 Install OF Dependencies 
@@ -59,7 +59,6 @@ ofxKinect
 install libfreenect
 add rules.d to /etc/udev to bypass permissions
 xbox 360 works
-kinect for Windows does not (yet)
 
 
 Libs to add :
@@ -72,9 +71,6 @@ framerate issues : machine not fast enough. can build ffmpeg for cuda?
 
 install : lm-sensors for temp monitoring
 
-
-
-
 OF path
 ~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release
 
@@ -84,12 +80,8 @@ Project Path
 Data
 ~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/bin/data
 
-
-
 Realsense
-
 https://jetsonhacks.com/2019/12/22/install-realsense-camera-in-5-minutes-jetson-nano/
-
 
 ## OSC control
 
