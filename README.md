@@ -57,7 +57,13 @@ https://github.com/IntelRealSense/librealsense/releases?page=1
 
 
 **Jetson Nano (linux amr7)**
-install dependencies! in scripts/ubuntu/
+Download linux arm7 from OF website
+Install dependencies! in scripts/ubuntu/
+Edit make files 
+https://gist.github.com/madelinegannon/237733e6c114f156b31366f47c1f3d32#editing-make-files
+
+and continue following build instructions
+
 
 Project Generator cli
 ```
