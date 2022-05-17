@@ -38,3 +38,20 @@ o = OSCFunc({ |msg, time, addr, recvPort|
 }, '/poscr');
 
 o.free;
+
+
+
+
+
+b = NetAddr("192.168.1.55",57000);
+b.sendMsg("/inputSettings/blur/blur", 10);
+
+b.sendMsg("/inputSettings/nearfar/far", 255);
+b.sendMsg("/inputSettings/nearfar/far", 100);
+
+
+b.sendMsg("/inputSettings/realtime/realtime", 0);
+b.sendMsg("/inputSettings/realtime/realtime", 1);
+b.sendMsg("/inputSettings/pixel_recorder/recording", true);
+b.sendMsg("/inputSettings/pixel_recorder/recording", false);
+b.free;

@@ -1,10 +1,36 @@
-#  Explorer
+#  Kinect Explorer
 
+Tool for processing depth data, image processing, blob tracking and sending data out via OSC.
 
+Depth Camera supported : 
+Kinetic
+Realsense 400 series
 
+Platforms :
+OSX and Linux arm7 (Jetson Nano)
 
+## Dependencies
+
+openframeworks
+including :
+ofxOpenCv
+ofxCv
+ofxGui
+ofxKinect
+ofxOsc
+ofxVideoRecorder
+ofxLibRealSense2
 
 ## Installation
+
+Download openframeworks 
+Install OF Dependencies 
+Build OF if needed
+Build Examples for testing
+Download each ofx and test 
+
+
+
 
 https://openframeworks.cc/setup/linux-install/
 
