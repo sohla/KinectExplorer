@@ -126,6 +126,8 @@
             "minRadius": "30",
             "on": "1",
             "persistance": "15",
+            "sc": "127.0.0.1",
+            "td": "192.168.1.150",
             "threshold": "127"
         },
         "realtime": {

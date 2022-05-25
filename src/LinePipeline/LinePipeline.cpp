@@ -33,6 +33,8 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     group.add(maxRadiusParam);
     group.add(persistanceParam);
     group.add(distanceParam);
+    
+
     gui.add(group);
 
     procImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
@@ -177,7 +179,6 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 proc->process(followers[i]);
             };
         };
-        
     };
     
     return procImage.getPixels();

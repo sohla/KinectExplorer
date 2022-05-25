@@ -10,6 +10,7 @@
 
 #include "ofxCv.h"
 #include "ofxOscSender.h"
+#include "ofxArgParser.h"
 
 // handy model for collecting data from tracker and procs
 // gets passed to everything for each frame
@@ -24,7 +25,9 @@ protected:
     float startedDying;
     ofxOscSender scSender;
     ofxOscSender tdSender;
-
+    std::string scIP;
+    std::string tdIP;
+    
 public:
     
     BlobModel()
@@ -37,7 +40,6 @@ public:
 
     void sendOSCMessage();
     void addDataToOSCMessage();
-    
     
     ofxOscMessage getOSCMessage(){return oscMessage;};
     

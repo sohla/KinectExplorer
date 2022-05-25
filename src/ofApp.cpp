@@ -1,7 +1,6 @@
 #include "ofApp.h"
 
 
-//float ofApp::scale{1.65};
 
 
 //--------------------------------------------------------------
@@ -39,7 +38,6 @@ void ofApp::setup(){
     pixelPipeline.setup(model, gui);
 
     gui.loadFromFile("inputSettings.json");
-
 }
 
 //--------------------------------------------------------------

@@ -141,14 +141,11 @@ void BlobModel::kill() {
 
 void BlobModel::sendOSCMessage(){
 
-    //•• set in OSC out
-    scSender.setup("127.0.0.1", 57120);
+    scSender.setup(ofxArgParser::getValue("sc") , 57120);
     scSender.sendMessage(oscMessage, false);
 
-    tdSender.setup("192.168.1.150", 57130);
-//    tdSender.setup("127.0.0.1", 57130);
+    tdSender.setup(ofxArgParser::getValue("td") , 57130);
     tdSender.sendMessage(oscMessage, false);
-
 }
 
 
