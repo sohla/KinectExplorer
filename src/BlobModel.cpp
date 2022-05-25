@@ -17,6 +17,22 @@
  /ke/update     sent for each follower update called followed by data.
  /ke/deinit     sent for each follower kill called followed by data.
  
+ Index      Data
+ 0          label
+ 1          state
+ 2          area
+ 3          perimeter
+ 4          center x
+ 5          center y
+ 6          bounds x
+ 7          bounds y
+ 8          bounds width
+ 9          bounds height
+ 10         index
+ 11         velocity x
+ 12         velocity y
+ 13         vertices size
+ 14         vertices[x0,y0,x1,y1...]
  
  
  
@@ -131,7 +147,7 @@ void BlobModel::sendOSCMessage(){
     scSender.setup("127.0.0.1", 57120);
     scSender.sendMessage(oscMessage, false);
 
-    tdSender.setup("192.168.0.143", 57130);
+    tdSender.setup("192.168.1.150", 57130);
 //    tdSender.setup("127.0.0.1", 57130);
     tdSender.sendMessage(oscMessage, false);
 

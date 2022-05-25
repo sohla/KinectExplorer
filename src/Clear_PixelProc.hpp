@@ -16,16 +16,13 @@
 
 class Clear_PixelProc : public Base_PixelProc {
     
-    ofParameter<bool> triggerParam = ofParameter<bool>("trigger",true);
-
     void setup(const DepthModel &model, ofxPanel &gui){
         
         ofParameterGroup group;
 
         group.setName(title());
         group.add(onParam);
-        group.add(drawParam);
-        group.add(triggerParam);
+        group.add(drawParam); 
         gui.add(group);
 
         procImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
@@ -33,12 +30,10 @@ class Clear_PixelProc : public Base_PixelProc {
     }
 
     void proc(){
-
-        if(triggerParam.get()){
-            procImage.clear();
-        }
-
+        ofPixels & pix = procImage.getPixels();
+        for(int i = 0; i < pix.size(); i++) {pix[i] = 0;};
     };
+    
     string title(){return "clear";};
 };
 
