@@ -8,7 +8,20 @@
 //#include <stdio.h>
 #include "BlobModel.hpp"
 
-
+/*
+ 
+ OSC API
+ 
+ Command        Notes
+ /ke/init       sent for each follower setup called followed by data.
+ /ke/update     sent for each follower update called followed by data.
+ /ke/deinit     sent for each follower kill called followed by data.
+ 
+ 
+ 
+ 
+ 
+ */
 
 const float dyingTime = 0.5;
 
@@ -26,8 +39,8 @@ void BlobModel::setup(const cv::Rect& track) {
     addDataToOSCMessage();
     sendOSCMessage();
 
-    float curTime = ofGetElapsedTimef();
-    std::cout << curTime << ": " << getLabel() << ": init" <<  std::endl;
+//    float curTime = ofGetElapsedTimef();
+//    std::cout << curTime << ": " << getLabel() << ": init" <<  std::endl;
 
 }
 
@@ -59,6 +72,8 @@ void BlobModel::addDataToOSCMessage(){
 //     std::cout << " : " << line.size() << " : " << area << " : " << perimeter << center << " : " ;
     
     
+    //send dimensions of camera img
+    
     oscMessage.addIntArg(getLabel());//0
     oscMessage.addIntArg(state);//1
 
@@ -79,8 +94,8 @@ void BlobModel::addDataToOSCMessage(){
     oscMessage.addInt32Arg(velocity.x);//11
     oscMessage.addInt32Arg(velocity.y);//12
 
-    oscMessage.addInt32Arg(currLine.size());//13
-
+    oscMessage.addInt64Arg(currLine.size());//13
+    
     for( auto &vert :  currLine.getVertices()){//14..( size = //10)
         oscMessage.addDoubleArg(vert.x);
         oscMessage.addDoubleArg(vert.y);
@@ -105,13 +120,14 @@ void BlobModel::kill() {
     
     sendOSCMessage();
 
-    float curTime = ofGetElapsedTimef();
-    std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
+//    float curTime = ofGetElapsedTimef();
+//    std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
 
 }
 
 void BlobModel::sendOSCMessage(){
 
+    //•• set in OSC out
     scSender.setup("127.0.0.1", 57120);
     scSender.sendMessage(oscMessage, false);
 

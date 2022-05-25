@@ -23,6 +23,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 
     ofParameterGroup group;
 
+    
     group.setName(title());
     group.add(onParam);
     group.add(drawParam);
@@ -71,6 +72,10 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
 
 void LinePipeline::draw(const DepthModel &model){
 
+    //•• not drawing line into procImage....
+    //••        procImage.draw(0, 0, model.depthCameraWidth * model.depthCameraScale, model.depthCameraHeight * model.depthCameraScale);
+    //•• drawing to screen
+    
     if(drawParam.get()){
 
         ofPushMatrix();
@@ -130,7 +135,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         ofxCv::RectTracker& contourTracker = contourFinder.getTracker();
         trackerFollower.track(contourFinder.getBoundingRects());
         
-            
+        // get our lovely custom follower
         vector<BlobModel>& followers = trackerFollower.getFollowers();
         
         for(int i = 0; i < followers.size(); i++) {
@@ -146,12 +151,12 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                     const cv::Rect& c = contourFinder.getBoundingRects()[j];
                     if(current == c){
                         // so we found a rect that is in the list
-                        // assuming index also points to the coreesponding polyline
+                        // assuming index also points to the corresponding polyline
                         followers[i].line = contourFinder.getPolyline(j);
                     }
                 }
 
-                // let's populate the blobModel (followers)
+                // let's populate the blobModel (followers) with some extra data (velocity, curr/prev position etc.)
                 followers[i].index = i;
                 followers[i].currentRect = current;
                 followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
@@ -164,7 +169,9 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 }else{
                     followers[i].velocity = ofVec2f(0,0);
                 }
-
+            
+            //•• for each follower[i] pass DepthModel?
+            
             for( auto &proc : processors ){
                 proc->process(followers[i]);
             };

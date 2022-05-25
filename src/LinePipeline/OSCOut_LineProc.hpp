@@ -34,7 +34,7 @@ class OSCOut_LineProc : public Base_LineProc {
     void setup(ofxPanel &gui){
 
         ofParameterGroup group;
-
+        //•• add listening
         group.setName(title());
         group.add(onParam);
         group.add(ipParam);

@@ -82,7 +82,7 @@
             "cropTop": "0.3",
             "cv-threshold": "0",
             "draw": "0",
-            "far": "85",
+            "far": "170",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -115,7 +115,7 @@
             "threshold": "249"
         },
         "realtime": {
-            "realtime": "1"
+            "realtime": "0"
         },
         "reorder": {
             "draw": "1",

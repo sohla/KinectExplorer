@@ -15,9 +15,7 @@
 // gets passed to everything for each frame
 
 enum BlobState {
-//    enum type {
-        initState = 1, updateState = 2, deinitState = 3
-//    };
+    initState = 1, updateState = 2, deinitState = 3
 };
 
 class BlobModel : public ofxCv::RectFollower {
@@ -43,7 +41,7 @@ public:
     
     ofxOscMessage getOSCMessage(){return oscMessage;};
     
-    
+    // useful data
     //•• make below protected?
     ofPolyline line;
     
