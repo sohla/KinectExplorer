@@ -94,7 +94,7 @@ void BlobModel::addDataToOSCMessage(){
     oscMessage.addInt32Arg(velocity.x);//11
     oscMessage.addInt32Arg(velocity.y);//12
 
-    oscMessage.addInt64Arg(currLine.size());//13
+    oscMessage.addInt32Arg(currLine.size());//13
     
     for( auto &vert :  currLine.getVertices()){//14..( size = //10)
         oscMessage.addDoubleArg(vert.x);

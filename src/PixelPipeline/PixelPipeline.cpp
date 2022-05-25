@@ -29,6 +29,7 @@ void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
     processors.push_back( new NearFar_PixelProc());
     processors.push_back( new Blur_PixelProc());
     //processors.push_back( new OSCOut_PixelProc("127.0.0.1","57120"));
+    //••generator
     processors.push_back( new LinePipeline());
 
     //------------------------------------------

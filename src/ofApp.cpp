@@ -32,9 +32,9 @@ void ofApp::setup(){
     group.add(realtimeParam);
     gui.add(group);
     
+    pixelPlayer.setup("ke_depth2021-07-31-11-02-03.mov");
 //    pixelPlayer.setup("upDownLeftRight.mov");
-        pixelPlayer.setup("ke_depth2021-07-31-11-02-03.mov");
-//        pixelPlayer.setup("ke_depth2021-07-31-10-54-18.mov");
+//    pixelPlayer.setup("ke_depth2021-07-31-10-54-18.mov");
     
     pixelPipeline.setup(model, gui);
 
@@ -44,16 +44,6 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
-//    pixelPlayer.update([&](const ofPixels &pixels){
-//        pixelPipeline.update(model, pixels);
-//    });
-
-//    depthCamera->update([&](const ofPixels &pixels){
-//        pixelPipeline.update(model, pixels);
-//    });
-
-    
 
     if(realtimeParam.get() == true){
 
@@ -63,9 +53,7 @@ void ofApp::update(){
 
         // update returns next frames pixels
         depthCamera->update([&](const ofPixels &pixels){
-
             pixelPipeline.update(model, pixels);
-
         });
     }else{
 
@@ -76,10 +64,7 @@ void ofApp::update(){
     }
 
     // OSC receiver
-//    updateOSC();
-    
     oscParamSync.update();
-    
     
 }
 

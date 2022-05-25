@@ -126,6 +126,9 @@
 
 	//------------------------------------------------------
 	var row = 3, col = 3;
+	var makePatch = {
+		(\file: "fourTemplatePatch3.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false)
+	};
 	var patches = [
 		// (\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		// (\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
@@ -138,7 +141,7 @@
 
 		// (\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		// (\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "fourTemplatePatch3.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		makePatch.(),
 		
 		// (\file: "frogFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 		(\file: "longFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
