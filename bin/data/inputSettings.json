@@ -5,6 +5,10 @@
             "draw": "0",
             "on": "1"
         },
+        "clear": {
+            "draw": "0",
+            "on": "0"
+        },
         "dilate": {
             "draw": "0",
             "on": "1"
@@ -82,7 +86,7 @@
             "cropTop": "0.3",
             "cv-threshold": "0",
             "draw": "0",
-            "far": "170",
+            "far": "177",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -111,8 +115,18 @@
             "maxRadius": "255",
             "minRadius": "18",
             "on": "1",
-            "persistance": "0",
+            "persistance": "15",
             "threshold": "249"
+        },
+        "pixelpoint": {
+            "blobs": "1",
+            "distance": "255",
+            "draw": "1",
+            "maxRadius": "238",
+            "minRadius": "30",
+            "on": "1",
+            "persistance": "15",
+            "threshold": "127"
         },
         "realtime": {
             "realtime": "0"

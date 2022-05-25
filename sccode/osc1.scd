@@ -44,6 +44,18 @@ o.free;
 
 
 b = NetAddr("192.168.1.55",57000);
+
+b = NetAddr("127.0.0.1",57000);
+
+(
+{
+b.sendMsg("/inputSettings/pixelpoint/persistance", 1);
+b.sendMsg("/inputSettings/clear/on", 1);0.1.wait;
+b.sendMsg("/inputSettings/pixelpoint/persistance", 15);
+b.sendMsg("/inputSettings/clear/on", 0);
+}.fork
+)
+
 b.sendMsg("/inputSettings/blur/blur", 10);
 
 b.sendMsg("/inputSettings/nearfar/far", 255);

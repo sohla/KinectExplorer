@@ -2,6 +2,7 @@
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
 	// var netAddr = NetAddr.new("127.0.0.1", 10001);
 	var netAddr = NetAddr.new("192.168.1.150", 10001);
+	var keAddr = NetAddr("127.0.0.1",57000);
 	var numOfBlobs = 4;
 
 
@@ -99,6 +100,18 @@
 	);
 	//------------------------------------------------------
 
+	var resetKE = {
+
+		{
+
+			keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 1);
+			keAddr.sendMsg("/inputSettings/clear/on", 1);
+			0.1.wait;
+			keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 15);
+			keAddr.sendMsg("/inputSettings/clear/on", 0);
+		}.fork
+
+	};
 
 	//------------------------------------------------------
 	var filter = {|input,history,friction = 0.5|
@@ -359,6 +372,7 @@
 
 				.action_({|b|
 					if(b.value == 1,{
+						resetKE.();//•• maybe not
 						m.isOn = true;
 						m.env.use{~init.(m)}; 
 					},{
@@ -392,6 +406,7 @@
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
 			.action_({|b|
+				resetKE.();
 				patches.do({|m| 
 					loadPatch.(m);
 					m.env.use{
@@ -433,7 +448,7 @@
 	);
 
 
-	// s.plotTreeView(0.5, serverView);
+	 // s.plotTreeView(0.5, serverView);
 
 	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
 		.value_((0..49));
@@ -597,6 +612,8 @@
 
 		// load all data into patches
 		patches.do({|m| loadPatch.(m)});
+
+		resetKE.();
 	});
 
 

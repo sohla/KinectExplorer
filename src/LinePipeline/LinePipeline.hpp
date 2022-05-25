@@ -15,7 +15,7 @@
 
 class LinePipeline : public Base_PixelProc {
     
-    string title(){return "pixel to point";};
+    string title(){return "pixelpoint";};
     
     ofParameter<int> blobsParam = ofParameter<int>("blobs",1,0,MAX_BLOBS);
     ofParameter<int> thresholdParam = ofParameter<int>("threshold",127,0,255);

@@ -35,8 +35,6 @@
  14         vertices[x0,y0,x1,y1...]
  
  
- 
- 
  */
 
 const float dyingTime = 0.5;

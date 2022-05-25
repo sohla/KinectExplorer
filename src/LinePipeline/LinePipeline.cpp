@@ -31,7 +31,7 @@ void LinePipeline::setup(const DepthModel &model, ofxPanel &gui){
     group.add(thresholdParam);
     group.add(minRadiusParam);
     group.add(maxRadiusParam);
-//    group.add(persistanceParam);
+    group.add(persistanceParam);
     group.add(distanceParam);
     gui.add(group);
 
@@ -129,7 +129,7 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
         
         contourFinder.findContours(procImage);
         
-        trackerFollower.setPersistence(15);
+        trackerFollower.setPersistence(persistanceParam.get());//15
         trackerFollower.setMaximumDistance(distanceParam.get());
 
         ofxCv::RectTracker& contourTracker = contourFinder.getTracker();
