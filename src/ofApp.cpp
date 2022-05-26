@@ -13,18 +13,13 @@ void ofApp::setup(){
 
 //    depthCamera = new KinectDepthCamera();
     depthCamera = new RealSenseDepthCamera();
-    
     depthCamera->setup(model);
     
+    // load settings
     gui.setup("inputSettings", "inputSettings.json", 1060, 0);
     
-    // gui with OSC
-    // can send msgs remotely (eg. from sc)
-    // b = NetAddr("127.0.0.1",57000);
-    // b.sendMsg("/inputSettings/blur/blur", 5);
-    // msg path: /inputSettings/xxGROUPxx/xxPARAMNAMExx
+    // setup for remote control via OSC
     oscParamSync.setup((ofParameterGroup&)gui.getParameter(), INPORT, "localhost", SCPORT);
-
     
     ofParameterGroup group;
     group.setName("realtime");
