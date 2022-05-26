@@ -141,6 +141,9 @@ void BlobModel::kill() {
 
 void BlobModel::sendOSCMessage(){
 
+    
+    std::cout << ofxArgParser::getValue("sc") << std::endl;
+
     scSender.setup(ofxArgParser::getValue("sc") , 57120);
     scSender.sendMessage(oscMessage, false);
 
