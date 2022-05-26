@@ -141,13 +141,21 @@ void BlobModel::kill() {
 
 void BlobModel::sendOSCMessage(){
 
-    
-//    std::cout << ofxArgParser::getValue("sc") << std::endl;
+    std::string scip = "127.0.0.1";
+    std::string tdip = "127.0.0.2";
 
-    scSender.setup(ofxArgParser::getValue("sc") , 57120);
+    if(ofxArgParser::hasKey("sc")){
+        scip = ofxArgParser::getValue("sc");
+    }
+
+    if(ofxArgParser::hasKey("td")){
+        tdip = ofxArgParser::getValue("td");
+    }
+
+    scSender.setup(scip, 57120);
     scSender.sendMessage(oscMessage, false);
 
-    tdSender.setup(ofxArgParser::getValue("td") , 57130);
+    tdSender.setup(tdip , 57130);
     tdSender.sendMessage(oscMessage, false);
 }
 
