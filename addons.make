@@ -5,3 +5,4 @@ ofxKinect
 ofxOsc
 ofxVideoRecorder
 ofxLibRealSense2
+ofxPoco

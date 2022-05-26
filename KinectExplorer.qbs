@@ -12,6 +12,9 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
+            'src/BlobModel.cpp',
+            'src/BlobModel.hpp',
+            'src/Clear_PixelProc.hpp',
             'src/LinePipeline/Base_LineProc.cpp',
             'src/LinePipeline/Base_LineProc.hpp',
             'src/LinePipeline/LinePipeline.cpp',
@@ -55,6 +58,7 @@ Project{
             'ofxOsc',
             'ofxVideoRecorder',
             'ofxLibRealSense2',
+            'ofxPoco',
         ]
 
         // additional flags for the project. the of module sets some
