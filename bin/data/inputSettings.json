@@ -18,6 +18,15 @@
             "draw": "0",
             "on": "0"
         },
+        "generator": {
+            "UnknownName": "1",
+            "animate": "1",
+            "blobs": "4",
+            "draw": "0",
+            "on": "1",
+            "random": "1",
+            "speed": "0.0816327"
+        },
         "keNDIReceiver": {
             "draw": "0",
             "on": "1"
@@ -86,7 +95,7 @@
             "cropTop": "0.3",
             "cv-threshold": "0",
             "draw": "0",
-            "far": "177",
+            "far": "75",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -119,7 +128,7 @@
             "threshold": "249"
         },
         "pixelpoint": {
-            "blobs": "1",
+            "blobs": "0",
             "distance": "255",
             "draw": "1",
             "maxRadius": "238",
@@ -158,8 +167,8 @@
         },
         "smooth": {
             "draw": "1",
-            "on": "1",
-            "smooth": "4"
+            "on": "0",
+            "smooth": "2"
         },
         "switches": {
             "ApplyFilter": "0",

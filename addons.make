@@ -2,7 +2,7 @@ ofxOpenCv
 ofxCv
 ofxGui
 ofxKinect
-ofxOsc
-ofxVideoRecorder
 ofxLibRealSense2
+ofxOsc
 ofxPoco
+ofxVideoRecorder
