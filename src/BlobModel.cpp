@@ -7,7 +7,6 @@
 
 //#include <stdio.h>
 #include "BlobModel.hpp"
-
 /*
  
  OSC API
@@ -51,7 +50,7 @@ void BlobModel::setup(const cv::Rect& track) {
     oscMessage.clear();
     oscMessage.setAddress("/ke/init");
     addDataToOSCMessage();
-    sendOSCMessage();
+    oscSender.sendOSCMessage(oscMessage);
 
 //    float curTime = ofGetElapsedTimef();
 //    std::cout << curTime << ": " << getLabel() << ": init" <<  std::endl;
@@ -69,7 +68,7 @@ void BlobModel::update(const cv::Rect& track) {
     oscMessage.clear();
     oscMessage.setAddress("/ke/update");
     addDataToOSCMessage();
-    sendOSCMessage();
+    oscSender.sendOSCMessage(oscMessage);
 
 }
 
@@ -132,32 +131,11 @@ void BlobModel::kill() {
     oscMessage.setAddress("/ke/deinit");
     oscMessage.addIntArg(label);
     
-    sendOSCMessage();
+    
+    oscSender.sendOSCMessage(oscMessage);
+
 
 //    float curTime = ofGetElapsedTimef();
 //    std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
 
 }
-
-void BlobModel::sendOSCMessage(){
-
-    std::string scip = "127.0.0.1";
-    std::string tdip = "127.0.0.2";
-
-    if(ofxArgParser::hasKey("sc")){
-        scip = ofxArgParser::getValue("sc");
-    }
-
-    if(ofxArgParser::hasKey("td")){
-        tdip = ofxArgParser::getValue("td");
-    }
-
-    scSender.setup(scip, 57120);
-    scSender.sendMessage(oscMessage, false);
-
-    tdSender.setup(tdip , 57130);
-    tdSender.sendMessage(oscMessage, false);
-}
-
-
-

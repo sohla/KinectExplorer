@@ -33,6 +33,9 @@ void ofApp::setup(){
     pixelPipeline.setup(model, gui);
 
     gui.loadFromFile("inputSettings.json");
+    
+    ofxOscSender scSender;
+
 }
 
 //--------------------------------------------------------------

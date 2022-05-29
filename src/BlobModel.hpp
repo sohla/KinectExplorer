@@ -9,8 +9,7 @@
 #define BlobModel_h
 
 #include "ofxCv.h"
-#include "ofxOscSender.h"
-#include "ofxArgParser.h"
+#include "OSCSender.hpp"
 
 // handy model for collecting data from tracker and procs
 // gets passed to everything for each frame
@@ -23,10 +22,7 @@ class BlobModel : public ofxCv::RectFollower {
 
 protected:
     float startedDying;
-    ofxOscSender scSender;
-    ofxOscSender tdSender;
-    std::string scIP;
-    std::string tdIP;
+    OSCSender oscSender;
     
 public:
     

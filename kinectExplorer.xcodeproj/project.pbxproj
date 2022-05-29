@@ -68,6 +68,7 @@
 		E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */; };
 		E55DEEF784A10419E444669E /* flags.c in Sources */ = {isa = PBXBuildFile; fileRef = 682082DEC78C75C8FB18B7DB /* flags.c */; };
 		EBCDE831EFAE08274E799C97 /* Calibration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 402C8F4015542356D362AC88 /* Calibration.cpp */; };
+		F0A61FC0284386FF00A66C36 /* OSCSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0A61FBE284386FF00A66C36 /* OSCSender.cpp */; };
 		F285EB3169F1566CA3D93C20 /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E112B3AEBEA2C091BF2B40AE /* ofxPanel.cpp */; };
 		F4135EEFC911E9ED211FB6F9 /* core.c in Sources */ = {isa = PBXBuildFile; fileRef = CF528C0E8DBFF5C31E8D6529 /* core.c */; };
 		F76B4A79BD8DE4854141CB47 /* fdog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A2D8249D46647E3C51769CDE /* fdog.cpp */; };
@@ -826,6 +827,8 @@
 		F070AF5E3926EB2CB7A15D1B /* params.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = params.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/params.h; sourceTree = SOURCE_ROOT; };
 		F0713696284042AF00CE07CB /* Generator_PixelProc.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = Generator_PixelProc.hpp; path = PixelPipeline/Generator_PixelProc.hpp; sourceTree = "<group>"; };
 		F08B15785026958C81B7CEFA /* deriv.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = deriv.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/cudev/ptr2d/deriv.hpp; sourceTree = SOURCE_ROOT; };
+		F0A61FBE284386FF00A66C36 /* OSCSender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OSCSender.cpp; sourceTree = "<group>"; };
+		F0A61FBF284386FF00A66C36 /* OSCSender.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OSCSender.hpp; sourceTree = "<group>"; };
 		F0B21373033A0907CFFFD055 /* des.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = des.h; path = ../../../addons/ofxPoco/libs/openssl/include/openssl/des.h; sourceTree = SOURCE_ROOT; };
 		F0E9ADA5A6ADE5F14B6AF8DD /* superres.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = superres.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/superres.hpp; sourceTree = SOURCE_ROOT; };
 		F0F66CDAF4F529BF3C91085B /* videoio.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = videoio.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/videoio/videoio.hpp; sourceTree = SOURCE_ROOT; };
@@ -2397,11 +2400,13 @@
 				1874040572F7282A7CF79366 /* PixelPlayer.cpp */,
 				5FDB4915CBBDF83783DD0769 /* PixelPipeline */,
 				317A128D4BE724A1D4A58112 /* BlobModel.hpp */,
+				DCFCF99E861F1154D14BDDBD /* BlobModel.cpp */,
+				F0A61FBF284386FF00A66C36 /* OSCSender.hpp */,
+				F0A61FBE284386FF00A66C36 /* OSCSender.cpp */,
 				2E0741A42407FFCD829A1439 /* PixelPlayer.h */,
 				4E239EE809BC1D4BE0F79F7D /* Sources */,
 				760CBA768A229B5B35AF8902 /* ofxArgParser.cpp */,
 				3E63618A48EC591284A9DDB6 /* ofxArgParser.h */,
-				DCFCF99E861F1154D14BDDBD /* BlobModel.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -2671,6 +2676,7 @@
 				E212C821D1064B92DD953A42 /* ofxCvHaarFinder.cpp in Sources */,
 				63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */,
 				D3301F6A0B43BB293ED97C1D /* ofxCvShortImage.cpp in Sources */,
+				F0A61FC0284386FF00A66C36 /* OSCSender.cpp in Sources */,
 				B6840996567E78436F7ECFAB /* ETF.cpp in Sources */,
 				F76B4A79BD8DE4854141CB47 /* fdog.cpp in Sources */,
 				EBCDE831EFAE08274E799C97 /* Calibration.cpp in Sources */,
