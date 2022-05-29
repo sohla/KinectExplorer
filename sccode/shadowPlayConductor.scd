@@ -12,7 +12,7 @@
 
 	var oscListeners = [];
 	var pntListener, objListener, lnkListener;
-	var initListener, updateListener, deinitListener;
+	var resetListener, initListener, updateListener, deinitListener;
 
 	var scale = 0.6;
 
@@ -124,6 +124,7 @@
 		pfmtRout.stop;
 		patches.do({|m| m.env.use{~deinit.(m)} });
 
+		resetListener.free;
 		initListener.free;
 		updateListener.free;
 		deinitListener.free;
@@ -466,7 +467,18 @@
 		//initBlobs.();
 
 		//------------------------------------------------------
-		initListener = OSCFunc({ |msg, time, addr, recvPort|
+		resetListener = OSCFunc({ |msg, time, addr, recvPort|
+
+			blobsDict.do({|blob|
+				patches.do({|m| m.env.use{
+					if(m.isOn, {
+						if(blobsDict.values.size > 0,{
+							~onDeinit.(blob, blobsDict);
+						});
+					});
+				}});
+			});
+			
 			blobsDict = Dictionary.new(numOfBlobs);
 			resetKE.();
 		}, '/ke/reset', recvPort: 57120);
@@ -559,14 +571,12 @@
 					if(m.isOn, {
 						if(blobsDict.values.size > 0,{
 							~onDeinit.(blob, blobsDict);
-							// ~deinit.(m);
 
 						});
 					}); 
 				}});
 
 				blobsDict.removeAt(msg[1]);
-				// blobsDict.postln;
 
 			});
 
