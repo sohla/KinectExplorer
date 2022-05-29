@@ -83,7 +83,6 @@ void BlobModel::addDataToOSCMessage(ofxOscMessage &oscMessage){
 
 //     std::cout << " : " << line.size() << " : " << area << " : " << perimeter << center << " : " ;
     
-    
     //send dimensions of camera img
     
     oscMessage.addIntArg(getLabel());//0
