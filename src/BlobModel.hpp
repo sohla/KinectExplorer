@@ -35,9 +35,8 @@ public:
     void kill();
 
     void sendOSCMessage();
-    void addDataToOSCMessage();
+    void addDataToOSCMessage(ofxOscMessage &oscMessage);
     
-    ofxOscMessage getOSCMessage(){return oscMessage;};
     
     // useful data
     //•• make below protected?
@@ -53,7 +52,7 @@ public:
     BlobState state;
     
 private:
-    ofxOscMessage oscMessage;
+    
 
     void debug(){
         std::cout << "label:" << ofToString(label) << " index:" << ofToString(index) << std::endl;

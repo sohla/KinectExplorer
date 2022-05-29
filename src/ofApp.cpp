@@ -34,7 +34,9 @@ void ofApp::setup(){
 
     gui.loadFromFile("inputSettings.json");
     
-    ofxOscSender scSender;
+    ofxOscMessage oscMessage;
+    oscMessage.setAddress("/ke/reset");
+    oscSender.sendOSCMessage(oscMessage);
 
 }
 

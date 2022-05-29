@@ -467,6 +467,11 @@
 
 		//------------------------------------------------------
 		initListener = OSCFunc({ |msg, time, addr, recvPort|
+			blobsDict = Dictionary.new(numOfBlobs);
+			resetKE.();
+		}, '/ke/reset', recvPort: 57120);
+		//------------------------------------------------------
+		initListener = OSCFunc({ |msg, time, addr, recvPort|
 
 			var blob = Event.new(proto:blobModel);
 
@@ -504,7 +509,7 @@
 				});
 			}});
 
-
+			blobsDict.postln;
 		}, '/ke/init', recvPort: 57120);
 
 		//------------------------------------------------------

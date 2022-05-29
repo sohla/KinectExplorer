@@ -9,6 +9,7 @@
 #include "PixelPipeline.hpp"
 #include "ofxGui.h"
 #include "ofxOscParameterSync.h"
+#include "OSCSender.hpp"
 
 #define INPORT 57000
 #define SCPORT 57120
@@ -29,6 +30,8 @@ class ofApp : public ofBaseApp{
         ofParameter<bool> realtimeParam = ofParameter<bool>("realtime",true);
     
         DepthModel   model;
+    
+        OSCSender   oscSender;
     
 	public:
 		void setup();

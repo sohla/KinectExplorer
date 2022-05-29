@@ -47,9 +47,9 @@ void BlobModel::setup(const cv::Rect& track) {
     randomHue = ofRandom(0,255);
 
     //build message
-    oscMessage.clear();
+    ofxOscMessage oscMessage;
     oscMessage.setAddress("/ke/init");
-    addDataToOSCMessage();
+    addDataToOSCMessage(oscMessage);
     oscSender.sendOSCMessage(oscMessage);
 
 //    float curTime = ofGetElapsedTimef();
@@ -64,15 +64,14 @@ void BlobModel::update(const cv::Rect& track) {
 
 //    float curTime = ofGetElapsedTimef();
 //    std::cout << curTime << ": " << getLabel() << ": update" << std::endl;
-
-    oscMessage.clear();
+    ofxOscMessage oscMessage;
     oscMessage.setAddress("/ke/update");
-    addDataToOSCMessage();
+    addDataToOSCMessage(oscMessage);
     oscSender.sendOSCMessage(oscMessage);
 
 }
 
-void BlobModel::addDataToOSCMessage(){
+void BlobModel::addDataToOSCMessage(ofxOscMessage &oscMessage){
 
     ofPolyline currLine = line.getResampledByCount(127);
     
@@ -126,14 +125,11 @@ void BlobModel::kill() {
     previousPosition = ofVec2f(0,0);
     currentPosition = ofVec2f(0,0);
         
-    // build messagez
-    oscMessage.clear();
+    // build message
+    ofxOscMessage oscMessage;
     oscMessage.setAddress("/ke/deinit");
     oscMessage.addIntArg(label);
-    
-    
     oscSender.sendOSCMessage(oscMessage);
-
 
 //    float curTime = ofGetElapsedTimef();
 //    std::cout << curTime << ": " << getLabel() << ": deinit" <<  std::endl;
