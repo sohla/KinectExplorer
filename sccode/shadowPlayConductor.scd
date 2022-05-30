@@ -394,11 +394,11 @@
 			msgToBlob.(msg, blob);
 			blobsDict.put(blob.label,blob);
 
-			postf("blob +: % :", blob.label);
-			blobsDict.do({|b|
-				postf("\t %", b.label);
-			});
-			postf("% \n");
+			// postf("blob +: % :", blob.label);
+			// blobsDict.do({|b|
+			// 	postf("\t %", b.label);
+			// });
+			// postf("% \n");
 			
 			patches.do({|p|
 				if(p.isOn, {
@@ -414,16 +414,17 @@
 		//------------------------------------------------------
 		updateListener = OSCFunc({ |msg, time, addr, recvPort|
 
-			if(blobsDict.at(msg[1]) != nil,{
+			var blob = blobsDict.at(msg[1]);
+			if(blob != nil,{
 
-				 msgToBlob.(msg, blobsDict.at(msg[1]));
+				 msgToBlob.(msg, blob);
 				
 				// if this blob is on tell all patches
-				if(blobsDict.at(msg[1]).state == 2,{
+				if(blob.state == 2,{
 					patches.do({|p| 
 						if(p.isOn, {
 							if(blobsDict.values.size > 0,{
-								p.env.use{~onBlobUpdate.(blobsDict.at(msg[1]), blobsDict)};
+								p.env.use{~onBlobUpdate.(blob, blobsDict)};
 							}); 
 						});
 					});
@@ -435,9 +436,9 @@
 		//------------------------------------------------------
 		deinitListener = OSCFunc({ |msg, time, addr, recvPort|
 
-			if(blobsDict.at(msg[1]) != nil,{
+			var blob = blobsDict.at(msg[1]);
+			if(blob != nil,{
 
-				var blob = blobsDict.at(msg[1]);
 
 				patches.do({|p| 
 					if(p.isOn, {
@@ -448,16 +449,15 @@
 					}); 
 				});
 				
-
-				freeBlob.(blobsDict.at(msg[1]));
-
+				
+				freeBlob.(blob);
 				blobsDict.removeAt(msg[1]);
 
-				postf("blob -: % :", blob.label);
-				blobsDict.do({|b|
-					postf("\t %", b.label);
-				});
-				postf("% \n");
+				// postf("blob -: % :", blob.label);
+				// blobsDict.do({|b|
+				// 	postf("\t %", b.label);
+				// });
+				// postf("% \n");
 
 			});
 
