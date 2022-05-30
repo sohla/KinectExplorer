@@ -1,5 +1,5 @@
 (
-	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
+	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 	// var netAddr = NetAddr.new("127.0.0.1", 10001);
 	var netAddr = NetAddr.new("192.168.1.150", 10001);
 	var keAddr = NetAddr("127.0.0.1",57000);
@@ -10,7 +10,6 @@
 	var loadPatch, patchButton, reloadButton;
 	var graphView, plotView, plotter, serverView;
 
-	var oscListeners = [];
 	var pntListener, objListener, lnkListener;
 	var resetListener, initListener, updateListener, deinitListener;
 
@@ -23,22 +22,22 @@
 		//•• add first time condition to remove calling ~deinit when exec.
 		loop{
 			var temp = 0;
-			patches.do({ |m,i| temp = temp + File.mtime(patchesPath.asAbsolutePath++m.file) });
+			patches.do({ |p,i| temp = temp + File.mtime(patchesPath.asAbsolutePath++p.file) });
 			if(temp != pfmt,{ {reloadButton.valueAction_(0)}.defer() });
 			pfmt = temp;				
 			0.1.yield;
-		}
+		}	
 	}.play;
 
 	//------------------------------------------------------
 	var blobModel = (
 				\dataSize: 3,
 				\state: 0,
-				\area: 0,
-				\perimeter: 0,	
-				\center: Point(0,0),
-				\rect: Rect(0,0,20,20),
-				\velocity: Point(0,0),
+				\area: nil,
+				\perimeter: nil,	
+				\center: nil,
+				\rect: nil,
+				\velocity: nil,
 				\label: 0,
 
 				\data: [[0,0]],
@@ -47,18 +46,55 @@
 				\root: 60,
 				\env:  nil,
 				\pattern: nil,
+				\buses: nil
+
 
 	);
 
-
 	var blobsDict = Dictionary.new(numOfBlobs);
+	//------------------------------------------------------
+
+	var initBlob = {|blob|
+
+			blob.area = Bus.control(s,1);
+			blob.perimeter = Bus.control(s,1);
+			blob.center = Bus.control(s,2);
+			blob.rect = Bus.control(s,4);
+			blob.velocity = Bus.control(s,2);
+	};
+
+	var msgToBlob = {|msg, blob|
+
+			blob.label = msg[1]; 
+			blob.state = msg[2]; 
+			blob.area.set(msg[3] * 100);
+			blob.perimeter.set(msg[4] * 100);
+			blob.center.setn([msg[5],msg[6]]);
+			blob.rect.setn([msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000]);
+			blob.index = msg[11].asInteger;
+			blob.velocity.setn([msg[12], msg[13]]);
+			blob.dataSize = msg[14].asInteger;
+			blob.data = msg.copyRange(15,512 + 15);
+
+	};
+
+	var freeBlob = {|blob|
+
+		blob.area.free;
+		blob.perimeter.free;
+		blob.center.free;
+		blob.rect.free;
+		blob.velocity.free;
+
+		
+	};
+
 
 	//------------------------------------------------------
 
 	var resetKE = {
 
 		{
-
 			keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 1);
 			keAddr.sendMsg("/inputSettings/clear/on", 1);
 			0.1.wait;
@@ -77,14 +113,13 @@
 	var freeAll = {		
 
 		pfmtRout.stop;
-		patches.do({|m| m.env.use{~deinit.(m)} });
+		patches.do({|p| p.env.use{~deinit.(p)} });
 
 		resetListener.free;
 		initListener.free;
 		updateListener.free;
 		deinitListener.free;
 
-		oscListeners.do{|l|l.free};
 
 		freqScope.kill;
 		Ndef.clear(0);
@@ -95,29 +130,12 @@
 
 	//------------------------------------------------------
 	var row = 3, col = 3;
-	var makePatch = {
-		(\file: "fourTemplatePatch3.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false)
-	};
+
 	var patches = [
-		// (\file: "testPatch.scd", \start: 0, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		// (\file: "blazPatch.scd", \start: 240, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		// (\file: "conexPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		// (\file: "plucktonePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		// (\file: "viztestPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		// (\file: "frogPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		// (\file: "longPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
 
-
-		// (\file: "fourTemplatePatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		// (\file: "fourTemplatePatch2.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		makePatch.(),
-		
-		// (\file: "frogFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "longFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "shapeVortex.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		// (\file: "conexFourPatch.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "bodyElectric.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
-		(\file: "waterSoul.scd", \start: 120, \fade: 1, \env: Environment.make({}), \netAddr: netAddr, \isOn: false),
+		// patch model
+		(\file: "basic1.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "basic2.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 
 	];
 	//------------------------------------------------------
@@ -161,7 +179,7 @@
 				// for now, calling all patches
 				patches.do({|m| 
 					m.env.use{
-						var d = ~onData.(blobsDict);
+						var d = ~onPlotData.(blobsDict);
 						if(d != nil, {data = d});
 					}; 
 				});
@@ -178,7 +196,10 @@
 			if(blob.state == 2,{
 
 				var prev = [];
-				var val = blob.rect.width * 10;
+
+				var rect  = Rect.fromArray(blob.rect.getnSynchronous(4));
+				var center = Point(blob.center.getnSynchronous(2)[0] * 640, blob.center.getnSynchronous(2)[1] * 480);
+				var velocity = Point(blob.velocity.getnSynchronous(2)[0], blob.velocity.getnSynchronous(2)[1]);
 
 				var ax, ay, bx, by, mx, my;
 				var xdif, ydif, a1, b1, a2, b2;
@@ -189,17 +210,16 @@
 				Pen.fillColor = cols.at(i);
 				Pen.strokeColor = cols.at(i);
 
-				Pen.fillOval(Rect(blob.center.x, blob.center.y,6,6));
-				Pen.fillRect(Rect(blob.center.x - 5,550,10, blob.rect.width * -1));
-				// Pen.fillRect(Rect(12 + (i*22),550,10, blob.pWidth.rateFiltered * -1));
+				Pen.fillOval(Rect(center.x, center.y,6,6));
+				Pen.fillRect(Rect(center.x - 5,550,10, rect.width * -1));
 
-				Pen.strokeRect(blob.rect);
+				Pen.strokeRect(rect);
 
-			 	Pen.moveTo(blob.center);
-				Pen.lineTo(Point(blob.center.x+ (blob.velocity.x*2), blob.center.y+(blob.velocity.y*2)));
+			 	Pen.moveTo(center);
+				Pen.lineTo(Point(center.x+ (velocity.x*2), center.y+(velocity.y*2)));
 				Pen.stroke;
 
-				Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, blob.center.x + 20@blob.center.y);
+				Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, center.x + 20@center.y);
 
 				prev = blob.data.reshape(1,2)[0];
 				blob.data.reshape(blob.data.size,2).do({|o,j|
@@ -244,10 +264,10 @@
 	//------------------------------------------------------
 	patchButton = {|i|{|j|
 		var index = (i * col) + j;
-		var m = patches[index];
-		if( m != nil,{
+		var p = patches[index];
+		if( p != nil,{
 			Button()
-				.states_([[m.file, Color.gray(0.2)],[m.file, Color.green(0.8)]])
+				.states_([[p.file, Color.gray(0.2)],[p.file, Color.green(0.8)]])
 				.font_(Font(size:16))
 				.minHeight_(50)
 				.minWidth_(100)
@@ -255,11 +275,12 @@
 				.action_({|b|
 					if(b.value == 1,{
 						resetKE.();//•• maybe not
-						m.isOn = true;
-						m.env.use{~init.(m)}; 
+						p.isOn = true;
+						p.env.use{~init.(p)}; 
 					},{
-						m.env.use{~deinit.(m)}; 
-						m.isOn = false;
+						p.env.use{~deinit.(p)}; 
+						resetKE.();
+						p.isOn = false;
 					});
 				})
 		});
@@ -288,13 +309,14 @@
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
 			.action_({|b|
-				resetKE.();
-				patches.do({|m| 
-					loadPatch.(m);
-					m.env.use{
+				
+				patches.do({|p| 
+					p.env.use{
 						// ~reload.(m);//•• turn off the on>>>/??
-						~deinit.(m);
-						if(m.isOn == true,{~init.(m)});
+						~deinit.(p);
+						loadPatch.(p);
+						resetKE.();
+						if(p.isOn == true,{~init.(p)});
 					}; 
 				})
 			}),
@@ -330,7 +352,7 @@
 	);
 
 
-	 // s.plotTreeView(0.5, serverView);
+	 s.plotTreeView(0.5, serverView);
 
 	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
 		.value_((0..49));
@@ -354,7 +376,7 @@
 				patches.do({|m| m.env.use{
 					if(m.isOn, {
 						if(blobsDict.values.size > 0,{
-							~onDeinit.(blob, blobsDict);
+							~onBlobDeinit.(blob, blobsDict);
 						});
 					});
 				}});
@@ -368,39 +390,23 @@
 
 			var blob = Event.new(proto:blobModel);
 
-			//•• label is unique : needs to be assigned to a synth/pattern
-			// blob.label = msg[1];
+			initBlob.(blob);
+			msgToBlob.(msg, blob);
+			blobsDict.put(blob.label,blob);
 
-			blob.label = msg[1]; 
-			blob.state = msg[2]; 
-			blob.area = msg[3] * 100;
-			blob.perimeter = msg[4] * 100;
-
-			// 640 & 480 are coming from Kinect Explorer
-			blob.center = filter.(Point(msg[5]* 640,msg[6]* 480), blob.center, 0.9);
-
-			blob.rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
-
-			blob.index = msg[11].asInteger;
-		
-			blob.velocity = Point(msg[12], msg[13]);
-
-			blob.dataSize = msg[14].asInteger;
-			blob.data = msg.copyRange(15,512 + 15);
-
-
-
-			blobsDict.put(msg[1],blob);
-			// blobsDict.postln;
+			postf("blob +: % :", blob.label);
+			blobsDict.do({|b|
+				postf("\t %", b.label);
+			});
+			postf("% \n");
 			
-			patches.do({|m| m.env.use{
-				if(m.isOn, {
+			patches.do({|p|
+				if(p.isOn, {
 					if(blobsDict.values.size > 0,{
-						// ~init.(m);
-						~onInit.(blob, blobsDict);
+						 p.env.use{~onBlobInit.(blob, blobsDict)};
 					});
 				});
-			}});
+			});
 
 			//blobsDict.postln;
 		}, '/ke/init', recvPort: 57120);
@@ -410,32 +416,17 @@
 
 			if(blobsDict.at(msg[1]) != nil,{
 
-				blobsDict.at(msg[1]).label = msg[1]; 
-				blobsDict.at(msg[1]).state = msg[2]; 
-				blobsDict.at(msg[1]).area = msg[3] * 100;
-				blobsDict.at(msg[1]).perimeter = msg[4] * 100;
-
-				// 640 & 480 are coming from Kinect Explorer
-				blobsDict.at(msg[1]).center = filter.(Point(msg[5]* 640,msg[6]* 480), blobsDict.at(msg[1]).center, 0.9);
-
-				blobsDict.at(msg[1]).rect = Rect(msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000);
-
-				blobsDict.at(msg[1]).index = msg[11].asInteger;
-			
-				blobsDict.at(msg[1]).velocity = Point(msg[12], msg[13]);
-
-				blobsDict.at(msg[1]).dataSize = msg[14].asInteger;
-				blobsDict.at(msg[1]).data = msg.copyRange(15,512 + 15);
-
+				 msgToBlob.(msg, blobsDict.at(msg[1]));
+				
 				// if this blob is on tell all patches
 				if(blobsDict.at(msg[1]).state == 2,{
-					patches.do({|m| m.env.use{
-						if(m.isOn, {
+					patches.do({|p| 
+						if(p.isOn, {
 							if(blobsDict.values.size > 0,{
-								~onUpdate.(blobsDict.at(msg[1]), blobsDict);
+								p.env.use{~onBlobUpdate.(blobsDict.at(msg[1]), blobsDict)};
 							}); 
 						});
-					}});
+					});
 				});
 			});
 
@@ -448,16 +439,25 @@
 
 				var blob = blobsDict.at(msg[1]);
 
-				patches.do({|m| m.env.use{
-					if(m.isOn, {
+				patches.do({|p| 
+					if(p.isOn, {
 						if(blobsDict.values.size > 0,{
-							~onDeinit.(blob, blobsDict);
+							p.env.use{~onBlobDeinit.(blob, blobsDict)};
 
 						});
 					}); 
-				}});
+				});
+				
+
+				freeBlob.(blobsDict.at(msg[1]));
 
 				blobsDict.removeAt(msg[1]);
+
+				postf("blob -: % :", blob.label);
+				blobsDict.do({|b|
+					postf("\t %", b.label);
+				});
+				postf("% \n");
 
 			});
 

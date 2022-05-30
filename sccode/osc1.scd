@@ -47,7 +47,7 @@ b = NetAddr("192.168.1.55",57000);
 
 b = NetAddr("127.0.0.1",57000);
 
-(
+( 
 {
 b.sendMsg("/inputSettings/pixelpoint/persistance", 1);
 b.sendMsg("/inputSettings/clear/on", 1);0.1.wait;
@@ -67,3 +67,23 @@ b.sendMsg("/inputSettings/realtime/realtime", 1);
 b.sendMsg("/inputSettings/pixel_recorder/recording", true);
 b.sendMsg("/inputSettings/pixel_recorder/recording", false);
 b.free;
+
+
+
+
+
+
+
+
+
+(
+	SynthDef(\basicSin, {|out = 0, freq = 160, amp = 0.1|
+		var sig = SinOsc.ar(freq, 0, amp)!2;
+		Out.ar(out, sig);
+
+	}).add;
+
+
+)
+
+
