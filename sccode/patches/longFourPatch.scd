@@ -246,7 +246,7 @@ var vizMessage;
 //------------------------------------------------------
 ~deinit = {|model|
 
-	postf("deinit : % \n", model.file);
+	// postf("deinit : % \n", model.file);
 
 	patterns.do{|p|
 		if(p != nil,{
@@ -275,7 +275,7 @@ var vizMessage;
 		patterns[l].play(0.1);
 		postf("playing : (%)[%] % \n", blob.label, l, patterns[l]);
 	});
-	patterns[l].group.postln;
+
 	// oscSender.sendMsg("/shadow", 
 
 	// 					"shape", 10,

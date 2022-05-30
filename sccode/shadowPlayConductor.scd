@@ -38,9 +38,6 @@
 				\perimeter: 0,	
 				\center: Point(0,0),
 				\rect: Rect(0,0,20,20),
-
-				// \pWidth: Event.new(proto:paramModel),
-
 				\velocity: Point(0,0),
 				\label: 0,
 
@@ -56,48 +53,6 @@
 
 	var blobsDict = Dictionary.new(numOfBlobs);
 
-	// var initBlobs = {
-	// 	blobs.do({|b,i|
-	// 		b.channel = i;
-	// 		b.dataSize = 0;
-	// 		b.data = [];
-	// 		b.area = 0;
-	// 		b.perimeter = 0;
-	// 		b.center = Point(0,0);
-	// 		b.rect = Rect(0,0,0,0);
-	// 		b.root = 0;
-	// 	});
-	// };
-
-	var point = (
-		\id: 0,
-		\x: 0,
-		\y: 0
-	);
-
-	var link = (
-		\a: 0,
-		\b: 0
-	);
-
-	var pose = (
-		\id: 0,
-		\l: 0,
-		\r: 0,
-		\t: 0,
-		\b: 0,
-		\points: Array.fill(0, {Event.new(proto:point)}),
-		\links: Array.fill(0, {Event.new(proto:link)})
-	);
-
-	var poses = Array.fill(10, {Event.new(proto:pose)});
-
-	var poseData = (
-		\perimeter: 0,
-		\ow: 0,
-		\wr: 0,
-
-	);
 	//------------------------------------------------------
 
 	var resetKE = {
@@ -190,80 +145,6 @@
 			"💫 welcome to shadow play 💫".postln;
 			f.();
 		};
-	};
-
-	//------------------------------------------------------------
-	var updateGraphViewXX = {|view|	
-	Pen.fillColor = Color.black;
-		Pen.fillRect(window.view.bounds);
-		Pen.width = 1;
-		Pen.fillColor = Color.green;
-
-
-		poses.do({|o,i|
-	
-			if(o.links.size > 0,{
-
-				Pen.strokeColor = Color.red;
-				Pen.width = 0.5;
-
-				o.links.do({|q,k|
-
-					// urgh...need to test
-					if(o.points[q.a] != nil || o.points[q.a] != nil,{
-
-						var ax = o.points[q.a].x * scale;
-						var ay = o.points[q.a].y * scale;
-						var bx = o.points[q.b].x * scale;
-						var by = o.points[q.b].y * scale;
-
-						Pen.moveTo(ax@ay);
-						Pen.lineTo(bx@by);
-						Pen.stroke;
-					});
-				});
-			});
-
-			if(o.points.size > 0,{
-
-				var rect = Rect.newSides(o.l * scale, o.t * scale, o.r * scale, o.b * scale);
-
-				poseData.perimeter = (rect.width * 2) + (rect.height * 2);
-
-				poseData.wr = filter.((rect.width - poseData.ow).abs * 10, poseData.wr, 0.3);
-
-				poseData.ow = rect.width;
-				
-				// plotter : updating the data in a gui updae call!!?!?!
-				plotter.value = plotter.value.flop;
-				plotter.value = plotter.value.insert(0, [rect.width, rect.height, poseData.wr]);
-				plotter.value = plotter.value.keep(200);
-				plotter.value = plotter.value.flop;
-
-				plotter.minval_(0);
-				plotter.maxval_(1200);
-
-				// draw the points
-				Pen.strokeColor = Color.yellow;
-				Pen.width = 0.2;
-				Pen.strokeRect(rect);
-				Pen.stringAtPoint(o.id.asString, rect.center, color: Color.yellow);
-
-				o.points.do({|p,j|
-
-					if(p.size > 0,{
-						var x = p.x * scale;
-						var y = p.y * scale;
-
-						Pen.fillOval(Rect(x, y, 5, 5));
-						// Pen.stringAtPoint(p.id.asString, x@y+5);
-					});
-				});
-
-				o.points = nil;
-				o.links = nil;
-			});
-		});
 	};
 
 	//------------------------------------------------------------
@@ -478,7 +359,7 @@
 					});
 				}});
 			});
-			
+
 			blobsDict = Dictionary.new(numOfBlobs);
 			resetKE.();
 		}, '/ke/reset', recvPort: 57120);
@@ -521,7 +402,7 @@
 				});
 			}});
 
-			blobsDict.postln;
+			//blobsDict.postln;
 		}, '/ke/init', recvPort: 57120);
 
 		//------------------------------------------------------
@@ -584,54 +465,12 @@
 		}, '/ke/deinit', recvPort: 57120);
 		
 		//------------------------------------------------------
-		//
-		//------------------------------------------------------
-		lnkListener = OSCFunc({ |msg, time, addr, recvPort|
-			var objIndex = msg[1];
-			poses[objIndex].links = Array.fill(msg[2], {Event.new(proto:link)});
-			msg.copySeries(3,nil).reshape(msg[2],2).do({|o, i|
-				poses[objIndex].links[i].a = o[0];
-				poses[objIndex].links[i].b = o[1];
-			});
-			// ([poses[objIndex].links, poses[objIndex].points.size]).postln;
-		}, 'poscr/links');
-		
-		//------------------------------------------------------
-		objListener = OSCFunc({ |msg, time, addr, recvPort|
-			// [msg, time, addr, recvPort].postln;
-			var objIndex = msg[1];
-
-			// poses = Array.fill(numPoints + 1, {Event.new(proto:pose)});
-			poses[objIndex].id = msg[1];// need to store?
-			poses[objIndex].l = msg[2];
-			poses[objIndex].r = msg[3];
-			poses[objIndex].t = msg[4];
-			poses[objIndex].b = msg[5];
-		}, '/poscr/obj');
-
-		//------------------------------------------------------
-		pntListener = OSCFunc({ |msg, time, addr, recvPort|
-
-			var objIndex = msg[1];
-			var numPoints = msg[2];
-			poses[objIndex].points = Array.fill(numPoints, {Event.new(proto:point)});
-			msg.copySeries(3,nil).reshape(numPoints,3).do({|o, i|
-				poses[objIndex].points[i].id = o[0];
-				poses[objIndex].points[i].x = o[1];
-				poses[objIndex].points[i].y = o[2];
-				{graphView.refresh()}.defer;
-			});
-		}, '/poscr/pnts');
-
-		//------------------------------------------------------
 
 		// load all data into patches
 		patches.do({|m| loadPatch.(m)});
 
 		resetKE.();
 	});
-
-
 )
 
 
