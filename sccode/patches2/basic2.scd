@@ -2,6 +2,16 @@ var patterns = [];
 var index = 0;
 var pairs = Dictionary.new(4);
 
+
+var findNextRunning = {
+	var index = nil;
+	patterns.do({|e,i|
+		if(e.isMonitoring == false,{
+			index = i;
+		});
+	});
+	index
+};
 //------------------------------------------------------
 ~init = {|patch|
 
@@ -16,14 +26,16 @@ var pairs = Dictionary.new(4);
 	}).add;
 
 	patterns = Array.fill(4, {|i|
-		Pbind(
-			\instrument, \basicSin,
-			\note, (i*3),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,0,46)}),
-			\octave, 4,
-			\dur, 0.3,
-			\amp, 0.2,
-			//\func, Pfunc({[blob.label].postln;})
-		)
+			Ndef("pa_"++i,
+				Pbind(
+				    \instrument, \basicSin, 
+				    \amp, 0.3,
+				    \root, 0,
+				    \octave, 3 + i,
+				    \dur, 0.1 * (i+1),
+				    \note, 7 * i
+			  	)
+			);
 	});
 };
 
@@ -37,17 +49,27 @@ var pairs = Dictionary.new(4);
 //------------------------------------------------------
 ~deinit = {|patch|
 
+	postf("deinit : % \n", patch.file);
+
+	patterns.do({|e|
+		if(e != nil,{
+			e.end(0.2); //stops and free's but needs some time to do so
+		});
+	});
+
+	pairs = Dictionary.new(4);
 
 };
 
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
 
-	index = index + 1;
-	index = index.mod(4);
+	var i = findNextRunning.();
 
-	patterns[index].play;
-	pairs.put(blob.label, index);
+	if(i != nil, {
+		pairs.put(blob.label, i);
+		patterns[i].play(0.1);
+	});
 
 };
 
@@ -56,8 +78,7 @@ var pairs = Dictionary.new(4);
 
 	var i = pairs.removeAt(blob.label);
 	if(i != nil,{
-		"STOP".postln;
-		patterns[i].stop;
+		patterns[i].stop(0.4);
 	});
 	
 };
@@ -90,3 +111,8 @@ var pairs = Dictionary.new(4);
 // Ndef(\lfo).clear
 // Ndef.clear
 // Ndef.all
+
+
+
+
+
