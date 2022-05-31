@@ -138,6 +138,7 @@
 		(\file: "basic2.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basic3.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basic4.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "basic5.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 
 	];
 	//------------------------------------------------------
