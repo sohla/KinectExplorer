@@ -136,6 +136,7 @@
 		// patch model
 		(\file: "basic1.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basic2.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "basic3.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 
 	];
 	//------------------------------------------------------
@@ -143,8 +144,7 @@
 	var bootServer = {|f|
 	
 		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		// var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
+		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");		// var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
@@ -449,7 +449,8 @@
 					}); 
 				});
 				
-				
+				//needs to be longer than the fade out on the patterns inside the patch when using Ndefs
+				// {freeBlob.(blob);}.defer(1.7);
 				freeBlob.(blob);
 				blobsDict.removeAt(msg[1]);
 
@@ -466,6 +467,7 @@
 		
 		//------------------------------------------------------
 
+		TempoClock.default.tempo = 1.0;
 		// load all data into patches
 		patches.do({|m| loadPatch.(m)});
 

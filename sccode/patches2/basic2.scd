@@ -33,7 +33,7 @@ var findNextRunning = {
 				    \root, 0,
 				    \octave, 3 + i,
 				    \dur, 0.1 * (i+1),
-				    \note, 7 * i
+				    \note, 0
 			  	)
 			);
 	});
@@ -51,9 +51,9 @@ var findNextRunning = {
 
 	postf("deinit : % \n", patch.file);
 
-	patterns.do({|e|
-		if(e != nil,{
-			e.end(0.2); //stops and free's but needs some time to do so
+	patterns.do({|p|
+		if(p != nil,{
+			p.end(0.2); //stops and free's but needs some time to do so
 		});
 	});
 
