@@ -30,7 +30,9 @@ class Generator_PixelProc : public Base_PixelProc {
     ofParameter<int> blobsParam = ofParameter<int>("blobs",1,0,4);
     ofParameter<bool> randomParam = ofParameter<bool>("random", false);
     ofParameter<bool> animateParam = ofParameter<bool>("animate", false);
-    ofParameter<float> speedParam = ofParameter<float>("speed",0.5,0.0,1.0);
+    ofParameter<float> speedXParam = ofParameter<float>("speedX",0.5,0.0,1.0);
+    ofParameter<float> speedWParam = ofParameter<float>("speedW",0.5,0.0,1.0);
+    ofParameter<float> speedHParam = ofParameter<float>("speedH",0.5,0.0,1.0);
 
     vector<gblob> gblobs;
     
@@ -44,7 +46,9 @@ class Generator_PixelProc : public Base_PixelProc {
         group.add(blobsParam);
         group.add(randomParam);
         group.add(animateParam);
-        group.add(speedParam);
+        group.add(speedXParam);
+        group.add(speedWParam);
+        group.add(speedHParam);
         gui.add(group);
 
         procImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
@@ -66,12 +70,12 @@ class Generator_PixelProc : public Base_PixelProc {
         // make some gblobs
         for(int i = 0; i < 4; i++){
             gblob b = {
-                ofRandom(100,640-100),
-                float(480 * 0.7),
-                ofRandom(70,90),
-                ofRandom(100,300),
-                int(ofRandom(190,210)),
-                ofRandom(-15,15),
+                ofRandom(100,640-100),  // x
+                float(480 * 0.7),       // y
+                ofRandom(70,90),        // w
+                ofRandom(100,190),      // h
+                int(ofRandom(190,210)), // hue
+                ofRandom(-15,15),       // delta
             };
             gblobs.push_back(b);
         };
@@ -86,7 +90,9 @@ class Generator_PixelProc : public Base_PixelProc {
                 
                 // animate blob
                 if(animateParam.get()){
-                    gblobs[i].x += gblobs[i].delta * speedParam.get();
+                    gblobs[i].x += gblobs[i].delta * speedXParam.get();
+                    gblobs[i].w += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.10, 0.28)  * speedWParam.get() ) * 1.1;
+                    gblobs[i].h += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.03, 0.18) * speedHParam.get() ) * 1.1;
                 }
 
                 if(gblobs[i].x < 0){

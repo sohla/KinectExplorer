@@ -25,7 +25,10 @@
             "draw": "0",
             "on": "1",
             "random": "1",
-            "speed": "0.406605"
+            "speed": "0",
+            "speedH": "0.5",
+            "speedW": "0.5",
+            "speedX": "0"
         },
         "keNDIReceiver": {
             "draw": "0",
@@ -92,7 +95,7 @@
             "cropBot": "0.75",
             "cropLeft": "0",
             "cropRight": "1",
-            "cropTop": "0.3",
+            "cropTop": "0",
             "cv-threshold": "0",
             "draw": "0",
             "far": "75",
