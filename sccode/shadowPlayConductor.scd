@@ -257,6 +257,8 @@
 		var file = File.new(path.asAbsolutePath,"r");
 		var str = file.readAllString;
 		var env = Environment.make {
+
+			//•• add shared functionality here ••//
 			interpret(str);
 		};
 		model.env = env;

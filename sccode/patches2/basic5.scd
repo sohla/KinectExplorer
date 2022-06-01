@@ -122,8 +122,8 @@ var getPattern = {|i, blob|
 	postf("deinit : % \n", patch.file);
 
 	runningPatterns.do({|p,i|
-		p.stop; 
-		p.clear;
+		// p.stop; 
+		p.clear(10);
 		p.free;
 		runningPatterns.put(i,nil);
 	});
@@ -136,7 +136,7 @@ var getPattern = {|i, blob|
 ~onBlobInit = {|blob, blobsDict|
 
 	var i = findNextRunning.();
-	var ptn = Pdef("pa_"++i, getPattern.(i,blob));
+	var ptn = Ndef("basic4_"++i, getPattern.(i,blob));
 
 	runningPatterns.put(i,ptn);
 
@@ -152,8 +152,8 @@ var getPattern = {|i, blob|
 
 	var i = pairs.removeAt(blob.label);
 	if(i != nil,{
-		runningPatterns[i].stop;
-		runningPatterns[i].clear;
+		// runningPatterns[i].stop;
+		runningPatterns[i].clear(1);
 		// Ndef.all.values[0].clean;
 		runningPatterns.put(i,nil);
 	});
