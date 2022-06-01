@@ -39,6 +39,8 @@
 				\rect: nil,
 				\velocity: nil,
 				\label: 0,
+				\depthCamWidth: 0,
+				\depthCamHeight: 0,
 
 				\data: [[0,0]],
 				\isNoteOn: false,
@@ -71,10 +73,13 @@
 			blob.perimeter.set(msg[4] * 100);
 			blob.center.setn([msg[5],msg[6]]);
 			blob.rect.setn([msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000]);
-			blob.index = msg[11].asInteger;
-			blob.velocity.setn([msg[12], msg[13]]);
-			blob.dataSize = msg[14].asInteger;
-			blob.data = msg.copyRange(15,512 + 15);
+			blob.depthCamWidth = msg[11];
+			blob.depthCamHeight = msg[12];
+			blob.index = msg[13].asInteger;
+			blob.velocity.setn([msg[14], msg[15]]);
+			blob.dataSize = msg[16].asInteger;
+			blob.data = msg.copyRange(17,127*2);
+			blob.dataSize.postln;
 
 	};
 
@@ -200,7 +205,7 @@
 				var prev = [];
 
 				var rect  = Rect.fromArray(blob.rect.getnSynchronous(4));
-				var center = Point(blob.center.getnSynchronous(2)[0] * 640, blob.center.getnSynchronous(2)[1] * 480);
+				var center = Point(blob.center.getnSynchronous(2)[0] * blob.depthCamWidth, blob.center.getnSynchronous(2)[1] * blob.depthCamHeight);
 				var velocity = Point(blob.velocity.getnSynchronous(2)[0], blob.velocity.getnSynchronous(2)[1]);
 
 				var ax, ay, bx, by, mx, my;
@@ -316,7 +321,6 @@
 				
 				patches.do({|p| 
 					p.env.use{
-						// ~reload.(m);//•• turn off the on>>>/??
 						~deinit.(p);
 						loadPatch.(p);
 						resetKE.();
@@ -351,12 +355,11 @@
 		)
 		),
 		serverView = UserView()
-			// .minHeight_(500)
 			.minWidth_(300)
 	);
 
-
-	 s.plotTreeView(0.5, serverView);
+	// debug tool
+	s.plotTreeView(0.5, serverView);
 
 	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
 		.value_((0..49));
@@ -371,8 +374,6 @@
 		SynthDef(\mouseY, { |bus| Out.kr(bus, MouseY.kr(0,1.0))}).add;
 
 		// start listening to OSC blob data
-		//initBlobs.();
-
 		//------------------------------------------------------
 		resetListener = OSCFunc({ |msg, time, addr, recvPort|
 
@@ -478,19 +479,4 @@
 		resetKE.();
 	});
 )
-
-
-
-// Ptpar
-// Pspawner
-// s.meters
-
-
-
-// (
-
-// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches/";
-// var time = File.mtime(patchesPath.asAbsolutePath++"plucktonePatch.scd");
-// time
-// )
 

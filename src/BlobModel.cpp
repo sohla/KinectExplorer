@@ -91,8 +91,8 @@ void BlobModel::addDataToOSCMessage(ofxOscMessage &oscMessage){
     oscMessage.addFloatArg(area);//2
     oscMessage.addFloatArg(perimeter);//3
 
-    oscMessage.addFloatArg(ofMap(center.x, 0, 640, 0.0, 1.0));//4
-    oscMessage.addFloatArg(ofMap(center.y, 0, 480, 0.0, 1.0));//5
+    oscMessage.addFloatArg(ofMap(center.x, 0, depthCameraWidth, 0.0, 1.0));//4
+    oscMessage.addFloatArg(ofMap(center.y, 0, depthCameraHeight, 0.0, 1.0));//5
 
     oscMessage.addFloatArg(ofMap(bounds.x, 0, 1000, 0.0, 1.0));//6
     oscMessage.addFloatArg(ofMap(bounds.y, 0, 1000, 0.0, 1.0));//7
@@ -100,14 +100,18 @@ void BlobModel::addDataToOSCMessage(ofxOscMessage &oscMessage){
     oscMessage.addFloatArg(ofMap(bounds.width, 0, 1000, 0.0, 1.0));//8
     oscMessage.addFloatArg(ofMap(bounds.height, 0, 1000, 0.0, 1.0));//9
 
-    oscMessage.addInt32Arg(index);//10•••••
-    
-    oscMessage.addInt32Arg(velocity.x);//11
-    oscMessage.addInt32Arg(velocity.y);//12
+    oscMessage.addIntArg(depthCameraWidth);// 10
+    oscMessage.addIntArg(depthCameraHeight);// 11
 
-    oscMessage.addInt32Arg(currLine.size());//13
     
-    for( auto &vert :  currLine.getVertices()){//14..( size = //10)
+    oscMessage.addInt32Arg(index);//12•••••
+    
+    oscMessage.addInt32Arg(velocity.x);//13
+    oscMessage.addInt32Arg(velocity.y);//14
+
+    oscMessage.addInt32Arg(currLine.size());//15
+    
+    for( auto &vert :  currLine.getVertices()){//16..( size = //15)
         oscMessage.addDoubleArg(vert.x);
         oscMessage.addDoubleArg(vert.y);
         //std::cout << vert.x << " , " << vert.y;

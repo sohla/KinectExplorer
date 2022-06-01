@@ -110,13 +110,6 @@ var getPattern = {|i, blob|
 
 };
 //------------------------------------------------------
-~reload = {|patch|
-
-	postf("reload : % \n", patch.file);
-
-};
-
-//------------------------------------------------------
 ~deinit = {|patch|
 
 	postf("deinit : % \n", patch.file);
@@ -153,8 +146,7 @@ var getPattern = {|i, blob|
 	var i = pairs.removeAt(blob.label);
 	if(i != nil,{
 		// runningPatterns[i].stop;
-		runningPatterns[i].clear(1);
-		// Ndef.all.values[0].clean;
+		runningPatterns[i].clear(1); //fade
 		runningPatterns.put(i,nil);
 	});
 	

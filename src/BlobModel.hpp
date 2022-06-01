@@ -50,7 +50,9 @@ public:
     cv::Rect currentRect;
     unsigned int randomHue;
     BlobState state;
-    
+    int depthCameraWidth;
+    int depthCameraHeight;
+
 private:
     
 

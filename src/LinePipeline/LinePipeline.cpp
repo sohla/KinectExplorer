@@ -162,7 +162,9 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
                 followers[i].index = i;
                 followers[i].currentRect = current;
                 followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
-    
+                followers[i].depthCameraWidth = model.depthCameraWidth;
+                followers[i].depthCameraHeight = model.depthCameraHeight;
+            
                 if(trackerFollower.existsPrevious(label)){
                 
                     const cv::Rect& previous = trackerFollower.getPrevious(label);

@@ -40,13 +40,6 @@ var findNextRunning = {
 };
 
 //------------------------------------------------------
-~reload = {|patch|
-
-	postf("reload : % \n", patch.file);
-
-};
-
-//------------------------------------------------------
 ~deinit = {|patch|
 
 	postf("deinit : % \n", patch.file);
