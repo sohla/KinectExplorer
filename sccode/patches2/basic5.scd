@@ -15,20 +15,14 @@ var findNextRunning = {
 
 var getPattern = {|i, blob|
 
-	var notes = [
-		[0,4,4,11,12],
-		[0,4,7,5,12],
-		[7,9,12,14,12],
-		[0,4,-5,-7,0],
-	];
-
+	var notes = [0,-2, -3, -5, -7, -8 ,-10];
 	var patterns = [
 		Pbind(
 		    \instrument, Pswitch([\a,\a,\a,\a], i),
 		    \amp, 0.9,
 		    \root, 0,
 		    \octave, 2,
-		    \attack, 0.004,
+		    \attack, 0.001,
 		    \decay, 0.1,
 		    \sustain, 0.4,
 		    \release,  0.1,
@@ -48,14 +42,14 @@ var getPattern = {|i, blob|
 		    \attack, 0.003,
 		    \decay, 0.01,
 		    \sustain, 0.2,
-		    \release,  0.8,
+		    \release,  Pfunc{blob.rect.getnSynchronous(4)[3].linlin(120,190,0.1,1.3)},
 		    \dur, 0.1,
-		    \note, Pseq([0,-2, -3, -5, -7, -8 ,-10].stutter(18), inf),
+		    \note, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,6).floor}).stutter(3),
 		    \dt, Pwhite(0.01, 0.02),
 		    \ff, Pwhite(1500, 1700),
 		    \rf, 0.3,
 		    \dis, 0.05,
-		    \df, 5
+		    \df, Pfunc{blob.rect.getnSynchronous(4)[2].linlin(70,180,1,25)}
 	  	),
 		Pbind(
 		    \instrument, Pswitch([\a,\a,\a,\a], i),
@@ -144,7 +138,7 @@ var getPattern = {|i, blob|
 	var i = findNextRunning.();
 	var ptn = Pdef("pa_"++i, getPattern.(i,blob));
 
-
+	runningPatterns.put(i,ptn);
 
 	if(i != nil, {
 		pairs.put(blob.label, i);

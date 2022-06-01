@@ -74,7 +74,12 @@ var findNextRunning = {
 		    \decay, 0.1,
 		    \sustain, Pswitch([ 0.02,0.01,0.01,0.03], i), //make sure sustain is not to low!
 		    \release,  Pswitch([Pwhite(1.5,0.03),0.9,1.3,1.5], i),
-		    \dur, Pswitch([Prand([0.1,Rest(0.1),0.3], inf),Prand([0.4,Rest(0.2),0.2], inf), Pseq([0.4,0.1,0.1,0.2], inf),Pseq([0.8,Rest(0.4)],inf)], i),
+		    \dur, Pswitch([
+		    	Prand([0.1,Rest(0.1),0.3], inf),
+		    	Prand([0.4,Rest(0.2),0.2], inf), 
+		    	Pseq([0.4,0.1,0.1,0.2], inf),
+		    	Pseq([0.8,Rest(0.4)],inf) 
+		    ], i),
 		    \note, Pswitch( notes[i],Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,5).floor}),
 		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01], i),
 		    \ff, Pwhite(300, 700),
