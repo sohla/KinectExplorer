@@ -454,8 +454,8 @@
 				});
 				
 				//needs to be longer than the fade out on the patterns inside the patch when using Ndefs
-				// {freeBlob.(blob);}.defer(1.7);
-				freeBlob.(blob);
+				{freeBlob.(blob);}.defer(11);
+				// freeBlob.(blob);
 				blobsDict.removeAt(msg[1]);
 
 				// postf("blob -: % :", blob.label);
