@@ -56,25 +56,25 @@ var findNextRunning = {
 
 	var vizMessage = {|e, i|
 		if(oscSender != nil, {
-			oscSender.sendMsg("/shadow", 
-				"shape", e.shape,
-				"duration", e.dur,
-				"attack", e.attack,
-				"release", e.release,
-				"color", e.color,
-				"scale", e.scale,
-				"sx", e.sx,
-				"sy", e.sy,
-				"ex", e.ex,
-				"ey", e.ey,
-				"imageindex", e.imageindex,
-				"rotstart",e.rotstart,
-				"rotend", e.rotend,
-				"amp", e.amp,
-				"speed", e.speed,
-				// "freq", e.freq,
-				"wobble", e.wobble,
-			);
+			{oscSender.sendMsg("/shadow", 
+				"shape", e[\shape],
+				"duration", e[\dur],
+				"attack", e[\attack],
+				"release", e[\release] * 0.5,
+				"color", e[\color],
+				"scale", e[\scale],
+				"sx", e[\sx],
+				"sy", e[\sy],
+				"ex", e[\ex],
+				"ey", e[\ey],
+				"imageindex", e[\imageindex],
+				"rotstart",e[\rotstart],
+				"rotend", e[\rotend],
+				"amp", e[\amp],
+				"speed", e[\speed],
+				"freq", 1,
+				"wobble", e[\wobble],
+			);}.defer(0.1);
 		});
 	};
 
@@ -109,13 +109,13 @@ var findNextRunning = {
 		    \df, Pswitch([9,8,7,4,1], i),
 
 		    // visuals
-		    \shape, 1,
-		    \color, 0.1,
+		    \shape, 3,
+		    \color, Pkey(\ff).linlin(300,700,0,1),
 		    \scale, 1,
-		    \sx, 0.5,
-		    \sy, 0.5,
-		    \ex, 0.5,
-		    \ey, 0.5,
+		    \sx, -1.6 + (i*1),
+		    \sy, 0,
+		    \ex, Pkey(\sx),
+		    \ey, 0,
 		    \imageindex, 0,
 		    \rotstart, 0,
 		    \rotend, 0,
@@ -129,7 +129,6 @@ var findNextRunning = {
 	  	)
 	);
 
-	oscSender.postln;
 
 	// i.postln;
 	patterns.put(i,ptn);
