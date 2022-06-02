@@ -59,8 +59,8 @@ var findNextRunning = {
 			{oscSender.sendMsg("/shadow", 
 				"shape", e[\shape],
 				"duration", e[\dur],
-				"attack", e[\attack],
-				"release", e[\release] * 0.5,
+				"attack", e[\attack] ,
+				"release", e[\release] * 0.4,
 				"color", e[\color],
 				"scale", e[\scale],
 				"sx", e[\sx],
@@ -94,7 +94,7 @@ var findNextRunning = {
 		    \attack, Pswitch([ Pwhite(0.001,0.06),0.002,0.003,0.005], i),
 		    \decay, 0.1,
 		    \sustain, Pswitch([ 0.02,0.01,0.01,0.03], i), //make sure sustain is not to low!
-		    \release,  Pswitch([Pwhite(1.5,0.03),0.9,1.3,1.5], i),
+		    \release,  Pswitch([Pwhite(1.5,0.03),0.9,1.3,1.5], i) * 0.4,
 		    \dur, Pswitch([
 		    	Prand([0.1,Rest(0.1),0.3], inf),
 		    	Prand([0.4,Rest(0.2),0.2], inf), 
@@ -109,13 +109,13 @@ var findNextRunning = {
 		    \df, Pswitch([9,8,7,4,1], i),
 
 		    // visuals
-		    \shape, 3,
+		    \shape, Pswitch([1,6,3,4], i),
 		    \color, Pkey(\ff).linlin(300,700,0,1),
-		    \scale, 1,
-		    \sx, -1.6 + (i*1),
-		    \sy, 0,
+		    \scale, Pswitch([1,4,Pwhite(1.03,2.1),4], i),
+		    \sy, Pswitch([0,0,0,Pkey(\note).linlin(-7,4,-1.5,1.5)], i),
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,-2,2)},
+		    \ey, Pkey(\sy) * 0.1,
 		    \ex, Pkey(\sx),
-		    \ey, 0,
 		    \imageindex, 0,
 		    \rotstart, 0,
 		    \rotend, 0,
