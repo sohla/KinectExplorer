@@ -9,6 +9,9 @@ public:
 	static void init(int argc, const char** argv)
 	{
 		int n = 0;
+        
+        std::cout << "args : ";
+        
 		while (++n < argc)
 		{
 			string key = argv[n];
@@ -21,7 +24,12 @@ public:
 			{
 				args[key.substr(1)] = argv[++n];
 			}
+
+            std::cout << key << " ";
 		}
+        
+        std::cout << std::endl;
+        
 	}
 	
 	static bool hasKey(const string& key)

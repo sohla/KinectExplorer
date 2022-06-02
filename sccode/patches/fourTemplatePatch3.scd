@@ -49,6 +49,26 @@ var vizMessage;
 	};
 
 
+// oscSender.sendMsg("/shadow", 
+// 			"shape", e.sh,
+// 			"duration", e.dur,
+// 			"attack", e.attack,
+// 			"release", e.release,
+// 			"color", e.color,
+// 			"scale", e.scale,
+// 			"sx", e.sx,
+// 			"sy", e.sy,
+// 			"ex", e.ex,
+// 			"ey", e,ey,
+// 			"imageindex", e.ii,
+// 			"rotstart",e.rotstart,
+// 			"rotend", e.rotend,
+// 			"amp", e.amp,
+// 			"speed", e.speed,
+// 			"freq", e.freq,
+// 			"wobble", e.wobble,
+// 		);
+
 	SynthDef(\a, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);

@@ -136,6 +136,7 @@ var getPattern = {|i, blob|
 	if(i != nil, {
 		pairs.put(blob.label, i);
 		runningPatterns[i].quant = [0.4, 0];
+		runningPatterns[i].fadeTime = 0.1;
 		runningPatterns[i].play;
 	});
 };

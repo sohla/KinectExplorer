@@ -12,7 +12,7 @@
 void OSCSender::sendOSCMessage(const ofxOscMessage &oscMessage){
 
     std::string scip = "127.0.0.1";
-    std::string tdip = "127.0.0.2";
+    std::string tdip = "127.0.0.1";
 
     if(ofxArgParser::hasKey("sc")){
         scip = ofxArgParser::getValue("sc");
