@@ -116,7 +116,7 @@ var getPattern = {|i, blob|
 
 	runningPatterns.do({|p,i|
 		// p.stop; 
-		p.clear(10);
+		p.clear(2);
 		p.free;
 		runningPatterns.put(i,nil);
 	});

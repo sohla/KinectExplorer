@@ -79,7 +79,6 @@
 			blob.velocity.setn([msg[14], msg[15]]);
 			blob.dataSize = msg[16].asInteger;
 			blob.data = msg.copyRange(17,127*2);
-			blob.dataSize.postln;
 
 	};
 
@@ -320,12 +319,21 @@
 			.action_({|b|
 				
 				patches.do({|p| 
-					p.env.use{
-						~deinit.(p);
-						loadPatch.(p);
+					// resetKE.();
+					if(p.isOn,{
+						p.env.use{
+							~deinit.(p);
+						}; 
+					});
+					
+					loadPatch.(p);
+
+					if(p.isOn,{
+						p.env.use{
+							~init.(p);
+						}; 
 						resetKE.();
-						if(p.isOn == true,{~init.(p)});
-					}; 
+					});
 				})
 			}),
 		Button()
@@ -378,8 +386,8 @@
 		resetListener = OSCFunc({ |msg, time, addr, recvPort|
 
 			blobsDict.do({|blob|
-				patches.do({|m| m.env.use{
-					if(m.isOn, {
+				patches.do({|p| m.env.use{
+					if(p.isOn, {
 						if(blobsDict.values.size > 0,{
 							~onBlobDeinit.(blob, blobsDict);
 						});
@@ -474,7 +482,7 @@
 
 		TempoClock.default.tempo = 1.0;
 		// load all data into patches
-		patches.do({|m| loadPatch.(m)});
+		patches.do({|p| loadPatch.(p)});
 
 		resetKE.();
 	});

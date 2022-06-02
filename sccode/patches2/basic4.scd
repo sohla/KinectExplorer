@@ -1,7 +1,7 @@
 var patterns = Array.fill(4,{nil});
 var index = 0;
 var pairs = Dictionary.new(4);
-
+var oscSender = "hi";
 
 var findNextRunning = {
 	var index = 0;
@@ -14,6 +14,7 @@ var findNextRunning = {
 };
 //------------------------------------------------------
 ~init = {|patch|
+
 
 	postf("init : % \n", patch.file);
 
@@ -28,6 +29,8 @@ var findNextRunning = {
 
 	}).add;
 
+	oscSender = patch.netAddr;
+
 };
 
 //------------------------------------------------------
@@ -36,8 +39,8 @@ var findNextRunning = {
 	postf("deinit : % \n", patch.file);
 
 	patterns.do({|p,i|
-		p.stop; 
-		p.clear;
+		// p.stop; 
+		p.clear(1);
 		p.free;
 		patterns.put(i,nil);
 	});
@@ -51,6 +54,30 @@ var findNextRunning = {
 
 	var i = findNextRunning.();
 
+	var vizMessage = {|e, i|
+		if(oscSender != nil, {
+			oscSender.sendMsg("/shadow", 
+				"shape", e.shape,
+				"duration", e.dur,
+				"attack", e.attack,
+				"release", e.release,
+				"color", e.color,
+				"scale", e.scale,
+				"sx", e.sx,
+				"sy", e.sy,
+				"ex", e.ex,
+				"ey", e.ey,
+				"imageindex", e.imageindex,
+				"rotstart",e.rotstart,
+				"rotend", e.rotend,
+				"amp", e.amp,
+				"speed", e.speed,
+				// "freq", e.freq,
+				"wobble", e.wobble,
+			);
+		});
+	};
+
 	var notes = [
 		[0,4,4,11,12],
 		[0,4,7,5,12],
@@ -58,7 +85,7 @@ var findNextRunning = {
 		[0,4,-5,-7,0],
 	];
 
-	var ptn = Pdef("pa_"++i,
+	var ptn = Ndef("pa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\a,\a,\a,\a], i),
 		    \amp, Pswitch([0.3,0.3,0.4,0.8], i),
@@ -80,10 +107,31 @@ var findNextRunning = {
 		    \rf, 0.003,
 		    \dis, 0.05,
 		    \df, Pswitch([9,8,7,4,1], i),
+
+		    // visuals
+		    \shape, 1,
+		    \color, 0.1,
+		    \scale, 1,
+		    \sx, 0.5,
+		    \sy, 0.5,
+		    \ex, 0.5,
+		    \ey, 0.5,
+		    \imageindex, 0,
+		    \rotstart, 0,
+		    \rotend, 0,
+		    \speed, 1,
+		    // \freq, 1,
+		    \wobble, 1,
+
+			\osc, Pfunc{|e| 
+				vizMessage.(e, i);
+			}
 	  	)
 	);
 
-	i.postln;
+	oscSender.postln;
+
+	// i.postln;
 	patterns.put(i,ptn);
 
 	if(i != nil, {
@@ -98,8 +146,8 @@ var findNextRunning = {
 
 	var i = pairs.removeAt(blob.label);
 	if(i != nil,{
-		patterns[i].stop;
-		patterns[i].clear;
+		// patterns[i].stop;
+		patterns[i].clear(1);
 		// Ndef.all.values[0].clean;
 		patterns.put(i,nil);
 	});
