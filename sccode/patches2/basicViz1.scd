@@ -80,13 +80,13 @@ var findNextRunning = {
 		});
 	};
 
-	var notes = [0,4,8];
+	var notes = [0,4,8,12];
 
 	var ptn = Ndef("pa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\a,\a,\a,\a], i),
-		    \amp, 0.3,
-		    \octave, 7 - i,
+		    \amp, Pswitch([0.8,0.3,0.3,0.3], i),
+		    \octave, Pswitch([2,6,5,4], i),
 		    \attack, 0.02,
 		    \decay, 0.1,
 		    \sustain, 0.3, //make sure sustain is not to low!
@@ -97,21 +97,21 @@ var findNextRunning = {
 		    	Pseq([0.1,Rest(0.1),0.1,0.1], inf),
 		    	Pseq([0.2,0.2,Rest(0.5)], inf),
 		    ], i),
-		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,3).floor}),
+		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,4).floor}),
 		    \note, Pseq([0,7,11], inf),
-		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01], i),
-		    \ff, Pwhite(300, 700),
+		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
+		    \ff, Pwhite(300, 900),
 		    \rf, 0.003,
 		    \dis, 0.05,
-		    \df, Pswitch([9,8,7,4,1], i),
+		    \df, Pswitch([1,8,7,4,1], i),
 
 		    // visuals
-		    \shape, 6,
-		    \vdur, 0.15,
-		    \vatt, 0.1,
-		    \vrel, 0.9,
-		    \color, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.999)}),
-		    \scale, 0.3,
+		    \shape, 0,
+		    \vdur, 0.5,
+		    \vatt, 0.3,
+		    \vrel, 0.3,
+		    \color, Pswitch([0,0.3,0.6,0.9], i),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.999)}),
+		    \scale, Pswitch([1,0.5,0.1,0.2], i),
 		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,-1,1)}),
 		    \sy, -1,
 		    \ex, Pkey(\sx),
@@ -148,7 +148,7 @@ var findNextRunning = {
 ~onBlobDeinit = {|blob, blobsDict|
 
 	var i = pairs.removeAt(blob.label);
-	var fadeTime = 4;
+	var fadeTime = 2;
 	var fadeRate = 0.1;
 	var fadeSteps = (fadeTime / fadeRate).floor;
 

@@ -21,14 +21,14 @@
         "generator": {
             "UnknownName": "1",
             "animate": "1",
-            "blobs": "1",
+            "blobs": "4",
             "draw": "0",
-            "on": "1",
-            "random": "0",
+            "on": "0",
+            "random": "1",
             "speed": "0",
             "speedH": "0.908163",
             "speedW": "0.923469",
-            "speedX": "0.494898"
+            "speedX": "0.162947"
         },
         "keNDIReceiver": {
             "draw": "0",
@@ -92,13 +92,13 @@
             "vert-invert": "0"
         },
         "nearfar": {
-            "cropBot": "0.75",
+            "cropBot": "0.657845",
             "cropLeft": "0",
             "cropRight": "1",
-            "cropTop": "0",
+            "cropTop": "0.254784",
             "cv-threshold": "0",
-            "draw": "0",
-            "far": "75",
+            "draw": "1",
+            "far": "138",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -137,7 +137,7 @@
             "maxRadius": "238",
             "minRadius": "30",
             "on": "1",
-            "persistance": "15",
+            "persistance": "6",
             "sc": "127.0.0.1",
             "td": "192.168.1.150",
             "threshold": "127"

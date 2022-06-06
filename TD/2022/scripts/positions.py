@@ -1,5 +1,6 @@
 # me - this DAT
 # scriptOp - the OP which is cooking
+import math
 
 # press 'Setup Parameters' in the OP to call this function to re-create the parameters.
 def onSetupParameters(scriptOp):
