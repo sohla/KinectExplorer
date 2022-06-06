@@ -48,7 +48,8 @@
 				\root: 60,
 				\env:  nil,
 				\pattern: nil,
-				\buses: nil
+				\buses: nil,
+				\fadeValue: 1.0,
 
 
 	);

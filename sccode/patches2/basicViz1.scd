@@ -62,7 +62,7 @@ var findNextRunning = {
 				"attack", e[\vatt],
 				"release", e[\vrel],
 				"color", e[\color],
-				"scale", e[\scale],
+				"scale", e[\scale] * blob.fadeValue,
 				"sx", e[\sx],
 				"sy", e[\sy],
 				"ex", e[\ex],
@@ -80,25 +80,25 @@ var findNextRunning = {
 		});
 	};
 
-	var notes = [0,5,7,10,14,17];
+	var notes = [0,4,8];
 
 	var ptn = Ndef("pa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\a,\a,\a,\a], i),
 		    \amp, 0.3,
-		    \octave, 6 - i,
+		    \octave, 7 - i,
 		    \attack, 0.02,
 		    \decay, 0.1,
 		    \sustain, 0.3, //make sure sustain is not to low!
-		    \release,  0.7,
+		    \release,  1.7,
 		    \dur, Pswitch([
-		    	0.1,
-		    	0.2, 
-		    	0.5,
-		    	0.4
+		    	Pseq([1,Rest(0.5)], inf),
+		    	Pseq([0.5,Rest(0.25)], inf),
+		    	Pseq([0.1,Rest(0.1),0.1,0.1], inf),
+		    	Pseq([0.2,0.2,Rest(0.5)], inf),
 		    ], i),
-		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,5).floor}),
-		    \note, Pseq([0,4,7,10,12], inf),
+		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,3).floor}),
+		    \note, Pseq([0,7,11], inf),
 		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01], i),
 		    \ff, Pwhite(300, 700),
 		    \rf, 0.003,
@@ -109,13 +109,13 @@ var findNextRunning = {
 		    \shape, 6,
 		    \vdur, 0.15,
 		    \vatt, 0.1,
-		    \vrel, 0.2,
+		    \vrel, 0.9,
 		    \color, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.999)}),
-		    \scale, 1,
+		    \scale, 0.3,
 		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,-1,1)}),
 		    \sy, -1,
 		    \ex, Pkey(\sx),
-		    \ey, 1,
+		    \ey, 1,//Pfunc({blob.rect.getnSynchronous(4)[3].linlin(160,250,0,1).floor}),
 		    \imageindex, 14,
 		    \rotstart, -90,
 		    \rotend, -90,
@@ -124,7 +124,8 @@ var findNextRunning = {
 		    \wobble, 1.1,
 
 			\osc, Pfunc{|e| 
-				if(e[\dur].isKindOf(Float) == true,{
+
+				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
 				});
 				true // must return true 
@@ -132,7 +133,7 @@ var findNextRunning = {
 	  	)
 	);
 
-
+	blob.fadeValue = 1.0;
 	// i.postln;
 	patterns.put(i,ptn);
 
@@ -147,11 +148,27 @@ var findNextRunning = {
 ~onBlobDeinit = {|blob, blobsDict|
 
 	var i = pairs.removeAt(blob.label);
-	if(i != nil,{
+	var fadeTime = 4;
+	var fadeRate = 0.1;
+	var fadeSteps = (fadeTime / fadeRate).floor;
 
-		//• need something here to fade visuals
+	"deinit blob".postln;
+	
+	if(i != nil,{
+		
+		// calcualte fade value (used for visuals)
+		SystemClock.sched(0.0,
+		    Routine({ 
+		    	fadeSteps.do({
+					
+					blob.fadeValue = blob.fadeValue - (1.0 / (fadeTime / fadeRate));	        
+			        fadeRate.yield;
+		    	}) ;
+		    });
+		);
+
 		// patterns[i].stop;
-		patterns[i].clear(1);
+		patterns[i].clear(fadeTime);
 		// Ndef.all.values[0].clean;
 		patterns.put(i,nil);
 	});

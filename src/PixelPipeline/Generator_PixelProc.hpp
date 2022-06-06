@@ -73,7 +73,7 @@ class Generator_PixelProc : public Base_PixelProc {
                 ofRandom(100,640-100),  // x
                 float(480 * 0.8),       // y
                 ofRandom(70,90),        // w
-                ofRandom(100,190),      // h
+                ofRandom(100,240),      // h
                 int(ofRandom(190,210)), // hue
                 ofRandom(-15,15),       // delta
             };
