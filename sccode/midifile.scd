@@ -9,7 +9,7 @@
 	//midiFile.asDicts.do({ |item| item.postln; });
 	// midiFile.play;
 	// midiFile.tracks;
-	midiFile.generatePatternSeqs[1].size;
+	midiFile.generatePatternSeqs[1];
 //	midiFile.noteOnEvents(0,0).postln;
 )
 

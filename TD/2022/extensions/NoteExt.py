@@ -34,7 +34,7 @@ class NoteExt:
 				self.dataOp.appendChan( arg )
 
 		vars["lifetotal"]	= vars['attack'] + vars['release'] # for now, need to be clear on this
-		vars["release"]		= vars["release"] * 0.75	#a little less than audio release
+		vars["release"]		= vars["release"] 	#a little less than audio release
 		vars["completed"]	= 0.
 		vars["life"]		= 0.
 		vars["value"]		= 0.
@@ -82,9 +82,10 @@ class NoteExt:
 				life   		= self.dataOp["life"][i]
 				release		= self.dataOp["release"][i]
 				duration	= self.dataOp["duration"][i]
-				totalduration = attack + duration + release
+				totalduration = duration + attack + release
+
 				value = 1.
-				releaseStart = attack
+				releaseStart = duration - attack
 				if life < attack:
 					value = min( life / attack , 1.)
 

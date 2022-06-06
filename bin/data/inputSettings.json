@@ -21,14 +21,14 @@
         "generator": {
             "UnknownName": "1",
             "animate": "1",
-            "blobs": "4",
+            "blobs": "1",
             "draw": "0",
             "on": "1",
             "random": "0",
             "speed": "0",
             "speedH": "0.908163",
             "speedW": "0.923469",
-            "speedX": "0.111607"
+            "speedX": "0.494898"
         },
         "keNDIReceiver": {
             "draw": "0",
