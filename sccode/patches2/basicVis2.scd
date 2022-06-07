@@ -30,6 +30,26 @@ var findNextRunning = {
 
 	}).add;
 
+	SynthDef(\glow, {|out = 0, attack = 0.004, release = 0.9, freq = 100, gate = 1, coef = 0.0, tf = 1, amp = 0.3, ff = 10500, rf = 0.5|
+		var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
+		var trig = Impulse.ar(XLine.ar(tf, 1, attack + (release * 0.5)));
+		var sub = LFTri.ar(freq, [0,pi/3], 0.09);
+		var sig = Splay.ar({|i|
+	    	var f = freq * (i+1);
+	    	Pluck.ar(
+	    		BrownNoise.ar(1), 
+	    		trig,  
+	    		f.reciprocal, 
+	    		f.reciprocal, 
+	    		Demand.ar(trig, 0, Dwhite(1, 10)),
+	        	coef: coef
+	        )} !2);
+
+		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
+		Out.ar(out, (filter + sub) * env * amp);
+
+	}).add;
+
 	oscSender = patch.netAddr;
 
 };
@@ -93,40 +113,61 @@ var findNextRunning = {
 
 	var notes = [0,4,8,12];
 
-	var ptn = Ndef("pa_"++i,
+	var ptn = Pdef("pa_"++i,
 		Pbind(
-		    \instrument, Pswitch([\a,\a,\a,\a], i),
-		    \amp, Pswitch([0.8,0.3,0.3,0.3], i),
-		    \octave, Pswitch([2,6,5,4], i),
-		    \attack, 0.02,
-		    \decay, 0.1,
-		    \sustain, 0.3, //make sure sustain is not to low!
-		    \release,  1.7,
-		    \dur, Pswitch([
-		    	1,//Pseq([1,Rest(0.5)], inf),
-		    	0.5,//Pseq([0.5,Rest(0.25)], inf),
-		    	0.125,//Pseq([0.125,Rest(0.125),0.125,0.125], inf),
-		    	0.25,//Pseq([0.25,0.25,Rest(0.5)], inf),
+		    \instrument, \glow,
+		    \amp, Pswitch([0.3,0.8,0.8,1.3], i),
+		    \octave, Pswitch([
+		    	7,
+		    	7,
+		    	5,
+				Pseq([2,3,4,3], inf),
 		    ], i),
-		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,4).floor}),
-		    \note, Pseq([0,7,11], inf),
-		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
-		    \ff, Pwhite(300, 900),
-		    \rf, 0.003,
-		    \dis, 0.05,
-		    \df, Pswitch([1,8,7,4,1], i),
+		    \attack, Pswitch([0.4,0.001,0.001,0.001], i),
+		    \decay, 0.1,
+		    \sustain, 0.3, 
+		    \release,  Pswitch([8.6,0.9,3.9,Pwhite(0.9,1.9)], i),
+		    \dur, Pswitch([
+		    	4,
+		    	Pseq([0.125,0.125,Rest(0.5)], inf),
+		    	0.125*3,
+		    	0.125
+		    ], i),
+		    \root, Pswitch([
+		    	Pseq([0].stutter(2), inf),
+		    	Pseq([0].stutter(32), inf),
+		    	Pseq([0].stutter(21), inf),
+		    	Pseq([0].stutter(64), inf),
+		    ], i),
+		    \note, Pswitch([
+		    	Pseq([[0,4,-2],[2,5,0]].stutter(1), inf),
+		    	Pseq([-2,10], inf),
+		    	Pseq([7,5,4,2,-2].stutter(3), inf),
+			    Pseq([0,0,-2,4,0,0,5,-2,5,5,-2,2,0,7,7,7].stutter(4), inf)
+		    ], i),
+
+		    \coef, Pswitch([
+		    	0.3,
+		    	Pwhite(0.001,0.1),
+		    	0.3,
+				Pwhite(0.9,0.87),
+		    ], i),
+		    \tf, Pswitch([40,1,1,1], i),
+		    \ff, 11400,
+		    \rf, 1,
 
 		    // visuals
-		    \shape, 0,
+		    \shape, 3,
+
 		    \vdur, 0.5,
 		    \vatt, 0.05,
-		    \vrel, 0.3,
-		    \color, Pswitch([0,0.3,Pkey(\note).linlin(0,11,0.1,0.2),0.9], i),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.999)}),
-		    \scale, Pswitch([1,0.5,0.1,0.2], i),
+		    \vrel, 0.5,
+		    \color, Pswitch([0,0.3,Pkey(\note).linlin(0,11,0.1,0.2),0.9], i),
+		    \scale, Pswitch([2,0.5,1,0.6], i),
 		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,-1,1)}),
-		    \sy, -1,
+		    \sy, 0,
 		    \ex, Pkey(\sx),
-		    \ey, 1,//Pfunc({blob.rect.getnSynchronous(4)[3].linlin(160,250,0,1).floor}),
+		    \ey, -1,
 		    \imageindex, 14,
 		    \rotstart, -90,
 		    \rotend, -90,
@@ -162,7 +203,6 @@ var findNextRunning = {
 	var fadeRate = 0.1;
 	var fadeSteps = (fadeTime / fadeRate).floor;
 
-	"deinit blob".postln;
 	if(i != nil,{
 		
 		// calcualte fade value (used for visuals)
