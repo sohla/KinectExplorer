@@ -41,7 +41,7 @@ var findNextRunning = {
 
 	patterns.do({|p,i|
 
-		// hack together a blob model with label and fadevalue
+		// hack together a blob model with label
 		// to pass to blob deinit, giving us a nice fade
 		var label = pairs.findKeyForValue(i);
 		if(label!=nil,{
@@ -144,7 +144,6 @@ var findNextRunning = {
 	  	)
 	);
 
-	blob.fadeValue = 1.0;
 	fadeValues[i] = 1.0;
 	patterns.put(i,ptn);
 

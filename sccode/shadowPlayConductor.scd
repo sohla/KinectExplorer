@@ -49,7 +49,6 @@
 				\env:  nil,
 				\pattern: nil,
 				\buses: nil,
-				\fadeValue: 1.0,
 
 
 	);
