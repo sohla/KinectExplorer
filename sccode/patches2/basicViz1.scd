@@ -2,6 +2,7 @@ var patterns = Array.fill(4,{nil});
 var index = 0;
 var pairs = Dictionary.new(4);
 var oscSender = "hi";
+var fadeValues = [1,1,1,1];
 
 var findNextRunning = {
 	var index = 0;
@@ -39,10 +40,20 @@ var findNextRunning = {
 	postf("deinit : % \n", patch.file);
 
 	patterns.do({|p,i|
+
+		// hack together a blob model with label and fadevalue
+		// to pass to blob deinit, giving us a nice fade
+		var label = pairs.findKeyForValue(i);
+		if(label!=nil,{
+			var b = (\label:label);
+			~onBlobDeinit.(b, nil);
+		});
+
+		// just stop everything
 		// p.stop; 
-		p.clear(1);
-		p.free;
-		patterns.put(i,nil);
+		// p.clear(1);
+		// p.free;
+		// patterns.put(i,nil);
 	});
 
 	pairs = Dictionary.new(4);
@@ -62,7 +73,7 @@ var findNextRunning = {
 				"attack", e[\vatt],
 				"release", e[\vrel],
 				"color", e[\color],
-				"scale", e[\scale] * blob.fadeValue,
+				"scale", e[\scale] * fadeValues[i],
 				"sx", e[\sx],
 				"sy", e[\sy],
 				"ex", e[\ex],
@@ -92,10 +103,10 @@ var findNextRunning = {
 		    \sustain, 0.3, //make sure sustain is not to low!
 		    \release,  1.7,
 		    \dur, Pswitch([
-		    	Pseq([1,Rest(0.5)], inf),
-		    	Pseq([0.5,Rest(0.25)], inf),
-		    	Pseq([0.1,Rest(0.1),0.1,0.1], inf),
-		    	Pseq([0.2,0.2,Rest(0.5)], inf),
+		    	1,//Pseq([1,Rest(0.5)], inf),
+		    	0.5,//Pseq([0.5,Rest(0.25)], inf),
+		    	0.125,//Pseq([0.125,Rest(0.125),0.125,0.125], inf),
+		    	0.25,//Pseq([0.25,0.25,Rest(0.5)], inf),
 		    ], i),
 		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,4).floor}),
 		    \note, Pseq([0,7,11], inf),
@@ -108,9 +119,9 @@ var findNextRunning = {
 		    // visuals
 		    \shape, 0,
 		    \vdur, 0.5,
-		    \vatt, 0.3,
+		    \vatt, 0.05,
 		    \vrel, 0.3,
-		    \color, Pswitch([0,0.3,0.6,0.9], i),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.999)}),
+		    \color, Pswitch([0,0.3,Pkey(\note).linlin(0,11,0.1,0.2),0.9], i),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.999)}),
 		    \scale, Pswitch([1,0.5,0.1,0.2], i),
 		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,-1,1)}),
 		    \sy, -1,
@@ -134,13 +145,13 @@ var findNextRunning = {
 	);
 
 	blob.fadeValue = 1.0;
-	// i.postln;
+	fadeValues[i] = 1.0;
 	patterns.put(i,ptn);
 
 	if(i != nil, {
 		pairs.put(blob.label, i);
 		patterns[i].quant = [1, 0];
-		patterns[i].play;
+		patterns[i].play();
 	});
 };
 
@@ -148,12 +159,11 @@ var findNextRunning = {
 ~onBlobDeinit = {|blob, blobsDict|
 
 	var i = pairs.removeAt(blob.label);
-	var fadeTime = 2;
+	var fadeTime = 2; //• add to blob
 	var fadeRate = 0.1;
 	var fadeSteps = (fadeTime / fadeRate).floor;
 
 	"deinit blob".postln;
-	
 	if(i != nil,{
 		
 		// calcualte fade value (used for visuals)
@@ -161,8 +171,9 @@ var findNextRunning = {
 		    Routine({ 
 		    	fadeSteps.do({
 					
-					blob.fadeValue = blob.fadeValue - (1.0 / (fadeTime / fadeRate));	        
+					fadeValues[i] = fadeValues[i] - (1.0 / (fadeTime / fadeRate));	        
 			        fadeRate.yield;
+			        // fadeValues.postln;
 		    	}) ;
 		    });
 		);

@@ -466,7 +466,7 @@
 				});
 				
 				//needs to be longer than the fade out on the patterns inside the patch when using Ndefs
-				{freeBlob.(blob);}.defer(11);
+				{freeBlob.(blob);}.defer(10);
 				// freeBlob.(blob);
 				blobsDict.removeAt(msg[1]);
 
@@ -482,7 +482,6 @@
 		}, '/ke/deinit', recvPort: 57120);
 		
 		//------------------------------------------------------
-
 		TempoClock.default.tempo = 1.0;
 		// load all data into patches
 		patches.do({|p| loadPatch.(p)});
