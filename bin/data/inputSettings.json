@@ -1,7 +1,7 @@
 {
     "inputSettings": {
         "blur": {
-            "blur": "3",
+            "blur": "4",
             "draw": "0",
             "on": "1"
         },
@@ -21,9 +21,9 @@
         "generator": {
             "UnknownName": "1",
             "animate": "1",
-            "blobs": "4",
+            "blobs": "1",
             "draw": "0",
-            "on": "0",
+            "on": "1",
             "random": "1",
             "speed": "0",
             "speedH": "0.908163",
@@ -97,8 +97,8 @@
             "cropRight": "1",
             "cropTop": "0.254784",
             "cv-threshold": "0",
-            "draw": "1",
-            "far": "138",
+            "draw": "0",
+            "far": "123",
             "horz-invert": "0",
             "map": "0",
             "near": "255",
@@ -137,7 +137,7 @@
             "maxRadius": "238",
             "minRadius": "30",
             "on": "1",
-            "persistance": "6",
+            "persistance": "15",
             "sc": "127.0.0.1",
             "td": "192.168.1.150",
             "threshold": "127"
@@ -170,8 +170,8 @@
         },
         "smooth": {
             "draw": "1",
-            "on": "0",
-            "smooth": "2"
+            "on": "1",
+            "smooth": "3"
         },
         "switches": {
             "ApplyFilter": "0",

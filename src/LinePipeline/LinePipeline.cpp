@@ -97,7 +97,7 @@ void LinePipeline::draw(const DepthModel &model){
                 ofDrawRectangle(followers[i].currentRect.x, followers[i].currentRect.y, followers[i].currentRect.width, followers[i].currentRect.height);
                 
                 ofDrawLine(followers[i].previousPosition, followers[i].currentPosition);
-                ofDrawLine(followers[i].currentPosition, followers[i].currentPosition + (followers[i].velocity * 2.0));
+                ofDrawLine(followers[i].currentPosition, followers[i].currentPosition + (followers[i].currentVelocity * 2.0));
                 ofDrawBitmapString(ofToString(followers[i].getLabel()), followers[i].currentPosition);
             }
         }
@@ -147,33 +147,45 @@ ofPixels LinePipeline::process(const DepthModel &model, const ofPixels &pixel){
             // ok so contourTracker and trackerFollower persist different 'blobs'
             // BUT they may contain the same RECTS, so look for them....
             
-                const cv::Rect& current = trackerFollower.getCurrent(label);
+            const cv::Rect& current = trackerFollower.getCurrent(label);
 
-                for(int j=0; j < contourFinder.getBoundingRects().size(); j++){
-                    const cv::Rect& c = contourFinder.getBoundingRects()[j];
-                    if(current == c){
-                        // so we found a rect that is in the list
-                        // assuming index also points to the corresponding polyline
-                        followers[i].line = contourFinder.getPolyline(j);
-                    }
+            for(int j=0; j < contourFinder.getBoundingRects().size(); j++){
+                const cv::Rect& c = contourFinder.getBoundingRects()[j];
+                if(current == c){
+                    // so we found a rect that is in the list
+                    // assuming index also points to the corresponding polyline
+                    followers[i].line = contourFinder.getPolyline(j);
                 }
+            }
 
-                // let's populate the blobModel (followers) with some extra data (velocity, curr/prev position etc.)
-                followers[i].index = i;
-                followers[i].currentRect = current;
-                followers[i].currentPosition = ofVec2f(current.x + current.width / 2, current.y + current.height / 2);
-                followers[i].depthCameraWidth = model.depthCameraWidth;
-                followers[i].depthCameraHeight = model.depthCameraHeight;
+            // let's populate the blobModel (followers) with some extra data (velocity, curr/prev position etc.)
+            followers[i].index = i;
+            followers[i].currentRect = current;
+            followers[i].currentPosition = ofVec2f(current.x + (current.width / 2.0), current.y + (current.height / 2.0));
+            followers[i].depthCameraWidth = model.depthCameraWidth;
+            followers[i].depthCameraHeight = model.depthCameraHeight;
+        
+            // only calculating x
+            followers[i].velocityRate = (followers[i].currentPosition.x - followers[i].previousPosition.x);
+            // / (followers[i].currentPosition.y - followers[i].previousPosition.y);
+        
+            if(trackerFollower.existsPrevious(label)){
             
-                if(trackerFollower.existsPrevious(label)){
-                
-                    const cv::Rect& previous = trackerFollower.getPrevious(label);
-                    followers[i].previousPosition = ofVec2f(previous.x + previous.width / 2, previous.y + previous.height / 2);
-                    //••• acceleration a = (cv - pv) / t;
-                    followers[i].velocity = followers[i].currentPosition - followers[i].previousPosition;
-                }else{
-                    followers[i].velocity = ofVec2f(0,0);
-                }
+                const cv::Rect& previous = trackerFollower.getPrevious(label);
+                followers[i].previousPosition = ofVec2f(previous.x + (previous.width / 2.0), previous.y + (previous.height / 2.0));
+
+                followers[i].currentVelocity = followers[i].currentPosition - followers[i].previousPosition;
+
+                followers[i].acceleration = followers[i].currentVelocity - followers[i].previousVelocity;
+                // only calculating x
+                followers[i].accelerationRate = (followers[i].currentVelocity.x - followers[i].previousVelocity.x);
+                // / (followers[i].currentVelocity.y - followers[i].previousVelocity.y);
+
+            }else{
+                followers[i].currentVelocity = ofVec2f(0,0);
+            }
+        
+            followers[i].previousVelocity = followers[i].currentVelocity;
             
             //•• for each follower[i] pass DepthModel?
             

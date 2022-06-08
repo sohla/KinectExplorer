@@ -46,7 +46,16 @@ public:
 
     ofVec2f previousPosition;
     ofVec2f currentPosition;
-    ofVec2f velocity;
+    
+    ofVec2f previousVelocity;
+    ofVec2f currentVelocity;
+    
+    ofVec2f acceleration;
+    
+    float velocityRate;
+    float accelerationRate;
+
+    
     cv::Rect currentRect;
     unsigned int randomHue;
     BlobState state;

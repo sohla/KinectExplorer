@@ -38,6 +38,9 @@
 				\center: nil,
 				\rect: nil,
 				\velocity: nil,
+				\acceleration: nil,
+				\velocityRate: nil,
+				\accelerationRate: nil,
 				\label: 0,
 				\depthCamWidth: 0,
 				\depthCamHeight: 0,
@@ -63,6 +66,9 @@
 			blob.center = Bus.control(s,2);
 			blob.rect = Bus.control(s,4);
 			blob.velocity = Bus.control(s,2);
+			blob.acceleration = Bus.control(s,2);
+			blob.velocityRate = Bus.control(s,1);
+			blob.accelerationRate = Bus.control(s,1);
 	};
 
 	var msgToBlob = {|msg, blob|
@@ -77,8 +83,11 @@
 			blob.depthCamHeight = msg[12];
 			blob.index = msg[13].asInteger;
 			blob.velocity.setn([msg[14], msg[15]]);
-			blob.dataSize = msg[16].asInteger;
-			blob.data = msg.copyRange(17,127*2);
+			blob.acceleration.setn([msg[16], msg[17]]);
+			blob.velocityRate.set(msg[18]);
+			blob.accelerationRate.set(msg[19]);
+			blob.dataSize = msg[20].asInteger;
+			blob.data = msg.copyRange(21,127*2);
 
 	};
 
@@ -89,7 +98,8 @@
 		blob.center.free;
 		blob.rect.free;
 		blob.velocity.free;
-
+		blob.velocityRate.free;
+		blob.accelerationRate;
 		
 	};
 
@@ -146,6 +156,7 @@
 
 		(\file: "basicVis1.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basicVis2.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "basicVis3.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 
 	];
 	//------------------------------------------------------
@@ -186,11 +197,13 @@
 
 			if(blobsDict.values.size > 0,{
 				// for now, calling all patches
-				patches.do({|m| 
-					m.env.use{
-						var d = ~onPlotData.(blobsDict);
-						if(d != nil, {data = d});
-					}; 
+				patches.do({|p|
+					if(p.isOn,{ 
+						p.env.use{
+							var d = ~onPlotData.(blobsDict);
+							if(d != nil, {data = d});
+						}; 
+					});
 				});
 			});
 			data;
@@ -213,6 +226,9 @@
 				var ax, ay, bx, by, mx, my;
 				var xdif, ydif, a1, b1, a2, b2;
 
+				var dv = rect.width * -1; //• rector out
+				// var dv = plotData.() * -1;
+
 				Pen.smoothing_(true);
 				Pen.width = 1;
 
@@ -220,7 +236,7 @@
 				Pen.strokeColor = cols.at(i);
 
 				Pen.fillOval(Rect(center.x, center.y,6,6));
-				Pen.fillRect(Rect(center.x - 5,550,10, rect.width * -1));
+				Pen.fillRect(Rect(center.x - 5,550,10, dv));
 
 				Pen.strokeRect(rect);
 

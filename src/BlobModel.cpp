@@ -104,14 +104,20 @@ void BlobModel::addDataToOSCMessage(ofxOscMessage &oscMessage){
     oscMessage.addIntArg(depthCameraHeight);// 11
 
     
-    oscMessage.addInt32Arg(index);//12•••••
+    oscMessage.addInt32Arg(index);//12 internal use : current index within followers array
     
-    oscMessage.addInt32Arg(velocity.x);//13
-    oscMessage.addInt32Arg(velocity.y);//14
+    oscMessage.addFloatArg(currentVelocity.x);//13
+    oscMessage.addFloatArg(currentVelocity.y);//14
+    
+    oscMessage.addFloatArg(acceleration.x);//15
+    oscMessage.addFloatArg(acceleration.y);//16
 
-    oscMessage.addInt32Arg(currLine.size());//15
+    oscMessage.addFloatArg(velocityRate);//17
+    oscMessage.addFloatArg(accelerationRate);//18
+
+    oscMessage.addInt32Arg(currLine.size());//19
     
-    for( auto &vert :  currLine.getVertices()){//16..( size = //15)
+    for( auto &vert :  currLine.getVertices()){//20..( size = //15)
         oscMessage.addDoubleArg(vert.x);
         oscMessage.addDoubleArg(vert.y);
         //std::cout << vert.x << " , " << vert.y;
