@@ -53,7 +53,7 @@ void BlobModel::setup(const cv::Rect& track) {
     oscSender.sendOSCMessage(oscMessage);
 
 //    float curTime = ofGetElapsedTimef();
-//    std::cout << curTime << ": " << getLabel() << ": init" <<  std::endl;
+//   std::cout << curTime << ": " << getLabel() << ": init" <<  std::endl;
 
 }
 
@@ -84,7 +84,7 @@ void BlobModel::addDataToOSCMessage(ofxOscMessage &oscMessage){
 //     std::cout << " : " << line.size() << " : " << area << " : " << perimeter << center << " : " ;
     
     //send dimensions of camera img
-    
+
     oscMessage.addIntArg(getLabel());//0
     oscMessage.addIntArg(state);//1
 

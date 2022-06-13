@@ -664,6 +664,7 @@ obj/linuxarmv7l/Release/src/LinePipeline/LinePipeline.o: \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/LinePipeline/LineProc.hpp \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/BlobModel.hpp \
+ /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/OSCSender.hpp \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/src/ofxOscSender.h \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h \
@@ -2041,6 +2042,8 @@ obj/linuxarmv7l/Release/src/LinePipeline/LinePipeline.o: \
 /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp:
 
 /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/BlobModel.hpp:
+
+/home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/OSCSender.hpp:
 
 /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/src/ofxOscSender.h:
 
