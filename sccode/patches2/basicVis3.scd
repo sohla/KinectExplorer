@@ -95,7 +95,7 @@ var findNextRunning = {
 
 	var ptn = Pdef("pa_"++i,
 		Pbind(
-		    \instrument, \glow,
+		    \instrument, \a,
 		    \amp, Pswitch([0.4], i),
 		    \octave, Pswitch([
 		    	3,
@@ -128,6 +128,7 @@ var findNextRunning = {
 
 		    \dat, Pfunc({|e|
 		    	// blob.center.getnSynchronous
+		    	true
 		    }),
 		    // visuals
 		    \shape, 4,

@@ -2,9 +2,10 @@
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 	var netAddr = NetAddr.new("127.0.0.1", 10001);
 	// var netAddr = NetAddr.new("192.168.1.150", 10001);
-	var keAddr = NetAddr("127.0.0.1",57000);
+	// var keAddr = NetAddr("127.0.0.1",57000);
+	var keAddr = NetAddr("192.168.1.55",57000);
 	var numOfBlobs = 4;
-
+	var port = 57121;
 
 	var window, freqScope;
 	var loadPatch, patchButton, reloadButton;
@@ -416,7 +417,7 @@
 
 			blobsDict = Dictionary.new(numOfBlobs);
 			resetKE.();
-		}, '/ke/reset', recvPort: 57120);
+		}, '/ke/reset', recvPort: port);
 		//------------------------------------------------------
 		initListener = OSCFunc({ |msg, time, addr, recvPort|
 
@@ -424,11 +425,12 @@
 			initBlob.(blob);
 			msgToBlob.(msg, blob);
 			blobsDict.put(blob.label,blob);
-			postf("blob +: % :", blob.label);
-			blobsDict.do({|b|
-				postf("\t %", b.label);
-			});
-			postf("% \n");
+
+			// postf("blob +: % :", blob.label);
+			// blobsDict.do({|b|
+			// 	postf("\t %", b.label);
+			// });
+			// postf("% \n");
 			
 			patches.do({|p|
 				if(p.isOn, {
@@ -439,7 +441,7 @@
 			});
 
 			//blobsDict.postln;
-		}, '/ke/init', recvPort: 57120);
+		}, '/ke/init', recvPort: port);
 
 		//------------------------------------------------------
 		updateListener = OSCFunc({ |msg, time, addr, recvPort| 
@@ -462,7 +464,7 @@
 				});
 			});
 
-		}, '/ke/update', recvPort: 57120);
+		}, '/ke/update', recvPort: port);
 
 		//------------------------------------------------------
 		deinitListener = OSCFunc({ |msg, time, addr, recvPort|
@@ -494,7 +496,7 @@
 			});
 
 
-		}, '/ke/deinit', recvPort: 57120);
+		}, '/ke/deinit', recvPort: port);
 		
 		//------------------------------------------------------
 		TempoClock.default.tempo = 1.0;
