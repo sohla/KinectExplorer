@@ -723,6 +723,7 @@ obj/linuxarmv7l/Release/src/main.o: \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/../ip/PacketListener.h \
+ /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/OSCSender.hpp \
  /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/ofxArgParser.h
 
 /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/libs/openFrameworks/ofMain.h:
@@ -2202,5 +2203,7 @@ obj/linuxarmv7l/Release/src/main.o: \
 /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h:
 
 /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/addons/ofxOsc/libs/oscpack/src/osc/../ip/PacketListener.h:
+
+/home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/OSCSender.hpp:
 
 /home/sohla/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer/src/ofxArgParser.h:
