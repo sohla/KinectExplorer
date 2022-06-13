@@ -421,21 +421,19 @@
 		initListener = OSCFunc({ |msg, time, addr, recvPort|
 
 			var blob = Event.new(proto:blobModel);
-
 			initBlob.(blob);
 			msgToBlob.(msg, blob);
 			blobsDict.put(blob.label,blob);
-
-			// postf("blob +: % :", blob.label);
-			// blobsDict.do({|b|
-			// 	postf("\t %", b.label);
-			// });
-			// postf("% \n");
+			postf("blob +: % :", blob.label);
+			blobsDict.do({|b|
+				postf("\t %", b.label);
+			});
+			postf("% \n");
 			
 			patches.do({|p|
 				if(p.isOn, {
 					if(blobsDict.values.size > 0,{
-						 p.env.use{~onBlobInit.(blob, blobsDict)};
+						 p.env.use{~onBlobInit.(blob, blobsDict)};	
 					});
 				});
 			});
@@ -444,9 +442,10 @@
 		}, '/ke/init', recvPort: 57120);
 
 		//------------------------------------------------------
-		updateListener = OSCFunc({ |msg, time, addr, recvPort|
+		updateListener = OSCFunc({ |msg, time, addr, recvPort| 
 
 			var blob = blobsDict.at(msg[1]);
+
 			if(blob != nil,{
 
 				 msgToBlob.(msg, blob);
@@ -506,3 +505,5 @@
 	});
 )
 
+
+// NetAddr.localAddr
