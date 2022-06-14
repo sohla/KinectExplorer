@@ -86,6 +86,10 @@ var findNextRunning = {
 	blobsDict.size
 };
 
+//------------------------------------------------------
+~onBlobData = {|blob|
+	
+};
 
 
 

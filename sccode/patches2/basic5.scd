@@ -163,5 +163,9 @@ var getPattern = {|i, blob|
 	
 	blobsDict.size
 };
+//------------------------------------------------------
+~onBlobData = {|blob|
+	
+};
 
 

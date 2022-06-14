@@ -6,7 +6,7 @@ var root = [0,3,-2,5].stutter(28);
 //------------------------------------------------------
 ~init = {|patch|
 
-	SynthDef(\basicSin, {|out = 0, freq = 160, amp = 0.1, attack = 2, decay = 0.1, sustain = 0.8, release = 1.9, gate = 1, pan = 0|
+	SynthDef(\basicSin, {|out = 0, freq = 160, amp = 0.4, attack = 2, decay = 0.1, sustain = 0.8, release = 1.9, gate = 1, pan = 0|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var sig = SinOsc.ar(freq, 0, amp * env);
@@ -53,5 +53,9 @@ var root = [0,3,-2,5].stutter(28);
 ~onPlotData = {|blobsDict|
 	
 	blobsDict.size
+};
+//------------------------------------------------------
+~onBlobData = {|blob|
+	
 };
 

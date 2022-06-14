@@ -46,3 +46,7 @@ var active = Dictionary.new(4);
 	blobsDict.size
 };
 
+//------------------------------------------------------
+~onBlobData = {|blob|
+	
+};

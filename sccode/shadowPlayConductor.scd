@@ -145,7 +145,7 @@
 	};
 
 	//------------------------------------------------------
-	var row = 3, col = 3;
+	var row = 3, col = 5;
 
 	var patches = [
 
@@ -200,11 +200,28 @@
 			var data = [0];
 
 			if(blobsDict.values.size > 0,{
-				// for now, calling all patches
+				// for now, calling all on patches
 				patches.do({|p|
 					if(p.isOn,{ 
 						p.env.use{
 							var d = ~onPlotData.(blobsDict);
+							if(d != nil, {data = d});
+						}; 
+					});
+				});
+			});
+			data;
+		};
+
+		var blobData = {|blob|
+			var data = 0;
+
+			if(blobsDict.values.size > 0,{
+				// for now, calling all on patches
+				patches.do({|p|
+					if(p.isOn,{ 
+						p.env.use{
+							var d = ~onBlobData.(blob);
 							if(d != nil, {data = d});
 						}; 
 					});
@@ -230,8 +247,7 @@
 				var ax, ay, bx, by, mx, my;
 				var xdif, ydif, a1, b1, a2, b2;
 
-				var dv = rect.width * -1; //• rector out
-				// var dv = plotData.() * -1;
+				var dv = blobData.(blob);
 
 				Pen.smoothing_(true);
 				Pen.width = 1;
@@ -299,7 +315,7 @@
 		if( p != nil,{
 			Button()
 				.states_([[p.file, Color.gray(0.2)],[p.file, Color.green(0.8)]])
-				.font_(Font(size:16))
+				.font_(Font(size:14))
 				.minHeight_(50)
 				.minWidth_(100)
 
@@ -348,7 +364,7 @@
 							~deinit.(p);
 						}; 
 					});
-					
+
 					loadPatch.(p);
 
 					if(p.isOn,{
@@ -364,6 +380,12 @@
 			.maxWidth_(100)
 			.action_({|b|
 				if(b.value == 1,{s.mute},{s.unmute});
+			}),
+		Button()
+			.states_([["freeAll", Color.gray(0.2)]])
+			.maxWidth_(100)
+			.action_({|b|
+				s.freeAll;
 			}),
 		GridLayout.rows(*patchButton.()),	
 		graphView = UserView()
@@ -514,3 +536,5 @@
 )
 
 // NetAddr.localAddr
+
+

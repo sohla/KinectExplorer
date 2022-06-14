@@ -1,8 +1,8 @@
-var patterns = Array.fill(4,{nil});
-var index = 0;
 var pairs = Dictionary.new(4);
-var oscSender = "hi";
+var patterns = Array.fill(4,{nil});
 var fadeValues = [1,1,1,1];
+var index = 0;
+var oscSender = "hi";
 
 var findNextRunning = {
 	var index = 0;
@@ -195,4 +195,8 @@ var findNextRunning = {
 	blobsDict.size
 };
 
+//------------------------------------------------------
+~onBlobData = {|blob|
+	
+};
 
