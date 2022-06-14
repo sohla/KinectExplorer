@@ -37,7 +37,7 @@ Pdef.clear
 
 (
 {
-	var fs = Array.makeScaleCps(groundNote: 55, type: 'major');
+	var fs = Array.makeScaleCps(groundNote: 455, type: 'major');
 	var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];//(1..8).reciprocal;
 	var rs = [1];//(1..8).reciprocal;
 
@@ -190,7 +190,7 @@ b = {
 
 
 
-{ MoogFF.ar(LFSaw.ar([55, 55.3], 1, 0.1),MouseX.kr(4, 3398),3) }.play(s);
+{ MoogFF.ar(LFSaw.ar([55, 55.5], 1, 0.1),MouseX.kr(4, 3398),3) }.play(s);
 
 
 
@@ -376,6 +376,23 @@ SynthDef(\fm, {
 	OffsetOut.ar(out, sig)
 }).add;
 )
+(
+Pbind(
+	\instrument, \fm,
+	\freq, Pseq( (30..42), inf).midicps,
+	\dur, 0.25,
+	\fb, 1.9,
+	\rel, Pwhite(0.2,1.11),
+	\pan, Pwhite(-0.2,0.2),
+	\mInd1, Pwhite(0,13),
+	\mInd2, Pwhite(0,1),
+	\mInd3, Pwhite(0,1),
+	\mInd4, Pwhite(0,13),
+	\mInd5, Pwhite(0,1),
+	\mInd6, Pwhite(0,1),
+).play;
+)
+
 
 (
 {
@@ -392,7 +409,8 @@ SynthDef(\fm, {
 
 /////////////////////////////////////
 Quarks.gui
-({
+(
+{
 	var dur_up_down = MouseX.kr(1,5);
 	var ctl_maths = Maths2.ar(dur_up_down,dur_up_down, 0.9);
 

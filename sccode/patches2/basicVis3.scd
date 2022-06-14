@@ -3,6 +3,7 @@ var index = 0;
 var pairs = Dictionary.new(4);
 var oscSender = "hi";
 var fadeValues = [1,1,1,1];
+var previousBlobsSize = 0;
 
 var findNextRunning = {
 	var index = 0;
@@ -93,124 +94,125 @@ var findNextRunning = {
 
 	var notes = [0,4,8,12];
 
-	var ptn = Pdef("pa_"++i,
-		Pbind(
-		    \instrument, \a,
-		    \amp, Pswitch([0.4], i),
-		    \octave, Pswitch([
-		    	3,
-		    	4,
-		    	5,
-				6,
-		    ], i),
-		    \attack, Pswitch([0.02,0.001,0.001,0.001], i),
-		    \decay, 0.1,
-		    \sustain, 0.3, 
-		    \release,  Pswitch([1,1,1,1], i),
-		    \dur, Pswitch([
-		    	1,
-		    	0.5,
-		    	0.25,
-		    	0.125
-		    ], i),
-		    \root, Pswitch([
-		    	Pseq([0].stutter(2), inf),
-		    	Pseq([0].stutter(32), inf),
-		    	Pseq([0].stutter(21), inf),
-		    	Pseq([0].stutter(64), inf),
-		    ], i),
-		    \note, Pswitch([
-		    	Pseq([0], inf),
-		    	Pseq([0], inf),
-		    	Pseq([0], inf),
-			    Pseq([0], inf)
-		    ], i),
+	// var ptn = Pdef("pa_"++i,
+	// 	Pbind(
+	// 	    \instrument, \a,
+	// 	    \amp, Pswitch([0.4], i),
+	// 	    \octave, Pswitch([
+	// 	    	3,
+	// 	    	4,
+	// 	    	5,
+	// 			6,
+	// 	    ], i),
+	// 	    \attack, Pswitch([0.02,0.001,0.001,0.001], i),
+	// 	    \decay, 0.1,
+	// 	    \sustain, 0.3, 
+	// 	    \release,  Pswitch([1,1,1,1], i),
+	// 	    \dur, Pswitch([
+	// 	    	1,
+	// 	    	0.5,
+	// 	    	0.25,
+	// 	    	0.125
+	// 	    ], i),
+	// 	    \root, Pswitch([
+	// 	    	Pseq([0].stutter(2), inf),
+	// 	    	Pseq([0].stutter(32), inf),
+	// 	    	Pseq([0].stutter(21), inf),
+	// 	    	Pseq([0].stutter(64), inf),
+	// 	    ], i),
+	// 	    \note, Pswitch([
+	// 	    	Pseq([0], inf),
+	// 	    	Pseq([0], inf),
+	// 	    	Pseq([0], inf),
+	// 		    Pseq([0], inf)
+	// 	    ], i),
 
-		    \dat, Pfunc({|e|
-		    	// blob.center.getnSynchronous
-		    	true
-		    }),
-		    // visuals
-		    \shape, 4,
+	// 	    \dat, Pfunc({|e|
+	// 	    	// blob.center.getnSynchronous
+	// 	    	true
+	// 	    }),
+	// 	    // visuals
+	// 	    \shape, 4,
 
-		    \vdur, 0.5,
-		    \vatt, 0.05,
-		    \vrel, 0.5,
-		    \color, Pswitch([0,0.3,Pkey(\note).linlin(0,11,0.1,0.2),0.9], i),
-		    \scale, Pswitch([2,0.5,1,0.6], i),
-		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,-1,1)}),
-		    \sy, 0,
-		    \ex, Pkey(\sx),
-		    \ey, -1,
-		    \imageindex, 14,
-		    \rotstart, -90,
-		    \rotend, -90,
-		    \speed, 10,
-		    // \freq, 1,
-		    \wobble, 1.1,
+	// 	    \vdur, 0.5,
+	// 	    \vatt, 0.05,
+	// 	    \vrel, 0.5,
+	// 	    \color, Pswitch([0,0.3,Pkey(\note).linlin(0,11,0.1,0.2),0.9], i),
+	// 	    \scale, Pswitch([2,0.5,1,0.6], i),
+	// 	    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,-1,1)}),
+	// 	    \sy, 0,
+	// 	    \ex, Pkey(\sx),
+	// 	    \ey, -1,
+	// 	    \imageindex, 14,
+	// 	    \rotstart, -90,
+	// 	    \rotend, -90,
+	// 	    \speed, 10,
+	// 	    // \freq, 1,
+	// 	    \wobble, 1.1,
 
-			\osc, Pfunc{|e| 
+	// 		\osc, Pfunc{|e| 
 
-				if(e[\dur].isKindOf(Rest) != true,{
-					vizMessage.(e, i);
-				});
-				true // must return true 
-			}
-	  	)
-	);
+	// 			if(e[\dur].isKindOf(Rest) != true,{
+	// 				vizMessage.(e, i);
+	// 			});
+	// 			true // must return true 
+	// 		}
+	//   	)
+	// );
 
-	fadeValues[i] = 1.0;
-	patterns.put(i,ptn);
+	// fadeValues[i] = 1.0;
+	// patterns.put(i,ptn);
 
-	if(i != nil, {
-		pairs.put(blob.label, i);
-		patterns[i].quant = [1, 0];
-		patterns[i].play();
-	});
+	// if(i != nil, {
+	// 	pairs.put(blob.label, i);
+	// 	patterns[i].quant = [1, 0];
+	// 	patterns[i].play();
+	// });
+
 };
 
 //------------------------------------------------------
 ~onBlobDeinit = {|blob, blobsDict|
 
-	var i = pairs.removeAt(blob.label);
-	var fadeTime = 2; //• add to blob
-	var fadeRate = 0.1;
-	var fadeSteps = (fadeTime / fadeRate).floor;
+	// var i = pairs.removeAt(blob.label);
+	// var fadeTime = 2; //• add to blob
+	// var fadeRate = 0.1;
+	// var fadeSteps = (fadeTime / fadeRate).floor;
 
-	if(i != nil,{
+	// if(i != nil,{
 		
-		// calcualte fade value (used for visuals)
-		SystemClock.sched(0.0,
-		    Routine({ 
-		    	fadeSteps.do({
+	// 	// calcualte fade value (used for visuals)
+	// 	SystemClock.sched(0.0,
+	// 	    Routine({ 
+	// 	    	fadeSteps.do({
 					
-					fadeValues[i] = fadeValues[i] - (1.0 / (fadeTime / fadeRate));	        
-			        fadeRate.yield;
-			        // fadeValues.postln;
-		    	}) ;
-		    });
-		);
+	// 				fadeValues[i] = fadeValues[i] - (1.0 / (fadeTime / fadeRate));	        
+	// 		        fadeRate.yield;
+	// 		        // fadeValues.postln;
+	// 	    	}) ;
+	// 	    });
+	// 	);
 
-		// patterns[i].stop;
-		patterns[i].clear(fadeTime);
-		// Ndef.all.values[0].clean;
-		patterns.put(i,nil);
-	});
+	// 	// patterns[i].stop;
+	// 	patterns[i].clear(fadeTime);
+	// 	// Ndef.all.values[0].clean;
+	// 	patterns.put(i,nil);
+	// });
 	
 };
 
 //------------------------------------------------------
 ~onBlobUpdate = {|blob, blobsDict|
 
+	if(blobsDict.size != previousBlobsSize,{
+		[blob.label,"change"].postln;
+	});
+	previousBlobsSize = blobsDict.size;
 };
 
 //------------------------------------------------------
 ~onPlotData = {|blobsDict|
-		
-	var data = blobsDict.at(blobsDict.keys.asArray[0]);
 
-	// var dv = rect.width * -1;
-	data.rect.getnSynchronous(4)[2];
+
+	1
 };
-
-

@@ -3,9 +3,9 @@
 	var netAddr = NetAddr.new("127.0.0.1", 10001);
 	// var netAddr = NetAddr.new("192.168.1.150", 10001);
 	// var keAddr = NetAddr("127.0.0.1",57000);
-	var keAddr = NetAddr("192.168.1.55",57000);
+	var keAddr = NetAddr("192.168.1.70",57000);
 	var numOfBlobs = 4;
-	var port = 57121;
+	var port = 57120;
 
 	var window, freqScope;
 	var loadPatch, patchButton, reloadButton;
@@ -53,6 +53,7 @@
 				\env:  nil,
 				\pattern: nil,
 				\buses: nil,
+				\collided: nil,
 
 
 	);
@@ -113,7 +114,7 @@
 			keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 1);
 			keAddr.sendMsg("/inputSettings/clear/on", 1);
 			0.2.wait;
-			keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 15);
+			keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 2);
 			keAddr.sendMsg("/inputSettings/clear/on", 0);
 		}.fork
 
@@ -149,11 +150,12 @@
 	var patches = [
 
 		// patch model
-		// (\file: "basic1.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "basic1.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		// (\file: "basic2.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		// (\file: "basic3.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		// (\file: "basic4.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		// (\file: "basic5.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "basic6.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 
 		(\file: "basicVis1.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basicVis2.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
@@ -472,6 +474,9 @@
 			var blob = blobsDict.at(msg[1]);
 			if(blob != nil,{
 
+				// msgToBlob.(msg, blob);
+				blob.label = msg[1]; 
+				blob.state = msg[2]; 
 
 				patches.do({|p| 
 					if(p.isOn, {
@@ -506,6 +511,5 @@
 		resetKE.();
 	});
 )
-
 
 // NetAddr.localAddr
