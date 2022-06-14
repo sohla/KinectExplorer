@@ -4,8 +4,8 @@ SynthDef(\slido, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, s
 	var enva = EnvGen.ar(Env.adsr(attack / 2, decay / 2, sustain, release /2), gate);
 	var envb = EnvGen.ar(Env.adsr(attack, decay, sustain, release), doneAction: 2);
 	var sig;
-	var d = 4; 
-	var a = 4; 
+	var d = 2; 
+	var a = 2; 
 	var p = [freq, freq+0.1];
 
 	sig = Mix.ar(Array.fill(d, { |i| SinOsc.ar(p,0, LFCub.ar([p,p+1], (i+1) * pi/4, 0.003 ,0.003) * enva) }));
@@ -65,6 +65,21 @@ SynthDef(\slido, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.2, s
 			\attack, 1.005,
 			\release, 2.4,
 			\wobf, 0.09,
+		)
+	).play;
+)
+(
+	Pdef(\d,
+		Pbind(
+			\instrument, \slido,
+			\octave, Prand([3,4,5], inf),
+			\note, Prand([0,4,5,7,10,12], inf),
+			\root, Pseq([0,3,-2].stutter(8*8), inf),
+			\dur, 0.2,
+			\amp, 2.9,
+			\attack, 0.005,
+			\release, 0.4,
+			\wobf, 0.3,
 		)
 	).play;
 )
