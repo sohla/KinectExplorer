@@ -88,7 +88,7 @@
 	}).send(s);
 
 
-	SynthDef(\frog, {|attack = 0.004, release = 1.9, freq = 120, gate = 1, vib = 1, amp = 0.1,
+	SynthDef(\frog, {|attack = 0.004, release = 10.9, freq = 120, gate = 1, vib = 1, amp = 0.1,
 		mx = 0.5, my = 0.5|
 
 		var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
@@ -125,14 +125,14 @@
 	Ndef(\glowPtn2,
 		Pbind(
 			\instrument, \glow,
-			\octave, Prand([3], inf),
-			\note, Prand([0], inf),
-			\root, Pseq([0,-3,-5,-6,-3].stutter(16), inf),
+			\octave, Prand([[4]], inf),
+			\note, Prand([-3], inf),
+			\root, Pseq([0].stutter(16), inf),
 			\dur, 0.55,
 			\amp, 0,
 			\attack, Pwhite(4,7, inf),
 			\release, Pwhite(2,4, inf),
-			\lpf, 180
+			\lpf, 380
 		)
 	).play;	
 
@@ -158,6 +158,22 @@
 		)
 	).play;
 
+	Ndef(\dweepPtn2,
+		Pbind(
+			\instrument, \glow,
+			\octave, Pseq([[6.02,7]-2], inf),
+			\note, Prand([0].stutter(6), inf),
+			\root, Pseq([0-3,2-3,4-3].stutter(30), inf),
+			\dur, 0.33,
+			\amp, 0.0, 
+			\lpf, 380,
+
+			\attack, Pwhite(1.11,1.21, inf),
+			\release, Pwhite(0.3,0.4, inf),
+
+
+		)
+	).play;
 
 	Ndef(\frogPtn,
 		Pbind(
@@ -169,8 +185,7 @@
 			\amp, 0.0,
 			\attack, Pwhite(0.001,0.006, inf),
 			\release, Pwhite(0.3,1.9, inf),
-		    \rel, Pkey(\release),
-		    \vib, 50,
+		    \vib, 150,
 		)
 	).play;
 
@@ -180,13 +195,15 @@
 
 		//------------------------------------------------------
 		MIDIdef.cc(\glowamp,{|val| Ndef(\glowPtn).set(\amp,val.linlin(0,127,0,1)) }, 81, 0);
-		MIDIdef.cc(\glowx,{|val| Ndef(\glowPtn).set(\mx,val.linlin(0,127,0,1)) }, 94, 0);
-		MIDIdef.cc(\glowy,{|val| Ndef(\glowPtn).set(\my,val.linlin(0,127,0,1)) }, 82, 0);
+		MIDIdef.cc(\glowx,{|val| Ndef(\glowPtn).set(\mx,val.linlin(0,127,0.07,1)) }, 94, 0);
+		MIDIdef.cc(\glowy,{|val| Ndef(\glowPtn).set(\my,val.linlin(0,127,0.4,0.98)) }, 82, 0);
 
-		MIDIdef.cc(\glowamp2,{|val| Ndef(\glowPtn2).set(\amp,val.linlin(0,127,0,1)) }, 83, 0);
-		MIDIdef.cc(\glow2y,{|val| Ndef(\glowPtn2).set(\my,val.linlin(0,127,0,1)) }, 94, 0);
+		MIDIdef.cc(\dweep2amp,{|val| Ndef(\dweepPtn2).set(\amp,val.linlin(0,127,0,1)) }, 83, 0);
+		MIDIdef.cc(\dweep2x,{|val| Ndef(\dweepPtn2).set(\mx,val.linlin(0,127,1,0)) }, 94, 0);
+		MIDIdef.cc(\dweep2oct,{|val| Ndef(\dweepPtn2).set(\octave,val.linlin(0,127,2,6).floor) }, 94, 0);
+		// MIDIdef.cc(\glow2y,{|val| Ndef(\glowPtn2).set(\my,val.linlin(0,127,0,1)) }, 94, 0);
 
-		MIDIdef.cc(\windamp,{|val| Ndef(\wind).set(\amp,val.linlin(0,127,0,0.5)) }, 84, 0);
+		MIDIdef.cc(\windamp,{|val| Ndef(\wind).set(\amp,val.linlin(0,127,0,	1.0)) }, 84, 0);
 		MIDIdef.cc(\windmx,{|val| Ndef(\wind).set(\mx,val.linlin(0,127,0,1)) }, 95, 0);
 		MIDIdef.cc(\windmy,{|val| Ndef(\wind).set(\my,val.linlin(0,127,0,1)) }, 94, 0);
 
@@ -194,9 +211,10 @@
 		MIDIdef.cc(\dweepmx,{|val| Ndef(\dweepPtn).set(\mx,val.linlin(0,127,0,1)) }, 94, 0);
 		MIDIdef.cc(\dweepmy,{|val| Ndef(\dweepPtn).set(\my,val.linexp(0,127,0.35,1)) }, 86, 0);
 
-		MIDIdef.cc(\frogamp,{|val| Ndef(\frogPtn).set(\amp,val.linexp(0,127,0.0001,1.0)) }, 87, 0);
+		MIDIdef.cc(\frogamp,{|val| Ndef(\frogPtn).set(\amp,val.linexp(0,127,0.0001,0.8)) }, 87, 0);
 		MIDIdef.cc(\frogmx,{|val| Ndef(\frogPtn).set(\mx,val.linlin(0,127,0,1)) }, 94, 0);
 		MIDIdef.cc(\frogmy,{|val| Ndef(\frogPtn).set(\my,val.linlin(0,127,0,1)) }, 94, 0);
+		MIDIdef.cc(\frogattack,{|val| Ndef(\frogPtn).set(\attack,val.linlin(0,127,1,0.002)) }, 87, 0);
 	//------------------------------------------------------
 
 	QtGUI.palette = QPalette.dark; 

@@ -44,8 +44,8 @@ Pdef(\a,
 		\instrument, \dweep,
 		\octave, Pseq([[2,3],5,7,6,5,4], inf),
 		\note, Prand([0,5,9].stutter(6), inf),
-		\root, Pseq([0-3,2-3,4-3].stutter(18), inf),
-		\dur, 0.3,
+		\root, Pseq([0-3,2-3,4-3].stutter(30), inf),
+		\dur, 0.33,
 		\amp, 0.9, 
 	)
 ).play;

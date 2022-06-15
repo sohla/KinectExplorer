@@ -438,3 +438,27 @@ env ui?
 
 
 */
+
+
+
+(
+// Ndef(\noise).addSpec(\mFreq, [0.1, 8, \lin]);
+// Ndef(\noise).addSpec(\fFreq, [100, 8000, \exp]);
+// Ndef(\noise).addSpec(\fRq, [0.01, 2, \lin]);
+
+// Ndef(\noise).fadeTime = 10;
+
+Ndef(\noise, {|mFreq = 0.1, fFreq = 348, fRq = 0.1|
+
+	var src, mod;
+
+	mod = {LFNoise2.ar(mFreq).range(0, 1)}!6;
+
+	src = WhiteNoise.ar(mod.lagud(1, 4));
+
+	src = RLPF.ar(src, MouseY.kr(10,500).lag(1), MouseX.kr(0.1,0.9));
+
+	Splay.ar(src);
+
+}).play
+)
