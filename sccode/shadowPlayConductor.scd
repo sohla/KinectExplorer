@@ -1,9 +1,9 @@
 (
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 	var netAddr = NetAddr.new("127.0.0.1", 10001);
-	// var netAddr = NetAddr.new("192.168.1.150", 10001);
+	// var netAddr = NetAddr.new("192.168.1.180", 10001);
 	// var keAddr = NetAddr("127.0.0.1",57000);
-	var keAddr = NetAddr("192.168.1.70",57000);
+	var keAddr = NetAddr("192.168.1.55",57000);
 	var numOfBlobs = 4;
 	var port = 57120;
 

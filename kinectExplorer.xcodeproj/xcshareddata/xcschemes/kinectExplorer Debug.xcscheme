@@ -65,11 +65,11 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-sp &quot;57121&quot;"
+            argument = "-sp &quot;57120&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-td &quot;127.0.0.1&quot;"
+            argument = "-td &quot;1292.168.1.180&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

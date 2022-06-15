@@ -1,8 +1,9 @@
 var oscSender = nil;
 var synths = Array.fill(8,{nil});
 var pairs = Dictionary.new(8);
-var notes = [50,54+12,57,61+12] - 12;
+var notes = [50,54+12,57,61+12] - 12 - 0;
 var root = [0,3,-2,5].stutter(4);
+var sx = 0;
 
 var findNextRunning = {
 	var index = 0;
@@ -60,13 +61,13 @@ var findNextRunning = {
 			oscSender.sendMsg("/shadow", 
 				"shape", 5,
 				"duration", 0.1,
-				"attack", 0.002,
-				"release", 4.1,
+				"attack", 0.03,
+				"release", 3.9,
 				"color", blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.99),
-				"scale", 2,
-				"sx", 0,
+				"scale", 1,
+				"sx", sx,
 				"sy", -1,
-				"ex", 0,
+				"ex", sx,
 				"ey", 1,
 				"imageindex", 0,
 				"rotstart",0,
@@ -119,6 +120,7 @@ var findNextRunning = {
 		// });
 		// synths.at(i).set(\freq, root[0].midicps);
 		//synths.at(i).set(\harm, blob.center.getnSynchronous(2)[0].linlin(0.05,0.85,1,2));
+		sx = blob.center.getnSynchronous(2)[0].linlin(0,1,-1,1);
 	});
 };
 
