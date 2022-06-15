@@ -36,7 +36,7 @@ a = Synth.new(\drawing1, [\release,22]);
 			\root, Pseq([0,4,-1, 2].stutter(20), inf),
 			\dur, Pseq([1/5, 1/5, 1/2.5, 1/5] * 3, inf),
 			\amp, 1,
-			\attack, Pwhite(0.1,0.6, inf),
+			\attack, Pwhite(0.001,0.006, inf),
 			\release, Pwhite(4.1,6.9, inf),
 		)
 	).play;
