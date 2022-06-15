@@ -1,3 +1,12 @@
+/*
+
+E∆7	B∆7	D∆7	C∆7
+
+G#-	D#-	F#-	E-
+
+
+*/
+
 (
 	var window;
 	var faders = [];
