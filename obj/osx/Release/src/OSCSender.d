@@ -1,88 +1,19 @@
-obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelPipeline.cpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelPipeline.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxGui.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxToggle.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofParameter.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEvents.h \
+obj/osx/Release/src/OSCSender.o: \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.cpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscSender.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscException.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscBundle.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscMessage.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscArg.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofConstants.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glew/include/GL/glew.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/tess2/include/tesselator.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEventUtils.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEvent.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofTimer.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofUtils.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/checked.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/core.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/unchecked.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofFpsCounter.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec2.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool2.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec2.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/qualifier.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/setup.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../simd/platform.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec2.inl \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/./compute_vector_relational.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool2_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float2.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float2_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double2.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double2_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int2.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int2_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint2.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint2_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofPoint.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec3f.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec2f.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMathConstants.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/fwd.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec4f.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec4.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool4.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec4.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec4.inl \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/compute_vector_relational.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool4_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float4.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float4_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double4.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double4_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/setup.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int4.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int4_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint4.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint4_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec3.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool3.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec3.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec3.inl \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool3_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float3.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float3_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double3.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double3_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int3.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int3_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint3.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint3_precision.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofRectangle.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofColor.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/common.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/_fixes.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/func_common.inl \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../vector_relational.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/func_vector_relational.inl \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/compute_common.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec1.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec1.inl \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec2.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec3.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec4.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/_vectorize.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofLog.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofFileUtils.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/boost/include/boost/filesystem.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/boost/include/boost/filesystem/config.hpp \
@@ -480,13 +411,103 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/boost/include/boost/filesystem/convenience.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/boost/include/boost/filesystem/string_file.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/boost/include/boost/filesystem/fstream.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxBaseGui.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofTrueTypeFont.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPath.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPolyline.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPolyline.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofParameter.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEvents.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEventUtils.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEvent.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofTimer.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofUtils.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/checked.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/core.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/unchecked.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofFpsCounter.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec2.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool2.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec2.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/qualifier.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/setup.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../simd/platform.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec2.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/./compute_vector_relational.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool2_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float2.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float2_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double2.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double2_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int2.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int2_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint2.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint2_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofPoint.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec3f.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec2f.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMathConstants.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/fwd.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec4f.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec4.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool4.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec4.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec4.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/compute_vector_relational.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool4_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float4.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float4_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double4.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double4_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/setup.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int4.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int4_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint4.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint4_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec3.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool3.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec3.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec3.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool3_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float3.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float3_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double3.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double3_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int3.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int3_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint3.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint3_precision.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofRectangle.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofColor.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/common.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/_fixes.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/func_common.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../vector_relational.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/func_vector_relational.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/compute_common.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec1.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec1.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec2.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec3.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec4.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/_vectorize.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofLog.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofParameterGroup.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/ofxArgParser.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/ofMain.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofSystemUtils.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofURLFileLoader.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofThread.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofThreadChannel.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofJson.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/json/include/json.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofXml.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/pugixml/include/pugixml.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/pugixml/include/pugiconfig.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofGraphicsBaseTypes.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofGraphicsConstants.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofTypes.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMath.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/constants.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/../ext/scalar_constants.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/scalar_constants.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/constants.inl \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVectorMath.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/mat3x3.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/matrix_double3x3.hpp \
@@ -590,9 +611,6 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../ext/quaternion_relational.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/quaternion_relational.inl \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../gtc/constants.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/../ext/scalar_constants.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/scalar_constants.inl \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/constants.inl \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../gtc/matrix_transform.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/../mat4x4.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/../vec2.hpp \
@@ -749,7 +767,6 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/../ext/scalar_ulp.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/scalar_ulp.inl \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./gtc/vec1.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/constants.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/matrix_transform.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/matrix_inverse.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/quaternion.hpp \
@@ -797,83 +814,32 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMatrix3x3.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMatrix4x4.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofQuaternion.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofAppRunner.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofWindowSettings.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofMainLoop.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMath.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofVboMesh.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofMesh.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLUtils.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofMesh.inl \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofVbo.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofBufferObject.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofTessellator.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofTexture.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPixels.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofBitmapFont.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofGraphics.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxSlider.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxInputField.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxSliderGroup.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxGuiGroup.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxButton.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxLabel.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofParameterGroup.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxColorPicker.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxPanel.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofImage.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLBaseTypes.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxOpenCv.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvConstants.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv/cv.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/cvdef.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/hal/interface.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/version.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/base.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/cvstd.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/ptr.inl.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/neon_utils.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/traits.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/matx.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/saturate.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/fast_math.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/types.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/mat.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/bufferpool.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/mat.inl.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/persistence.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/operations.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/cvstd.inl.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/utility.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/optim.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgproc/imgproc_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgproc/types_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/photo/photo_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/video/tracking_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/objdetect/objdetect_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/ofMain.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofSystemUtils.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofURLFileLoader.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofThread.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofThreadChannel.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofJson.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/json/include/json.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofXml.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/pugixml/include/pugixml.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/pugixml/include/pugiconfig.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofTypes.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/communication/ofSerial.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/communication/ofArduino.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofFbo.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofTexture.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLBaseTypes.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLRenderer.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPolyline.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPolyline.inl \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofAppRunner.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofWindowSettings.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofMainLoop.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/of3dGraphics.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/of3dPrimitives.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofMesh.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLUtils.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofMesh.inl \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofNode.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofBitmapFont.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPixels.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofGraphics.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofMatrixStack.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPath.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofVboMesh.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofVbo.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofBufferObject.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofTessellator.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofLight.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofMaterial.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofShader.h \
@@ -882,7 +848,9 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/cairo/include/cairo/cairo-version.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/cairo/include/cairo/cairo-features.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/cairo/include/cairo/cairo-deprecated.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofImage.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofRendererCollection.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofTrueTypeFont.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofBaseApp.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/sound/ofSoundBaseTypes.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofAppBaseWindow.h \
@@ -905,246 +873,35 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/video/ofAVFoundationVideoPlayer.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/of3dUtils.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofCamera.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofEasyCam.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvImage.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvGrayscaleImage.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvBlob.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvColorImage.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvFloatImage.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvShortImage.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvContourFinder.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvHaarFinder.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/opencv.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgproc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/photo.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/video.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/video/tracking.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/video/background_segm.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/features2d.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/flann/miniflann.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/flann/defines.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/flann/config.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/objdetect.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/objdetect/detection_based_tracker.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/calib3d.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/affine.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/calib3d/calib3d_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgcodecs.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/videoio.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/highgui.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/highgui/highgui_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgcodecs/imgcodecs_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/videoio/videoio_c.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/ml.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Utilities.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Wrappers.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/CLD/include/CLD/imatrix.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/CLD/include/CLD/ETF.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/CLD/include/CLD/fdog.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/CLD/include/CLD/myvec.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Helpers.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Distance.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Calibration.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Tracker.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/ContourFinder.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/RunningBackground.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Flow.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Kalman.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Dilate_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Base_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Erode_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Blur_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/NearFar_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/NearFarColor_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/OSCOut_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscSender.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscException.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscBundle.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscMessage.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscArg.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelRecorderProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxVideoRecorder/src/ofxVideoRecorder.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Clear_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Generator_PixelProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/LinePipeline/LinePipeline.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/LinePipeline/Base_LineProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/LinePipeline/LineProc.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/BlobModel.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.hpp \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/ofxArgParser.h
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofEasyCam.h
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelPipeline.hpp:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.hpp:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxGui.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscSender.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxToggle.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofParameter.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEvents.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscException.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscBundle.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscMessage.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscArg.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofConstants.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glew/include/GL/glew.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/tess2/include/tesselator.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEventUtils.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEvent.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofTimer.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofUtils.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/checked.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/core.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/unchecked.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofFpsCounter.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec2.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool2.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec2.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/qualifier.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/setup.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../simd/platform.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec2.inl:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/./compute_vector_relational.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool2_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float2.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float2_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double2.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double2_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int2.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int2_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint2.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint2_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofPoint.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec3f.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec2f.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMathConstants.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/fwd.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec4f.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec4.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool4.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec4.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec4.inl:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/compute_vector_relational.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool4_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float4.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float4_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double4.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double4_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/setup.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int4.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int4_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint4.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint4_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec3.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool3.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec3.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec3.inl:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool3_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float3.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float3_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double3.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double3_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int3.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int3_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint3.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint3_precision.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofRectangle.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofColor.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/common.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/_fixes.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/func_common.inl:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../vector_relational.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/func_vector_relational.inl:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/compute_common.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec1.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec1.inl:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec2.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec3.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec4.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/_vectorize.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofLog.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofFileUtils.h:
 
@@ -1940,19 +1697,199 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/boost/include/boost/filesystem/fstream.hpp:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxBaseGui.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofParameter.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofTrueTypeFont.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEvents.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPath.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEventUtils.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPolyline.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/events/ofEvent.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPolyline.inl:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofTimer.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofUtils.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/checked.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/core.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/utf8/include/utf8/unchecked.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofFpsCounter.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec2.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool2.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec2.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/qualifier.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/setup.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../simd/platform.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec2.inl:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/./compute_vector_relational.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool2_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float2.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float2_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double2.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double2_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int2.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int2_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint2.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint2_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofPoint.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec3f.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec2f.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMathConstants.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/fwd.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVec4f.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec4.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool4.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec4.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec4.inl:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/compute_vector_relational.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool4_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float4.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float4_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double4.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double4_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/setup.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int4.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int4_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint4.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint4_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/vec3.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool3.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/../detail/type_vec3.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec3.inl:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_bool3_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float3.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_float3_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double3.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_double3_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int3.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_int3_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint3.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./ext/vector_uint3_precision.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofRectangle.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofColor.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/common.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/_fixes.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/func_common.inl:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../vector_relational.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/func_vector_relational.inl:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/compute_common.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec1.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec1.inl:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec2.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec3.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/type_vec4.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/_vectorize.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofLog.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofParameterGroup.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/ofxArgParser.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/ofMain.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofSystemUtils.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofURLFileLoader.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofThread.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofThreadChannel.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofJson.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/json/include/json.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofXml.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/pugixml/include/pugixml.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/pugixml/include/pugiconfig.hpp:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofGraphicsBaseTypes.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofGraphicsConstants.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofTypes.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMath.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/constants.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/../ext/scalar_constants.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/scalar_constants.inl:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/constants.inl:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofVectorMath.h:
 
@@ -2159,12 +2096,6 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/quaternion_relational.inl:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../gtc/constants.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/../ext/scalar_constants.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/ext/scalar_constants.inl:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/constants.inl:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/detail/../gtc/matrix_transform.hpp:
 
@@ -2478,8 +2409,6 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/./gtc/vec1.hpp:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/constants.hpp:
-
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/matrix_transform.hpp:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/glm/include/glm/gtc/matrix_inverse.hpp:
@@ -2574,15 +2503,31 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofQuaternion.h:
 
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/communication/ofSerial.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/communication/ofArduino.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofFbo.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofTexture.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLBaseTypes.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLRenderer.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPolyline.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPolyline.inl:
+
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofAppRunner.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofWindowSettings.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofMainLoop.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/math/ofMath.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/of3dGraphics.h:
 
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofVboMesh.h:
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/of3dPrimitives.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofMesh.h:
 
@@ -2590,143 +2535,25 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofMesh.inl:
 
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofNode.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofBitmapFont.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPixels.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofGraphics.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofMatrixStack.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPath.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofVboMesh.h:
+
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofVbo.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofBufferObject.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofTessellator.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofTexture.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofPixels.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofBitmapFont.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofGraphics.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxSlider.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxInputField.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxSliderGroup.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxGuiGroup.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxButton.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxLabel.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofParameterGroup.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxColorPicker.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxGui/src/ofxPanel.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofImage.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLBaseTypes.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxOpenCv.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvConstants.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv/cv.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/core_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/types_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/cvdef.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/hal/interface.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/version.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/base.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/cvstd.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/ptr.inl.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/neon_utils.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/traits.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/matx.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/saturate.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/fast_math.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/types.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/mat.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/bufferpool.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/mat.inl.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/persistence.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/operations.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/cvstd.inl.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/utility.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/optim.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgproc/imgproc_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgproc/types_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/photo/photo_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/video/tracking_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/objdetect/objdetect_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/ofMain.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofSystemUtils.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofURLFileLoader.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofThread.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofThreadChannel.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofJson.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/json/include/json.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofXml.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/pugixml/include/pugixml.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/pugixml/include/pugiconfig.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/types/ofTypes.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/communication/ofSerial.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/communication/ofArduino.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofFbo.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofGLRenderer.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/of3dGraphics.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/of3dPrimitives.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofNode.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/utils/ofMatrixStack.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/gl/ofLight.h:
 
@@ -2744,7 +2571,11 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/cairo/include/cairo/cairo-deprecated.h:
 
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofImage.h:
+
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofRendererCollection.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/graphics/ofTrueTypeFont.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/app/ofBaseApp.h:
 
@@ -2791,149 +2622,3 @@ obj/osx/Release/src/PixelPipeline/PixelPipeline.o: \
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofCamera.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/libs/openFrameworks/3d/ofEasyCam.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvImage.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvGrayscaleImage.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvBlob.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvColorImage.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvFloatImage.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvShortImage.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvContourFinder.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/src/ofxCvHaarFinder.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/opencv.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgproc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/photo.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/video.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/video/tracking.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/video/background_segm.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/features2d.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/flann/miniflann.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/flann/defines.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/flann/config.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/objdetect.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/objdetect/detection_based_tracker.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/calib3d.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/core/affine.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/calib3d/calib3d_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgcodecs.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/videoio.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/highgui.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/highgui/highgui_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/imgcodecs/imgcodecs_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/videoio/videoio_c.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOpenCv/libs/opencv/include/opencv2/ml.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Utilities.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Wrappers.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/CLD/include/CLD/imatrix.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/CLD/include/CLD/ETF.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/CLD/include/CLD/fdog.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/CLD/include/CLD/myvec.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Helpers.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Distance.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Calibration.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Tracker.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/ContourFinder.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/RunningBackground.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Flow.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Kalman.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Dilate_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Base_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Erode_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Blur_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/NearFar_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/NearFarColor_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/OSCOut_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscSender.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscException.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/UdpSocket.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscBundle.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscMessage.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscArg.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/PixelRecorderProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxVideoRecorder/src/ofxVideoRecorder.h:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Clear_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/PixelPipeline/Generator_PixelProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/LinePipeline/LinePipeline.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/LinePipeline/Base_LineProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/LinePipeline/LineProc.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/BlobModel.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.hpp:
-
-/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/ofxArgParser.h:
