@@ -226,3 +226,7 @@ Synth(\shepard,[\dur,5])
 ~shep do: _.free;
 
 FreqScope.new;
+
+
+Pfxb
+
