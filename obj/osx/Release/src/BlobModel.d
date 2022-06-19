@@ -875,6 +875,7 @@ obj/osx/Release/src/BlobModel.o: \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Flow.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Kalman.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.hpp \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscSender.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscTypes.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscOutboundPacketStream.h \
@@ -2690,6 +2691,8 @@ obj/osx/Release/src/BlobModel.o: \
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxCv/libs/ofxCv/include/ofxCv/Kalman.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.hpp:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscSender.h:
 
