@@ -17,7 +17,7 @@ var active = Dictionary.new(4);
 ~deinit = {|patch|
 
 	postf("deinit : % \n", patch.file);
-	active.do({|o,k| o.free});
+	active.do({|o,k| o.set(\gate, 0)});
 };
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
