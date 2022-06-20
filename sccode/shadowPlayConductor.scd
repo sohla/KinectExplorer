@@ -1,9 +1,11 @@
 (
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
-	var netAddr = NetAddr.new("127.0.0.1", 10001);
-	// var netAddr = NetAddr.new("192.168.1.150", 10001);
+	// var netAddr = NetAddr.new("127.0.0.1", 10001);
+	var netAddr = NetAddr.new("10.1.1.5", 10001);
+	// var netAddr = NetAddr.new("192.168.1.180", 10001);
 	// var keAddr = NetAddr("127.0.0.1",57000);
-	var keAddr = NetAddr("192.168.1.70",57000);
+	// var keAddr = NetAddr("192.168.1.55",57000);
+	var keAddr = NetAddr("10.1.1.3",57000);
 	var numOfBlobs = 4;
 	var port = 57120;
 
@@ -158,6 +160,7 @@
 		(\file: "basic6.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basic7.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 
+		(\file: "basicVisCalibrate.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basicVis1.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basicVis2.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basicVis3.scd", \env: Environment.make({}), \netAddr: netAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),

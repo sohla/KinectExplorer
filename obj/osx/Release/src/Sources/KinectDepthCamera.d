@@ -1002,7 +1002,9 @@ obj/osx/Release/src/Sources/KinectDepthCamera.o: \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/src/ofxOscReceiver.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h \
   /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h \
-  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/../ip/PacketListener.h
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/../ip/PacketListener.h \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.hpp \
+  /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/ofxArgParser.h
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/Sources/KinectDepthCamera.h:
 
@@ -3009,3 +3011,7 @@ obj/osx/Release/src/Sources/KinectDepthCamera.o: \
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/OscReceivedElements.h:
 
 /Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/addons/ofxOsc/libs/oscpack/src/osc/../ip/PacketListener.h:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/OSCSender.hpp:
+
+/Users/soh_la/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/src/ofxArgParser.h:

@@ -448,7 +448,8 @@ Quarks.gui
 
 /*
 
-keyboard tracking to comb filters
+keyboard tracking to 
+comb filters
 wavetable synthesis
 lfo envelope timings
 env ui?

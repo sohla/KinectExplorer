@@ -1,8 +1,8 @@
-var patterns = Array.fill(4,{nil});
-var index = 0;
 var pairs = Dictionary.new(4);
-var oscSender = "hi";
+var patterns = Array.fill(4,{nil});
 var fadeValues = [1,1,1,1];
+var index = 0;
+var oscSender = "hi";
 
 var findNextRunning = {
 	var index = 0;
@@ -27,26 +27,6 @@ var findNextRunning = {
 		var comb = CombL.ar(filter, 0.3, 0.2, 0.2,1);
 		LocalOut.ar(filter);
 		Out.ar(out, comb * env);
-
-	}).add;
-
-	SynthDef(\glow, {|out = 0, attack = 0.004, release = 0.9, freq = 100, gate = 1, coef = 0.0, tf = 1, amp = 0.3, ff = 10500, rf = 0.5|
-		var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
-		var trig = Impulse.ar(XLine.ar(tf, 1, attack + (release * 0.5)));
-		var sub = LFTri.ar(freq, [0,pi/3], 0.09);
-		var sig = Splay.ar({|i|
-	    	var f = freq * (i+1);
-	    	Pluck.ar(
-	    		BrownNoise.ar(1), 
-	    		trig,  
-	    		f.reciprocal, 
-	    		f.reciprocal, 
-	    		Demand.ar(trig, 0, Dwhite(1, 10)),
-	        	coef: coef
-	        )} !2);
-
-		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
-		Out.ar(out, (filter + sub) * env * amp);
 
 	}).add;
 
@@ -113,61 +93,40 @@ var findNextRunning = {
 
 	var notes = [0,4,8,12];
 
-	var ptn = Pdef("pa_"++i,
+	var ptn = Ndef("pa_"++i,
 		Pbind(
-		    \instrument, \glow,
-		    \amp, Pswitch([0.3,0.8,0.8,1.3], i),
-		    \octave, Pswitch([
-		    	7,
-		    	7,
-		    	5,
-				Pseq([2,3,4,3], inf),
-		    ], i),
-		    \attack, Pswitch([0.4,0.001,0.001,0.001], i),
+		    \instrument, Pswitch([\a,\a,\a,\a], i),
+		    \amp, Pswitch([0.5,0.3,0.4,0.4], i),
+		    \octave, Pswitch([3,6,5,4], i),
+		    \attack, 0.02,
 		    \decay, 0.1,
-		    \sustain, 0.3, 
-		    \release,  Pswitch([8.6,0.9,3.9,Pwhite(0.9,1.9)], i),
+		    \sustain, 0.3, //make sure sustain is not to low!
+		    \release,  1.7,
 		    \dur, Pswitch([
-		    	4,
-		    	Pseq([0.125,0.125,Rest(0.5)], inf),
-		    	0.125*3,
-		    	0.125
+		    	Pseq([1], inf),
+		    	Pseq([0.5], inf),
+		    	Pseq([0.125], inf),
+		    	Pseq([0.5], inf),
 		    ], i),
-		    \root, Pswitch([
-		    	Pseq([0].stutter(2), inf),
-		    	Pseq([0].stutter(32), inf),
-		    	Pseq([0].stutter(21), inf),
-		    	Pseq([0].stutter(64), inf),
-		    ], i),
-		    \note, Pswitch([
-		    	Pseq([[0,4,-2],[2,5,0]].stutter(1), inf),
-		    	Pseq([-2,10], inf),
-		    	Pseq([7,5,4,2,-2].stutter(3), inf),
-			    Pseq([0,0,-2,4,0,0,5,-2,5,5,-2,2,0,7,7,7].stutter(4), inf)
-		    ], i),
-
-		    \coef, Pswitch([
-		    	0.3,
-		    	Pwhite(0.001,0.1),
-		    	0.3,
-				Pwhite(0.9,0.87),
-		    ], i),
-		    \tf, Pswitch([40,1,1,1], i),
-		    \ff, 11400,
-		    \rf, 1,
+		    \root, 0,//Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,4).floor}),
+		    \note, Pseq([0,7,11], inf),
+		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
+		    \ff, Pwhite(300, 900),
+		    \rf, 0.003,
+		    \dis, 0.05,
+		    \df, Pswitch([1,8,7,4,1], i),
 
 		    // visuals
-		    \shape, 3,
-
-		    \vdur, 0.1,
-		    \vatt, 0.05,
+		    \shape, 1,
+		    \vdur, 0.02,
+		    \vatt, 0.01,
 		    \vrel, 0.1,
-		    \color, Pswitch([0,0.5,Pkey(\note).linlin(0,11,0.0,0.2),1], i),
-		    \scale, Pswitch([2,0.5,1,0.6], i) * 4,
-		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0,1,-1,1)}),
-		    \sy, -1,
+		    \color, Pswitch([0,0.3,Pkey(\note).linlin(0,11,0.1,0.2),0.9], i),
+		    \scale, 1,
+		    \sx, 0,
+		    \sy, 0,
 		    \ex, Pkey(\sx),
-		    \ey, 1,
+		    \ey, Pkey(\sy),
 		    \imageindex, 14,
 		    \rotstart, -90,
 		    \rotend, -90,
@@ -233,7 +192,7 @@ var findNextRunning = {
 //------------------------------------------------------
 ~onPlotData = {|blobsDict|
 	
-	5
+	blobsDict.size
 };
 
 //------------------------------------------------------

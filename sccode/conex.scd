@@ -36,7 +36,6 @@ SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, rel
 
 )
 
-
 (	
 	Ndef(\ptn,
 		Pbind(

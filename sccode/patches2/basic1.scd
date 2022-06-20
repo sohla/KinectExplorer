@@ -17,7 +17,7 @@ var active = Dictionary.new(4);
 ~deinit = {|patch|
 
 	postf("deinit : % \n", patch.file);
-	active.do({|o,k| o.free});
+	active.do({|o,k| o.set(\gate, 0)});
 };
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
@@ -37,7 +37,7 @@ var active = Dictionary.new(4);
 ~onBlobUpdate = {|blob, blobsDict|
 
 	 active.at(blob.label).set(\freq, 40 + blob.center.getnSynchronous(2)[0].linexp(0,1,2,7070));
-	 active.at(blob.label).set(\pan, blob.center.getnSynchronous(2)[0].linlin(0.05,0.85,-1,1).postln);
+	 active.at(blob.label).set(\pan, blob.center.getnSynchronous(2)[0].linlin(0.05,0.85,-1,1));
 };
 
 //------------------------------------------------------
