@@ -1,4 +1,5 @@
-var oscSender = nil;
+var noteAddr = "";
+var globalAddr = "";
 var synths = Array.fill(8,{nil});
 var pairs = Dictionary.new(8);
 var notes = [50,54+12,57,61+12] - 12 - 0;
@@ -33,7 +34,8 @@ var findNextRunning = {
 		Out.ar(out, LeakDC.ar(sig + tone) * amp * env);
 	}).add;
 
-	oscSender = patch.netAddr;
+	noteAddr = patch.noteAddr;
+	globalAddr  = patch.globalAddr;
 
 };
 
@@ -57,8 +59,8 @@ var findNextRunning = {
 	var i = findNextRunning.();
 
 	var vizMessage = {|i|
-		if(oscSender != nil, {
-			oscSender.sendMsg("/shadow", 
+		if(noteAddr != nil, {
+			noteAddr.sendMsg("/shadow", 
 				"shape", 5,
 				"duration", 0.1,
 				"attack", 0.03,

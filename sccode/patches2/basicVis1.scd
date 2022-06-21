@@ -2,7 +2,8 @@ var pairs = Dictionary.new(4);
 var patterns = Array.fill(4,{nil});
 var fadeValues = [1,1,1,1];
 var index = 0;
-var oscSender = "hi";
+var noteAddr = "";
+var globalAddr = "";
 
 var findNextRunning = {
 	var index = 0;
@@ -30,7 +31,8 @@ var findNextRunning = {
 
 	}).add;
 
-	oscSender = patch.netAddr;
+	noteAddr = patch.noteAddr;
+	globalAddr  = patch.globalAddr;
 
 };
 
@@ -66,8 +68,8 @@ var findNextRunning = {
 	var i = findNextRunning.();
 
 	var vizMessage = {|e, i|
-		if(oscSender != nil, {
-			{oscSender.sendMsg("/shadow", 
+		if(noteAddr != nil, {
+			{noteAddr.sendMsg("/shadow", 
 				"shape", e[\shape],
 				"duration", e[\vdur],
 				"attack", e[\vatt],
