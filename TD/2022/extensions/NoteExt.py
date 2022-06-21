@@ -26,7 +26,8 @@ class NoteExt:
 			self.dataOp["id"][sample] = sample
 
 	def Osc_kvpmessage( self, message, args ):
-
+		if len(message) < 2:
+			return
 		vars = {}
 		for i, arg in enumerate( args[::2] ):
 			vars[arg] = args[i * 2 +1]
