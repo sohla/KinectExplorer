@@ -31,6 +31,15 @@ var findNextRunning = {
 
 	}).add;
 
+	SynthDef(\b, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1, dis = 0.1, df = 5, dt = 1|
+
+		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+		var sig = SinOsc.ar([freq,freq + (freq * dt)],0, amp);
+		Out.ar(out, sig * env);
+
+	}).add;
+
+
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
 
@@ -95,7 +104,7 @@ var findNextRunning = {
 
 	var notes = [0,4,8,12];
 
-	var ptn = Ndef("pa_"++i,
+	var ptn = Pdef("pa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\a,\a,\a,\a], i),
 		    \amp, Pswitch([0.8,0.3,0.3,0.3], i),
@@ -178,8 +187,8 @@ var findNextRunning = {
 		    });
 		);
 
-		// patterns[i].stop;
-		patterns[i].clear(fadeTime);
+		 patterns[i].stop;
+		//patterns[i].clear(fadeTime);
 		// Ndef.all.values[0].clean;
 		patterns.put(i,nil);
 	});

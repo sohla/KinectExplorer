@@ -83,32 +83,32 @@ var findNextRunning = {
 	var notes = [
 		[0,4,4,11,12],
 		[0,4,7,5,12],
-		[7,9,12,14,12],
+		[4,12,7,9,5,14,0,16],
 		[0,4,-5,-7,0],
 	];
 
-	var ptn = Ndef("pa_"++i,
+	var ptn = Pdef("pa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\a,\a,\a,\a], i),
-		    \amp, Pswitch([0.3,0.3,0.4,0.8], i),
+		    \amp, Pswitch([0.2,0.2,0.3,0.8], i),
 		    \root, 0,
 		    \octave, 6 - i,
-		    \attack, Pswitch([ Pwhite(0.001,0.06),0.002,0.003,0.005], i),
+		    \attack, Pswitch([ Pwhite(0.001,0.06),0.002,0.003,0.005] * 0.1, i),
 		    \decay, 0.1,
 		    \sustain, Pswitch([ 0.02,0.01,0.01,0.03], i), //make sure sustain is not to low!
-		    \release,  Pswitch([Pwhite(1.5,0.03),0.9,1.3,1.5], i) * 0.4,
+		    \release,  Pswitch([Pwhite(1.5,0.03),0.9,1.3,1.5], i) * 2,
 		    \dur, Pswitch([
 		    	Prand([0.1,Rest(0.1),0.3], inf),
 		    	Prand([0.4,Rest(0.2),0.2], inf), 
-		    	Pseq([0.4,0.1,0.1,0.2], inf),
+		    	Pseq([0.4,0.1,Rest(0.1),0.2], inf),
 		    	Pseq([0.8,Rest(0.4)],inf) 
 		    ], i),
-		    \note, Pswitch( notes[i],Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,5).floor}),
-		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01], i),
-		    \ff, Pwhite(300, 700),
-		    \rf, 0.003,
-		    \dis, 0.05,
-		    \df, Pswitch([9,8,7,4,1], i),
+		    \note, Pswitch( notes[i],Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0,5).floor}),
+		    \dt, 0.001,//Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01], i),
+		    \ff, 14000,//Pwhite(300, 1700),
+		    \rf, 0.002,
+		    \dis, 1,
+		    \df, 2,//Pswitch([9,8,7,4,1], i),
 
 		    // visuals
 		    \shape, Pswitch([7,6,3,6], i),

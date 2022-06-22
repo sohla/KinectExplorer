@@ -138,7 +138,7 @@
 		deinitListener.free;
 
 
-		freqScope.kill;
+		// freqScope.kill;
 		Ndef.clear(0);
 		s.freeAll;
 		s.quit;
@@ -184,6 +184,7 @@
 		o.outDevice = ServerOptions.devices[output];
 		o.sampleRate = 44100.000000;
 		o.memSize = 8192 * 2;
+		o.blockSize = 128;
 		o.numInputBusChannels = 2;
 		o.numOutputBusChannels = 4;
 
@@ -406,9 +407,9 @@
 				.minWidth_(300),
 
 
-			freqScope = FreqScopeView()
-				.freqMode_(1)
-				.active_(true),	
+			// freqScope = FreqScopeView()
+			// 	.freqMode_(1)
+			// 	.active_(true),	
 		)
 		),
 		serverView = UserView()
@@ -416,9 +417,9 @@
 	);
 
 	// debug tool
-	// s.plotTreeView(0.5, serverView);
+	s.plotTreeView(0.5, serverView);
 
-	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
+	plotter = Plotter("plot", Rect(0, 0, 300, 300), plotView)
 		.value_((0..49));
 	plotter.superpose = true;
 	plotter.setProperties(\backgroundColor, Color.gray(0.25));
@@ -515,8 +516,8 @@
 				});
 				
 				//needs to be longer than the fade out on the patterns inside the patch when using Ndefs
-				{freeBlob.(blob);}.defer(10);
-				// freeBlob.(blob);
+				// {freeBlob.(blob);}.defer(10);
+				freeBlob.(blob);
 				blobsDict.removeAt(msg[1]);
 
 				// postf("blob -: % :", blob.label);
@@ -540,5 +541,4 @@
 )
 
 // NetAddr.localAddr
-
 
