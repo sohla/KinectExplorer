@@ -51,5 +51,12 @@ def onCook(s):
 			startr = s["rotstart"][id]
 			endr = s["rotend"][id]
 			s["rz"][id]	 = (( endr - startr ) * val ) + startr
+		
+		if s["scx"] is not None:
+			s["scx"][instance] =  s["scx"][instance] * s["value"][instance]
+		
+		if s["scy"] is not None:
+			s["scy"][instance] =  s["scy"][instance] * s["value"][instance]
+		
 
 	return
