@@ -1,4 +1,3 @@
-
 var pairs = Dictionary.new(4);
 var patterns = Array.fill(4,{nil});
 var fadeValues = [1,1,1,1];

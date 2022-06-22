@@ -228,5 +228,21 @@ Synth(\shepard,[\dur,5])
 FreqScope.new;
 
 
-Pfxb
 
+
+(Splay
+{
+    var low = LFDNoise3.ar(1e3,0.1);
+    var mid = LFDNoise1.ar(9e3, 0.1);
+    var hi = PinkNoise.ar(0.1);
+
+    Splay.arFill(10, { |i| 
+            SinOsc.ar( LFNoise2.kr( rrand(10, 20), 200, i + 3 * 100))  
+    });
+
+
+    OnePole.ar(Mix.ar([low,mid,hi]), MouseY.kr(1,0.9, \exponential))
+
+}.play
+
+)

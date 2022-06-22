@@ -26,9 +26,10 @@ var findNextRunning = {
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var	exc = LFNoise2.ar(lfn, 0.06, 1); 
+		var lfo = LFCub.ar(0.1,0,0.014,1);
 
 		var sig = (DynKlank.ar(`[
-				Array.series(12, [freq,freq+0.3], [freq,freq+0.5] * harm),
+				Array.series(12, [freq,freq+0.3] * lfo, [freq,freq+0.5] * harm * lfo),
 				Array.geom(12,0.9,0.8*exc),
 				Array.fill(12,3)
 			], exc) * 0.02).softclip;
@@ -57,8 +58,7 @@ var findNextRunning = {
 	globalAddr.sendMsg("/poly_r", 1); 
 	globalAddr.sendMsg("/poly_g", 0); 
 	globalAddr.sendMsg("/poly_b", 1); 
-	globalAddr.sendMsg("/poly_a", 0.5);//? 
-
+	globalAddr.sendMsg("/poly_a", 0.5);
 
 	globalAddr.sendMsg("/feedback_mix",1); 
 	globalAddr.sendMsg("/feedback_opacity", 0.9); 
@@ -157,12 +157,8 @@ var findNextRunning = {
 
 	var i = pairs.at(blob.label);
 	if(i != nil,{
-		synths.at(i).set(\lfn, blob.area.getSynchronous.linexp(7,42,80,12500));
-		// synths.at(i).get(\freq, {|f|
-			// synths.at(i).set(\freq, (notes[0] + root[0]).midicps);
-		// });
-		// synths.at(i).set(\freq, root[0].midicps);
-		//synths.at(i).set(\harm, blob.center.getnSynchronous(2)[0].linlin(0.05,0.85,1,2));
+		synths.at(i).set(\lfn, blob.rect.getnSynchronous(4)[2].linexp(20,102,200,20000));
+		synths.at(i).set(\harm, blob.rect.getnSynchronous(4)[2].linexp(20,102,1,5).floor);
 		sx = blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1);
 	});
 };
@@ -177,5 +173,6 @@ var findNextRunning = {
 ~onBlobData = {|blob|
 	
 	var rect  = Rect.fromArray(blob.rect.getnSynchronous(4));
+	// blob.rect.getnSynchronous(4)[2].postln;
 	rect.width * -1
 };

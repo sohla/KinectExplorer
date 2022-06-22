@@ -1,7 +1,7 @@
 ( 
 SynthDef(\voiv, {|out = 0, attack = 0.01, decay = 0.3, sustain = 0.8, release = 0.9, freq = 120.0, gate = 1, amp = 1.0, wobf = 1, woba = 0.003, verb = 1, voice = 0.5|
 
-	var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), doneAction: 2);
+	var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 	var fe = EnvGen.ar(Env.perc(0.01,decay), gate);
 	var fd = EnvGen.ar(Env.perc(0.01,decay * 0.6), gate);
 	var fm = LFCub.ar(wobf * (1-fd),0,woba,1);//0.013
@@ -9,15 +9,11 @@ SynthDef(\voiv, {|out = 0, attack = 0.01, decay = 0.3, sustain = 0.8, release = 
 	var as = [1,0.5,0.3,0.1,1];
 	var rs = [1,1,1,1,0.01];
 	var tone = Saw.ar([freq, freq + (freq * 0.01) ],0.3 * fe);
-	var sig = Splay.arFill(7,{
-			DynKlank.ar(
+	var sig = 
+			Klang.ar(
 				`[fs, as, rs], 
-				PinkNoise.ar(0.08) * fe
-			) * 0.5
-		},
-		1,
-		1,
-	0);
+				(0.1 + (PinkNoise.ar(0.1,1) * fe)).min(0.01)///•••••
+			) * 0.5;
 
 	tone = tone.blend( SinOsc.ar(freq, pi, fd), voice);
 	sig = sig.blend(tone,0.47);
@@ -49,9 +45,10 @@ Pdef(\a,
 	)
 ).play;
 )
-
+s.peakCPU
 /*
 mouse control : what params
 refine
 
 */
+
