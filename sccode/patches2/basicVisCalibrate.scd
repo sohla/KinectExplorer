@@ -1,59 +1,11 @@
-/*
-poly_render	1
-poly_linewidth	1
-poly_r	1
-poly_g	1
-poly_b	1
-poly_a	1
-poly_solid	1
-poly_r1	0.5256772
-poly_g1	0.4037037
-poly_b1	0.5899158
-poly_a1	1
-poly_r2	0.8434553
-poly_g2	0.905377
-poly_b2	0.953554
-poly_a2	1
-poly_r3	0.3657314
-poly_g3	0.8912058
-poly_b3	0.2633678
-poly_a3	1
-poly_r4	0.6390325
-poly_g4	0.9091134
-poly_b4	0.2246641
-poly_a4	1
-feedback_mix	0
-feedback_opacity	0.98
-feedback_x	0
-feedback_y	0
-feedback_displacex	0
-feedback_displacey	0
-feedback_edge_r	0
-feedback_edge_g	0
-feedback_edge_b	0
-feedback_edge_blacklevel	0
-feedback_edge_strength	0
-background_r	0
-background_g	0
-background_b	0
-background_index	0
-displace_speedx	0
-displace_speedy	0
-displace_speedz	0
-displace_period	1
-displace_noise_harmonic	0
-displace_x	0
-displace_y	0
-displace_mix	0
-
-*/
 
 var pairs = Dictionary.new(4);
 var patterns = Array.fill(4,{nil});
 var fadeValues = [1,1,1,1];
 var index = 0;
-var noteAddr = "";
-var globalAddr = "";
+var noteAddr = nil;
+var globalAddr = nil;
+var vp;
 
 var findNextRunning = {
 	var index = 0;
@@ -85,7 +37,7 @@ var findNextRunning = {
 	globalAddr  = patch.globalAddr;
 
 	globalAddr.sendMsg("/poly_render", 1); 
-	globalAddr.sendMsg("/poly_linewidth", 1); 
+	globalAddr.sendMsg("/poly_linewidth",5); 
 	globalAddr.sendMsg("/poly_solid", 1); 
 	globalAddr.sendMsg("/poly_r", 1); 
 	globalAddr.sendMsg("/poly_g", 1); 
@@ -94,7 +46,7 @@ var findNextRunning = {
 
 	4.0.do({|i|
 		// var i = 2 ;
-		var c = Color.grey(0.2);//Color.rand(0.0,1.0);
+		var c = Color.black;//rand(0.0,1.0);
 		// [i,c].postln;
 		globalAddr.sendMsg("/poly_r"++(i+1), c.red); 
 		globalAddr.sendMsg("/poly_g"++(i+1), c.green); 
@@ -102,28 +54,63 @@ var findNextRunning = {
 		globalAddr.sendMsg("/poly_a"++(i+1), 1); 
 	});
 
-	// globalAddr.sendMsg("/background_r", 1); 
-	// globalAddr.sendMsg("/background_g", 0); 
-	// globalAddr.sendMsg("/background_b", 0); 
-	// globalAddr.sendMsg("/background_index", 0); 
+	globalAddr.sendMsg("/xfade", 1);//0 off 1 mix 
+
+	globalAddr.sendMsg("/background_index", 1);//0 off 1 mix 
+	globalAddr.sendMsg("/background_r", 0); 
+	globalAddr.sendMsg("/background_g", 1); 
+	globalAddr.sendMsg("/background_b", 0); 
 
 
-	globalAddr.sendMsg("/feedback_mix", 1); 
-	globalAddr.sendMsg("/feedback_opacity", 0.5); 
+	globalAddr.sendMsg("/displace_mix", 0);//on/off 
+	globalAddr.sendMsg("/displace_x", 0); 
+	globalAddr.sendMsg("/displace_y", 0.0); 
+	globalAddr.sendMsg("/displace_period", 0.2); 
+	globalAddr.sendMsg("/displace_noise_harmonic", 1); 
+	globalAddr.sendMsg("/displace_speedz", 0.02); 
 
-	globalAddr.sendMsg("/feedback_x", -0.5); 
-	globalAddr.sendMsg("/feedback_y", -0.5); 
 
-	globalAddr.sendMsg("/feedback_displacex", 0); 
-	globalAddr.sendMsg("/feedback_displacey", 0); 
+	globalAddr.sendMsg("/feedback_mix", 0); 
+	globalAddr.sendMsg("/feedback_opacity", 0.9); 
 
-	globalAddr.sendMsg("/feedback_edge_r", 1); 
-	globalAddr.sendMsg("/feedback_edge_g", 1); 
-	globalAddr.sendMsg("/feedback_edge_b", 1); 
+
+	globalAddr.sendMsg("/feedback_hue", 0); 
+
+	globalAddr.sendMsg("/feedback_x", 0); //-1 1
+	globalAddr.sendMsg("/feedback_y", 0.1); 
+
+	globalAddr.sendMsg("/feedback_displacex",0.1); //-1 1
+	globalAddr.sendMsg("/feedback_displacey", 0.1); 
+
+	globalAddr.sendMsg("/feedback_edge_r", 0); 
+	globalAddr.sendMsg("/feedback_edge_g", 0); 
+	globalAddr.sendMsg("/feedback_edge_b", 0); 
 
 	globalAddr.sendMsg("/feedback_edge_blacklevel", 0); 
-	globalAddr.sendMsg("/feedback_edge_strength", 0.1); 
+	globalAddr.sendMsg("/feedback_edge_strength", 0); 
 
+	vp = Pdef("va_",
+		Pbind(
+			\amp, 0,
+			\dur, 4,
+			\func, Pfunc({|e|
+				4.0.do({|i|
+					// var i = 2 ;
+					var c = Color.rand(0.0,1.0);
+					// // [i,c].postln;
+					// globalAddr.sendMsg("/poly_r"++(i+1), c.red); 
+					// globalAddr.sendMsg("/poly_g"++(i+1), c.green); 
+					// globalAddr.sendMsg("/poly_b"++(i+1), c.blue); 
+					// globalAddr.sendMsg("/poly_a"++(i+1), 0.5); 
+
+						globalAddr.sendMsg("/background_r", c.red); 
+						globalAddr.sendMsg("/background_g", c.green); 
+						globalAddr.sendMsg("/background_b", c.blue); 
+
+				});
+			})
+		)
+	).play;
 
 };
 
@@ -131,8 +118,8 @@ var findNextRunning = {
 ~deinit = {|patch|
 
 	postf("deinit : % \n", patch.file);
-	
-	globalAddr.sendMsg("/poly_render",0); 
+
+	if(globalAddr != nil, {globalAddr.sendMsg("/poly_render",0)});
 
 	patterns.do({|p,i|
 
@@ -152,6 +139,7 @@ var findNextRunning = {
 	});
 
 	pairs = Dictionary.new(4);
+	vp.clear;
 
 };
 
@@ -168,7 +156,7 @@ var findNextRunning = {
 				"attack", e[\vatt],
 				"release", e[\vrel],
 				"color", e[\color],
-				"scale", e[\scale] * fadeValues[i],
+				"scale", e[\scale],//* fadeValues[i],
 				"sx", e[\sx],
 				"sy", e[\sy],
 				"ex", e[\ex],
@@ -190,41 +178,41 @@ var findNextRunning = {
 	};
 
 	var notes = [0,4,8,12];
-
+	
 	var ptn = Pdef("pa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\a,\a,\a,\a], i),
-		    \amp, Pswitch([0.5,0.3,0.4,0.4], i),
-		    \octave, Pswitch([3,6,5,4], i),
+		    \amp, Pswitch([0.5,0.3,0.4,0.4]*1, i),
+		    \octave, Pswitch([3,6,4,3], i),
 		    \attack, 0.02,
 		    \decay, 0.1,
-		    \sustain, 0.3, //make sure sustain is not to low!
-		    \release,  1.7,
-		    \dur, 0.5,
+		    \sustain, 0.9, //make sure sustain is not to low!
+		    \release,  1.3,
+		    \dur, 0.7,
 		    // Pswitch([
 		    // 	Pseq([1], inf),
 		    // 	Pseq([0.5], inf),
 		    // 	Pseq([0.125], inf),
 		    // 	Pseq([0.5], inf),
 		    // ], i),
-		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,0,4).floor}),
+		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,4).floor}),
 		    \note, Pseq([0,7,11], inf),
 		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
 		    \ff, Pwhite(300, 900),
 		    \rf, 0.003,
 		    \dis, 0.05,
-		    \df, Pswitch([1,8,7,4,1], i),
+		    \df, Pswitch([1,8,7,4,1]*0.1, i),
 
 		    // visuals
-		    \shape, 0,
+		    \shape, 7,
 		    \vdur, 0.02,
 		    \vatt, 0.01,
-		    \vrel, 0.3,
+		    \vrel, 0.5,
 		    \color, 0.5,//Pswitch([0,0.3,Pkey(\note).linlin(0,11,0.1,0.2),0.9], i),
-		    \scale, 1,
+		    \scale, 4,
 		    \scx, 1,
 		    \scy, 1,
-		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.37,0.85,-1,1)}),
+		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
 		    \sy, 0,
 		    \ex, Pkey(\sx),
 		    \ey, Pkey(\sy),
@@ -278,35 +266,39 @@ var findNextRunning = {
 ~onBlobDeinit = {|blob, blobsDict|
 
 	var i = pairs.removeAt(blob.label);
-	var fadeTime = 2; //• add to blob
+	var fadeTime = 3; //• add to blob
 	var fadeRate = 0.1;
 	var fadeSteps = (fadeTime / fadeRate).floor;
 
 	if(i != nil,{
 		
 		// calcualte fade value (used for visuals)
-		SystemClock.sched(0.0,
-		    Routine({ 
-		    	fadeSteps.do({
+		// SystemClock.sched(0.0,
+		//     Routine({ 
+		//     	fadeSteps.do({
 					
-					fadeValues[i] = fadeValues[i] - (1.0 / (fadeTime / fadeRate));	        
-			        fadeRate.yield;
-			        // fadeValues.postln;
-		    	}) ;
-		    });
-		);
+		// 			fadeValues[i] = fadeValues[i] - (1.0 / (fadeTime / fadeRate));
 
+		// 			if(fadeValues[i] < 0.0001, {fadeValues[i] = 0});
+
+		// 	        fadeRate.yield;
+		// 	        // fadeValues.postln;
+		//     	});
+		//     });
+		// );
 		// patterns[i].stop;
-		patterns[i].clear(fadeTime);
+		patterns[i].clear();
 		// Ndef.all.values[0].clean;
 		patterns.put(i,nil);
+		// "off".postln;
+
 	});
 	
 };
 
 //------------------------------------------------------
 ~onBlobUpdate = {|blob, blobsDict|
-
+// [blob.depthCamWidth, blob.depthCamHeight].postln;
 };
 
 //------------------------------------------------------
