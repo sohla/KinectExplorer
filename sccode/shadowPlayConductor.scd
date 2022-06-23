@@ -2,18 +2,22 @@
 	var noteAddr = NetAddr.new("10.1.1.2", 10001);
 	var globalAddr = NetAddr.new("10.1.1.2", 10002);
 	var keAddr = NetAddr("10.1.1.3",57000);
+	var port = 57120;
+	var performancePort = 10005;
+
 
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 
 	var numOfBlobs = 4;
-	var port = 57120;
+
+
 
 	var window, freqScope;
 	var loadPatch, patchButton, reloadButton;
 	var graphView, plotView, plotter, serverView;
 
 	var pntListener, objListener, lnkListener;
-	var resetListener, initListener, updateListener, deinitListener;
+	var resetListener, initListener, updateListener, deinitListener, performanceListener;
 
 	var scale = 0.6;
 
@@ -136,9 +140,9 @@
 		initListener.free;
 		updateListener.free;
 		deinitListener.free;
+		//•••performanceListener.free;
 
-
-		// freqScope.kill;
+		freqScope.kill;
 		Ndef.clear(0);
 		s.freeAll;
 		s.quit;
@@ -164,6 +168,7 @@
 		(\file: "basicVis2.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basicVis3.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basicVis4.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "basicVis5.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "basicVis7.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 
 	];
@@ -172,7 +177,8 @@
 	var bootServer = {|f|
 	
 		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");		// var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
+		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");		
+		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
@@ -184,12 +190,11 @@
 		o.outDevice = ServerOptions.devices[output];
 		o.sampleRate = 44100.000000;
 		o.memSize = 8192 * 2;
-		o.blockSize = 128;
 		o.numInputBusChannels = 2;
-		o.numOutputBusChannels = 4;
+		o.numOutputBusChannels = 2;
 
 		s.waitForBoot{
-			"💫 welcome to shadow play 💫".postln;
+			"💫👻 welcome to sound shadows 👻💫".postln;
 			f.();
 		};
 	};
@@ -306,8 +311,25 @@
 		var str = file.readAllString;
 		var env = Environment.make {
 
+			~setPolyline = {|render = 1, lineWidth = 1, solid = 1|
+				model.globalAddr.sendMsg("/poly_render", render); 
+				model.globalAddr.sendMsg("/poly_linewidth",lineWidth); 
+				model.globalAddr.sendMsg("/poly_solid", solid); 
+			};
+
+			~setPolylineColor = {|index = 0, color = #[1,1,1,1]|
+				// // polyline colors
+				// globalAddr.sendMsg("/poly_r", 1); 
+
+				model.globalAddr.sendMsg("/poly_r"++index, color[0]); 
+				model.globalAddr.sendMsg("/poly_g"++index, color[1]); 
+				model.globalAddr.sendMsg("/poly_b"++index, color[2]); 
+				model.globalAddr.sendMsg("/poly_a"++index, color[3]); 
+			};
 			//•• add shared functionality here ••//
 			interpret(str);
+
+
 		};
 		model.env = env;
 		//• load synth here instead of init?
@@ -407,9 +429,9 @@
 				.minWidth_(300),
 
 
-			// freqScope = FreqScopeView()
-			// 	.freqMode_(1)
-			// 	.active_(true),	
+			freqScope = FreqScopeView()
+				.freqMode_(1)
+				.active_(true),	
 		)
 		),
 		serverView = UserView()
@@ -419,7 +441,7 @@
 	// debug tool
 	s.plotTreeView(0.5, serverView);
 
-	plotter = Plotter("plot", Rect(0, 0, 300, 300), plotView)
+	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
 		.value_((0..49));
 	plotter.superpose = true;
 	plotter.setProperties(\backgroundColor, Color.gray(0.25));
@@ -481,7 +503,6 @@
 			if(blob != nil,{
 
 				 msgToBlob.(msg, blob);
-				
 				// if this blob is on tell all patches
 				if(blob.state == 2,{
 					patches.do({|p| 
@@ -493,7 +514,6 @@
 					});
 				});
 			});
-
 		}, '/ke/update', recvPort: port);
 
 		//------------------------------------------------------
@@ -516,8 +536,8 @@
 				});
 				
 				//needs to be longer than the fade out on the patterns inside the patch when using Ndefs
-				// {freeBlob.(blob);}.defer(10);
-				freeBlob.(blob);
+				{freeBlob.(blob);}.defer(10);
+				// freeBlob.(blob);
 				blobsDict.removeAt(msg[1]);
 
 				// postf("blob -: % :", blob.label);
@@ -530,15 +550,27 @@
 
 
 		}, '/ke/deinit', recvPort: port);
-		
+		//------------------------------------------------------
+
+		//••• TODO
+		// performanceListener = OSCFunc.newMatching({ |msg, time, addr, recvPort|
+		// 	msg.postln;
+		// }, '/*', recvPort: performancePort);
+
 		//------------------------------------------------------
 		TempoClock.default.tempo = 1.0;
 		// load all data into patches
-		patches.do({|p| loadPatch.(p)});
-
+		patches.do({|p| loadPatch.(p)});	
 		resetKE.();
 	});
 )
 
 // NetAddr.localAddr
+
+// (
+// a = OSCFunc({ |msg, time, addr, recvPort|
+// 	msg.postln;
+// }, '/ke/update', recvPort: 57120);
+// )
+// a.free
 

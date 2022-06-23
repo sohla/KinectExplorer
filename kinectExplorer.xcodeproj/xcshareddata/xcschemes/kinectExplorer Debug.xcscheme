@@ -17,7 +17,7 @@
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
                BuildableName = "KinectExplorer.app"
                BlueprintName = "KinectExplorer"
-               ReferencedContainer = "container:KinectExplorer.xcodeproj">
+               ReferencedContainer = "container:kinectExplorer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,7 +33,7 @@
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "KinectExplorer.app"
             BlueprintName = "KinectExplorer"
-            ReferencedContainer = "container:KinectExplorer.xcodeproj">
+            ReferencedContainer = "container:kinectExplorer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -56,7 +56,7 @@
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "KinectExplorer.app"
             BlueprintName = "KinectExplorer"
-            ReferencedContainer = "container:KinectExplorer.xcodeproj">
+            ReferencedContainer = "container:kinectExplorer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <CommandLineArguments>
@@ -69,7 +69,7 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-td &quot;1292.168.1.180&quot;"
+            argument = "-td &quot;127.0.0.1&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
@@ -91,7 +91,7 @@
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "KinectExplorer.app"
             BlueprintName = "KinectExplorer"
-            ReferencedContainer = "container:KinectExplorer.xcodeproj">
+            ReferencedContainer = "container:kinectExplorer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
