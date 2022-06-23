@@ -311,8 +311,25 @@
 		var str = file.readAllString;
 		var env = Environment.make {
 
+			~setPolyline = {|render = 1, lineWidth = 1, solid = 1|
+				model.globalAddr.sendMsg("/poly_render", render); 
+				model.globalAddr.sendMsg("/poly_linewidth",lineWidth); 
+				model.globalAddr.sendMsg("/poly_solid", solid); 
+			};
+
+			~setPolylineColor = {|index = 0, color = #[1,1,1,1]|
+				// // polyline colors
+				// globalAddr.sendMsg("/poly_r", 1); 
+
+				model.globalAddr.sendMsg("/poly_r"++index, color[0]); 
+				model.globalAddr.sendMsg("/poly_g"++index, color[1]); 
+				model.globalAddr.sendMsg("/poly_b"++index, color[2]); 
+				model.globalAddr.sendMsg("/poly_a"++index, color[3]); 
+			};
 			//•• add shared functionality here ••//
 			interpret(str);
+
+
 		};
 		model.env = env;
 		//• load synth here instead of init?
@@ -556,3 +573,4 @@
 // }, '/ke/update', recvPort: 57120);
 // )
 // a.free
+

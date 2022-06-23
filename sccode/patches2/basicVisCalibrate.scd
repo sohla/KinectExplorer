@@ -5,6 +5,11 @@ var index = 0;
 var noteAddr = nil;
 var globalAddr = nil;
 var vp;
+var group = Group.new;
+
+// ••• GROUPSSSS!!!!!!
+
+
 
 var findNextRunning = {
 	var index = 0;
@@ -35,45 +40,31 @@ var findNextRunning = {
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
 
-	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
+	globalAddr.sendMsg("/xfade",10);//0 off 1 mix 
 
-	// polyline 
-	globalAddr.sendMsg("/poly_render", 1); 
-	globalAddr.sendMsg("/poly_linewidth",1); 
-	globalAddr.sendMsg("/poly_solid", 1); 
-
-	// polyline colors
-	globalAddr.sendMsg("/poly_r", 1); 
-	globalAddr.sendMsg("/poly_g", 1); 
-	globalAddr.sendMsg("/poly_b", 1); 
-	globalAddr.sendMsg("/poly_a", 1); 
+	~setPolyline.(1,3,1, Color(1,1,1,1).asArray);
 
 	// each polyline (blob)
 	4.0.do({|i|
-		// var i = 2 ;
-		var c = Color.rand(0.0,1.0);
-		// [i,c].postln;
-		globalAddr.sendMsg("/poly_r"++(i+1), c.red); 
-		globalAddr.sendMsg("/poly_g"++(i+1), c.green); 
-		globalAddr.sendMsg("/poly_b"++(i+1), c.blue); 
-		globalAddr.sendMsg("/poly_a"++(i+1), 1); 
+		var c = Color.red;
+		~setPolylineColor.(i,c.asArray);
 	});
 
 
 	// global color ramp
 	globalAddr.sendMsg("/ramp_r", 1); 
 	globalAddr.sendMsg("/ramp_g", 0.0); 
-	globalAddr.sendMsg("/ramp_b", 1.0); 
+	globalAddr.sendMsg("/ramp_b", 0.0); 
 
-	globalAddr.sendMsg("/ramp_hue1", 30); 
+	globalAddr.sendMsg("/ramp_hue1", 0); 
 
 	// background
-	globalAddr.sendMsg("/background_index",3);//0 off 1 mix 
+	globalAddr.sendMsg("/background_index",1);//0 off 1 mix 
 	
 	// background (index 1)
 	globalAddr.sendMsg("/background_r", 1); 
 	globalAddr.sendMsg("/background_g", 1); 
-	globalAddr.sendMsg("/background_b", 1); 
+	globalAddr.sendMsg("/background_b", 0); 
 
 	// background (index 2)
 	globalAddr.sendMsg("/cell_blur", 0.9);
@@ -94,7 +85,7 @@ var findNextRunning = {
 	globalAddr.sendMsg("/displace_speedz",1); 
 
 
-	globalAddr.sendMsg("/feedback_mix", 1); 
+	globalAddr.sendMsg("/feedback_mix", 0); 
 	globalAddr.sendMsg("/feedback_opacity", 0.98); 
 
 	globalAddr.sendMsg("/feedback_hue", 0); 
@@ -112,38 +103,38 @@ var findNextRunning = {
 	globalAddr.sendMsg("/feedback_edge_blacklevel", 0.0); 
 	globalAddr.sendMsg("/feedback_edge_strength", 0.0); 
 
-	vp = Pdef("va_",
-		Pbind(
-			\amp, 0,
-			\dur, 0.3,
-			\func, Pfunc({|e|
-				1.0.do({|i|
-					// var i = 2 ;
-					var c = Color.rand(0.0,1.0);
-						// globalAddr.sendMsg("/background_image_scale", 0); 
-						// globalAddr.sendMsg("/background_image_index", 10.rand.floor); 
-						// globalAddr.sendMsg("/background_image_scale", 2.rand.floor); 
+	// vp = Pdef("va_",
+	// 	Pbind(
+	// 		\amp, 0,
+	// 		\dur, 0.3,
+	// 		\func, Pfunc({|e|
+	// 			1.0.do({|i|
+	// 				// var i = 2 ;
+	// 				var c = Color.rand(0.0,1.0);
+	// 					// globalAddr.sendMsg("/background_image_scale", 0); 
+	// 					// globalAddr.sendMsg("/background_image_index", 10.rand.floor); 
+	// 					// globalAddr.sendMsg("/background_image_scale", 2.rand.floor); 
 
-						// globalAddr.sendMsg("/background_image_index", 12.rand.floor); 
+	// 					// globalAddr.sendMsg("/background_image_index", 12.rand.floor); 
 
-					// // [i,c].postln;
-					// globalAddr.sendMsg("/poly_r"++(i+1), c.red); 
-					// globalAddr.sendMsg("/poly_g"++(i+1), c.green); 
-					// globalAddr.sendMsg("/poly_b"++(i+1), c.blue); 
-					// globalAddr.sendMsg("/poly_a"++(i+1), 0.5); 
-						// globalAddr.sendMsg("/feedback_mix", 2.rand.floor); 
-	// globalAddr.sendMsg("/feedback_displacex",2.rand.floor); //-1 1
-	// globalAddr.sendMsg("/feedback_displacey", 2.rand.floor); 
-	// globalAddr.sendMsg("/displace_mix", 2.0.rand.floor); 
+	// 				// // [i,c].postln;
+	// 				// globalAddr.sendMsg("/poly_r"++(i+1), c.red); 
+	// 				// globalAddr.sendMsg("/poly_g"++(i+1), c.green); 
+	// 				// globalAddr.sendMsg("/poly_b"++(i+1), c.blue); 
+	// 				// globalAddr.sendMsg("/poly_a"++(i+1), 0.5); 
+	// 					// globalAddr.sendMsg("/feedback_mix", 2.rand.floor); 
+	// // globalAddr.sendMsg("/feedback_displacex",2.rand.floor); //-1 1
+	// // globalAddr.sendMsg("/feedback_displacey", 2.rand.floor); 
+	// // globalAddr.sendMsg("/displace_mix", 2.0.rand.floor); 
 
-						// globalAddr.sendMsg("/background_r", c.red); 
-						// globalAddr.sendMsg("/background_g", c.green); 
-						// globalAddr.sendMsg("/background_b", c.blue); 
+	// 					// globalAddr.sendMsg("/background_r", c.red); 
+	// 					// globalAddr.sendMsg("/background_g", c.green); 
+	// 					// globalAddr.sendMsg("/background_b", c.blue); 
 
-				});
-			})
-		)
-	).play;
+	// 			});
+	// 		})
+	// 	)
+	// ).play;
 
 };
 
@@ -174,7 +165,8 @@ var findNextRunning = {
 	});
 
 	pairs = Dictionary.new(4);
-	vp.clear;
+	// vp.clear;
+	// group.free;
 
 };
 
@@ -204,8 +196,7 @@ var findNextRunning = {
 				"rotend", e[\rotend],
 
 				"speed", 1,//e[\speed],
-				// "freq", 20,
-				"amp", 0.04,
+				"amp", 0.04,//????
 
 				"wobble", e[\wobble],
 			);}.defer(0.1);
@@ -217,6 +208,7 @@ var findNextRunning = {
 	var ptn = Pdef("aa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\ab,\ab,\ab,\ab], i),
+		    \group, group,
 		    \amp, Pswitch([0.5,0.3,0.4,0.4]*1, i),
 		    \octave, Pswitch([3,6,4,3], i),
 		    \attack, 0.02,
@@ -242,14 +234,14 @@ var findNextRunning = {
 		    \shape,7,//9 textures	
 		    \vdur, 0.02,
 		    \vatt, 0.01,
-		    \vrel, 0.02,
-		    \color, Pwhite(0.0,0.999),//Pswitch([0,0.3,Pkey(\note).linlin(0,11,0.0,0.99),0.9], i),
+		    \vrel, 0.3,
+		    \color, Pwhite(0.0,0.999),
 		    \scale,1,
-		    \scx,10,
-		    \scy, 0.03,
+		    \scx,1,
+		    \scy, 1,
 		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
-		    \sy, 0,//Pkey(\octave).linlin(3,6) * Pkey(\note).linlin(0,12,-1,1),
-		    \ex, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
+		    \sy, 0,
+		    \ex, Pkey(\sx),
 		    \ey, Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,
 		    \rotstart, 0,
@@ -260,26 +252,11 @@ var findNextRunning = {
 
 		    \bc, Pwhite(0,15),
 
-		    // \test, Pfunc({|e|
-		    // 	"note on".postln;
-		    // 	{"note off".postln;}.defer(e[\dur]/2);
-		    // }),
 			\osc, Pfunc{|e| 
-				// {
-				// 4.do({|i|
-				// 	var c = Color.rand(0.0,1.0);
-				// 	// [i,c].postln;
-				// 	globalAddr.sendMsg("/poly_r"++(i+1), c.red); 
-				// 	globalAddr.sendMsg("/poly_g"++(i+1), c.green); 
-				// 	globalAddr.sendMsg("/poly_b"++(i+1), c.blue); 
-				// 	globalAddr.sendMsg("/poly_a"++(i+1), 1); 
-				// });
-				// }.defer(0.15);
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
 				});
-
-				true // must return true 
+				true // !!! must return true !!!
 			}
 	  	)
 	);

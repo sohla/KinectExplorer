@@ -5,7 +5,7 @@ var pairs = Dictionary.new(8);
 var notes = [50,54+12,57,61+12];
 var root = [0,-2,3,-4,-5].stutter(14);
 var sx = 0;
-var group;
+var group = Group.new;
 var verbSynth;
 
 var findNextRunning = {
@@ -40,7 +40,7 @@ var findNextRunning = {
 
 	SynthDef(\verb1, {|out = 0, gate = 1|
 		var in = In.ar(out, 2);
-		var env = EnvGen.ar(Env.adsr(0.01,0.01,1,1), gate, doneAction: 14);
+		var env = EnvGen.ar(Env.adsr(0.01,0.01,1,5), gate, doneAction: 2);
 		var sig = JPverb.ar(in, 15, 0.1, 5, 0.7, 0.6, 3.8, 0.6,0.6,0.5);
 		ReplaceOut.ar(out, sig * env);
 	}).add;
@@ -48,7 +48,7 @@ var findNextRunning = {
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
 
-	group = Group.new;
+	// group = Group.new;
 	verbSynth  = Synth.head(group,\verb1, [\out,0]);
 
 
@@ -79,8 +79,8 @@ var findNextRunning = {
 
 
 	globalAddr.sendMsg("/xfade", 1);//0 off 1 mix 
-	globalAddr.sendMsg("/cell_blur", 0.4);
-	globalAddr.sendMsg("/cell_step", 0.04);
+	globalAddr.sendMsg("/cell_blur", 0.9);
+	globalAddr.sendMsg("/cell_step", 0.09);
 
 
 	globalAddr.sendMsg("/displace_mix", 0);//on/off 
@@ -91,7 +91,7 @@ var findNextRunning = {
 	globalAddr.sendMsg("/displace_speedz", 0.02); 
 
 
-	globalAddr.sendMsg("/feedback_mix", 1); 
+	globalAddr.sendMsg("/feedback_mix", 0); 
 	globalAddr.sendMsg("/feedback_opacity", 0.9); 
 
 
@@ -136,18 +136,18 @@ var findNextRunning = {
 	var vizMessage = {|i|
 		if(noteAddr != nil, {
 			noteAddr.sendMsg("/shadow", 
-				"shape", 5,
+				"shape", 7,
 				"duration", 0.1,
 				"attack", 0.03,
-				"release", 1.8,
+				"release", 0.3,
 				"color", blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.18),
-				"scale", 10,
-				"scx", 10,
-				"scy", 0.005,
+				"scale", 1,
+				"scx", 20,
+				"scy", 0.1,
 				"sx", sx,
-				"sy", 0.5,
+				"sy", 0,
 				"ex", sx,
-				"ey", -0.5,
+				"ey", 0,
 				"imageindex", 0,
 				"rotstart",0,
 				"rotend", 0,
