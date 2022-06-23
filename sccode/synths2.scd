@@ -230,7 +230,7 @@ FreqScope.new;
 
 
 
-(Splay
+(
 {
     var low = LFDNoise3.ar(1e3,0.1);
     var mid = LFDNoise1.ar(9e3, 0.1);

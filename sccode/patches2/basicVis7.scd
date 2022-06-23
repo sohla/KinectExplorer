@@ -2,7 +2,7 @@ var noteAddr = "";
 var globalAddr = "";
 var synths = Array.fill(8,{nil});
 var pairs = Dictionary.new(8);
-var notes = [50,54+12,57,61+12] ;
+var notes = [50,54+12,57,61+12];
 var root = [0,-2,3,-4,-5].stutter(14);
 var sx = 0;
 var group;
@@ -40,7 +40,7 @@ var findNextRunning = {
 
 	SynthDef(\verb1, {|out = 0, gate = 1|
 		var in = In.ar(out, 2);
-		var env = EnvGen.ar(Env.adsr(0.01,0.01,1,5), gate, doneAction: 14);
+		var env = EnvGen.ar(Env.adsr(0.01,0.01,1,1), gate, doneAction: 14);
 		var sig = JPverb.ar(in, 15, 0.1, 5, 0.7, 0.6, 3.8, 0.6,0.6,0.5);
 		ReplaceOut.ar(out, sig * env);
 	}).add;
@@ -53,28 +53,63 @@ var findNextRunning = {
 
 
 	globalAddr.sendMsg("/poly_render", 1); 
-	globalAddr.sendMsg("/poly_linewidth",3); 
+	globalAddr.sendMsg("/poly_linewidth",5); 
 	globalAddr.sendMsg("/poly_solid", 1); 
 	globalAddr.sendMsg("/poly_r", 1); 
-	globalAddr.sendMsg("/poly_g", 0); 
+	globalAddr.sendMsg("/poly_g", 1); 
 	globalAddr.sendMsg("/poly_b", 1); 
-	globalAddr.sendMsg("/poly_a", 0.5);
+	globalAddr.sendMsg("/poly_a", 1); 
 
-	globalAddr.sendMsg("/feedback_mix",1); 
+	4.0.do({|i|
+		// var i = 2 ;
+		var c = Color.black;//rand(0.0,1.0);
+		// [i,c].postln;
+		globalAddr.sendMsg("/poly_r"++(i+1), c.red); 
+		globalAddr.sendMsg("/poly_g"++(i+1), c.green); 
+		globalAddr.sendMsg("/poly_b"++(i+1), c.blue); 
+		globalAddr.sendMsg("/poly_a"++(i+1), 1); 
+	});
+
+	// globalAddr.sendMsg("/xfade", 1);//0 off 1 mix 
+
+	globalAddr.sendMsg("/background_index", 2);//0 off 1 bg 2 energy 
+	globalAddr.sendMsg("/background_r", 0); 
+	globalAddr.sendMsg("/background_g", 1); 
+	globalAddr.sendMsg("/background_b", 0); 
+
+
+	globalAddr.sendMsg("/xfade", 1);//0 off 1 mix 
+	globalAddr.sendMsg("/cell_blur", 0.4);
+	globalAddr.sendMsg("/cell_step", 0.04);
+
+
+	globalAddr.sendMsg("/displace_mix", 0);//on/off 
+	globalAddr.sendMsg("/displace_x", 0); 
+	globalAddr.sendMsg("/displace_y", 0.0); 
+	globalAddr.sendMsg("/displace_period", 0.2); 
+	globalAddr.sendMsg("/displace_noise_harmonic", 1); 
+	globalAddr.sendMsg("/displace_speedz", 0.02); 
+
+
+	globalAddr.sendMsg("/feedback_mix", 1); 
 	globalAddr.sendMsg("/feedback_opacity", 0.9); 
 
+
+	globalAddr.sendMsg("/feedback_hue", 0); 
+
 	globalAddr.sendMsg("/feedback_x", 0); //-1 1
-	globalAddr.sendMsg("/feedback_y", 0.5); 
+	globalAddr.sendMsg("/feedback_y", 1); 
 
-	globalAddr.sendMsg("/feedback_displacex", 2); //-1 1
-	globalAddr.sendMsg("/feedback_displacey", 0); 
+	globalAddr.sendMsg("/feedback_displacex",1); //-1 1
+	globalAddr.sendMsg("/feedback_displacey", 1); 
 
-	globalAddr.sendMsg("/feedback_edge_r", 1); 
+	globalAddr.sendMsg("/feedback_edge_r", 0); 
 	globalAddr.sendMsg("/feedback_edge_g", 0); 
 	globalAddr.sendMsg("/feedback_edge_b", 0); 
 
 	globalAddr.sendMsg("/feedback_edge_blacklevel", 0); 
-	globalAddr.sendMsg("/feedback_edge_strength", 0.2); 
+	globalAddr.sendMsg("/feedback_edge_strength", 0); 
+
 };
 
 //------------------------------------------------------
@@ -105,14 +140,14 @@ var findNextRunning = {
 				"duration", 0.1,
 				"attack", 0.03,
 				"release", 1.8,
-				"color", blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.99),
-				"scale", 1,
-				"scx", 0.01,
-				"scy", 1,
+				"color", blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.18),
+				"scale", 10,
+				"scx", 10,
+				"scy", 0.005,
 				"sx", sx,
-				"sy", -1,
+				"sy", 0.5,
 				"ex", sx,
-				"ey", 1,
+				"ey", -0.5,
 				"imageindex", 0,
 				"rotstart",0,
 				"rotend", 0,
@@ -127,7 +162,7 @@ var findNextRunning = {
 	};
 
 	if(i != nil, {
-		var synth = Synth.head(group, \chordal, [\gate,1, \freq, (notes[0] + root[0] + [0,-12,0,0,12].choose).midicps, \attack, 0.02, \sustain, 1.0, \decay, 0.9, \release, 0.1]);
+		var synth = Synth.head(group, \chordal, [\gate,1, \freq, (notes[0] + root[0] + [0,-12,0,0,12].choose).midicps, \attack, 0.8, \sustain, 1.0, \decay, 0.9, \release, 0.1]);
 
 		vizMessage.(i);
 		notes = notes.rotate(-1);
@@ -158,7 +193,7 @@ var findNextRunning = {
 	var i = pairs.at(blob.label);
 	if(i != nil,{
 		synths.at(i).set(\lfn, blob.rect.getnSynchronous(4)[2].linexp(20,102,200,20000));
-		synths.at(i).set(\harm, blob.rect.getnSynchronous(4)[2].linexp(20,102,1,5).floor);
+		synths.at(i).set(\harm, blob.rect.getnSynchronous(4)[2].linexp(20,102,0.5,1.5));
 		sx = blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1);
 	});
 };
