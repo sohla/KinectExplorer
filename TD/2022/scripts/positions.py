@@ -45,7 +45,7 @@ def onCook(s):
 
 		# scale these values to projection (sx,sy,ex,ey are in the range -1,1)
 		s["tx"][instance] = vx * 2.07
-		s["ty"][instance] = vy * 1.55 
+		s["ty"][instance] = vy * 1.16
 		
 		if s.chan("rotend") is not None:
 			startr = s["rotstart"][id]
