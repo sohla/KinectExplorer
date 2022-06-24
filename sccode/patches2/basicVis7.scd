@@ -22,7 +22,7 @@ var findNextRunning = {
 //------------------------------------------------------
 ~init = {|patch|
 
-	SynthDef(\chordal, {|out = 0, freq = 120, amp = 0.5, attack = 0.01, decay = 0.03, sustain = 0.4, release = 0.9, gate = 1, harm = 1, lfn = 200|
+	SynthDef(\chordal, {|out = 0, freq = 120, amp = 0.4, attack = 0.01, decay = 0.03, sustain = 0.4, release = 0.9, gate = 1, harm = 1, lfn = 200|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var	exc = LFNoise2.ar(lfn, 0.06, 1); 

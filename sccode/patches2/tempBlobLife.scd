@@ -63,21 +63,21 @@ var findNextRunning = {
 
 	// each polyline (blob)
 	4.0.do({|i|
-		var c = Color.black;
+		var c = Color(0,((i+1)*0.2),1);
 		~setPolylineColor.(i,c.asArray);
 	});
 
-	~setColorRamp.(Color.green.asArray, 20);
+	~setColorRamp.(Color(0,0.5,1).asArray, 40);
 
 	// ~setBackground0.();
 	// ~setBackground1.(Color.red.asArray);
-	~setBackground2.(blur:0.9, step:0.09);
-	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
+	// ~setBackground2.(blur:0.9, step:0.09);
+	~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
-	// ~setDisplace.(mix:0.0, x:1, y:1, period:0.3, noise:1, z:0);
-	~setDisplace.(mix:0.0);
-	// ~setFeedback.(mix:1, opacity:0.98, hue:0.0, x:0, y:0.5, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
-	~setFeedback.(mix:0);
+	~setDisplace.(mix:1.0, x:1, y:0.2, period:1.2, noise:2, z:0);
+	// ~setDisplace.(mix:0.0);
+	~setFeedback.(mix:0.4, opacity:0.999, hue:0.0, x:0, y:0.02, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.1);
+	// ~setFeedback.(mix:0);
 
 };
 
@@ -106,17 +106,17 @@ var findNextRunning = {
 		if(noteAddr != nil, {
 			noteAddr.sendMsg("/shadow", 
 				"shape", 7,
-				"duration", 0.1,
+				"duration", 0.5,
 				"attack", 0.03,
-				"release", 1.1,
-				"color", blob.center.getnSynchronous(2)[0].linlin(0,1,0,0.18),
+				"release", 2.1,
+				"color", blob.center.getnSynchronous(2)[0].linlin(0,1,0,1),
 				"scale", 1,
-				"scx", 1,
-				"scy", 1,
-				"sx", sx,
-				"sy", 0,
-				"ex", sx,
-				"ey", 0,
+				"scx", 20,
+				"scy", 0.02,
+				"sx", 0,
+				"sy", -1,
+				"ex", 0,
+				"ey", -0.3.rrand(-0.5),
 				"imageindex", 0,
 				"rotstart",0,
 				"rotend", 0,

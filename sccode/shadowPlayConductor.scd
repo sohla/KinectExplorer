@@ -142,7 +142,7 @@
 		deinitListener.free;
 		//•••performanceListener.free;
 
-		freqScope.kill;
+		// freqScope.kill;
 		Ndef.clear(0);
 		s.freeAll;
 		s.quit;
@@ -175,6 +175,16 @@
 		(\file: "tempBlobLife.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "tempBlobPattern.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 		(\file: "tempBlobTrack.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+
+
+		(\file: "earth.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "sunFire.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "water.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "discoStripes.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+		(\file: "colorShape.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+
+		(\file: "basicVis7.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
+
 	];
 	//------------------------------------------------------
 
@@ -509,9 +519,9 @@
 				.minWidth_(300),
 
 
-			freqScope = FreqScopeView()
-				.freqMode_(1)
-				.active_(true),	
+			// freqScope = FreqScopeView()
+			// 	.freqMode_(1)
+			// 	.active_(true),	
 		)
 		),
 		serverView = UserView()
@@ -521,7 +531,7 @@
 	// debug tool
 	s.plotTreeView(0.5, serverView);
 
-	plotter = Plotter("plot", Rect(0, 0, 300, freqScope.bounds.height), plotView)
+	plotter = Plotter("plot", Rect(0, 0, 400, 300), plotView)
 		.value_((0..49));
 	plotter.superpose = true;
 	plotter.setProperties(\backgroundColor, Color.gray(0.25));

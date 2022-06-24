@@ -79,17 +79,17 @@ var findNextRunning = {
 
 
 
-	~setColorRamp.(Color(0,1,0).asArray, 50);
+	~setColorRamp.(Color(1,0,0).asArray, 120);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.black.asArray);
+	~setBackground1.(Color.white.asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
 	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
 	~setDisplace.(mix:0.0);
-	 ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:0, y:0.9, dx:0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
-	// ~setFeedback.(mix:0);
+	// ~setFeedback.(mix:1, opacity:0.98, hue:0.0, x:0, y:-0.7, dx:0, dy:-0.02, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	 ~setFeedback.(mix:0);
 
 
 };
@@ -151,7 +151,7 @@ var findNextRunning = {
 		Pbind(
 		    \instrument, \glow,
 		    \group, group,
-		    \amp, 0.3,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
+		    \amp, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
 		    // \octave, Prand([4,5,6,7],inf),//Pswitch([Prand([3,4,5,6],inf),6,4,3], i),
 
 	//	    \octave, Pswitch([2,3,4,5], i),
@@ -164,7 +164,7 @@ var findNextRunning = {
 		    \attack, 0.02,
 		    \decay, 0.02,
 		    \sustain, 0.5, //make sure sustain is not to low!
-		    \release,  Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.2,3.2)}),
+		    \release,  0.9,
 		    // \dur, 0.2,
 		    \dur, Pswitch([
 		    	4,
@@ -205,16 +205,16 @@ var findNextRunning = {
 		    \ff, 11400,
 		    \rf, 1,
 		    // visuals
-		    \shape,7,//9 textures	
+		    \shape,Pswitch([6,3,5,7], i),//9 textures	
 		    \vdur, 0.01,
 		    \vatt, 0.01,
-		    \vrel, 0.6,
+		    \vrel, 0.16,
 		    \color, Pswitch([0,0.25,0.50,0.75], i),
 		    \scale, 1,
-		    \scx, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
-		    \scy, 0.1,
+		    \scx, Pswitch([2,0.5,0.2,0.1], i),
+		    \scy, Pswitch([2,2,0.2,2], i),
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,-1,1)},
-		    \sy, -0.9,
+		    \sy, Pswitch([0,0.5,0,-1], i),
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,
