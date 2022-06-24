@@ -6,6 +6,8 @@ var notes = [50,54+12,57,61+12];
 var root = [0,-2,3,-4,-5].stutter(14);
 var sx = 0;
 var group = Group.new;
+var bus = Bus.audio(s,2);
+
 var verbSynth;
 
 var findNextRunning = {
@@ -38,18 +40,18 @@ var findNextRunning = {
 	}).add;
 
 
-	SynthDef(\verb1, {|out = 0, gate = 1|
-		var in = In.ar(out, 2);
+	SynthDef(\verb1, {|inBus = 0, outBus = 0, gate = 1|
+		var in = In.ar(inBus, 2);
 		var env = EnvGen.ar(Env.adsr(0.01,0.01,1,5), gate, doneAction: 2);
 		var sig = JPverb.ar(in, 15, 0.1, 5, 0.7, 0.6, 3.8, 0.6,0.6,0.5);
-		ReplaceOut.ar(out, sig * env);
+		Out.ar(outBus, sig * env);
 	}).add;
 
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
 
 	// group = Group.new;
-	verbSynth  = Synth.head(group,\verb1, [\out,0]);
+	verbSynth  = Synth.head(group,\verb1, [\inBus, bus, \outBus,0]);
 
 
 	//----------------------------------------------------------------------------
@@ -68,7 +70,7 @@ var findNextRunning = {
 	~setColorRamp.(Color.green.asArray, 20);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.red.asArray);
+	// ~setBackground1.(Color.red.asArray);
 	~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
@@ -129,7 +131,7 @@ var findNextRunning = {
 	};
 
 	if(i != nil, {
-		var synth = Synth.head(group, \chordal, [\gate,1, \freq, (notes[0] + root[0] + [0,-12,0,0,12].choose).midicps, \attack, 0.8, \sustain, 1.0, \decay, 0.9, \release, 0.1]);
+		var synth = Synth.before(verbSynth, \chordal, [\out, bus, \gate,1, \freq, (notes[0] + root[0] + [0,-12,0,0,12].choose).midicps, \attack, 0.8, \sustain, 1.0, \decay, 0.9, \release, 0.1]);
 
 		vizMessage.(i);
 		notes = notes.rotate(-1);

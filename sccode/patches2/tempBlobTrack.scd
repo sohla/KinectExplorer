@@ -1,6 +1,7 @@
 var active = Dictionary.new(4);
 var noteAddr = nil;
 var globalAddr = nil;
+var group = Group.new;
 
 //------------------------------------------------------
 ~init = {|patch|
@@ -21,7 +22,7 @@ var globalAddr = nil;
 	//----------------------------------------------------------------------------
 	// vis
 	//----------------------------------------------------------------------------
-	globalAddr.sendMsg("/xfade",0.1);//0 off 1 mix 
+	globalAddr.sendMsg("/xfade",2);//0 off 1 mix 
 
 	~setPolyline.(1,5,1);
 
@@ -36,7 +37,7 @@ var globalAddr = nil;
 	//~setBackground0.();
 	// ~setBackground1.(Color.red.asArray);
 	//~setBackground2.(blur:0.4, step:0.3);
-	~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(1,1,0).asArray);
+	~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(1,0,0).asArray);
 
 	~setDisplace.(mix:1.0, x:3.2, y:3.2, period:1, noise:0.5, z:0.2);
 	// ~setDisplace.(mix:0.0);
@@ -49,11 +50,15 @@ var globalAddr = nil;
 
 	postf("deinit : % \n", patch.file);
 	active.do({|o,k| o.set(\gate, 0)});
+	~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0,0).asArray);
+	~setDisplace.(mix:0.0);
+	~setFeedback.(mix:0);
+		~setPolyline.(0);
 };
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
 
-	var synth = Synth.new(\basicSin, [\gate,1]);
+	var synth = Synth.head(group, \basicSin, [\gate,1]);
 	active.put(blob.label, synth);
 };
 

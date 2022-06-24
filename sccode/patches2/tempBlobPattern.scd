@@ -56,8 +56,8 @@ var findNextRunning = {
 
 	~setColorRamp.(Color.green.asArray, 20);
 
-	~setBackground0.();
-	// ~setBackground1.(Color.red.asArray);
+	// ~setBackground0.();
+	~setBackground1.(Color.green.asArray);
 	//~setBackground2.(blur:0.4, step:0.3);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
@@ -72,6 +72,8 @@ var findNextRunning = {
 ~deinit = {|patch|
 
 	postf("deinit : % \n", patch.file);
+
+	~setBackground0.();
 
 	// if(globalAddr != nil, {
 	// 	globalAddr.sendMsg("/poly_render",0)
@@ -97,6 +99,8 @@ var findNextRunning = {
 	pairs = Dictionary.new(4);
 	// vp.clear;
 	// group.free;
+
+
 
 };
 
