@@ -26,35 +26,31 @@ var findNextRunning = {
 
 	postf("init : % \n", patch.file);
 
-	SynthDef(\ab, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1, dis = 0.1, df = 5, dt = 1|
 
-		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
-		var sig = SinOsc.ar([freq,freq + (freq * dt)], LocalIn.ar(2) * LFNoise1.ar(dis,df), amp);
-		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
-		var comb = CombL.ar(filter, 0.3, 0.2, 0.2,1);
-		LocalOut.ar(filter);
-		Out.ar(out, comb * env);
+	SynthDef(\dweep2, {|out = 0, freq = 100.0, amp = 0.1, attack = 0.003, decay = 0.05, sustain = 0.15, release = 2.6, gate = 1, viba = 1.0, dist =0.1|
+		
+		var enva = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 
-	}).add;
-	SynthDef(\glow, {|out = 0, attack = 0.004, release = 0.9, freq = 100, gate = 1, coef = 0.0, tf = 1, amp = 0.3, ff = 10500, rf = 0.5|
-		var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
-		var trig = Impulse.ar(XLine.ar(tf, 1, attack + (release * 0.5)));
-		var sub = LFTri.ar(freq, [0,pi/3], 0.09);
-		var sig = Splay.ar({|i|
-	    	var f = freq * (i+1);
-	    	Pluck.ar(
-	    		BrownNoise.ar(1), 
-	    		trig,  
-	    		f.reciprocal, 
-	    		f.reciprocal, 
-	    		Demand.ar(trig, 0, Dwhite(1, 10)),
-	        	coef: coef
-	        )} !2);
+		var l = LocalIn.ar(2);
+		var j = LFCub.ar( viba, 0, 0.02, 1);
 
-		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
-		Out.ar(out, (filter + sub) * env * amp);
+		var sig = PitchShift.ar(
+			SinOscFB.ar( [freq, freq + (freq * 0.006)], dist),
+		[0.02,0.021],
+		j
+		);
+		LocalOut.ar(sig.tanh);
+
+		// sig = Splay.arFill(3, {|i|
+		// 	AllpassL.ar(sig, 0.1, 0.05 * i, 0.2 + (0.1 * i));
+
+		// });
+
+		Out.ar(out, sig * enva * amp);
 
 	}).add;
+
+
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
 
@@ -147,63 +143,57 @@ var findNextRunning = {
 
 	var notes = [0,2,4,5,7,9,10];
 	
-	var ptn = Pdef("aa_"++i,
+	var ptn = Pdef("jj_"++i,
 		Pbind(
-		    \instrument, \glow,
+		    \instrument, \dweep2,
 		    \group, group,
-		    \amp, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
-		    // \octave, Prand([4,5,6,7],inf),//Pswitch([Prand([3,4,5,6],inf),6,4,3], i),
+			\octave, Pswitch([
+				0,
+				0,
+				5,
+				Pseq([[2,3],5,7,6,5,4], inf)
+			], i),
+			\note, Pswitch([
+				0,
+				0,
+				0,
+				Prand([0,5,9].stutter(6), inf)
+			], i),
+			\root, Pswitch([
+				0,
+				0,
+				0,
+				Pseq([0-3,2-3,4-3].stutter(18), inf)
+			], i),
 
-	//	    \octave, Pswitch([2,3,4,5], i),
-		    \octave, Pswitch([
-		    	7 - Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,1,3).floor},
-		    	7 - Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,1,3).floor},
-		    	5 - Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,1,3).floor},
-				Pseq([2,3,4,3], inf) * Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,1,3).floor},
-		    ], i),
+
+			\dur, 0.3,
+			\amp, Pswitch([
+				0,
+				0,
+				0,
+				0.1
+			], i),
+		    \dist, Pfunc{blob.rect.getnSynchronous(4)[2].linlin(50,65,0.1,1.3)},
+		    \viba, Pfunc{blob.rect.getnSynchronous(4)[3].linlin(80,150,0.1,30)},
+
+
 		    \attack, 0.02,
 		    \decay, 0.02,
 		    \sustain, 0.5, //make sure sustain is not to low!
-		    \release,  0.9,
-		    // \dur, 0.2,
-		    \dur, Pswitch([
-		    	4,
-		    	Pseq([0.125,0.125,Rest(0.5)], inf),
-		    	0.125*3,
-		    	0.125
-		    ], i),
+		    \release,  2.6,
 
-		    // \note, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,6).floor}),
-		    
-		    \note, Pswitch([
-		    	Pseq([[0,4,-2],[2,5,0]].stutter(1), inf),
-		    	Pseq([-2,10], inf),
-		    	Pseq([7,5,4,2,-2].stutter(3), inf),
-			    Pseq([0,0,-2,4,0,0,5,-2,5,5,-2,2,0,7,7,7].stutter(4), inf)
-		    ], i),
+		    // \vib, Pfunc{blob.area.getSynchronous.linlin(3,8,0.1,10)},
+		    // \test, Pfunc{blob.area.getSynchronous.linlin(3,8,0.1,100)},
 
-		    \root, Pswitch([
-		    	Pseq([0].stutter(2), inf),
-		    	Pseq([0].stutter(32), inf),
-		    	Pseq([0].stutter(21), inf),
-		    	Pseq([0].stutter(64), inf),
-		    ], i),
+		    // \root, Pswitch([
+		    // 	Pseq([0].stutter(2), inf),
+		    // 	Pseq([0].stutter(32), inf),
+		    // 	Pseq([0].stutter(21), inf),
+		    // 	Pseq([0].stutter(64), inf),
+		    // ], i),
 
-		    // \root, Pseq([0,5,-2].stutter(60), inf),
-		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
-		    \ff, Pwhite(300, 900),
-		    \rf, 0.003,
-		    \dis, 0.05,
-		    \df, Pswitch([1,8,7,4,1]*0.1, i),
-		    \coef, Pswitch([
-		    	0.3,
-		    	Pwhite(0.001,0.1),
-		    	0.3,
-				Pwhite(0.9,0.87),
-		    ], i),
-		    \tf, Pswitch([40,1,1,1], i),
-		    \ff, 11400,
-		    \rf, 1,
+
 		    // visuals
 		    \shape,Pswitch([6,3,5,7], i),//9 textures	
 		    \vdur, 0.01,
@@ -232,6 +222,7 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
+					//e[\test].postln;
 				});
 				true // !!! must return true !!!
 			}

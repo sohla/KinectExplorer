@@ -91,8 +91,8 @@ a.set(d[0],0.1)
 (
     {
     	Splay.ar({|i|
-    		var f = 1111 * 2.pow(i+1) * 0.5;
-    		Pluck.ar(BrownNoise.ar(0.2), Impulse.kr(MouseY.kr(1,100).poll),  f.reciprocal, f.reciprocal, MouseX.kr(0.1,10),
+    		var f = (82).midicps * 2.pow(i+1) * 0.5;
+    		Pluck.ar(BrownNoise.ar(0.2), Impulse.kr(MouseY.kr(20,100)),  f.reciprocal, f.reciprocal, 1,
         coef:MouseY.kr(-0.999, 0.999, lag:1.6))} !2)
 
     }.play(s)

@@ -1,5 +1,5 @@
 (
-SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, release = 0.9, vib = 2|
+SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, release = 0.9, vib = 2, va = 0.1|
 
 
 	var fs = Array.geom(5, freq, 2.01);
@@ -11,7 +11,7 @@ SynthDef(\conex, {|out = 0, gate = 1, amp = 0.5, freq = 120, attack = 0.007, rel
 	var venv = EnvGen.ar(Env.perc(attack * 2, release * 2));
 	var imp = BLowShelf.ar(HPF.ar( LPF.ar(PinkNoise.ar((0.007 * nenv)), 16000), 240), 40, 1, -2).clip;
 	var sig = DynKlank.ar(
-		`[fs * LFCub.ar(ff,0,MouseY.kr(0.01,0.1)*env,1), as, rs], 
+		`[fs * LFCub.ar(ff,0,va*env,1), as, rs], 
 		imp,
 		[1,1.012], 0 ,MouseX.kr(0.01,1.0)) ;
 	Out.ar(out, sig * amp * env * 30);

@@ -7,6 +7,7 @@ var root = [0,-2,3,-4,-5].stutter(14);
 var sx = 0;
 var group = Group.new;
 var verbSynth;
+var bus = Bus.audio(s,2);
 
 var findNextRunning = {
 	var index = 0;
@@ -22,7 +23,7 @@ var findNextRunning = {
 //------------------------------------------------------
 ~init = {|patch|
 
-	SynthDef(\chordal, {|out = 0, freq = 120, amp = 0.4, attack = 0.01, decay = 0.03, sustain = 0.4, release = 0.9, gate = 1, harm = 1, lfn = 200|
+	SynthDef(\chordal, {|out = 0, freq = 120, amp = 0.2, attack = 0.01, decay = 0.03, sustain = 0.4, release = 0.9, gate = 1, harm = 1, lfn = 200|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var	exc = LFNoise2.ar(lfn, 0.06, 1); 
@@ -38,18 +39,19 @@ var findNextRunning = {
 	}).add;
 
 
-	SynthDef(\verb1, {|out = 0, gate = 1|
-		var in = In.ar(out, 2);
+	SynthDef(\verb1, {|inBus = 0, outBus = 0, gate = 1|
+		var in = In.ar(inBus, 2);
 		var env = EnvGen.ar(Env.adsr(0.01,0.01,1,5), gate, doneAction: 2);
 		var sig = JPverb.ar(in, 15, 0.1, 5, 0.7, 0.6, 3.8, 0.6,0.6,0.5);
-		ReplaceOut.ar(out, sig * env);
+		Out.ar(outBus, sig * env);
 	}).add;
+
 
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
 
 	// group = Group.new;
-	verbSynth  = Synth.head(group,\verb1, [\out,0]);
+	verbSynth  = Synth.head(group,\verb1, [\inBus, bus, \outBus,0]);
 
 
 	//----------------------------------------------------------------------------
@@ -129,7 +131,7 @@ var findNextRunning = {
 	};
 
 	if(i != nil, {
-		var synth = Synth.head(group, \chordal, [\gate,1, \freq, (notes[0] + root[0] + [0,-12,0,0,12].choose).midicps, \attack, 0.8, \sustain, 1.0, \decay, 0.9, \release, 0.1]);
+		var synth = Synth.head(group, \chordal, [\out, bus, \gate,1, \freq, (notes[0] + root[0] + [0,-12,0,0,12].choose).midicps, \attack, 0.8, \sustain, 1.0, \decay, 0.9, \release, 0.1]);
 
 		vizMessage.(i);
 		notes = notes.rotate(-1);

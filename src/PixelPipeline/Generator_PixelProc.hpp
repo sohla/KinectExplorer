@@ -15,6 +15,7 @@ struct gblob {
     
     float x,y;
     float w,h;
+    float dw, dh;
     int hue;
     float delta;
 
@@ -31,9 +32,9 @@ class Generator_PixelProc : public Base_PixelProc {
     ofParameter<bool> randomParam = ofParameter<bool>("random", false);
     ofParameter<bool> animateParam = ofParameter<bool>("animate", false);
     ofParameter<float> speedXParam = ofParameter<float>("speedX",0.5,0.0,1.0);
-    ofParameter<float> speedWParam = ofParameter<float>("speedW",0.5,0.0,1.0);
-    ofParameter<float> speedHParam = ofParameter<float>("speedH",0.5,0.0,1.0);
-
+    ofParameter<float> deltaWParam = ofParameter<float>("deltaW",1.0,0.5,2.0);
+    ofParameter<float> deltaHParam = ofParameter<float>("deltaH",1.0,0.5,2.0);
+    
     vector<gblob> gblobs;
     
     void setup(const DepthModel &model, ofxPanel &gui){
@@ -47,21 +48,31 @@ class Generator_PixelProc : public Base_PixelProc {
         group.add(randomParam);
         group.add(animateParam);
         group.add(speedXParam);
-        group.add(speedWParam);
-        group.add(speedHParam);
+        group.add(deltaWParam);
+        group.add(deltaHParam);
         gui.add(group);
 
         procImage.allocate(model.depthCameraWidth, model.depthCameraHeight);
         fbo.allocate(model.depthCameraWidth, model.depthCameraHeight, GL_RGBA);
     
         randomParam.addListener(this, &Generator_PixelProc::onRandomParam);
-        
+        deltaWParam.addListener(this, &Generator_PixelProc::onDeltaWHParam);
+        deltaHParam.addListener(this, &Generator_PixelProc::onDeltaWHParam);
+
         makeBlobs();
     }
     
     void onRandomParam(bool& val){
         makeBlobs();
     }
+    
+    void onDeltaWHParam(float& val){
+        for(int i = 0; i < blobsParam.get(); i++){
+            gblobs[i].dw = gblobs[i].w * deltaWParam.get();
+            gblobs[i].dh = gblobs[i].h * deltaHParam.get();
+        }
+    }
+    
     
     void makeBlobs(){
 
@@ -70,13 +81,18 @@ class Generator_PixelProc : public Base_PixelProc {
         // make some gblobs
         for(int i = 0; i < 4; i++){
             gblob b = {
-                ofRandom(100,640-100),  // x
+                ofRandom(100,440),  // x
                 float(480 * 0.8),       // y
-                ofRandom(70,90),        // w
-                ofRandom(100,240),      // h
+                ofRandom(50,110),        // w
+                ofRandom(80,240),      // h
+                10,        // dw
+                10,      // dh
                 int(ofRandom(190,210)), // hue
                 ofRandom(-15,15),       // delta
             };
+            b.dw = b.w;
+            b.dh = b.h;
+
             gblobs.push_back(b);
         };
     };
@@ -91,22 +107,20 @@ class Generator_PixelProc : public Base_PixelProc {
                 // animate blob
                 if(animateParam.get()){
                     gblobs[i].x += gblobs[i].delta * speedXParam.get();
-                    gblobs[i].w += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.10, 0.28)  * speedWParam.get() ) * 1.1;
-                    gblobs[i].h += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.03, 0.18) * speedHParam.get() ) * 1.1;
                 }
 
-                if(gblobs[i].x < 0){
-                    gblobs[i].x = 0;
+                if(gblobs[i].x < 100){
+                    gblobs[i].x = 100;
                     gblobs[i].delta *= -1;
                 }
-                if(gblobs[i].x > 540){
-                    gblobs[i].x = 540;
+                if(gblobs[i].x > 440){
+                    gblobs[i].x = 440;
                     gblobs[i].delta *= -1;
                 }
                 // draw it
                 gblob gb = gblobs[i];
                 ofSetColor(gb.hue);
-                ofDrawRectRounded(gb.x, gb.y - gb.h, gb.w, gb.h, 10);
+                ofDrawRectRounded(gb.x, 250 - gb.dh , gb.dw, gb.dh, 10);
             };
 
         fbo.end();

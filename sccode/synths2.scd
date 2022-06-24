@@ -32,10 +32,10 @@ VarGui(
 {
 	var trig, snd, freqs;
 	trig = Impulse.ar(4);
-	freqs = (60.5 + [0, 2, 4, 5, 7, 9, 10]).midicps;
-	snd = Pluck.ar(Hasher.ar(Sweep.ar(trig)) * -10.dbamp, trig, freqs.reciprocal, freqs.reciprocal, 0.9, 0.5);
+	freqs = (70.5 + [0, 2, 4, 5, 7, 9, 10]).midicps;
+	snd = Pluck.ar(Hasher.ar(Sweep.ar(trig, 2)) * -10.dbamp, trig, freqs.reciprocal, freqs.reciprocal, 2.9, 0.01);
 	snd = LeakDC.ar(snd).sum;
-	snd = MoogFF.ar(snd, LFNoise2.kr(1).linexp(-1, 1, 150, 10000), 0);
+	snd = MoogFF.ar(snd, LFNoise2.kr(1).linexp(-1, 1, 470, 1570), 0);
 	snd = snd ! 2;
 	snd;
 }.play(fadeTime: 0);
@@ -67,7 +67,7 @@ SynthDef("help-VOsc",{ arg out=0, bufoffset=0;
     // mouse x controls the wavetable position
     x = MouseX.kr(0,7);
     Out.ar(out,
-        VOsc.ar(bufoffset+x, [80, 81] * 0.5, [LFNoise2.kr(12.1,0.5), LFNoise2.kr(20.2,0.5)], 0.3)
+        VOsc.ar(bufoffset+x, [80, 81], [LFNoise2.kr(12.1,0.5), LFNoise2.kr(20.2,0.5)], 0.3)
     )
 }).play(s,[\out, 0, \bufoffset, 0]);
 )
@@ -232,16 +232,11 @@ FreqScope.new;
 
 (
 {
-    var low = LFDNoise3.ar(1e3,0.1);
-    var mid = LFDNoise1.ar(9e3, 0.1);
-    var hi = PinkNoise.ar(0.1);
+    var low = LFDNoise3.ar(1e3,0.03);
+    var mid = LFDNoise1.ar([9e3,8e3], 0.1);
+    var hi = WhiteNoise.ar(0.1);
 
-    Splay.arFill(10, { |i| 
-            SinOsc.ar( LFNoise2.kr( rrand(10, 20), 200, i + 3 * 100))  
-    });
-
-
-    OnePole.ar(Mix.ar([low,mid,hi]), MouseY.kr(1,0.9, \exponential))
+    OnePole.ar(Mix.ar([low,mid,hi]), MouseY.kr(1,0.9, \exponential,9))
 
 }.play
 
