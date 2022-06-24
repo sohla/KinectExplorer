@@ -113,7 +113,7 @@ var findNextRunning = {
 		    // visuals
 		    \shape, Pswitch([7,6,3,6], i),
 		    \color, Pkey(\ff).linlin(300,700,0,1),
-		    \scale, Pswitch([1,4,Pwhite(1.03,2.1),4], i),
+		    \scale, 1,//Pswitch([1,4,Pwhite(1.03,2.1),4], i),
 		    \sy, Pswitch([0,0,0,Pkey(\note).linlin(-7,4,-1.5,1.5)], i),
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0,1,-1.5,1.5)},
 		    \ey, Pkey(\sy),

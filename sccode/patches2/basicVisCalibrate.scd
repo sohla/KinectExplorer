@@ -40,101 +40,31 @@ var findNextRunning = {
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
 
-	globalAddr.sendMsg("/xfade",10);//0 off 1 mix 
 
-	~setPolyline.(1,3,1, Color(1,1,1,1).asArray);
+	//----------------------------------------------------------------------------
+	// vis
+	//----------------------------------------------------------------------------
+	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
+
+	~setPolyline.(1,3,1);
 
 	// each polyline (blob)
 	4.0.do({|i|
-		var c = Color.red;
+		var c = Color.grey(0.6);
 		~setPolylineColor.(i,c.asArray);
 	});
 
+	~setColorRamp.(Color.green.asArray, 20);
 
-	// global color ramp
-	globalAddr.sendMsg("/ramp_r", 1); 
-	globalAddr.sendMsg("/ramp_g", 0.0); 
-	globalAddr.sendMsg("/ramp_b", 0.0); 
+	~setBackground0.();
+	// ~setBackground1.(Color.red.asArray);
+	//~setBackground2.(blur:0.4, step:0.3);
+	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
-	globalAddr.sendMsg("/ramp_hue1", 0); 
-
-	// background
-	globalAddr.sendMsg("/background_index",1);//0 off 1 mix 
-	
-	// background (index 1)
-	globalAddr.sendMsg("/background_r", 1); 
-	globalAddr.sendMsg("/background_g", 1); 
-	globalAddr.sendMsg("/background_b", 0); 
-
-	// background (index 2)
-	globalAddr.sendMsg("/cell_blur", 0.9);
-	globalAddr.sendMsg("/cell_step", 0.03);
-
-	// background (index 3)
-	globalAddr.sendMsg("/background_image_index", 2); 
-	globalAddr.sendMsg("/background_image_scale",3); 
-	globalAddr.sendMsg("/background_image_rotspeed", 0); 
-	globalAddr.sendMsg("/background_image_blendmode",1); //0-look it up!
-
-	// displace polyline
-	globalAddr.sendMsg("/displace_mix", 0);//on/off 
-	globalAddr.sendMsg("/displace_x", 10); 
-	globalAddr.sendMsg("/displace_y", 10); 
-	globalAddr.sendMsg("/displace_period", 0.3); 
-	globalAddr.sendMsg("/displace_noise_harmonic", 0); 
-	globalAddr.sendMsg("/displace_speedz",1); 
-
-
-	globalAddr.sendMsg("/feedback_mix", 0); 
-	globalAddr.sendMsg("/feedback_opacity", 0.98); 
-
-	globalAddr.sendMsg("/feedback_hue", 0); 
-
-	globalAddr.sendMsg("/feedback_x", 0); //-1 1
-	globalAddr.sendMsg("/feedback_y", 0); 
-
-	globalAddr.sendMsg("/feedback_displacex",0.0); //-1 1
-	globalAddr.sendMsg("/feedback_displacey", 0.0); 
-
-	globalAddr.sendMsg("/feedback_edge_r", 1); 
-	globalAddr.sendMsg("/feedback_edge_g", 1); 
-	globalAddr.sendMsg("/feedback_edge_b", 1); 
-
-	globalAddr.sendMsg("/feedback_edge_blacklevel", 0.0); 
-	globalAddr.sendMsg("/feedback_edge_strength", 0.0); 
-
-	// vp = Pdef("va_",
-	// 	Pbind(
-	// 		\amp, 0,
-	// 		\dur, 0.3,
-	// 		\func, Pfunc({|e|
-	// 			1.0.do({|i|
-	// 				// var i = 2 ;
-	// 				var c = Color.rand(0.0,1.0);
-	// 					// globalAddr.sendMsg("/background_image_scale", 0); 
-	// 					// globalAddr.sendMsg("/background_image_index", 10.rand.floor); 
-	// 					// globalAddr.sendMsg("/background_image_scale", 2.rand.floor); 
-
-	// 					// globalAddr.sendMsg("/background_image_index", 12.rand.floor); 
-
-	// 				// // [i,c].postln;
-	// 				// globalAddr.sendMsg("/poly_r"++(i+1), c.red); 
-	// 				// globalAddr.sendMsg("/poly_g"++(i+1), c.green); 
-	// 				// globalAddr.sendMsg("/poly_b"++(i+1), c.blue); 
-	// 				// globalAddr.sendMsg("/poly_a"++(i+1), 0.5); 
-	// 					// globalAddr.sendMsg("/feedback_mix", 2.rand.floor); 
-	// // globalAddr.sendMsg("/feedback_displacex",2.rand.floor); //-1 1
-	// // globalAddr.sendMsg("/feedback_displacey", 2.rand.floor); 
-	// // globalAddr.sendMsg("/displace_mix", 2.0.rand.floor); 
-
-	// 					// globalAddr.sendMsg("/background_r", c.red); 
-	// 					// globalAddr.sendMsg("/background_g", c.green); 
-	// 					// globalAddr.sendMsg("/background_b", c.blue); 
-
-	// 			});
-	// 		})
-	// 	)
-	// ).play;
+	// ~setDisplace.(mix:0.0, x:1, y:1, period:0.3, noise:1, z:0);
+	~setDisplace.(mix:0.0);
+	// ~setFeedback.(mix:1, opacity:0.98, hue:0.0, x:0, y:0.5, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	~setFeedback.(mix:0);
 
 };
 
@@ -178,27 +108,9 @@ var findNextRunning = {
 	var vizMessage = {|e, i|
 		if(noteAddr != nil, {
 			{noteAddr.sendMsg("/shadow", 
-				"shape", e[\shape],
-				"duration", e[\vdur],
-				"attack", e[\vatt],
-				"release", e[\vrel],
-				"color", e[\color],
-				"scale", e[\scale],//* fadeValues[i],
-				"sx", e[\sx],
-				"sy", e[\sy],
-				"ex", e[\ex],
-				"ey", e[\ey],
-				"scx", e[\scx],
-				"scy", e[\scy],
-
-				"imageindex", e[\imageindex],
-				"rotstart",e[\rotstart],
-				"rotend", e[\rotend],
-
-				"speed", 1,//e[\speed],
-				"amp", 0.04,//????
-
-				"wobble", e[\wobble],
+				"shape", e[\shape],"duration", e[\vdur],"attack", e[\vatt],"release", e[\vrel],"color", e[\color],
+				"scale", e[\scale],"sx", e[\sx],"sy", e[\sy],"ex", e[\ex],"ey", e[\ey],"scx", e[\scx],"scy", e[\scy],"imageindex", e[\imageindex],
+				"rotstart",e[\rotstart],"rotend", e[\rotend],"speed", 1,"amp", 0.04,"wobble", e[\wobble]
 			);}.defer(0.1);
 		});
 	};
@@ -210,7 +122,7 @@ var findNextRunning = {
 		    \instrument, Pswitch([\ab,\ab,\ab,\ab], i),
 		    \group, group,
 		    \amp, Pswitch([0.5,0.3,0.4,0.4]*1, i),
-		    \octave, Pswitch([3,6,4,3], i),
+		    \octave, Prand([4,5,6,7],inf),//Pswitch([Prand([3,4,5,6],inf),6,4,3], i),
 		    \attack, 0.02,
 		    \decay, 0.02,
 		    \sustain, 0.5, //make sure sustain is not to low!
@@ -221,7 +133,7 @@ var findNextRunning = {
 		    	Pseq([0.5], inf),
 		    	Pseq([0.125], inf),
 		    	Pseq([0.5], inf),
-		    ], i),
+		    ] * 0.25, i),
 		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,4).floor}),
 		    \note, Pseq([0,7,11], inf),
 		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
@@ -232,15 +144,15 @@ var findNextRunning = {
 
 		    // visuals
 		    \shape,7,//9 textures	
-		    \vdur, 0.02,
+		    \vdur, 0.06,
 		    \vatt, 0.01,
-		    \vrel, 0.3,
-		    \color, Pwhite(0.0,0.999),
-		    \scale,1,
-		    \scx,1,
-		    \scy, 1,
+		    \vrel, Pswitch([0.97,0.6,0.8,0.5], i),
+		    \color, Pswitch([0,0.25,0.5,0.75], i),//Pwhite(0.0,0.999),
+		    \scale, 1,
+		    \scx, 0.7,
+		    \scy, Pswitch([0.06, 0.09,0.04,0.05] * 1.51, i),
 		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
-		    \sy, 0,
+		    \sy, -1,
 		    \ex, Pkey(\sx),
 		    \ey, Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,
