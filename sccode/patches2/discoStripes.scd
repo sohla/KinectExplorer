@@ -37,7 +37,7 @@ var findNextRunning = {
 
 	}).add;
 	SynthDef(\glow, {|out = 0, attack = 0.004, release = 0.9, freq = 100, gate = 1, coef = 0.0, tf = 1, amp = 0.3, ff = 10500, rf = 0.5|
-		var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
+		var env = EnvGen.ar(Env.perc(attack, release, 1, -4), gate, doneAction: 2);
 		var trig = Impulse.ar(XLine.ar(tf, 1, attack + (release * 0.5)));
 		var sub = LFTri.ar(freq, [0,pi/3], 0.09);
 		var sig = Splay.ar({|i|
@@ -82,7 +82,7 @@ var findNextRunning = {
 	~setColorRamp.(Color(0,1,0).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.black.asArray);
+	~setBackground1.(Color.red.asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
@@ -147,11 +147,11 @@ var findNextRunning = {
 
 	var notes = [0,2,4,5,7,9,10];
 	
-	var ptn = Pdef("aa_"++i,
+	var ptn = Pdef("zz_"++i,
 		Pbind(
 		    \instrument, \glow,
 		    \group, group,
-		    \amp, 0.5,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
+		    \amp, 1,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
 		    // \octave, Prand([4,5,6,7],inf),//Pswitch([Prand([3,4,5,6],inf),6,4,3], i),
 
 	//	    \octave, Pswitch([2,3,4,5], i),
@@ -167,7 +167,7 @@ var findNextRunning = {
 		    \release,  Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.2,3.2)}),
 		    // \dur, 0.2,
 		    \dur, Pswitch([
-		    	4,
+		    	1,
 		    	Pseq([0.125,0.125,Rest(0.5)], inf),
 		    	0.125*3,
 		    	0.125

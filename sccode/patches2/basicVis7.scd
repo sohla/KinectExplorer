@@ -23,7 +23,7 @@ var findNextRunning = {
 //------------------------------------------------------
 ~init = {|patch|
 
-	SynthDef(\chordal, {|out = 0, freq = 120, amp = 0.2, attack = 0.01, decay = 0.03, sustain = 0.4, release = 0.9, gate = 1, harm = 1, lfn = 200|
+	SynthDef(\chordal, {|out = 0, freq = 120, amp = 0.4, attack = 0.01, decay = 0.03, sustain = 0.4, release = 0.9, gate = 1, harm = 1, lfn = 200|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var	exc = LFNoise2.ar(lfn, 0.06, 1); 
@@ -31,7 +31,7 @@ var findNextRunning = {
 
 		var sig = (DynKlank.ar(`[
 				Array.series(12, [freq,freq+0.3] * lfo, [freq,freq+0.5] * harm * lfo),
-				Array.geom(12,0.9,0.8*exc),
+				Array.geom(12,0.9,0.2*exc),
 				Array.fill(12,3)
 			], exc) * 0.02).softclip;
 		var tone = SinOsc.ar([freq, freq + (freq * 0.003)] * 1,0,0.2 * env);
@@ -63,15 +63,15 @@ var findNextRunning = {
 
 	// each polyline (blob)
 	4.0.do({|i|
-		var c = Color.black;
+		var c = Color.red;
 		~setPolylineColor.(i,c.asArray);
 	});
 
-	~setColorRamp.(Color.green.asArray, 20);
+	~setColorRamp.(Color.red.asArray, 120);
 
 	// ~setBackground0.();
 	~setBackground1.(Color.red.asArray);
-	~setBackground2.(blur:0.9, step:0.09);
+	~setBackground2.(blur:0.98, step:0.04);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
 	// ~setDisplace.(mix:0.0, x:1, y:1, period:0.3, noise:1, z:0);
@@ -131,7 +131,7 @@ var findNextRunning = {
 	};
 
 	if(i != nil, {
-		var synth = Synth.head(group, \chordal, [\out, bus, \gate,1, \freq, (notes[0] + root[0] + [0,-12,0,0,12].choose).midicps, \attack, 0.8, \sustain, 1.0, \decay, 0.9, \release, 0.1]);
+		var synth = Synth.head(group, \chordal, [\out, bus, \gate,1, \freq, (notes[0] + root[0] + [0,-12,0,0,-12].choose).midicps, \attack, 0.8, \sustain, 1.0, \decay, 0.9, \release, 0.1]);
 
 		vizMessage.(i);
 		notes = notes.rotate(-1);
@@ -162,7 +162,7 @@ var findNextRunning = {
 	var i = pairs.at(blob.label);
 	if(i != nil,{
 		synths.at(i).set(\lfn, blob.rect.getnSynchronous(4)[2].linexp(20,102,200,20000));
-		synths.at(i).set(\harm, blob.rect.getnSynchronous(4)[2].linexp(20,102,0.5,1.5));
+		synths.at(i).set(\harm, blob.rect.getnSynchronous(4)[2].linexp(20,102,0.5,3.0));
 		sx = blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1);
 	});
 };

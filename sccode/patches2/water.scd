@@ -70,7 +70,7 @@ var findNextRunning = {
 
 	~setDisplace.(mix:1.0, x:1, y:0.2, period:1.2, noise:2, z:0);
 	// ~setDisplace.(mix:0.0);
-	~setFeedback.(mix:0.1, opacity:0.999, hue:0.02, x:0, y:0.02, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.1);
+	~setFeedback.(mix:1, opacity:0.99, hue:0.02, x:0, y:0.2, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.1);
 	// ~setFeedback.(mix:0);
 
 
@@ -129,21 +129,21 @@ var findNextRunning = {
 
 	var notes = [0,4,8,12];
 	
+
 	var ptn = Pdef("aa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\ab,\ab,\ab,\ab], i),
 		    \group, group,
-		    \amp, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
+		    \amp, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.3,0.1)}),
 		    // \octave, Prand([4,5,6,7],inf),//Pswitch([Prand([3,4,5,6],inf),6,4,3], i),
-
-		    \octave, Pswitch([2,4,5,6,7],Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,4,0).floor}) ),
-		    \attack, 0.02,
+		    \octave, Pswitch([3,4,5,6],Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,3,0).floor}) ),
+		    \attack, 0.18,
 		    \decay, 0.02,
 		    \sustain, 0.5, //make sure sustain is not to low!
 		    \release,  1.9,
 		    // \dur, 0.3,
 		    // \dur, 0.4,//Pfunc({blob.velocity.getnSynchronous(2)[0].abs.linlin(0,4, 3, 0.1)}),
-		    \dur, Pfunc({blob.velocity.getSynchronous.abs.linlin(0,3.4,1.5,0.1)}),
+		    \dur, Pfunc({blob.velocity.getSynchronous.abs.linlin(0,1.4,2.5,0.1).max(0.1)}),
 		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,4).floor}),
 		    \note, Pseq([0,4,8], inf),
 		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
@@ -160,7 +160,7 @@ var findNextRunning = {
 		    \color, Pwhite(0.0,1.0),
 		    \scale, 10,
 		    \scx, 20,
-		    \scy, PLFTri(60,0,1,0,inf).linlin(-1,1,0.001,0.01),
+		    \scy, PLFTri(60,0,1,0,inf).linlin(-1,1,0.001,0.04),
 		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,-1,1)}),
 		    \sy, -0.95,
 		    \ex, Pkey(\sx),
@@ -169,7 +169,7 @@ var findNextRunning = {
 		    \rotstart, 0,
 		    \rotend, 0,
 		    \speed, 1,
-		    \vmix, PLFTri(140,0,0.4,0.5,inf),
+		    \vmix, PLFTri(70,0,0.4,0.5,inf),
 		    // \freq, 1,
 		    \wobble, 0,
 
@@ -180,8 +180,8 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
-					~setFeedback.(mix:e[\vmix], opacity:0.997, hue:0.02, x:0, y:0.02, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.1);
-					e[\test].postln;
+					// ~setFeedback.(mix:e[\vmix], opacity:0.997, hue:0.02, x:0, y:0.02, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.1);
+					//e[\test].postln;
 				});
 				true // !!! must return true !!!
 			}

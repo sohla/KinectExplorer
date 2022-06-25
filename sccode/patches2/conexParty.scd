@@ -65,9 +65,9 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	// vis
 	//----------------------------------------------------------------------------
-	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
+	globalAddr.sendMsg("/xfade",0.1);//0 off 1 mix 
 
-	~setPolyline.(0,1,1);
+	~setPolyline.(1,4,0);
 
 	4.0.do({|i|
 		var c = [Color.red, Color.blue, Color.green, Color.white];
@@ -78,20 +78,20 @@ var findNextRunning = {
 	// globalAddr.sendMsg("/poly_r", 0); 
 	// globalAddr.sendMsg("/poly_g",0.5); 
 	// globalAddr.sendMsg("/poly_b", 1); 
-	globalAddr.sendMsg("/poly_a", 0.5); 
+	globalAddr.sendMsg("/poly_a", 1); 
 
 
 
 	~setColorRamp.(Color(0,1,0).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.black.asArray);
+	~setBackground1.(Color.white.asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
-	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
-	~setDisplace.(mix:0.0);
-	 ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:0, y:0.9, dx:0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	~setDisplace.(mix:1.0, x:3, y:3, period:5, noise:1.2, z:0.3);
+	// ~setDisplace.(mix:0.0);
+	 ~setFeedback.(mix:0.9, opacity:0.96, hue:0.1, x:0, y:0.0, dx:-0.2, dy:-0.2, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 
 
@@ -157,7 +157,6 @@ var findNextRunning = {
 		    \instrument, \conex,
 		    // \out, bus,
 		    \group, group,
-		    \amp, 0.23,
 
 			\octave, Pswitch([
 				Prand([3,4], inf),
@@ -188,7 +187,7 @@ var findNextRunning = {
 				0.4,
 				0.7,
 				0.2
-			], i),
+			]*3, i),
 			\attack, Pswitch([
 				0.7,
 				Pwhite(0.02,0.13),
@@ -213,43 +212,33 @@ var findNextRunning = {
 
 
 		    // visuals
-		    \shape,Pswitch([
-				3,
-				4,
-				5,
-				6
-			], i),
-		    \vdur, 0.01,
+		    \shape,7,
+		    \vdur, 0.03,
 		    \vatt, 0.01,
-		    \vrel, 0.6,
+		    \vrel, 0.1,
 		    \color, Pswitch([0,0.25,0.50,0.75], i),
 		    \scale, 1,
-		    \scx, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
-		    \scy, 0.1,
-		    \sx, Pswitch([
-				3,
-				4,
+		    \scx, 10,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
+		    \scy, Pswitch([
 				5,
-				6
+				0.1,
+				1,
+				0.01
+			], i),
+		    \sx, Pswitch([
+				0,
+				0,
+				0,
+				0
 			], i),
 		    \sy, Pswitch([
-				3,
-				4,
-				5,
-				6
+				0.5,
+				0,
+				-0.9,
+				0.8
 			], i),
-		    \ex, Pswitch([
-				3,
-				4,
-				5,
-				6
-			], i),
-		    \ey,  Pswitch([
-				3,
-				4,
-				5,
-				6
-			], i),
+		    \ex, Pkey(\sx),
+		    \ey, Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,
 		    \rotstart, 0,
 		    \rotend, 0,
@@ -265,7 +254,12 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
-					e[\test].postln;
+					if(i==1,{
+						// "go".postln;
+							 ~setFeedback.(mix:1.0.rand, opacity:0.96, hue:0.1, x:0, y:0.0, dx:-0.2, dy:-0.2, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+
+					});
+					// e[\test].postln;
 				});
 				true // !!! must return true !!!
 			}

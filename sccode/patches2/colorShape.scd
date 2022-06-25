@@ -6,6 +6,7 @@ var noteAddr = nil;
 var globalAddr = nil;
 var vp;
 var group = Group.new;
+var root = 0;
 
 // ••• GROUPSSSS!!!!!!
 
@@ -50,6 +51,30 @@ var findNextRunning = {
 
 	}).add;
 
+	SynthDef(\swimming2, {|out = 0, attack = 0.004, release = 1.9, freq = 120, gate = 1, ring = 0.23, amp = 1|
+
+		var env = EnvGen.ar(Env.adsr(attack, 0.07, 0.7,release, 1, -7), gate, doneAction: 2);
+		var sig = 0;
+		var p, z, trig;
+		p = 11;	// number of partials per channel
+		p.do({ |i|
+			sig = FSinOsc.ar(
+					[freq * (i+1+0.02.rand),freq * (i+1+0.01.rand)],
+					0,
+					Decay2.kr(
+						Dust.kr(
+							[1,1],
+							LFNoise1.kr(0.3 * (i+1), 1.0 / (i+1)**2	)
+						),
+						0.03,
+						ring	
+					),
+					sig
+			);
+		});
+		Out.ar(out, sig * env * amp);
+	}).add;
+
 
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
@@ -58,7 +83,7 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	// vis
 	//----------------------------------------------------------------------------
-	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
+	globalAddr.sendMsg("/xfade",0.3);//0 off 1 mix 
 
 	~setPolyline.(0,1,1);
 
@@ -84,8 +109,8 @@ var findNextRunning = {
 
 	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
 	~setDisplace.(mix:0.0);
-	// ~setFeedback.(mix:1, opacity:0.98, hue:0.0, x:0, y:-0.7, dx:0, dy:-0.02, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
-	 ~setFeedback.(mix:0);
+	~setFeedback.(mix:1, opacity:0.8, hue:0.0, x:0, y:0, dx:0.4, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	 // ~setFeedback.(mix:0);
 
 
 };
@@ -145,34 +170,45 @@ var findNextRunning = {
 	
 	var ptn = Pdef("jj_"++i,
 		Pbind(
-		    \instrument, \dweep2,
+		    \instrument, Pswitch([\swimming2,\swimming2,\swimming2,\dweep2], i),
 		    \group, group,
 			\octave, Pswitch([
-				0,
-				0,
+				6,
 				5,
+				4,
 				Pseq([[2,3],5,7,6,5,4], inf)
 			], i),
 			\note, Pswitch([
-				0,
-				0,
-				0,
+				13,
+				9,
+				2,
 				Prand([0,5,9].stutter(6), inf)
 			], i),
 			\root, Pswitch([
-				0,
-				0,
-				0,
+				root,
+				root,
+				root,
 				Pseq([0-3,2-3,4-3].stutter(18), inf)
 			], i),
 
-
-			\dur, 0.3,
-			\amp, Pswitch([
-				0,
-				0,
-				0,
+			\ring, Pswitch([
+				0.1,
+				0.1,
+				0.1,
 				0.1
+			], i),
+
+			\dur, Pswitch([
+				0.3,
+				0.3,
+				0.3,
+				0.3
+			], i),
+			\amp, Pswitch([
+				1,
+				1,
+				1,
+				0.3
 			], i),
 		    \dist, Pfunc{blob.rect.getnSynchronous(4)[2].linlin(50,65,0.1,1.3)},
 		    \viba, Pfunc{blob.rect.getnSynchronous(4)[3].linlin(80,150,0.1,30)},
@@ -197,16 +233,26 @@ var findNextRunning = {
 		    // visuals
 		    \shape,Pswitch([6,3,5,7], i),//9 textures	
 		    \vdur, 0.01,
-		    \vatt, 0.01,
-		    \vrel, 0.16,
+			\vatt, Pswitch([
+				0.01,
+				0.01,
+				0.01,
+				0.01
+			], i),
+			\vrel, Pswitch([
+				0.5,
+				0.5,
+				0.5,
+				0.26
+			], i),
 		    \color, Pswitch([0,0.25,0.50,0.75], i),
 		    \scale, 1,
-		    \scx, Pswitch([2,0.5,0.2,0.1], i),
-		    \scy, Pswitch([2,2,0.2,2], i),
+		    \scx, Pswitch([0.1,0.1,0.1,1], i),
+		    \scy, Pswitch([0.1,0.1,0.1,20], i),
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,-1,1)},
-		    \sy, Pswitch([0,0.5,0,-1], i),
+		    \sy, Pswitch([1,1,1,-1], i),
 		    \ex, Pkey(\sx),
-		    \ey,  Pkey(\sy),
+		    \ey, Pswitch([-1,-1,-1,-1], i),
 		    \imageindex, Pwhite(0,15).floor,
 		    \rotstart, 0,
 		    \rotend, 0,
@@ -222,7 +268,12 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
-					//e[\test].postln;
+					if(i==0,{
+						~setBackground1.(Color.rand.asArray);
+					});
+					// if(i==3,{
+					// 	root = e[\root];
+					// });
 				});
 				true // !!! must return true !!!
 			}

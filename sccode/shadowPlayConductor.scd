@@ -1,11 +1,11 @@
 (
-	// var noteAddr = NetAddr.new("10.1.1.2", 10001);
-	// var globalAddr = NetAddr.new("10.1.1.2", 10002);
-	// var keAddr = NetAddr("10.1.1.3",57000);
+	var noteAddr = NetAddr.new("10.1.1.2", 10001);
+	var globalAddr = NetAddr.new("10.1.1.2", 10002);
+	var keAddr = NetAddr("10.1.1.3",57000);
 
-	var noteAddr = NetAddr.new("127.0.0.1", 10001);
-	var globalAddr = NetAddr.new("127.0.0.1", 10002);
-	var keAddr = NetAddr("127.0.0.1",57000);
+	// var noteAddr = NetAddr.new("127.0.0.1", 10001);
+	// var globalAddr = NetAddr.new("127.0.0.1", 10002);
+	// var keAddr = NetAddr("127.0.0.1",57000);
 	var port = 57120;
 	var performancePort = 10005;
 
@@ -198,14 +198,14 @@
 
 	var bootServer = {|f|
 	
-		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");		
+		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");		
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
-		var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
-		var output = ServerOptions.devices.indexOfEqual("Built-in Output");
+		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 
 		o = Server.local.options;
 		o.inDevice = ServerOptions.devices[input];

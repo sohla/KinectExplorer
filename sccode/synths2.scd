@@ -232,11 +232,11 @@ FreqScope.new;
 
 (
 {
-    var low = LFDNoise3.ar(1e3,0.03);
+    var low = LFDNoise3.ar(2e3,0.03);
     var mid = LFDNoise1.ar([9e3,8e3], 0.1);
     var hi = WhiteNoise.ar(0.1);
 
-    OnePole.ar(Mix.ar([low,mid,hi]), MouseY.kr(1,0.9, \exponential,9))
+    OnePole.ar(Mix.ar([low,mid,hi]), MouseY.kr(1,0.9, \exponential,1))
 
 }.play
 

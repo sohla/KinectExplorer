@@ -25,24 +25,23 @@ var dir = 0.1;
 	//----------------------------------------------------------------------------
 	globalAddr.sendMsg("/xfade",7);//0 off 1 mix 
 
-	~setPolyline.(0,3,1);
+	~setPolyline.(1,3,1);
 
 	// each polyline (blob)
 	4.0.do({|i|
-		var c = Color(0,0,1,1);
+		var c = Color(1,1,1,1);
 		~setPolylineColor.(i,c.asArray);
 	});
 
-	~setColorRamp.(Color.red.asArray, 60);
+	~setColorRamp.(Color.red.asArray, 0);
 
 	// ~setBackground0.();
-	// ~setBackground1.(Color.red.asArray);
 	//~setBackground2.(blur:0.4, step:0.3);
 	~setBackground3.(index:2, scale:0.6, rot:0.1, mode:31, color:Color(1,1,1).asArray);
 
 	~setDisplace.(mix:1.0, x:3.2, y:0.2, period:0.3, noise:0.2, z:0.3);
 	// ~setDisplace.(mix:0.0);
-	// ~setFeedback.(mix:1, opacity:0.98, hue:0.0, x:0, y:-0.1, dx:1, dy:1, edgeColor:Color(0,1,0).asArray, edgeBlack:0.0, edgeStength:1.0);
+	~setFeedback.(mix:1, opacity:0.91, hue:0.0, x:0, y:0.1, dx:0, dy:0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 };
 
@@ -59,12 +58,12 @@ var dir = 0.1;
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
 
-	var p = [50,62,69,74] * 0.8;
+	var p = [50,62,69,74] * 0.7;
 	var synth = Synth.head(group, \basicSin, [\gate,1, \freq, p.choose.midicps]);
 	active.put(blob.label, synth);
 	dir = dir * -1;
 
-	~setBackground3.(index:10.rand.floor, scale:0.5, rot:active.size * dir , mode:31, color:Color(0,1,0).asArray);
+	~setBackground3.(index:10.rand.floor, scale:1.2, rot:active.size * dir , mode:31, color:Color(1,1,1).asArray);
 };
 
 //------------------------------------------------------
@@ -72,7 +71,7 @@ var dir = 0.1;
 
 	var synth = active.removeAt(blob.label);
 	synth.set(\gate, 0);
-	~setBackground3.(index:2, scale:0.53, rot:active.size * dir , mode:31, color:Color(0.1,1,0.2).asArray);
+	~setBackground3.(index:2, scale:0.8, rot:active.size * dir , mode:31, color:Color(0.1,1,0.2).asArray);
 };
 
 //------------------------------------------------------

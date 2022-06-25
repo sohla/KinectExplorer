@@ -63,20 +63,20 @@ var findNextRunning = {
 	// globalAddr.sendMsg("/poly_r", 0); 
 	// globalAddr.sendMsg("/poly_g",0.5); 
 	// globalAddr.sendMsg("/poly_b", 1); 
-	globalAddr.sendMsg("/poly_a", 0.5); 
+	globalAddr.sendMsg("/poly_a", 1); 
 
 
 
-	~setColorRamp.(Color(0,1,0).asArray, 50);
+	~setColorRamp.(Color(1,0.1,0).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.black.asArray);
-	// ~setBackground2.(blur:0.9, step:0.09);
+	~setBackground1.(Color.white.asArray);
+	// ~setBackground2.(blur:0.99, step:0.3);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
-	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
+	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:0.3, noise:1.2, z:0);
 	~setDisplace.(mix:0.0);
-	 ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:0, y:0.9, dx:0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	 ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:0, y:-0.1, dx:1, dy:1, edgeColor:Color(1,0,0).asArray, edgeBlack:0.0, edgeStength:0.2);
 	// ~setFeedback.(mix:0);
 
 
@@ -154,7 +154,7 @@ var findNextRunning = {
 		    	Pseq([Rest(2/6), 1/6, Rest(1/6)], inf),
 		    	Pseq([Rest(1/6), 1/6, Rest(2/6)], inf),
 				Pseq([1/6,Rest(1/6), Rest(2/6)], inf),
-		    ], i),
+		    ]
 
 
 			\harm, Pwhite(1,2),
@@ -163,16 +163,16 @@ var findNextRunning = {
 
 
 		    // visuals
-		    \shape,7,//9 textures	
-		    \vdur, 0.01,
-		    \vatt, 0.01,
-		    \vrel, 0.6,
+		    \shape,Pswitch([7,7,7,7],i),//9 textures	
+		    \vdur, 0.08,
+		    \vatt, 0.02,
+		    \vrel, 0.1,
 		    \color, Pswitch([0,0.25,0.50,0.75], i),
-		    \scale, 1,
-		    \scx, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
-		    \scy, 0.1,
+		    \scale, Pswitch([0.8,0.2,0.3,0.3],i),
+		    \scx, 3,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
+		    \scy, 20,
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,-1,1)},
-		    \sy, -0.9,
+		    \sy, 0,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,
