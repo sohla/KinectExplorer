@@ -67,11 +67,11 @@ var findNextRunning = {
 		~setPolylineColor.(i,c.asArray);
 	});
 
-	~setColorRamp.(Color.red.asArray, 120);
+	~setColorRamp.(Color.green.asArray, 120);
 
 	// ~setBackground0.();
 	~setBackground1.(Color.red.asArray);
-	~setBackground2.(blur:0.98, step:0.04);
+	~setBackground2.(blur:0.98, step:0.03);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
 	// ~setDisplace.(mix:0.0, x:1, y:1, period:0.3, noise:1, z:0);
@@ -163,7 +163,7 @@ var findNextRunning = {
 	if(i != nil,{
 		synths.at(i).set(\lfn, blob.rect.getnSynchronous(4)[2].linexp(20,102,200,20000));
 		synths.at(i).set(\harm, blob.rect.getnSynchronous(4)[2].linexp(20,102,0.5,3.0));
-		sx = blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1);
+		sx = blob.center.getnSynchronous(2)[0].linlin(0.11,0.72,-1,1);
 	});
 };
 

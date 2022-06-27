@@ -151,7 +151,7 @@ var findNextRunning = {
 		Pbind(
 		    \instrument, \glow,
 		    \group, group,
-		    \amp, 1,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
+		    \amp, 0.8,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
 		    // \octave, Prand([4,5,6,7],inf),//Pswitch([Prand([3,4,5,6],inf),6,4,3], i),
 
 	//	    \octave, Pswitch([2,3,4,5], i),
@@ -213,7 +213,7 @@ var findNextRunning = {
 		    \scale, 1,
 		    \scx, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, 0.1,
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
 		    \sy, -0.9,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),

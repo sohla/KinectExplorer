@@ -83,7 +83,7 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	// vis
 	//----------------------------------------------------------------------------
-	globalAddr.sendMsg("/xfade",0.3);//0 off 1 mix 
+	globalAddr.sendMsg("/xfade",1.1);//0 off 1 mix 
 
 	~setPolyline.(0,1,1);
 
@@ -175,7 +175,7 @@ var findNextRunning = {
 			\octave, Pswitch([
 				6,
 				5,
-				4,
+				5,
 				Pseq([[2,3],5,7,6,5,4], inf)
 			], i),
 			\note, Pswitch([
@@ -205,10 +205,10 @@ var findNextRunning = {
 				0.3
 			], i),
 			\amp, Pswitch([
-				1,
-				1,
-				1,
-				0.3
+				2,
+				2,
+				2,
+				0.1
 			], i),
 		    \dist, Pfunc{blob.rect.getnSynchronous(4)[2].linlin(50,65,0.1,1.3)},
 		    \viba, Pfunc{blob.rect.getnSynchronous(4)[3].linlin(80,150,0.1,30)},
@@ -245,11 +245,11 @@ var findNextRunning = {
 				0.5,
 				0.26
 			], i),
-		    \color, Pswitch([0,0.25,0.50,0.75], i),
+		    \color, Pswitch([0,0.25,0.50,PLFTri(100,0,0.5,0.5,inf)], i),
 		    \scale, 1,
 		    \scx, Pswitch([0.1,0.1,0.1,1], i),
 		    \scy, Pswitch([0.1,0.1,0.1,20], i),
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
 		    \sy, Pswitch([1,1,1,-1], i),
 		    \ex, Pkey(\sx),
 		    \ey, Pswitch([-1,-1,-1,-1], i),

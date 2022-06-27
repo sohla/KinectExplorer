@@ -50,14 +50,14 @@ var findNextRunning = {
 
 	// each polyline (blob)
 	4.0.do({|i|
-		var c = Color.grey(0.6);
+		var c = Color.white;
 		~setPolylineColor.(i,c.asArray);
 	});
 
 	~setColorRamp.(Color.green.asArray, 20);
 
-	~setBackground0.();
-	// ~setBackground1.(Color.red.asArray);
+	// ~setBackground0.();
+	~setBackground1.(Color.grey.asArray);
 	//~setBackground2.(blur:0.4, step:0.3);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
@@ -133,7 +133,7 @@ var findNextRunning = {
 		    	Pseq([0.5], inf),
 		    	Pseq([0.125], inf),
 		    	Pseq([0.5], inf),
-		    ] * 0.25, i),
+		    ] , i),
 		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,4).floor}),
 		    \note, Pseq([0,7,11], inf),
 		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
@@ -143,16 +143,16 @@ var findNextRunning = {
 		    \df, Pswitch([1,8,7,4,1]*0.1, i),
 
 		    // visuals
-		    \shape,7,//9 textures	
+		    \shape,1,//9 textures	
 		    \vdur, 0.06,
 		    \vatt, 0.01,
 		    \vrel, Pswitch([0.97,0.6,0.8,0.5], i),
 		    \color, Pswitch([0,0.25,0.5,0.75], i),//Pwhite(0.0,0.999),
 		    \scale, 1,
-		    \scx, 0.7,
-		    \scy, Pswitch([0.06, 0.09,0.04,0.05] * 1.51, i),
-		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
-		    \sy, -1,
+		    \scx, 1,//0.7,
+		    \scy, 1,//Pswitch([0.06, 0.09,0.04,0.05] * 1.51, i),
+		    \sx, 1,//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
+		    \sy, 0,
 		    \ex, Pkey(\sx),
 		    \ey, Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,

@@ -154,7 +154,7 @@ var findNextRunning = {
 		    	Pseq([Rest(2/6), 1/6, Rest(1/6)], inf),
 		    	Pseq([Rest(1/6), 1/6, Rest(2/6)], inf),
 				Pseq([1/6,Rest(1/6), Rest(2/6)], inf),
-		    ]
+		    ]*0.5, i),
 
 
 			\harm, Pwhite(1,2),
@@ -171,7 +171,7 @@ var findNextRunning = {
 		    \scale, Pswitch([0.8,0.2,0.3,0.3],i),
 		    \scx, 3,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, 20,
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
 		    \sy, 0,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),

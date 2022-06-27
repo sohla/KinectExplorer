@@ -67,11 +67,11 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	globalAddr.sendMsg("/xfade",0.1);//0 off 1 mix 
 
-	~setPolyline.(1,4,0);
+	~setPolyline.(1,1,0);
 
 	4.0.do({|i|
-		var c = [Color.red, Color.blue, Color.green, Color.white];
-		~setPolylineColor.(i,c[i].asArray);
+		var c = [Color.white, Color.blue, Color.green, Color.white];
+		~setPolylineColor.(i,Color.red.asArray);
 	});
 
 	// each polyline (blob)
@@ -85,7 +85,7 @@ var findNextRunning = {
 	~setColorRamp.(Color(0,1,0).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.white.asArray);
+	~setBackground1.(Color(1,0,1).asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
@@ -185,7 +185,7 @@ var findNextRunning = {
 			\amp, Pswitch([
 				0.3,
 				0.4,
-				0.7,
+				0.4,
 				0.2
 			]*3, i),
 			\attack, Pswitch([
@@ -208,7 +208,7 @@ var findNextRunning = {
 			], i),
 		    // \ring, Pfunc({blob.rect.getnSynchronous(4)[3].linlin(130,160,0.01,0.9)}),
 		    \ring, Pfunc({blob.area.getSynchronous.linlin(6,8,0.01,0.9)}),
-		    \va, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,0.005,0.06)}),
+		    \va, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.11,0.72,0.005,0.06)}),
 
 
 		    // visuals
@@ -222,7 +222,7 @@ var findNextRunning = {
 		    \scy, Pswitch([
 				5,
 				0.1,
-				1,
+				0.2,
 				0.01
 			], i),
 		    \sx, Pswitch([
