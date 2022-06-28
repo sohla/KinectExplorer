@@ -76,7 +76,7 @@ var findNextRunning = {
 
 	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:0.3, noise:1.2, z:0);
 	~setDisplace.(mix:0.0);
-	 ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:0, y:-0.1, dx:1, dy:1, edgeColor:Color(1,0,0).asArray, edgeBlack:0.0, edgeStength:0.2);
+	 ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:-0.0, y:-0.1, dx:1, dy:1, edgeColor:Color(1,1,0).asArray, edgeBlack:0.0, edgeStength:0.2);
 	// ~setFeedback.(mix:0);
 
 

@@ -46,22 +46,22 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
 
-	~setPolyline.(1,3,1);
+	~setPolyline.(1,1,1);
 
-	// 4.0.do({|i|
-	// 	var c = Color(0,((i+1)*0.2),1,0.1);
-	// 	~setPolylineColor.(i,c.asArray);
-	// });
+	4.0.do({|i|
+		var c = Color(0,((i+1)*0.2),1,0.1);
+		~setPolylineColor.(i,Color.white.asArray);
+	});
 
 	// each polyline (blob)
-	globalAddr.sendMsg("/poly_r", 0); 
-	globalAddr.sendMsg("/poly_g",0.5); 
-	globalAddr.sendMsg("/poly_b", 1); 
-	globalAddr.sendMsg("/poly_a", 0.001); 
+	// globalAddr.sendMsg("/poly_r", 0.2); 
+	// globalAddr.sendMsg("/poly_g",0.8); 
+	// globalAddr.sendMsg("/poly_b", 0.9); 
+	// globalAddr.sendMsg("/poly_a", 1); 
 
 
 
-	~setColorRamp.(Color(0,0.8,1).asArray, 30);
+	~setColorRamp.(Color(0,0.0,1).asArray, 20);
 
 	// ~setBackground0.();
 	// ~setBackground1.(Color.red.asArray);
@@ -144,7 +144,7 @@ var findNextRunning = {
 		    // \dur, 0.3,
 		    // \dur, 0.4,//Pfunc({blob.velocity.getnSynchronous(2)[0].abs.linlin(0,4, 3, 0.1)}),
 		    \dur, Pfunc({blob.velocity.getSynchronous.abs.linlin(0,1.4,2.5,0.1).max(0.1)}),
-		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,4).floor}),
+		    \root, Pseq([0,2,5,-3].stutter(8), inf),//Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,4).floor}),
 		    \note, Pseq([0,4,8], inf),
 		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
 		    \ff, Pwhite(300, 900),

@@ -67,17 +67,17 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	globalAddr.sendMsg("/xfade",0.1);//0 off 1 mix 
 
-	~setPolyline.(1,1,0);
+	~setPolyline.(1,3,0);
 
 	4.0.do({|i|
-		var c = [Color.white, Color.blue, Color.green, Color.white];
+		var c = [Color.red, Color.blue, Color.green, Color.red];
 		~setPolylineColor.(i,Color.red.asArray);
 	});
 
 	// each polyline (blob)
-	// globalAddr.sendMsg("/poly_r", 0); 
-	// globalAddr.sendMsg("/poly_g",0.5); 
-	// globalAddr.sendMsg("/poly_b", 1); 
+	globalAddr.sendMsg("/poly_r", 1); 
+	globalAddr.sendMsg("/poly_g",0.5); 
+	globalAddr.sendMsg("/poly_b", 1); 
 	globalAddr.sendMsg("/poly_a", 1); 
 
 
@@ -85,13 +85,13 @@ var findNextRunning = {
 	~setColorRamp.(Color(0,1,0).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color(1,0,1).asArray);
+	~setBackground1.(Color(0.1,0.7,0.4).asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
 	~setDisplace.(mix:1.0, x:3, y:3, period:5, noise:1.2, z:0.3);
 	// ~setDisplace.(mix:0.0);
-	 ~setFeedback.(mix:0.9, opacity:0.96, hue:0.1, x:0, y:0.0, dx:-0.2, dy:-0.2, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	 ~setFeedback.(mix:1, opacity:0.98, hue:0.1, x:-0.0, y:0.2, dx:-0.2, dy:-0.2, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 
 
@@ -220,7 +220,7 @@ var findNextRunning = {
 		    \scale, 1,
 		    \scx, 10,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, Pswitch([
-				5,
+				0.8,
 				0.1,
 				0.2,
 				0.01
@@ -256,7 +256,7 @@ var findNextRunning = {
 					vizMessage.(e, i);
 					if(i==1,{
 						// "go".postln;
-							 ~setFeedback.(mix:1.0.rand, opacity:0.96, hue:0.1, x:0, y:0.0, dx:-0.2, dy:-0.2, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+							 ~setFeedback.(mix:1.0.rand, opacity:0.99, hue:0.1, x:0.0, y:0.17, dx:-0.2, dy:-0.2, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.8);
 
 					});
 					// e[\test].postln;

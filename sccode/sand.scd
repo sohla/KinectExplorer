@@ -23,7 +23,7 @@ s.unmute
 				\octave, Prand([2,4,5,6], inf),
 				\note, Prand([0,4,5,7,10,12], inf),
 				\root, Pseq([0,3,-2].stutter(8*8), inf),
-				\dur, Pseq([0.1 ,Rest(0.1)], inf),
+				\dur, Pseq([0.2 ,Rest(0.1), 0.4, 0.4], inf),
 				\amp, 0.7,
 				\attack, Pwhite(0.001, 0.06),
 				\decay, 0.9,

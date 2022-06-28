@@ -33,7 +33,7 @@ var dir = 0.1;
 		~setPolylineColor.(i,c.asArray);
 	});
 
-	~setColorRamp.(Color.red.asArray, 0);
+	~setColorRamp.(Color.blue.asArray, 10);
 
 	// ~setBackground0.();
 	//~setBackground2.(blur:0.4, step:0.3);
@@ -41,7 +41,7 @@ var dir = 0.1;
 
 	~setDisplace.(mix:1.0, x:3.2, y:0.2, period:0.3, noise:0.2, z:0.3);
 	// ~setDisplace.(mix:0.0);
-	~setFeedback.(mix:1, opacity:0.91, hue:0.0, x:0, y:0.1, dx:0, dy:0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.0, edgeStength:0.0);
+	~setFeedback.(mix:1, opacity:0.91, hue:0.0, x:0, y:0.1, dx:0, dy:0, edgeColor:Color(0,0,1).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 };
 

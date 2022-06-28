@@ -42,7 +42,7 @@ var vp;
 
 	~setDisplace.(mix:1.0, x:10.5, y:0.5, period:1.7, noise:0, z:0.0);
 	// ~setDisplace.(mix:0.0);
-	~setFeedback.(mix:1, opacity:0.91, hue:0.0, x:0, y:0.73, dx:0.3, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.3);
+	~setFeedback.(mix:1, opacity:0.91, hue:0.0, x:0.0, y:0.33, dx:0.3, dy:0.0, edgeColor:Color(1,1,0).asArray, edgeBlack:0.0, edgeStength:0.2);
 	// ~setFeedback.(mix:0);
 
 	//----------------------------------------------------------------------------

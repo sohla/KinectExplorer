@@ -31,7 +31,7 @@ var findNextRunning = {
 
 		var sig = (DynKlank.ar(`[
 				Array.series(12, [freq,freq+0.3] * lfo, [freq,freq+0.5] * harm * lfo),
-				Array.geom(12,0.9,0.2*exc),
+				Array.geom(12,0.9,0.5*exc),
 				Array.fill(12,3)
 			], exc) * 0.02).softclip;
 		var tone = SinOsc.ar([freq, freq + (freq * 0.003)] * 1,0,0.2 * env);
@@ -67,17 +67,17 @@ var findNextRunning = {
 		~setPolylineColor.(i,c.asArray);
 	});
 
-	~setColorRamp.(Color.green.asArray, 120);
+	~setColorRamp.(Color.red.asArray, 40);
 
 	// ~setBackground0.();
 	~setBackground1.(Color.red.asArray);
-	~setBackground2.(blur:0.98, step:0.03);
+	~setBackground2.(blur:0.992, step:0.06);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
 	// ~setDisplace.(mix:0.0, x:1, y:1, period:0.3, noise:1, z:0);
 	~setDisplace.(mix:0.0);
-	// ~setFeedback.(mix:1, opacity:0.98, hue:0.0, x:0, y:0.5, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
-	~setFeedback.(mix:0);
+	 ~setFeedback.(mix:1, opacity:0.98, hue:0.1, x:0, y:0.02, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	//~setFeedback.(mix:0);
 
 };
 

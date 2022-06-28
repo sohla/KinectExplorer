@@ -100,7 +100,7 @@ var findNextRunning = {
 
 
 
-	~setColorRamp.(Color(1,0,0).asArray, 120);
+	~setColorRamp.(Color(0,1,0).asArray, 120);
 
 	// ~setBackground0.();
 	~setBackground1.(Color.white.asArray);
@@ -247,8 +247,8 @@ var findNextRunning = {
 			], i),
 		    \color, Pswitch([0,0.25,0.50,PLFTri(100,0,0.5,0.5,inf)], i),
 		    \scale, 1,
-		    \scx, Pswitch([0.1,0.1,0.1,1], i),
-		    \scy, Pswitch([0.1,0.1,0.1,20], i),
+		    \scx, Pswitch([0.2,0.5,0.2,1], i),
+		    \scy, Pswitch([0.2,0.5,0.2,20], i),
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
 		    \sy, Pswitch([1,1,1,-1], i),
 		    \ex, Pkey(\sx),
@@ -268,9 +268,9 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
-					if(i==0,{
-						~setBackground1.(Color.rand.asArray);
-					});
+					// if(i==0,{
+					// 	~setBackground1.(Color.rand.asArray);
+					// });
 					// if(i==3,{
 					// 	root = e[\root];
 					// });

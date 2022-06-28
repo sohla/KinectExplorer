@@ -82,13 +82,13 @@ var findNextRunning = {
 	~setColorRamp.(Color(0,1,0).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.red.asArray);
+	~setBackground1.(Color.black.asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
 	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
 	~setDisplace.(mix:0.0);
-	 ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:0, y:0.9, dx:0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	 ~setFeedback.(mix:1, opacity:0.96, hue:0.9, x:0, y:0.9, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 
 
@@ -183,10 +183,10 @@ var findNextRunning = {
 		    ], i),
 
 		    \root, Pswitch([
-		    	Pseq([0].stutter(2), inf),
-		    	Pseq([0].stutter(32), inf),
-		    	Pseq([0].stutter(21), inf),
-		    	Pseq([0].stutter(64), inf),
+		    	Pseq([2].stutter(2), inf),
+		    	Pseq([2].stutter(32), inf),
+		    	Pseq([2].stutter(21), inf),
+		    	Pseq([2].stutter(64), inf),
 		    ], i),
 
 		    // \root, Pseq([0,5,-2].stutter(60), inf),
