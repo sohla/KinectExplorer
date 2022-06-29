@@ -194,6 +194,7 @@
 		(\file: "conexParty.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 
 
+		(\file: "toDraw.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
 	];
 	//------------------------------------------------------
 

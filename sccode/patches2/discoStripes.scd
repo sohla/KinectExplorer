@@ -164,7 +164,7 @@ var findNextRunning = {
 		    \attack, 0.02,
 		    \decay, 0.02,
 		    \sustain, 0.5, //make sure sustain is not to low!
-		    \release,  Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.2,3.2)}),
+		    \release,  0.8,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.2,3.2)}),
 		    // \dur, 0.2,
 		    \dur, Pswitch([
 		    	1,
@@ -205,7 +205,7 @@ var findNextRunning = {
 		    \ff, 11400,
 		    \rf, 1,
 		    // visuals
-		    \shape,7,//9 textures	
+		    \shape,0,//9 textures	
 		    \vdur, 0.01,
 		    \vatt, 0.01,
 		    \vrel, 0.6,
@@ -213,8 +213,8 @@ var findNextRunning = {
 		    \scale, 1,
 		    \scx, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, 0.1,
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
-		    \sy, -0.9,
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.79,-1,1)},
+		    \sy, -1.1,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,

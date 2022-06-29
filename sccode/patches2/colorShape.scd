@@ -100,7 +100,7 @@ var findNextRunning = {
 
 
 
-	~setColorRamp.(Color(0,1,0).asArray, 120);
+	~setColorRamp.(Color(0,1,0).asArray, 30);
 
 	// ~setBackground0.();
 	~setBackground1.(Color.white.asArray);
@@ -231,7 +231,7 @@ var findNextRunning = {
 
 
 		    // visuals
-		    \shape,Pswitch([6,3,5,7], i),//9 textures	
+		    \shape,Pswitch([4,3,5,0], i),//9 textures	
 		    \vdur, 0.01,
 			\vatt, Pswitch([
 				0.01,
@@ -248,7 +248,7 @@ var findNextRunning = {
 		    \color, Pswitch([0,0.25,0.50,PLFTri(100,0,0.5,0.5,inf)], i),
 		    \scale, 1,
 		    \scx, Pswitch([0.2,0.5,0.2,1], i),
-		    \scy, Pswitch([0.2,0.5,0.2,20], i),
+		    \scy, Pswitch([0.2,0.5,0.2,7], i),
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
 		    \sy, Pswitch([1,1,1,-1], i),
 		    \ex, Pkey(\sx),

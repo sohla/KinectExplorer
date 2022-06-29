@@ -71,12 +71,12 @@ var findNextRunning = {
 
 	// ~setBackground0.();
 	~setBackground1.(Color.red.asArray);
-	~setBackground2.(blur:0.992, step:0.06);
+	~setBackground2.(blur:0.95, step:0.05);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
 	// ~setDisplace.(mix:0.0, x:1, y:1, period:0.3, noise:1, z:0);
 	~setDisplace.(mix:0.0);
-	 ~setFeedback.(mix:1, opacity:0.98, hue:0.1, x:0, y:0.02, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	 ~setFeedback.(mix:1, opacity:0.08, hue:0.9, x:0, y:0.02, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
 	//~setFeedback.(mix:0);
 
 };
@@ -114,9 +114,9 @@ var findNextRunning = {
 				"scx", 1,
 				"scy", 1,
 				"sx", sx,
-				"sy", 0,
+				"sy", -1,
 				"ex", sx,
-				"ey", 0,
+				"ey", 1,
 				"imageindex", 0,
 				"rotstart",0,
 				"rotend", 0,

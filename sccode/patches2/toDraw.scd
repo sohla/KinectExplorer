@@ -6,6 +6,9 @@ var noteAddr = nil;
 var globalAddr = nil;
 var vp;
 var group = Group.new;
+var verbSynth;
+var roots = [0,4,-1, 2];
+// var bus = Bus.audio(s,2);
 
 // ••• GROUPSSSS!!!!!!
 
@@ -26,20 +29,31 @@ var findNextRunning = {
 
 	postf("init : % \n", patch.file);
 
-	SynthDef(\ab, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1, dis = 0.1, df = 5, dt = 1|
 
-		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
-		var sig = SinOsc.ar([freq,freq + (freq * dt)], LocalIn.ar(2) * LFNoise1.ar(dis,df), amp);
-		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
-		var comb = CombL.ar(filter, 0.3, 0.2, 0.2,1);
-		LocalOut.ar(filter);
-		Out.ar(out, comb * env);
+	SynthDef(\drawing1, {|out =0, attack = 0.1, release = 12.9, freq = 120, gate = 1, vib = 1, amp = 0.7, flt = 10000, lfoa = 0.2, lfof = 4|
 
+		var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
+		var fs = Array.makeScaleCps(groundNote: 263, type: 'major');
+		var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];
+		var lfo = LFCub.ar(lfof,0,lfoa).linlin(-1,1,0.2,0.4);
+		var rs = [1];
+		var sig = Splay.arFill(16,
+			{
+
+				DynKlank.ar(
+					`[freq + (lfo * freq), as, rs], 
+					LPF.ar(PinkNoise.ar(0.007), flt);
+				) * 0.5
+
+			},
+			1,
+			1,
+			0);
+		Out.ar(out, sig * env * amp);
 	}).add;
 
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
-
 
 	//----------------------------------------------------------------------------
 	// vis
@@ -49,28 +63,28 @@ var findNextRunning = {
 	~setPolyline.(1,1,1);
 
 	4.0.do({|i|
-		var c = Color(0,((i+1)*0.2),1,0.1);
-		~setPolylineColor.(i,Color.white.asArray);
+		var c = [Color.red, Color.blue, Color.green, Color.white];
+		~setPolylineColor.(i,c[i].asArray);
 	});
 
 	// each polyline (blob)
-	// globalAddr.sendMsg("/poly_r", 0.2); 
-	// globalAddr.sendMsg("/poly_g",0.8); 
-	// globalAddr.sendMsg("/poly_b", 0.9); 
-	// globalAddr.sendMsg("/poly_a", 1); 
+	globalAddr.sendMsg("/poly_r", 1); 
+	globalAddr.sendMsg("/poly_g",1); 
+	globalAddr.sendMsg("/poly_b", 1); 
+	globalAddr.sendMsg("/poly_a", 1); 
 
 
 
-	~setColorRamp.(Color(0,0.0,1).asArray, 20);
+	~setColorRamp.(Color(1,1,0).asArray, 120);
 
 	// ~setBackground0.();
-	// ~setBackground1.(Color.red.asArray);
+	~setBackground1.(Color.black.asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
-	~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
+	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
-	~setDisplace.(mix:1.0, x:1, y:0.2, period:1.2, noise:2, z:0);
-	// ~setDisplace.(mix:0.0);
-	~setFeedback.(mix:1, opacity:0.99, hue:0.02, x:0, y:0.1, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.1);
+	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
+	~setDisplace.(mix:0.0);
+	  ~setFeedback.(mix:0.7, opacity:0.999, hue:0.13, x:0, y:0, dx:-0.03, dy:-0.03, edgeColor:Color(0.2,0.5,0.8).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 
 
@@ -80,6 +94,8 @@ var findNextRunning = {
 ~deinit = {|patch|
 
 	postf("deinit : % \n", patch.file);
+
+	// verbSynth.set(\gate, 0);
 
 	// ~setBackground0.();
 
@@ -127,51 +143,91 @@ var findNextRunning = {
 		});
 	};
 
-	var notes = [0,4,8,12];
+	var notes = [0,2,4,5,7,9,10];
 	
-
-	var ptn = Pdef("aa_"++i,
+	var ptn = Pdef("dd_"++i,
 		Pbind(
-		    \instrument, Pswitch([\ab,\ab,\ab,\ab], i),
+			\instrument, \drawing1,
+		    // \out, bus,
 		    \group, group,
-		    \amp, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.3,0.1)}),
-		    // \octave, Prand([4,5,6,7],inf),//Pswitch([Prand([3,4,5,6],inf),6,4,3], i),
-		    \octave, Pswitch([3,4,5,6],Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,3,0).floor}) ),
-		    \attack, 0.18,
-		    \decay, 0.02,
-		    \sustain, 0.5, //make sure sustain is not to low!
-		    \release,  1.9,
-		    // \dur, 0.3,
-		    // \dur, 0.4,//Pfunc({blob.velocity.getnSynchronous(2)[0].abs.linlin(0,4, 3, 0.1)}),
-		    \dur, Pfunc({blob.velocity.getSynchronous.abs.linlin(0,1.4,2.5,0.1).max(0.1)}),
-		    \root, Pseq([0,2,5,-3].stutter(8), inf),//Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,4).floor}),
-		    \note, Pseq([0,4,8], inf),
-		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
-		    \ff, Pwhite(300, 900),
-		    \rf, 0.003,
-		    \dis, 0.05,
-		    \df, Pswitch([1,8,7,4,1]*0.1, i),
+		    \amp, 0.23,
+
+			// \octave, Pseq([4,5,4,5], inf),
+			// \note, Pseq([0,7,16], inf),
+			\root, 2,//Pseq([0,4,-1, 2].stutter(20), inf),
+			// \dur, Pseq([1/5, 1/5, 1/2.5, 1/5] * 3, inf),
+			\amp, 1,
+			\attack, Pwhite(0.01,0.04, inf),
+			// \release, Pwhite(0.4,1.9, inf),
+
+			\octave, Pswitch([
+				Prand([6], inf),
+				Prand([4], inf),
+				Prand([3], inf),
+				Prand([5], inf)
+			], i),
+			\note, Pswitch([
+				Pseq([0,12,14,11,15], inf),
+				Pxrand([15,17,19,21,23,26,29], inf),
+				Pseq([0,-12,8,7], inf),
+				Pseq([0,3,2,3], inf)
+			], i),
+			// \root, Pswitch([
+			// 	0,
+			// 	0,
+			// 	0,
+			// 	Pseq([0].stutter(12), inf)
+			// ], i),
+			\dur, Pswitch([
+				Pseq([0.3, Rest(0.3), 0.3] / 3, inf),
+				1.2,
+				Pseq([1.2, Rest(0.6), 0.6], inf),
+				Pseq([0.6, Rest(0.3), 0.3, 0.3], inf)
+			], i),
+			// \amp, Pswitch([
+			// 	0.3,
+			// 	0.4,
+			// 	0.7,
+			// 	0.2
+			// ], i),
+			// \attack, Pswitch([
+			// 	0.7,
+			// 	Pwhite(0.02,0.13),
+			// 	Pwhite(0.01,0.03),
+			// 	Pwhite(0.003,0.01)
+			// ], i),
+			\release, Pswitch([
+				0.03,
+				Pwhite(1.5,1.2),
+				Pwhite(0.5,1.1),
+				Pwhite(0.1,3.6)
+			], i),
 
 		    // visuals
-		    \shape,7,//9 textures	
-		    \vdur, 0.6,
+		    \shape,Pswitch([
+				4,
+				4,
+				4,
+				4
+			], i),
+		    \vdur, 0.01,
 		    \vatt, 0.01,
-		    \vrel, Pswitch([0.97,0.6,0.8,0.5] * 3, i),
-		    \color, Pwhite(0.0,1.0),
-		    \scale, 10,
-		    \scx, 20,
-		    \scy, PLFTri(60,0,1,0,inf).linlin(-1,1,0.001,0.04),
-		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,-1,1)}),
-		    \sy, -0.95,
-		    \ex, Pkey(\sx),
-		    \ey,  Pwhite(0.7,1),
+		    \vrel, 0.6,
+		    \color, Pswitch([0,0.25,0.50,0.75], i),
+		    \scale, 1,
+		    \scx, 1,
+		    \scy, 1,
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.83,-1,1)},
+		    \sy, 0.8,//Pfunc{blob.center.getnSynchronous(2)[1].linlin(0.2,0.93,-1,1)},
+		    \ex, Pkey(\sx),// + Pwhite(-0.7,0.7),
+		    \ey, Pkey(\sy) - 2,//Pwhite(0.0,0.6),
 		    \imageindex, Pwhite(0,15).floor,
 		    \rotstart, 0,
 		    \rotend, 0,
 		    \speed, 1,
-		    \vmix, PLFTri(70,0,0.4,0.5,inf),
+		    \vmix, PLFTri(140,0,0.4,0.5,inf),
 		    // \freq, 1,
-		    \wobble, 0,
+		    \wobble, 8,
 
 		    
 
@@ -180,8 +236,9 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
-					~setFeedback.(mix:e[\vmix], opacity:0.997, hue:0.02, x:0.0, y:0.02, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.1);
-					//e[\test].postln;
+					if(i==1,{
+						roots = roots.rotate(-1);
+					});
 				});
 				true // !!! must return true !!!
 			}
