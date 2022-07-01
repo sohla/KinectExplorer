@@ -26,30 +26,23 @@ var findNextRunning = {
 
 	postf("init : % \n", patch.file);
 
-	SynthDef(\ab, {|out = 0, freq = 160, amp = 0.3, attack = 0.01, decay = 4.02, sustain = 0.8, release = 0.9, gate = 1, ff = 500, rf = 1, dis = 0.1, df = 5, dt = 1|
 
-		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
-		var sig = SinOsc.ar([freq,freq + (freq * dt)], LocalIn.ar(2) * LFNoise1.ar(dis,df), amp);
-		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
-		var comb = CombL.ar(filter, 0.3, 0.2, 0.2,1);
-		LocalOut.ar(filter);
-		Out.ar(out, comb * env);
-
-	}).add;
 	SynthDef(\glow, {|out = 0, attack = 0.004, release = 0.9, freq = 100, gate = 1, coef = 0.0, tf = 1, amp = 0.3, ff = 10500, rf = 0.5|
 		var env = EnvGen.ar(Env.perc(attack, release, 1, -4), gate, doneAction: 2);
 		var trig = Impulse.ar(XLine.ar(tf, 1, attack + (release * 0.5)));
 		var sub = LFTri.ar(freq, [0,pi/3], 0.09);
-		var sig = Splay.ar({|i|
-	    	var f = freq * (i+1);
-	    	Pluck.ar(
+		// var sig = Splay.ar({|i|
+	    	var f = [freq,freq*2];// * (i+1);
+	    	var sig = Pluck.ar(
 	    		BrownNoise.ar(1), 
 	    		trig,  
 	    		f.reciprocal, 
 	    		f.reciprocal, 
 	    		Demand.ar(trig, 0, Dwhite(1, 10)),
 	        	coef: coef
-	        )} !2);
+
+	        	);
+	        // );} !2);
 
 		var filter = MoogFF.ar(sig, ff.lag(0.1), rf);
 		Out.ar(out, (filter + sub) * env * amp);
@@ -67,7 +60,7 @@ var findNextRunning = {
 	~setPolyline.(0,1,1);
 
 	4.0.do({|i|
-		var c = [Color.red, Color.blue, Color.green, Color.white];
+		var c = [Color.red, Color.blue, Color.green, Color.red];
 		~setPolylineColor.(i,c[i].asArray);
 	});
 
@@ -82,7 +75,7 @@ var findNextRunning = {
 	~setColorRamp.(Color(0,1,0).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.black.asArray);
+	~setBackground1.(Color(0,0,0).asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
@@ -151,7 +144,7 @@ var findNextRunning = {
 		Pbind(
 		    \instrument, \glow,
 		    \group, group,
-		    \amp, 0.8,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
+		    \amp, 0.6,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.6,0.1)}),
 		    // \octave, Prand([4,5,6,7],inf),//Pswitch([Prand([3,4,5,6],inf),6,4,3], i),
 
 	//	    \octave, Pswitch([2,3,4,5], i),

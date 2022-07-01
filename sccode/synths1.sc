@@ -91,9 +91,9 @@ a.set(d[0],0.1)
 (
     {
     	Splay.ar({|i|
-    		var f = (82).midicps * 2.pow(i+1) * 0.5;
-    		Pluck.ar(BrownNoise.ar(0.2), Impulse.kr(MouseY.kr(20,100)),  f.reciprocal, f.reciprocal, 1,
-        coef:MouseY.kr(-0.999, 0.999, lag:1.6))} !2)
+    		var f = (42).midicps * 2.pow(i+1) * 0.5;
+    		Pluck.ar(BrownNoise.ar(0.2), Impulse.kr(MouseY.kr(1,100)),  f.reciprocal, f.reciprocal, 1,
+        coef:MouseY.kr(0, 0.999, lag:1.6))} !2)
 
     }.play(s)
 )
@@ -380,7 +380,8 @@ SynthDef(\fm, {
 Pbind(
 	\instrument, \fm,
 	\freq, Pseq( (30..42), inf).midicps,
-	\dur, 0.25,
+	\dur, 0.5,
+	\atk, 0.4,
 	\fb, 1.9,
 	\rel, Pwhite(0.2,1.11),
 	\pan, Pwhite(-0.2,0.2),

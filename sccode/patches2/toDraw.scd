@@ -37,7 +37,7 @@ var findNextRunning = {
 		var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];
 		var lfo = LFCub.ar(lfof,0,lfoa).linlin(-1,1,0.2,0.4);
 		var rs = [1];
-		var sig = Splay.arFill(16,
+		var sig = Splay.arFill(1,
 			{
 
 				DynKlank.ar(
@@ -60,11 +60,11 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
 
-	~setPolyline.(1,1,1);
+	~setPolyline.(1,0.1,0);
 
 	4.0.do({|i|
 		var c = [Color.red, Color.blue, Color.green, Color.white];
-		~setPolylineColor.(i,c[i].asArray);
+		~setPolylineColor.(i,Color.grey.asArray);
 	});
 
 	// each polyline (blob)
@@ -75,16 +75,16 @@ var findNextRunning = {
 
 
 
-	~setColorRamp.(Color(1,1,0).asArray, 120);
+	~setColorRamp.(Color(0.5,1,0.5).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.black.asArray);
+	~setBackground1.(Color.white.asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
-	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
-	~setDisplace.(mix:0.0);
-	  ~setFeedback.(mix:0.7, opacity:0.999, hue:0.13, x:0, y:0, dx:-0.03, dy:-0.03, edgeColor:Color(0.2,0.5,0.8).asArray, edgeBlack:0.0, edgeStength:0.0);
+	~setDisplace.(mix:1.0, x:1, y:1, period:3.2, noise:1.2, z:1);
+	// ~setDisplace.(mix:0.0);
+	  ~setFeedback.(mix:1, opacity:0.8987, hue:0.1, x:0, y:0.3, dx:-0.03, dy:-0.03, edgeColor:Color(0.2,0.5,0.8).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 
 
@@ -172,55 +172,36 @@ var findNextRunning = {
 				Pseq([0,-12,8,7], inf),
 				Pseq([0,3,2,3], inf)
 			], i),
-			// \root, Pswitch([
-			// 	0,
-			// 	0,
-			// 	0,
-			// 	Pseq([0].stutter(12), inf)
-			// ], i),
 			\dur, Pswitch([
 				Pseq([0.3, Rest(0.3), 0.3] / 3, inf),
 				1.2,
 				Pseq([1.2, Rest(0.6), 0.6], inf),
 				Pseq([0.6, Rest(0.3), 0.3, 0.3], inf)
 			], i),
-			// \amp, Pswitch([
-			// 	0.3,
-			// 	0.4,
-			// 	0.7,
-			// 	0.2
-			// ], i),
-			// \attack, Pswitch([
-			// 	0.7,
-			// 	Pwhite(0.02,0.13),
-			// 	Pwhite(0.01,0.03),
-			// 	Pwhite(0.003,0.01)
-			// ], i),
 			\release, Pswitch([
-				0.03,
+				0.1,
 				Pwhite(1.5,1.2),
 				Pwhite(0.5,1.1),
-				Pwhite(0.1,3.6)
+				Pwhite(0.3,3.6)
 			], i),
 
 		    // visuals
-		    \shape,Pswitch([
-				4,
-				4,
-				4,
-				4
-			], i),
-		    \vdur, 0.01,
+		    \shape,Pswitch([3,0,5,8], i),
+		    \vdur, 0.02,
 		    \vatt, 0.01,
-		    \vrel, 0.6,
-		    \color, Pswitch([0,0.25,0.50,0.75], i),
-		    \scale, 1,
-		    \scx, 1,
-		    \scy, 1,
+		    \vrel, 0.1,
+		    \color, Pswitch([
+		    	PLFTri(110,0,0.4,0.5,inf),
+		    	PLFTri(190,0,0.4,0.5,inf),
+		    	PLFTri(100,0,0.4,0.5,inf),
+		    	PLFTri(240,0,0.4,0.5,inf)], i),
+		    \scale, Pswitch([0.3,1,0.5,0.2], i),
+		    \scx, Pswitch([1,20,1,1], i),
+		    \scy, Pswitch([1,0.2,1,-1], i),
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.83,-1,1)},
-		    \sy, 0.8,//Pfunc{blob.center.getnSynchronous(2)[1].linlin(0.2,0.93,-1,1)},
+		    \sy, -0.1,//Pfunc{blob.center.getnSynchronous(2)[1].linlin(0.2,0.93,-1,1)},
 		    \ex, Pkey(\sx),// + Pwhite(-0.7,0.7),
-		    \ey, Pkey(\sy) - 2,//Pwhite(0.0,0.6),
+		    \ey, -0.8,//Pwhite(0.0,0.6),
 		    \imageindex, Pwhite(0,15).floor,
 		    \rotstart, 0,
 		    \rotend, 0,

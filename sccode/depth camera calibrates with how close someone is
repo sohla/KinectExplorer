@@ -1,0 +1,20 @@
+depth camera calibrates with how close someone is
+think of audience as a single unit
+disco harmonic progression
+reloading is still not working
+horizontal play
+
+blazsplit louder and timbre vari.
+
+conex polyline color
+fence for the box
+
+how to calibrate from SC : using OSC messages to TD
+
+autocontrast settings on d455 : must explore what we can do with this!
+
+notes :
+moving between projector and screen  playing with scale
+camera : auto exposure : must find better contorl and callobration 
+OSC to callobrate TD transfomr of polyline
+can we track more than 4 blobs? what is the actuall computational limit? 

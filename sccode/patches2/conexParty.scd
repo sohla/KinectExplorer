@@ -82,7 +82,7 @@ var findNextRunning = {
 
 
 
-	~setColorRamp.(Color(0,1,0).asArray, 50);
+	~setColorRamp.(Color(1,0,0).asArray, 50);
 
 	// ~setBackground0.();
 	~setBackground1.(Color(0.1,0.7,0.4).asArray);
@@ -235,7 +235,7 @@ var findNextRunning = {
 				0.5,
 				0,
 				-0.9,
-				0.8
+				0.2
 			], i),
 		    \ex, Pkey(\sx),
 		    \ey, Pkey(\sy),

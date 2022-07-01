@@ -36,7 +36,7 @@ var vp;
 	~setColorRamp.(Color.black.asArray, 60);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.blue.asArray);
+	~setBackground1.(Color(0,0,1).asArray);
 	// ~setBackground2.(blur:0.9, step:0.8);
 	// ~setBackground3.(index:2, scale:0.6, rot:0, mode:9, color:Color(1,1,0).asArray);
 
