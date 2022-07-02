@@ -81,14 +81,14 @@ var findNextRunning = {
 	~setColorRamp.(Color(0,1,0).asArray, 90);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.white.asArray);
+	~setBackground1.(Color(1,1,0).asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
 	~setDisplace.(mix:1.0, x:3, y:1, period:3, noise:1.2, z:0);
 	// ~setDisplace.(mix:0.0);
-	// ~setFeedback.(mix:1, opacity:0.494, hue:0.0, x:0, y:-0.2, dx:0.0, dy:0.0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.0, edgeStength:0.0);
-	 ~setFeedback.(mix:0);
+	~setFeedback.(mix:1, opacity:0.494, hue:0.0, x:0, y:-0.0, dx:-1.0, dy:-1.0, edgeColor:Color(0,0,0).asArray, edgeBlack:0.0, edgeStength:1.0);
+	 //~setFeedback.(mix:0);
 
 	//----------------------------------------------------------------------------
 	vp = Pdef("vas_",
@@ -191,11 +191,11 @@ var findNextRunning = {
 				0.2
 			], i),
 			\amp, Pswitch([
-				0.4,
 				0.3,
+				0.2,
 				0.4,
 				1
-			] * 0.3, i),
+			] * 0.45, i),
 			\mInd1, Pwhite(0,5),
 			\mInd2, Pwhite(0,0.4),
 			\mInd3, Pwhite(0,0.5),
@@ -206,7 +206,7 @@ var findNextRunning = {
 
 		    \atk, Pswitch([
 				Pwhite(0.06,0.006),
-				Pwhite(0.06,0.006),
+				Pwhite(0.006,0.002),
 				Pwhite(0.06,0.006),
 				Pwhite(0.008,0.003)
 			], i),
@@ -215,7 +215,7 @@ var findNextRunning = {
 		    \sustain, 0.5, //make sure sustain is not to low!
 		    \rel,  Pswitch([
 				Pwhite(0.1,0.9),
-				Pwhite(0.1,0.9),
+				Pwhite(0.1,0.3),
 				Pwhite(0.1,0.9),
 				Pwhite(0.1,0.2)
 			], i),
@@ -254,8 +254,8 @@ var findNextRunning = {
 		    ], i),
 		    \scale, 1,
 		    \scx, 1.3,
-		    \scy, 0.2,
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.83,-1,1)},
+		    \scy, 0.8,
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.83,-1,1)},
 		    \sy, Pswitch([
 				Pkey(\note).linlin(6,11,-1,1),
 				Pkey(\note).linlin(6,16,-1,1),

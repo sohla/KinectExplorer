@@ -67,7 +67,7 @@ var findNextRunning = {
 
 
 
-	~setColorRamp.(Color(0,0,1).asArray, 90);
+	~setColorRamp.(Color(0,1,1).asArray, 30);
 
 	// ~setBackground0.();
 	~setBackground1.(Color.white.asArray);
@@ -171,7 +171,7 @@ var findNextRunning = {
 		    \scale, Pswitch([0.8,0.2,0.3,0.3],i),
 		    \scx, 3,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, 20,
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.73,-1,1)},
 		    \sy, 0,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),
@@ -190,7 +190,7 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
-					e[\test].postln;
+					// e[\test].postln;
 				});
 				true // !!! must return true !!!
 			}

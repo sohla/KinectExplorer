@@ -103,7 +103,7 @@ var findNextRunning = {
 	~setColorRamp.(Color(0,1,0).asArray, 30);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.red.asArray);
+	~setBackground1.(Color.white.asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
@@ -249,7 +249,7 @@ var findNextRunning = {
 		    \scale, 1,
 		    \scx, Pswitch([0.2,0.5,0.2,1], i),
 		    \scy, Pswitch([0.2,0.5,0.2,7], i),
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.73,-1,1)},
 		    \sy, Pswitch([1,1,1,-1], i),
 		    \ex, Pkey(\sx),
 		    \ey, Pswitch([-1,-1,-1,-1], i),

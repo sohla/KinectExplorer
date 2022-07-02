@@ -66,7 +66,7 @@ var findNextRunning = {
 	// ~setBackground0.();
 	// ~setBackground1.(Color.red.asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
-	~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
+	~setBackground3.(index:8, scale:1, rot:0.1, mode:31, color:Color(0,0.9,0.3).asArray);
 
 	~setDisplace.(mix:1.0, x:1, y:0.2, period:1.2, noise:2, z:0);
 	// ~setDisplace.(mix:0.0);

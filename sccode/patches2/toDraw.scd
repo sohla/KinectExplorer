@@ -75,16 +75,16 @@ var findNextRunning = {
 
 
 
-	~setColorRamp.(Color(0.5,1,0.5).asArray, 50);
+	~setColorRamp.(Color(1,0,0.2).asArray, 30);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.white.asArray);
+	~setBackground1.(Color(1,1,1).asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
 	~setDisplace.(mix:1.0, x:1, y:1, period:3.2, noise:1.2, z:1);
 	// ~setDisplace.(mix:0.0);
-	  ~setFeedback.(mix:1, opacity:0.8987, hue:0.1, x:0, y:0.3, dx:-0.03, dy:-0.03, edgeColor:Color(0.2,0.5,0.8).asArray, edgeBlack:0.0, edgeStength:0.0);
+	  ~setFeedback.(mix:1, opacity:0.8987, hue:0.1, x:0, y:0.1, dx:-0.03, dy:-0.03, edgeColor:Color(0.2,0.5,0.8).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 
 
@@ -198,7 +198,7 @@ var findNextRunning = {
 		    \scale, Pswitch([0.3,1,0.5,0.2], i),
 		    \scx, Pswitch([1,20,1,1], i),
 		    \scy, Pswitch([1,0.2,1,-1], i),
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.83,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.73,-1,1)},
 		    \sy, -0.1,//Pfunc{blob.center.getnSynchronous(2)[1].linlin(0.2,0.93,-1,1)},
 		    \ex, Pkey(\sx),// + Pwhite(-0.7,0.7),
 		    \ey, -0.8,//Pwhite(0.0,0.6),

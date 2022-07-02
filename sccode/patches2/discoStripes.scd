@@ -38,7 +38,7 @@ var findNextRunning = {
 	    		trig,  
 	    		f.reciprocal, 
 	    		f.reciprocal, 
-	    		Demand.ar(trig, 0, Dwhite(1, 10)),
+	    		0.4,//Demand.ar(trig, 0, Dwhite(1, 10)),
 	        	coef: coef
 
 	        	);
@@ -75,7 +75,7 @@ var findNextRunning = {
 	~setColorRamp.(Color(0,1,0).asArray, 50);
 
 	// ~setBackground0.();
-	~setBackground1.(Color(0,0,0).asArray);
+	~setBackground1.(Color(1,1,1).asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
@@ -190,7 +190,7 @@ var findNextRunning = {
 		    \df, Pswitch([1,8,7,4,1]*0.1, i),
 		    \coef, Pswitch([
 		    	0.3,
-		    	Pwhite(0.001,0.1),
+		    	Pwhite(0.01,0.1),
 		    	0.3,
 				Pwhite(0.9,0.87),
 		    ], i),
@@ -206,7 +206,7 @@ var findNextRunning = {
 		    \scale, 1,
 		    \scx, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, 0.1,
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.79,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.79,-1,1)},
 		    \sy, -1.1,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),

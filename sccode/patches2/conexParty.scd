@@ -208,7 +208,7 @@ var findNextRunning = {
 			], i),
 		    // \ring, Pfunc({blob.rect.getnSynchronous(4)[3].linlin(130,160,0.01,0.9)}),
 		    \ring, Pfunc({blob.area.getSynchronous.linlin(6,8,0.01,0.9)}),
-		    \va, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.11,0.72,0.005,0.06)}),
+		    \va, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.21,0.72,0.005,0.06)}),
 
 
 		    // visuals
