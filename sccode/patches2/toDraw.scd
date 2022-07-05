@@ -6,7 +6,9 @@ var noteAddr = nil;
 var globalAddr = nil;
 var vp;
 var group = Group.new;
-var root = 0;
+var verbSynth;
+var roots = [0,4,-1, 2];
+// var bus = Bus.audio(s,2);
 
 // ••• GROUPSSSS!!!!!!
 
@@ -28,89 +30,62 @@ var findNextRunning = {
 	postf("init : % \n", patch.file);
 
 
-	SynthDef(\dweep2, {|out = 0, freq = 100.0, amp = 0.1, attack = 0.003, decay = 0.05, sustain = 0.15, release = 2.6, gate = 1, viba = 1.0, dist =0.1|
-		
-		var enva = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+	SynthDef(\drawing1, {|out =0, attack = 0.1, release = 12.9, freq = 120, gate = 1, vib = 1, amp = 0.7, flt = 10000, lfoa = 0.2, lfof = 4|
 
-		var l = LocalIn.ar(2);
-		var j = LFCub.ar( viba, 0, 0.02, 1);
+		var env = EnvGen.ar(Env.perc(attack, release, 1, -7), gate, doneAction: 2);
+		var fs = Array.makeScaleCps(groundNote: 263, type: 'major');
+		var as = [1,0.1,0.2,0.02,1,0.3,0.7,0.5];
+		var lfo = LFCub.ar(lfof,0,lfoa).linlin(-1,1,0.2,0.4);
+		var rs = [1];
+		var sig = Splay.arFill(1,
+			{
 
-		var sig = PitchShift.ar(
-			SinOscFB.ar( [freq, freq + (freq * 0.006)], dist),
-		[0.02,0.021],
-		j
-		);
-		LocalOut.ar(sig.tanh);
+				DynKlank.ar(
+					`[freq + (lfo * freq), as, rs], 
+					LPF.ar(PinkNoise.ar(0.007), flt);
+				) * 0.5
 
-		// sig = Splay.arFill(3, {|i|
-		// 	AllpassL.ar(sig, 0.1, 0.05 * i, 0.2 + (0.1 * i));
-
-		// });
-
-		Out.ar(out, sig * enva * amp);
-
-	}).add;
-
-	SynthDef(\swimming2, {|out = 0, attack = 0.004, release = 1.9, freq = 120, gate = 1, ring = 0.23, amp = 1|
-
-		var env = EnvGen.ar(Env.adsr(attack, 0.07, 0.7,release, 1, -7), gate, doneAction: 2);
-		var sig = 0;
-		var p, z, trig;
-		p = 11;	// number of partials per channel
-		p.do({ |i|
-			sig = FSinOsc.ar(
-					[freq * (i+1+0.02.rand),freq * (i+1+0.01.rand)],
-					0,
-					Decay2.kr(
-						Dust.kr(
-							[1,1],
-							LFNoise1.kr(0.3 * (i+1), 1.0 / (i+1)**2	)
-						),
-						0.03,
-						ring	
-					),
-					sig
-			);
-		});
+			},
+			1,
+			1,
+			0);
 		Out.ar(out, sig * env * amp);
 	}).add;
-
 
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
 
-
 	//----------------------------------------------------------------------------
 	// vis
 	//----------------------------------------------------------------------------
-	globalAddr.sendMsg("/xfade",1.1);//0 off 1 mix 
+	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
 
-	~setPolyline.(1,1,1);
+	~setPolyline.(1,0.1,0);
 
 	4.0.do({|i|
 		var c = [Color.red, Color.blue, Color.green, Color.white];
-		~setPolylineColor.(i,Color.white.asArray);
+		~setPolylineColor.(i,Color.grey.asArray);
 	});
 
 	// each polyline (blob)
-	// globalAddr.sendMsg("/poly_r", 0); 
-	// globalAddr.sendMsg("/poly_g",0.5); 
-	// globalAddr.sendMsg("/poly_b", 1); 
+	globalAddr.sendMsg("/poly_r", 1); 
+	globalAddr.sendMsg("/poly_g",1); 
+	globalAddr.sendMsg("/poly_b", 1); 
 	globalAddr.sendMsg("/poly_a", 1); 
 
 
 
-	~setColorRamp.(Color(0,1,0).asArray, 30);
+	~setColorRamp.(Color(1,0,0.2).asArray, 30);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.white.asArray);
+	~setBackground1.(Color(1,1,1).asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
-	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
-	~setDisplace.(mix:0.0);
-	~setFeedback.(mix:1, opacity:0.8, hue:0.0, x:0, y:0, dx:0.4, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
-	 // ~setFeedback.(mix:0);
+	~setDisplace.(mix:1.0, x:1, y:1, period:3.2, noise:1.2, z:1);
+	// ~setDisplace.(mix:0.0);
+	  ~setFeedback.(mix:1, opacity:0.8987, hue:0.1, x:0, y:0.1, dx:-0.03, dy:-0.03, edgeColor:Color(0.2,0.5,0.8).asArray, edgeBlack:0.0, edgeStength:0.0);
+	// ~setFeedback.(mix:0);
 
 
 };
@@ -119,6 +94,8 @@ var findNextRunning = {
 ~deinit = {|patch|
 
 	postf("deinit : % \n", patch.file);
+
+	// verbSynth.set(\gate, 0);
 
 	// ~setBackground0.();
 
@@ -168,98 +145,70 @@ var findNextRunning = {
 
 	var notes = [0,2,4,5,7,9,10];
 	
-	var ptn = Pdef("jj_"++i,
+	var ptn = Pdef("dd_"++i,
 		Pbind(
-		    \instrument, Pswitch([\swimming2,\swimming2,\swimming2,\dweep2], i),
+			\instrument, \drawing1,
+		    // \out, bus,
 		    \group, group,
+		    \amp, 0.23,
+
+			// \octave, Pseq([4,5,4,5], inf),
+			// \note, Pseq([0,7,16], inf),
+			\root, 2,//Pseq([0,4,-1, 2].stutter(20), inf),
+			// \dur, Pseq([1/5, 1/5, 1/2.5, 1/5] * 3, inf),
+			\amp, 1,
+			\attack, Pwhite(0.01,0.04, inf),
+			// \release, Pwhite(0.4,1.9, inf),
+
 			\octave, Pswitch([
-				6,
-				5,
-				5,
-				Pseq([[2,3],5,7,6,5,4], inf)
+				Prand([6], inf),
+				Prand([4], inf),
+				Prand([3], inf),
+				Prand([5], inf)
 			], i),
 			\note, Pswitch([
-				13,
-				9,
-				2,
-				Prand([0,5,9].stutter(6), inf)
+				Pseq([0,12,14,11,15], inf),
+				Pxrand([15,17,19,21,23,26,29], inf),
+				Pseq([0,-12,8,7], inf),
+				Pseq([0,3,2,3], inf)
 			], i),
-			\root, Pswitch([
-				root,
-				root,
-				root,
-				Pseq([0-3,2-3,4-3].stutter(18), inf)
-			], i),
-
-			\ring, Pswitch([
-				0.1,
-				0.1,
-				0.1,
-				0.1
-			], i),
-
 			\dur, Pswitch([
-				0.3,
-				0.3,
-				0.3,
-				0.3
+				Pseq([0.3, Rest(0.3), 0.3] / 3, inf),
+				1.2,
+				Pseq([1.2, Rest(0.6), 0.6], inf),
+				Pseq([0.6, Rest(0.3), 0.3, 0.3], inf)
 			], i),
-			\amp, Pswitch([
-				2,
-				2,
-				2,
-				0.1
+			\release, Pswitch([
+				0.1,
+				Pwhite(1.5,1.2),
+				Pwhite(0.5,1.1),
+				Pwhite(0.3,3.6)
 			], i),
-		    \dist, Pfunc{blob.rect.getnSynchronous(4)[2].linlin(50,65,0.1,1.3)},
-		    \viba, Pfunc{blob.rect.getnSynchronous(4)[3].linlin(80,150,0.1,30)},
-
-
-		    \attack, 0.02,
-		    \decay, 0.02,
-		    \sustain, 0.5, //make sure sustain is not to low!
-		    \release,  2.6,
-
-		    // \vib, Pfunc{blob.area.getSynchronous.linlin(3,8,0.1,10)},
-		    // \test, Pfunc{blob.area.getSynchronous.linlin(3,8,0.1,100)},
-
-		    // \root, Pswitch([
-		    // 	Pseq([0].stutter(2), inf),
-		    // 	Pseq([0].stutter(32), inf),
-		    // 	Pseq([0].stutter(21), inf),
-		    // 	Pseq([0].stutter(64), inf),
-		    // ], i),
-
 
 		    // visuals
-		    \shape,Pswitch([4,3,5,0], i),//9 textures	
-		    \vdur, 0.01,
-			\vatt, Pswitch([
-				0.01,
-				0.01,
-				0.01,
-				0.01
-			], i),
-			\vrel, Pswitch([
-				0.5,
-				0.5,
-				0.5,
-				0.26
-			], i),
-		    \color, Pswitch([0,0.25,0.50,PLFTri(100,0,0.5,0.5,inf)], i),
-		    \scale, 1,
-		    \scx, Pswitch([0.2,0.5,0.2,1], i),
-		    \scy, Pswitch([0.2,0.5,0.2,7], i),
+		    \shape,Pswitch([3,0,5,8], i),
+		    \vdur, 0.02,
+		    \vatt, 0.01,
+		    \vrel, 0.1,
+		    \color, Pswitch([
+		    	PLFTri(110,0,0.4,0.5,inf),
+		    	PLFTri(190,0,0.4,0.5,inf),
+		    	PLFTri(100,0,0.4,0.5,inf),
+		    	PLFTri(240,0,0.4,0.5,inf)], i),
+		    \scale, Pswitch([0.3,1,0.5,0.2], i),
+		    \scx, Pswitch([1,20,1,1], i),
+		    \scy, Pswitch([1,0.2,1,-1], i),
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.73,-1,1)},
-		    \sy, Pswitch([1,1,1,-1], i),
-		    \ex, Pkey(\sx),
-		    \ey, Pswitch([-1,-1,-1,-1], i),
+		    \sy, -0.1,//Pfunc{blob.center.getnSynchronous(2)[1].linlin(0.2,0.93,-1,1)},
+		    \ex, Pkey(\sx),// + Pwhite(-0.7,0.7),
+		    \ey, -0.8,//Pwhite(0.0,0.6),
 		    \imageindex, Pwhite(0,15).floor,
 		    \rotstart, 0,
 		    \rotend, 0,
 		    \speed, 1,
 		    \vmix, PLFTri(140,0,0.4,0.5,inf),
 		    // \freq, 1,
-		    \wobble, 0,
+		    \wobble, 8,
 
 		    
 
@@ -268,12 +217,9 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
-					// if(i==0,{
-					// 	~setBackground1.(Color.rand.asArray);
-					// });
-					// if(i==3,{
-					// 	root = e[\root];
-					// });
+					if(i==1,{
+						roots = roots.rotate(-1);
+					});
 				});
 				true // !!! must return true !!!
 			}

@@ -69,20 +69,20 @@ s.peakCPU
 		)
 	).play;
 )
-(
-	Pdef(\d,
-		Pbind(
-			\instrument, \slido,
-			\octave, Prand([3,4,5], inf),
-			\note, Prand([0,4,5,7,10,12], inf),
-			\root, Pseq([0,3,-2].stutter(8*8), inf),
-			\dur, 0.2,
-			\amp, 2.9,
-			\attack, 0.005,
-			\release, 0.4,
-			\wobf, 0.3,
-		)
-	).play;
+// (
+// 	Pdef(\d,
+// 		Pbind(
+// 			\instrument, \slido,
+// 			\octave, Prand([3,4,5], inf),
+// 			\note, Prand([0,4,5,7,10,12], inf),
+// 			\root, Pseq([0,3,-2].stutter(8*8), inf),
+// 			\dur, 0.2,
+// 			\amp, 2.9,
+// 			\attack, 0.005,
+// 			\release, 0.4,
+// 			\wobf, 0.3,
+// 		)
+// 	).play;
 )
 
 /*

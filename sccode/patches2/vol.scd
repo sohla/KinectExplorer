@@ -6,8 +6,8 @@ var noteAddr = nil;
 var globalAddr = nil;
 var vp;
 var group = Group.new;
-var root = 0;
-
+var roots = [0,5,-2];
+var root = Bus.control(s,1);
 // ••• GROUPSSSS!!!!!!
 
 
@@ -28,53 +28,31 @@ var findNextRunning = {
 	postf("init : % \n", patch.file);
 
 
-	SynthDef(\dweep2, {|out = 0, freq = 100.0, amp = 0.1, attack = 0.003, decay = 0.05, sustain = 0.15, release = 2.6, gate = 1, viba = 1.0, dist =0.1|
-		
-		var enva = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
+	SynthDef(\fm, {
+		arg out=0, pan=0, amp=0.25, freq=111, atk=0.03, rel=0.2,
+		mInd1=0.5, mInd2=0.5, mInd3=0.5, mInd4=0.5, mInd5=0.5, mInd6=0.5;
 
-		var l = LocalIn.ar(2);
-		var j = LFCub.ar( viba, 0, 0.02, 1);
+		var gainEnv = EnvGen.ar(Env.perc(atk, rel), \gt.kr(1), doneAction:2);
+		var sig, cascade_0, cascade_1;
 
-		var sig = PitchShift.ar(
-			SinOscFB.ar( [freq, freq + (freq * 0.006)], dist),
-		[0.02,0.021],
-		j
-		);
-		LocalOut.ar(sig.tanh);
+		cascade_0 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio3.kr(1), pi * 0.5).range(0, mInd3) ) * \amp_3.kr(0.5);
+		cascade_0 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio2.kr(1), pi * 0.5).range(0, mInd2) + cascade_0.range(0,mInd2)) * \amp_2.kr(0.5);
+		cascade_0 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio1.kr(1), pi * 0.5).range(0, mInd1) + cascade_0.range(0,mInd1)) * \amp_1.kr(0.5);
 
-		// sig = Splay.arFill(3, {|i|
-		// 	AllpassL.ar(sig, 0.1, 0.05 * i, 0.2 + (0.1 * i));
+		cascade_1 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio6.kr(1), pi * 0.5).range(0, mInd6) + LocalIn.ar(1).range(0, mInd6)) * \amp_6.kr(0.5);
+		cascade_1 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio5.kr(1), pi * 0.5).range(0, mInd5) + cascade_1.range(0,mInd5)) * \amp_5.kr(0.5);
+		cascade_1 = SinOsc.ar(freq, SinOsc.ar(freq * \ratio4.kr(1), pi * 0.5).range(0, mInd4) + cascade_1.range(0,mInd4)) * \amp_4.kr(0.5);
 
-		// });
+		LocalOut.ar(cascade_1 * \fb.kr(0.9));
 
-		Out.ar(out, sig * enva * amp);
+		sig = Mix([cascade_0, cascade_1]);
 
+		sig = sig * gainEnv;
+
+		sig = Pan2.ar(sig, pan, amp);
+		sig = LeakDC.ar(sig);
+		OffsetOut.ar(out, sig)
 	}).add;
-
-	SynthDef(\swimming2, {|out = 0, attack = 0.004, release = 1.9, freq = 120, gate = 1, ring = 0.23, amp = 1|
-
-		var env = EnvGen.ar(Env.adsr(attack, 0.07, 0.7,release, 1, -7), gate, doneAction: 2);
-		var sig = 0;
-		var p, z, trig;
-		p = 11;	// number of partials per channel
-		p.do({ |i|
-			sig = FSinOsc.ar(
-					[freq * (i+1+0.02.rand),freq * (i+1+0.01.rand)],
-					0,
-					Decay2.kr(
-						Dust.kr(
-							[1,1],
-							LFNoise1.kr(0.3 * (i+1), 1.0 / (i+1)**2	)
-						),
-						0.03,
-						ring	
-					),
-					sig
-			);
-		});
-		Out.ar(out, sig * env * amp);
-	}).add;
-
 
 	noteAddr = patch.noteAddr;
 	globalAddr  = patch.globalAddr;
@@ -88,31 +66,44 @@ var findNextRunning = {
 	~setPolyline.(1,1,1);
 
 	4.0.do({|i|
-		var c = [Color.red, Color.blue, Color.green, Color.white];
-		~setPolylineColor.(i,Color.white.asArray);
+		var c = [Color.red, Color.blue, Color.green, Color(1,1,0)];
+		~setPolylineColor.(i,c[i].asArray);
 	});
 
 	// each polyline (blob)
 	// globalAddr.sendMsg("/poly_r", 0); 
 	// globalAddr.sendMsg("/poly_g",0.5); 
 	// globalAddr.sendMsg("/poly_b", 1); 
-	globalAddr.sendMsg("/poly_a", 1); 
+	globalAddr.sendMsg("/poly_a", 0.5); 
 
 
 
-	~setColorRamp.(Color(0,1,0).asArray, 30);
+	~setColorRamp.(Color(0,1,0).asArray, 90);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.white.asArray);
+	~setBackground1.(Color(1,1,0).asArray);
 	// ~setBackground2.(blur:0.9, step:0.09);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color(0,0.8,1).asArray);
 
-	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:3, noise:1.2, z:0);
-	~setDisplace.(mix:0.0);
-	~setFeedback.(mix:1, opacity:0.8, hue:0.0, x:0, y:0, dx:0.4, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
-	 // ~setFeedback.(mix:0);
+	~setDisplace.(mix:1.0, x:3, y:1, period:3, noise:1.2, z:0);
+	// ~setDisplace.(mix:0.0);
+	~setFeedback.(mix:1, opacity:0.494, hue:0.0, x:0, y:-0.0, dx:-1.0, dy:-1.0, edgeColor:Color(0,0,0).asArray, edgeBlack:0.0, edgeStength:1.0);
+	 //~setFeedback.(mix:0);
 
+	//----------------------------------------------------------------------------
+	vp = Pdef("vas_",
+		Pbind(
+			\amp, 0,
+			\dur, 20,
+			\func, Pfunc({|e|
+				// ~setBackground3.(index:10.rand.floor, scale:e[\sc], rot:0, mode:9, color:Color(1,e[\yellow],0).asArray);
+				roots = roots.rotate(-1);
+				// roots[0].postln;
+				root.set(roots[0]);
 
+			})
+		)
+	).play;
 };
 
 //------------------------------------------------------
@@ -144,7 +135,7 @@ var findNextRunning = {
 	});
 
 	pairs = Dictionary.new(4);
-	// vp.clear;
+	vp.clear;
 	// group.free;
 
 
@@ -170,26 +161,21 @@ var findNextRunning = {
 	
 	var ptn = Pdef("jj_"++i,
 		Pbind(
-		    \instrument, Pswitch([\swimming2,\swimming2,\swimming2,\dweep2], i),
+		    \instrument, \fm,
 		    \group, group,
 			\octave, Pswitch([
+				4,
 				6,
 				5,
-				5,
-				Pseq([[2,3],5,7,6,5,4], inf)
+				Pseq([2,3], inf)
 			], i),
 			\note, Pswitch([
-				13,
-				9,
-				2,
-				Prand([0,5,9].stutter(6), inf)
+				Pseq([7,9].stutter(1), inf),
+				Pseq([9,7,12,9].stutter(8), inf),
+				Pseq([0,4,5,7,4,5].stutter(8), inf),
+				Pseq([0,5,9].stutter(4), inf)
 			], i),
-			\root, Pswitch([
-				root,
-				root,
-				root,
-				Pseq([0-3,2-3,4-3].stutter(18), inf)
-			], i),
+			\root, Pfunc{root.getSynchronous},
 
 			\ring, Pswitch([
 				0.1,
@@ -199,25 +185,40 @@ var findNextRunning = {
 			], i),
 
 			\dur, Pswitch([
-				0.3,
-				0.3,
-				0.3,
-				0.3
+				Pseq([0.2,0.3,0.3,0.2], inf),
+				Pseq([0.2,0.4,0.2,0.2], inf),
+				Pseq([0.2,0.1,Rest(0.2),0.2], inf),
+				0.2
 			], i),
 			\amp, Pswitch([
-				2,
-				2,
-				2,
-				0.1
+				0.3,
+				0.2,
+				0.4,
+				1
+			] * 0.45, i),
+			\mInd1, Pwhite(0,5),
+			\mInd2, Pwhite(0,0.4),
+			\mInd3, Pwhite(0,0.5),
+			\mInd4, Pwhite(0,5),
+			\mInd5, Pwhite(0,0.2),
+			\mInd6, Pwhite(0,0.1),			
+				    
+
+		    \atk, Pswitch([
+				Pwhite(0.06,0.006),
+				Pwhite(0.006,0.002),
+				Pwhite(0.06,0.006),
+				Pwhite(0.008,0.003)
 			], i),
-		    \dist, Pfunc{blob.rect.getnSynchronous(4)[2].linlin(50,65,0.1,1.3)},
-		    \viba, Pfunc{blob.rect.getnSynchronous(4)[3].linlin(80,150,0.1,30)},
 
-
-		    \attack, 0.02,
 		    \decay, 0.02,
 		    \sustain, 0.5, //make sure sustain is not to low!
-		    \release,  2.6,
+		    \rel,  Pswitch([
+				Pwhite(0.1,0.9),
+				Pwhite(0.1,0.3),
+				Pwhite(0.1,0.9),
+				Pwhite(0.1,0.2)
+			], i),
 
 		    // \vib, Pfunc{blob.area.getSynchronous.linlin(3,8,0.1,10)},
 		    // \test, Pfunc{blob.area.getSynchronous.linlin(3,8,0.1,100)},
@@ -231,7 +232,7 @@ var findNextRunning = {
 
 
 		    // visuals
-		    \shape,Pswitch([4,3,5,0], i),//9 textures	
+		    \shape,Pswitch([0,0,0,0], i),//9 textures	
 		    \vdur, 0.01,
 			\vatt, Pswitch([
 				0.01,
@@ -240,19 +241,30 @@ var findNextRunning = {
 				0.01
 			], i),
 			\vrel, Pswitch([
-				0.5,
-				0.5,
-				0.5,
-				0.26
+				0.1,
+				0.1,
+				0.1,
+				0.1
 			], i),
-		    \color, Pswitch([0,0.25,0.50,PLFTri(100,0,0.5,0.5,inf)], i),
+		    \color, Pswitch([
+		    	PLFTri(80,0,0.1,0.6,inf),
+		    	PLFTri(80,0,0.1,0.4,inf),
+		    	PLFTri(80,0,0.1,0.2,inf),
+		    	PLFTri(80,0,0.1,0.0,inf)
+		    ], i),
 		    \scale, 1,
-		    \scx, Pswitch([0.2,0.5,0.2,1], i),
-		    \scy, Pswitch([0.2,0.5,0.2,7], i),
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.73,-1,1)},
-		    \sy, Pswitch([1,1,1,-1], i),
+		    \scx, 1.3,
+		    \scy, 0.8,
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.83,-1,1)},
+		    \sy, Pswitch([
+				Pkey(\note).linlin(6,11,-1,1),
+				Pkey(\note).linlin(6,16,-1,1),
+				Pkey(\note).linlin(0,12,-1,1),
+				Pkey(\note).linlin(4,13,-1,1)
+			], i),
+
 		    \ex, Pkey(\sx),
-		    \ey, Pswitch([-1,-1,-1,-1], i),
+		    \ey, Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,
 		    \rotstart, 0,
 		    \rotend, 0,

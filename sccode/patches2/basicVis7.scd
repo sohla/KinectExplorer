@@ -23,7 +23,7 @@ var findNextRunning = {
 //------------------------------------------------------
 ~init = {|patch|
 
-	SynthDef(\chordal, {|out = 0, freq = 120, amp = 0.4, attack = 0.01, decay = 0.03, sustain = 0.4, release = 0.9, gate = 1, harm = 1, lfn = 200|
+	SynthDef(\chordal, {|out = 0, freq = 120, amp = 0.3, attack = 0.01, decay = 0.03, sustain = 0.4, release = 0.9, gate = 1, harm = 1, lfn = 200|
 
 		var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction: 2);
 		var	exc = LFNoise2.ar(lfn, 0.06, 1); 
@@ -71,7 +71,7 @@ var findNextRunning = {
 
 	// ~setBackground0.();
 	~setBackground1.(Color.red.asArray);
-	~setBackground2.(blur:0.992, step:0.06);
+	~setBackground2.(blur:0.99, step:0.07);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
 	// ~setDisplace.(mix:0.0, x:1, y:1, period:0.3, noise:1, z:0);
@@ -114,9 +114,9 @@ var findNextRunning = {
 				"scx", 1,
 				"scy", 1,
 				"sx", sx,
-				"sy", 0,
+				"sy", -1,
 				"ex", sx,
-				"ey", 0,
+				"ey", 1,
 				"imageindex", 0,
 				"rotstart",0,
 				"rotend", 0,
@@ -163,7 +163,7 @@ var findNextRunning = {
 	if(i != nil,{
 		synths.at(i).set(\lfn, blob.rect.getnSynchronous(4)[2].linexp(20,102,200,20000));
 		synths.at(i).set(\harm, blob.rect.getnSynchronous(4)[2].linexp(20,102,0.5,3.0));
-		sx = blob.center.getnSynchronous(2)[0].linlin(0.11,0.72,-1,1);
+		sx = blob.center.getnSynchronous(2)[0].linlin(0.21,0.72,-1,1);
 	});
 };
 

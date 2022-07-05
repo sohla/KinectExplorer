@@ -57,7 +57,7 @@ var findNextRunning = {
 	~setColorRamp.(Color.green.asArray, 20);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.grey.asArray);
+	~setBackground1.(Color.black.asArray);
 	//~setBackground2.(blur:0.4, step:0.3);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
@@ -137,10 +137,10 @@ var findNextRunning = {
 		    \root, Pswitch( notes,Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.31,0.73,0,4).floor}),
 		    \note, Pseq([0,7,11], inf),
 		    \dt, Pswitch([ Pwhite(0.02,0.03),Pwhite(0.004,0.013),Pwhite(0.001,0.002),0.01] * 1.2, i),
-		    \ff, Pwhite(300, 900),
-		    \rf, 0.003,
+		    \ff, Pwhite(800, 5900),
+		    \rf, 0.03,
 		    \dis, 0.05,
-		    \df, Pswitch([1,8,7,4,1]*0.1, i),
+		    \df, Pswitch([1,8,7,4,1]*0.3, i),
 
 		    // visuals
 		    \shape,1,//9 textures	
@@ -151,8 +151,8 @@ var findNextRunning = {
 		    \scale, 1,
 		    \scx, 1,//0.7,
 		    \scy, 1,//Pswitch([0.06, 0.09,0.04,0.05] * 1.51, i),
-		    \sx, 1,//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
-		    \sy, 0,
+		    \sx, 0,//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
+		    \sy, 1,
 		    \ex, Pkey(\sx),
 		    \ey, Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,

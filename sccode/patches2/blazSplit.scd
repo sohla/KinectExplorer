@@ -67,7 +67,7 @@ var findNextRunning = {
 
 
 
-	~setColorRamp.(Color(1,0.1,0).asArray, 50);
+	~setColorRamp.(Color(0,1,1).asArray, 30);
 
 	// ~setBackground0.();
 	~setBackground1.(Color.white.asArray);
@@ -76,7 +76,7 @@ var findNextRunning = {
 
 	// ~setDisplace.(mix:1.0, x:1.6, y:10, period:0.3, noise:1.2, z:0);
 	~setDisplace.(mix:0.0);
-	 ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:-0.0, y:-0.1, dx:1, dy:1, edgeColor:Color(1,1,0).asArray, edgeBlack:0.0, edgeStength:0.2);
+	 ~setFeedback.(mix:1, opacity:0.96, hue:0.9, x:-0.0, y:-0.1, dx:1, dy:1, edgeColor:Color(1,1,0).asArray, edgeBlack:0.0, edgeStength:0.2);
 	// ~setFeedback.(mix:0);
 
 
@@ -163,7 +163,7 @@ var findNextRunning = {
 
 
 		    // visuals
-		    \shape,Pswitch([7,7,7,7],i),//9 textures	
+		    \shape,Pswitch([0,0,0,0],i),//9 textures	
 		    \vdur, 0.08,
 		    \vatt, 0.02,
 		    \vrel, 0.1,
@@ -171,7 +171,7 @@ var findNextRunning = {
 		    \scale, Pswitch([0.8,0.2,0.3,0.3],i),
 		    \scx, 3,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, 20,
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.11,0.73,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.73,-1,1)},
 		    \sy, 0,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),
@@ -190,7 +190,7 @@ var findNextRunning = {
 			\osc, Pfunc{|e| 
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
-					e[\test].postln;
+					// e[\test].postln;
 				});
 				true // !!! must return true !!!
 			}
