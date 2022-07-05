@@ -241,3 +241,34 @@ FreqScope.new;
 }.play
 
 )
+
+
+(
+    SynthDef(\basic_sin, {|out=0, amp=0.1, freq=110, lfoa = 0.2, lfof = 50,
+        attack=0.1, decay=0.03, sustain=0.7, release=1.2, gate=1, dt=0.02|
+        var env = EnvGen.ar(Env.adsr(attack, decay, sustain, release), gate, doneAction:2);
+        var lfo = LFCub.ar(lfof).range(freq * (1-lfoa), freq * (1+lfoa));
+        var pch = [freq.lag + lfo, freq.lag + lfo + (freq * dt)];
+        var sig = SinOsc.ar(pch, 0,0.5);
+        Out.ar(out, sig * amp * env);
+    }).add;
+)
+(
+Pbind(
+    \instrument, \basic_sin,
+    \octave, Pseq([3,4,5], inf),
+    \lfoa, Pwhite(0.3,0.1),
+    \lfof, ((Pkey(\octave) * 12) + Pkey(\note)).midicps * PLFTri(50).linlin(0.0,1.0,0.5,10.0),
+    \note, Pseq([0,1,-2,5,4].stutter(9), inf),
+    \attack, Pwhite(0.02,0.08),
+    \release, Pwhite(0.05,1.9),
+    \amp, 0.5,
+    \dur, 0.15,
+).play;
+)
+
+
+
+s.plotTree
+s.scope
+s.freqscope

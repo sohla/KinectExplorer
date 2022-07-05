@@ -204,8 +204,7 @@ var findNextRunning = {
 		    \tf, Pswitch([40,1,1,1], i),
 		    \ff, 11400,
 		    \rf, 1,
-		    // visuals
-		    \shape,7,//9 textures	
+		    // visuals		    \shape,7,//9 textures	
 		    \vdur, 0.01,
 		    \vatt, 0.01,
 		    \vrel, 0.6,
