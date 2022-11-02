@@ -17,6 +17,7 @@ void RealSenseDepthCamera::setup(DepthModel &model){
                      model.depthCameraHeight,
                      OF_PIXELS_RGB);
     realsense.setupDevice(0);
+    
     realsense.setupDepth(model.depthCameraWidth, model.depthCameraHeight, 60);
     realsense.startPipeline(true);
 
