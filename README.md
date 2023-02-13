@@ -29,7 +29,8 @@ https://gist.github.com/jvcleave/e49c0b52085d040a5cd8a3385121cb91
 **OSX**
 Follow install instructions OF and ofx addons.
 
-Build issues with fmod lib may require change Build phase script 
+Build issues with fmod lib may require change 
+Build phase script 
 https://forum.openframeworks.cc/t/building-in-macos-11-0-big-sur/36581/4
 ```
 install_name_tool -change @rpath/libfmod.dylib @executable_path/../Frameworks/libfmodex.dylib "$TARGET_BUILD_DIR/$PRODUCT_NAME.app/Contents/MacOS/$PRODUCT_NAME";
