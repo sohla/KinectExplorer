@@ -17,7 +17,7 @@
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
                BuildableName = "KinectExplorer.app"
                BlueprintName = "KinectExplorer"
-               ReferencedContainer = "container:kinectExplorer.xcodeproj">
+               ReferencedContainer = "container:KinectExplorer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,7 +33,7 @@
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "KinectExplorer.app"
             BlueprintName = "KinectExplorer"
-            ReferencedContainer = "container:kinectExplorer.xcodeproj">
+            ReferencedContainer = "container:KinectExplorer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -46,7 +46,7 @@
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
-      debugDocumentVersioning = "YES"
+      debugDocumentVersioning = "NO"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
@@ -56,34 +56,16 @@
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "KinectExplorer.app"
             BlueprintName = "KinectExplorer"
-            ReferencedContainer = "container:kinectExplorer.xcodeproj">
+            ReferencedContainer = "container:KinectExplorer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-sc &quot;127.0.0.1&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-sp &quot;57120&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-td &quot;127.0.0.1&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-tp &quot;57130&quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Debug"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      debugDocumentVersioning = "YES">
+      debugDocumentVersioning = "NO">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
@@ -91,7 +73,7 @@
             BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
             BuildableName = "KinectExplorer.app"
             BlueprintName = "KinectExplorer"
-            ReferencedContainer = "container:kinectExplorer.xcodeproj">
+            ReferencedContainer = "container:KinectExplorer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
