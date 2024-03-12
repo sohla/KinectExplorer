@@ -3,7 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
+<<<<<<< HEAD
 	<string>23C71</string>
+=======
+	<string>21F79</string>
+>>>>>>> ead11c37b3baac3e5905cdbcfb48865092c91287
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
@@ -31,6 +35,7 @@
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
+<<<<<<< HEAD
 	<string></string>
 	<key>DTPlatformName</key>
 	<string>macosx</string>
@@ -46,6 +51,21 @@
 	<string>15C500b</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.graphics-design</string>
+=======
+	<string>13F17a</string>
+	<key>DTPlatformName</key>
+	<string>macosx</string>
+	<key>DTPlatformVersion</key>
+	<string>12.3</string>
+	<key>DTSDKBuild</key>
+	<string>21E226</string>
+	<key>DTSDKName</key>
+	<string>macosx12.3</string>
+	<key>DTXcode</key>
+	<string>1340</string>
+	<key>DTXcodeBuild</key>
+	<string>13F17a</string>
+>>>>>>> ead11c37b3baac3e5905cdbcfb48865092c91287
 	<key>LSMinimumSystemVersion</key>
 	<string>14.2</string>
 	<key>NSCameraUsageDescription</key>
