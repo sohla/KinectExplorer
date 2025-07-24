@@ -44,26 +44,27 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	// vis
 	//----------------------------------------------------------------------------
-	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
+	globalAddr.sendMsg("/xfade",1);//0 off 1 mix
 
-	~setPolyline.(1,3,1);
+	~setPolyline.(1,1,1);
 
 	// each polyline (blob)
 	4.0.do({|i|
-		var c = Color.white;
-		~setPolylineColor.(i,c.asArray);
+		var c = Color.new(0,1,1,0);
+		~setPolylineColor.(i,Color.blue.asArray);
 	});
 
-	~setColorRamp.(Color.green.asArray, 20);
+	~setColorRamp.(Color.green.asArray, 10);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.black.asArray);
-	//~setBackground2.(blur:0.4, step:0.3);
+	~setBackground1.(Color.white
+		.asArray);
+	// ~setBackground2.(blur:0.4, step:0.3);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
-	// ~setDisplace.(mix:0.0, x:1, y:1, period:0.3, noise:1, z:0);
+	// ~setDisplace.(mix:1, x:1, y:1, period:0.3, noise:1, z:0);
 	~setDisplace.(mix:0.0);
-	// ~setFeedback.(mix:1, opacity:0.98, hue:0.0, x:0, y:0.5, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	// ~setFeedback.(mix:1, opacity:0.98, hue:0.5, x:0, y:-0.1, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
 	~setFeedback.(mix:0);
 
 };
@@ -88,7 +89,7 @@ var findNextRunning = {
 		});
 
 		// just stop everything
-		// p.stop; 
+		// p.stop;
 		// p.clear(1);
 		// p.free;
 		// patterns.put(i,nil);
@@ -107,7 +108,7 @@ var findNextRunning = {
 
 	var vizMessage = {|e, i|
 		if(noteAddr != nil, {
-			{noteAddr.sendMsg("/shadow", 
+			{noteAddr.sendMsg("/shadow",
 				"shape", e[\shape],"duration", e[\vdur],"attack", e[\vatt],"release", e[\vrel],"color", e[\color],
 				"scale", e[\scale],"sx", e[\sx],"sy", e[\sy],"ex", e[\ex],"ey", e[\ey],"scx", e[\scx],"scy", e[\scy],"imageindex", e[\imageindex],
 				"rotstart",e[\rotstart],"rotend", e[\rotend],"speed", 1,"amp", 0.04,"wobble", e[\wobble]
@@ -116,7 +117,7 @@ var findNextRunning = {
 	};
 
 	var notes = [0,4,8,12];
-	
+
 	var ptn = Pdef("aa_"++i,
 		Pbind(
 		    \instrument, Pswitch([\ab,\ab,\ab,\ab], i),
@@ -143,15 +144,15 @@ var findNextRunning = {
 		    \df, Pswitch([1,8,7,4,1]*0.3, i),
 
 		    // visuals
-		    \shape,1,//9 textures	
+		    \shape,1,//9 textures
 		    \vdur, 0.06,
 		    \vatt, 0.01,
 		    \vrel, Pswitch([0.97,0.6,0.8,0.5], i),
-		    \color, Pswitch([0,0.25,0.5,0.75], i),//Pwhite(0.0,0.999),
+		    \color, 0,//Pswitch([0,0.25,0.5,0.75], i),//Pwhite(0.0,0.999),
 		    \scale, 1,
 		    \scx, 1,//0.7,
 		    \scy, 1,//Pswitch([0.06, 0.09,0.04,0.05] * 1.51, i),
-		    \sx, 0,//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
+		    \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.31,0.72,-1,1)}),
 		    \sy, 1,
 		    \ex, Pkey(\sx),
 		    \ey, Pkey(\sy),
@@ -164,7 +165,7 @@ var findNextRunning = {
 
 		    \bc, Pwhite(0,15),
 
-			\osc, Pfunc{|e| 
+			\osc, Pfunc{|e|
 				if(e[\dur].isKindOf(Rest) != true,{
 					vizMessage.(e, i);
 				});
@@ -193,12 +194,12 @@ var findNextRunning = {
 	var fadeSteps = (fadeTime / fadeRate).floor;
 
 	if(i != nil,{
-		
+
 		// calcualte fade value (used for visuals)
 		// SystemClock.sched(0.0,
-		//     Routine({ 
+		//     Routine({
 		//     	fadeSteps.do({
-					
+
 		// 			fadeValues[i] = fadeValues[i] - (1.0 / (fadeTime / fadeRate));
 
 		// 			if(fadeValues[i] < 0.0001, {fadeValues[i] = 0});
@@ -215,7 +216,7 @@ var findNextRunning = {
 		// "off".postln;
 
 	});
-	
+
 };
 
 //------------------------------------------------------
@@ -225,12 +226,12 @@ var findNextRunning = {
 
 //------------------------------------------------------
 ~onPlotData = {|blobsDict|
-	
+
 	blobsDict.size
 };
 
 //------------------------------------------------------
 ~onBlobData = {|blob|
-	
+
 };
 

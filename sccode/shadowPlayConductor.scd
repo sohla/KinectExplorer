@@ -1,7 +1,7 @@
 (
-	var noteAddr = NetAddr.new("10.1.1.2", 10001);
-	var globalAddr = NetAddr.new("10.1.1.2", 10002);
-	var keAddr = NetAddr("10.1.1.7",57000);
+	var noteAddr = NetAddr.new("10.1.1.6", 10001);
+	var globalAddr = NetAddr.new("10.1.1.6", 10002);
+	var keAddr = NetAddr("10.1.1.3",57000);
 
 	// var noteAddr = NetAddr.new("127.0.0.1", 10001);
 	// var globalAddr = NetAddr.new("127.0.0.1", 10002);
@@ -26,7 +26,7 @@
 	var scale = 0.6;
 
 	//------------------------------------------------------
-	var pfmt = 0; //store the sum of all patch files modification time since epoch 
+	var pfmt = 0; //store the sum of all patch files modification time since epoch
 
 	var pfmtRout = Routine {|i|
 		//•• add first time condition to remove calling ~deinit when exec.
@@ -34,9 +34,9 @@
 			var temp = 0;
 			patches.do({ |p,i| temp = temp + File.mtime(patchesPath.asAbsolutePath++p.file) });
 			if(temp != pfmt,{ {reloadButton.valueAction_(0)}.defer() });
-			pfmt = temp;				
+			pfmt = temp;
 			0.1.yield;
-		}	
+		}
 	}.play;
 
 	//------------------------------------------------------
@@ -44,7 +44,7 @@
 				\dataSize: 3,
 				\state: 0,
 				\area: nil,
-				\perimeter: nil,	
+				\perimeter: nil,
 				\center: nil,
 				\rect: nil,
 				\velocity: nil,
@@ -84,8 +84,8 @@
 
 	var msgToBlob = {|msg, blob|
 
-			blob.label = msg[1]; 
-			blob.state = msg[2]; 
+			blob.label = msg[1];
+			blob.state = msg[2];
 			blob.area.set(msg[3] * 100);
 			blob.perimeter.set(msg[4] * 100);
 			blob.center.setn([msg[5],msg[6]]);
@@ -111,7 +111,7 @@
 		blob.velocity.free;
 		blob.velocityRate.free;
 		blob.accelerationRate;
-		
+
 	};
 
 
@@ -135,7 +135,7 @@
 	};
 
 	//------------------------------------------------------
-	var freeAll = {		
+	var freeAll = {
 
 		pfmtRout.stop;
 		patches.do({|p| p.env.use{~deinit.(p)} });
@@ -199,16 +199,17 @@
 	//------------------------------------------------------
 
 	var bootServer = {|f|
-	
+
 		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");		
+		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
-		var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
-		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+
+	var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+	// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		var output = ServerOptions.devices.indexOfEqual("External Headphones");
+	// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
 		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
-		var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var output = ServerOptions.devices.indexOfEqual("Radial USB Pro Output");
 
 		o = Server.local.options;
@@ -230,7 +231,7 @@
 
 		var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
 		var vx = 0,vy = 0;
-		
+
 		var plotData = {
 
 			var data = [0];
@@ -238,11 +239,11 @@
 			if(blobsDict.values.size > 0,{
 				// for now, calling all on patches
 				patches.do({|p|
-					if(p.isOn,{ 
+					if(p.isOn,{
 						p.env.use{
 							var d = ~onPlotData.(blobsDict);
 							if(d != nil, {data = d});
-						}; 
+						};
 					});
 				});
 			});
@@ -255,11 +256,11 @@
 			if(blobsDict.values.size > 0,{
 				// for now, calling all on patches
 				patches.do({|p|
-					if(p.isOn,{ 
+					if(p.isOn,{
 						p.env.use{
 							var d = ~onBlobData.(blob);
 							if(d != nil, {data = d});
-						}; 
+						};
 					});
 				});
 			});
@@ -338,44 +339,44 @@
 		var env = Environment.make {
 
 			~setPolyline = {|render = 1, lineWidth = 1, solid = 1|
-				model.globalAddr.sendMsg("/poly_render", render); 
-				model.globalAddr.sendMsg("/poly_linewidth",lineWidth); 
-				model.globalAddr.sendMsg("/poly_solid", solid); 
+				model.globalAddr.sendMsg("/poly_render", render);
+				model.globalAddr.sendMsg("/poly_linewidth",lineWidth);
+				model.globalAddr.sendMsg("/poly_solid", solid);
 			};
 
 			~setPolylineColor = {|index = 0, color = #[1,1,1,1]|
 				// // polyline colors
-				// globalAddr.sendMsg("/poly_r", 1); 
+				// globalAddr.sendMsg("/poly_r", 1);
 
-				model.globalAddr.sendMsg("/poly_r"++(index+1), color[0]); 
-				model.globalAddr.sendMsg("/poly_g"++(index+1), color[1]); 
-				model.globalAddr.sendMsg("/poly_b"++(index+1), color[2]); 
-				model.globalAddr.sendMsg("/poly_a"++(index+1), color[3]); 
+				model.globalAddr.sendMsg("/poly_r"++(index+1), color[0]);
+				model.globalAddr.sendMsg("/poly_g"++(index+1), color[1]);
+				model.globalAddr.sendMsg("/poly_b"++(index+1), color[2]);
+				model.globalAddr.sendMsg("/poly_a"++(index+1), color[3]);
 			};
 
 
 			~setColorRamp = {|color = #[1,1,1], hue = 1|
 				// global color ramp
-				globalAddr.sendMsg("/ramp_r", color[0]); 
-				globalAddr.sendMsg("/ramp_g", color[1]); 
-				globalAddr.sendMsg("/ramp_b", color[2]); 
+				globalAddr.sendMsg("/ramp_r", color[0]);
+				globalAddr.sendMsg("/ramp_g", color[1]);
+				globalAddr.sendMsg("/ramp_b", color[2]);
 
-				globalAddr.sendMsg("/ramp_hue1", hue); 
+				globalAddr.sendMsg("/ramp_hue1", hue);
 			};
 
 			// background
 			~setBackground0 = {
 				globalAddr.sendMsg("/background_index",0);
-				globalAddr.sendMsg("/background_r", 0); 
-				globalAddr.sendMsg("/background_g", 0); 
-				globalAddr.sendMsg("/background_b", 0); 
+				globalAddr.sendMsg("/background_r", 0);
+				globalAddr.sendMsg("/background_g", 0);
+				globalAddr.sendMsg("/background_b", 0);
 			};
 
 			~setBackground1 = {|color = #[1,1,1]|
 				globalAddr.sendMsg("/background_index",1);
-				globalAddr.sendMsg("/background_r", color[0]); 
-				globalAddr.sendMsg("/background_g", color[1]); 
-				globalAddr.sendMsg("/background_b", color[2]); 
+				globalAddr.sendMsg("/background_r", color[0]);
+				globalAddr.sendMsg("/background_g", color[1]);
+				globalAddr.sendMsg("/background_b", color[2]);
 			};
 
 
@@ -387,45 +388,45 @@
 
 			~setBackground3 = {|index = 0, scale = 1, rot = 0.0, mode = 0, color = #[1,1,1]|
 				globalAddr.sendMsg("/background_index",3);
-				globalAddr.sendMsg("/background_image_index", index); 
-				globalAddr.sendMsg("/background_image_scale", scale); 
-				globalAddr.sendMsg("/background_image_rotspeed", rot); 
+				globalAddr.sendMsg("/background_image_index", index);
+				globalAddr.sendMsg("/background_image_scale", scale);
+				globalAddr.sendMsg("/background_image_rotspeed", rot);
 				globalAddr.sendMsg("/background_image_blendmode",mode);
-				globalAddr.sendMsg("/background_r", color[0]); 
-				globalAddr.sendMsg("/background_g", color[1]); 
-				globalAddr.sendMsg("/background_b", color[2]); 
+				globalAddr.sendMsg("/background_r", color[0]);
+				globalAddr.sendMsg("/background_g", color[1]);
+				globalAddr.sendMsg("/background_b", color[2]);
 			};
 
 			~setDisplace = {|mix = 1, x = 0.0, y = 0.0, period = 0.1, noise = 1, z = 0.0|
 				// displace polyline
-				globalAddr.sendMsg("/displace_mix", mix);//on/off 
-				globalAddr.sendMsg("/displace_x", x); 
-				globalAddr.sendMsg("/displace_y", y); 
-				globalAddr.sendMsg("/displace_period", period); 
-				globalAddr.sendMsg("/displace_noise_harmonic", noise); 
-				globalAddr.sendMsg("/displace_speedz",z); 
+				globalAddr.sendMsg("/displace_mix", mix);//on/off
+				globalAddr.sendMsg("/displace_x", x);
+				globalAddr.sendMsg("/displace_y", y);
+				globalAddr.sendMsg("/displace_period", period);
+				globalAddr.sendMsg("/displace_noise_harmonic", noise);
+				globalAddr.sendMsg("/displace_speedz",z);
 			};
-	
+
 
 			~setFeedback = {|mix=1, opacity=0.9, hue=0.2, x=0, y=0, dx=0, dy=0, edgeColor=#[0,0,0], edgeBlack=0.0, edgeStength=0.0|
 
-				globalAddr.sendMsg("/feedback_mix", mix); 
-				globalAddr.sendMsg("/feedback_opacity", opacity); 
+				globalAddr.sendMsg("/feedback_mix", mix);
+				globalAddr.sendMsg("/feedback_opacity", opacity);
 
-				globalAddr.sendMsg("/feedback_hue", hue); 
+				globalAddr.sendMsg("/feedback_hue", hue);
 
 				globalAddr.sendMsg("/feedback_x", x); //-1 1
-				globalAddr.sendMsg("/feedback_y", y); 
+				globalAddr.sendMsg("/feedback_y", y);
 
 				globalAddr.sendMsg("/feedback_displacex",dx); //-1 1
-				globalAddr.sendMsg("/feedback_displacey", dy); 
+				globalAddr.sendMsg("/feedback_displacey", dy);
 
-				globalAddr.sendMsg("/feedback_edge_r", edgeColor[0]); 
-				globalAddr.sendMsg("/feedback_edge_g", edgeColor[1]); 
-				globalAddr.sendMsg("/feedback_edge_b", edgeColor[2]); 
+				globalAddr.sendMsg("/feedback_edge_r", edgeColor[0]);
+				globalAddr.sendMsg("/feedback_edge_g", edgeColor[1]);
+				globalAddr.sendMsg("/feedback_edge_b", edgeColor[2]);
 
-				globalAddr.sendMsg("/feedback_edge_blacklevel", edgeBlack); 
-				globalAddr.sendMsg("/feedback_edge_strength", edgeStength); 
+				globalAddr.sendMsg("/feedback_edge_blacklevel", edgeBlack);
+				globalAddr.sendMsg("/feedback_edge_strength", edgeStength);
 
 			};
 			//•• add shared functionality here ••//
@@ -452,9 +453,9 @@
 					if(b.value == 1,{
 						resetKE.();//•• maybe not
 						p.isOn = true;
-						p.env.use{~init.(p)}; 
+						p.env.use{~init.(p)};
 					},{
-						p.env.use{~deinit.(p)}; 
+						p.env.use{~deinit.(p)};
 						resetKE.();
 						p.isOn = false;
 					});
@@ -463,7 +464,7 @@
 	}!col}!row;
 
 	//------------------------------------------------------
-	QtGUI.palette = QPalette.dark; 
+	QtGUI.palette = QPalette.dark;
 	window = Window("",Rect(0,0,Window.screenBounds.width * 0.5, Window.screenBounds.height - 300)
 		.center_(Window.screenBounds.width*0.85@100)
 	).front;
@@ -478,20 +479,20 @@
 		});
 	});
 
-	window.layout = 
+	window.layout =
 		HLayout(
 		VLayout(
 		reloadButton = Button()
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
 			.action_({|b|
-				
-				patches.do({|p| 
+
+				patches.do({|p|
 					// resetKE.();
 					if(p.isOn,{
 						p.env.use{
 							~deinit.(p);
-						}; 
+						};
 					});
 
 					loadPatch.(p);
@@ -499,7 +500,7 @@
 					if(p.isOn,{
 						p.env.use{
 							~init.(p);
-						}; 
+						};
 						resetKE.();
 					});
 				})
@@ -516,7 +517,7 @@
 			.action_({|b|
 				s.freeAll;
 			}),
-		GridLayout.rows(*patchButton.()),	
+		GridLayout.rows(*patchButton.()),
 		graphView = UserView()
 				.minHeight_(500)
 				.minWidth_(500)
@@ -533,7 +534,7 @@
 
 			// freqScope = FreqScopeView()
 			// 	.freqMode_(1)
-			// 	.active_(true),	
+			// 	.active_(true),
 		)
 		),
 		serverView = UserView()
@@ -548,7 +549,7 @@
 	plotter.superpose = true;
 	plotter.setProperties(\backgroundColor, Color.gray(0.25));
 	plotter.setProperties(\plotColor, [Color.yellow,Color.magenta,Color.cyan]).refresh;
-	
+
 
 	bootServer.({
 
@@ -585,11 +586,11 @@
 			// 	postf("\t %", b.label);
 			// });
 			// postf("% \n");
-			
+
 			patches.do({|p|
 				if(p.isOn, {
 					if(blobsDict.values.size > 0,{
-						 p.env.use{~onBlobInit.(blob, blobsDict)};	
+						 p.env.use{~onBlobInit.(blob, blobsDict)};
 					});
 				});
 			});
@@ -598,7 +599,7 @@
 		}, '/ke/init', recvPort: port);
 
 		//------------------------------------------------------
-		updateListener = OSCFunc({ |msg, time, addr, recvPort| 
+		updateListener = OSCFunc({ |msg, time, addr, recvPort|
 
 			var blob = blobsDict.at(msg[1]);
 
@@ -607,11 +608,11 @@
 				 msgToBlob.(msg, blob);
 				// if this blob is on tell all patches
 				if(blob.state == 2,{
-					patches.do({|p| 
+					patches.do({|p|
 						if(p.isOn, {
 							if(blobsDict.values.size > 0,{
 								p.env.use{~onBlobUpdate.(blob, blobsDict)};
-							}); 
+							});
 						});
 					});
 				});
@@ -625,18 +626,18 @@
 			if(blob != nil,{
 
 				// msgToBlob.(msg, blob);
-				blob.label = msg[1]; 
-				blob.state = msg[2]; 
+				blob.label = msg[1];
+				blob.state = msg[2];
 
-				patches.do({|p| 
+				patches.do({|p|
 					if(p.isOn, {
 						if(blobsDict.values.size > 0,{
 							p.env.use{~onBlobDeinit.(blob, blobsDict)};
 
 						});
-					}); 
+					});
 				});
-				
+
 				//needs to be longer than the fade out on the patterns inside the patch when using Ndefs
 				{freeBlob.(blob);}.defer(10);
 				// freeBlob.(blob);
@@ -662,7 +663,7 @@
 		//------------------------------------------------------
 		TempoClock.default.tempo = 1.0;
 		// load all data into patches
-		patches.do({|p| loadPatch.(p)});	
+		patches.do({|p| loadPatch.(p)});
 		resetKE.();
 	});
 )
