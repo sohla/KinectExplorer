@@ -72,8 +72,8 @@ class Generator_PixelProc : public Base_PixelProc {
             gblob b = {
                 ofRandom(100,640-100),  // x
                 float(480 * 0.8),       // y
-                ofRandom(70,90),        // w
-                ofRandom(100,240),      // h
+                ofRandom(20,40),        // w
+                ofRandom(180,290),      // h
                 int(ofRandom(190,210)), // hue
                 ofRandom(-15,15),       // delta
             };
@@ -91,16 +91,16 @@ class Generator_PixelProc : public Base_PixelProc {
                 // animate blob
                 if(animateParam.get()){
                     gblobs[i].x += gblobs[i].delta * speedXParam.get();
-                    gblobs[i].w += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.10, 0.28)  * speedWParam.get() ) * 1.1;
-                    gblobs[i].h += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.03, 0.18) * speedHParam.get() ) * 1.1;
+                    gblobs[i].w += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.10, 0.15)  * speedWParam.get() ) * 1.1;
+                    gblobs[i].h += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.10, 0.15) * speedHParam.get() ) * 1.1;
                 }
 
-                if(gblobs[i].x < 0){
-                    gblobs[i].x = 0;
+                if(gblobs[i].x < 100){
+                    gblobs[i].x = 100;
                     gblobs[i].delta *= -1;
                 }
-                if(gblobs[i].x > 540){
-                    gblobs[i].x = 540;
+                if(gblobs[i].x > 440){
+                    gblobs[i].x = 440;
                     gblobs[i].delta *= -1;
                 }
                 // draw it
