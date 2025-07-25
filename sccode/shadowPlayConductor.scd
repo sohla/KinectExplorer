@@ -1,11 +1,16 @@
 (
-	var noteAddr = NetAddr.new("10.1.1.6", 10001);
-	var globalAddr = NetAddr.new("10.1.1.6", 10002);
-	var keAddr = NetAddr("10.1.1.3",57000);
+	var noteAddr = NetAddr.new("192.168.1.150", 10001);
+	var globalAddr = NetAddr.new("192.168.1.150", 10002);
+	var keAddr = NetAddr("192.168.1.70",57000);
 
-	// var noteAddr = NetAddr.new("127.0.0.1", 10001);
-	// var globalAddr = NetAddr.new("127.0.0.1", 10002);
-	// var keAddr = NetAddr("127.0.0.1",57000);
+
+// var noteAddr = NetAddr.new("10.1.1.6", 10001);
+// var globalAddr = NetAddr.new("10.1.1.6", 10002);
+// var keAddr = NetAddr("10.1.1.3",57000);
+
+// var noteAddr = NetAddr.new("127.0.0.1", 10001);
+// var globalAddr = NetAddr.new("127.0.0.1", 10002);
+// var keAddr = NetAddr("127.0.0.1",57000);
 	var port = 57120;
 	var performancePort = 10005;
 
@@ -200,14 +205,14 @@
 
 	var bootServer = {|f|
 
-		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		//  var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 
-	var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+	// var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+	// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 	// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-		var output = ServerOptions.devices.indexOfEqual("External Headphones");
 	// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
 		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 		// var output = ServerOptions.devices.indexOfEqual("Radial USB Pro Output");
@@ -271,6 +276,14 @@
 		Pen.fillColor = Color.gray(0,1);
 		Pen.fillRect(window.view.bounds);
 
+		if(s.serverRunning == false,{
+			Pen.strokeColor = Color.magenta;
+		Pen.stringAtPoint("booting server...", 10@10, color:Color.yellow(0.5));
+		});
+
+		Pen.scale(1.3, 1.3);
+		Pen.translate(-100, -20);
+
 		blobsDict.do({|blob,i|
 
 			if(blob.state == 2,{
@@ -292,8 +305,8 @@
 				Pen.fillColor = cols.at(i);
 				Pen.strokeColor = cols.at(i);
 
-				Pen.fillOval(Rect(center.x, center.y,6,6));
-				Pen.fillRect(Rect(center.x - 5,550,10, dv));
+				Pen.fillOval(Rect(center.x-3, center.y-3, 6, 6));
+			// Pen.fillRect(Rect(center.x - 5,550,10, dv));
 
 				Pen.strokeRect(rect);
 
@@ -337,6 +350,14 @@
 		var file = File.new(path.asAbsolutePath,"r");
 		var str = file.readAllString;
 		var env = Environment.make {
+
+			~setRGBColor= {|color = #[1,1,1,1]|
+				model.globalAddr.sendMsg("/poly_r", color[0]);
+				model.globalAddr.sendMsg("/poly_g", color[1]);
+				model.globalAddr.sendMsg("/poly_b", color[2]);
+				model.globalAddr.sendMsg("/poly_a", color[3]);
+			};
+
 
 			~setPolyline = {|render = 1, lineWidth = 1, solid = 1|
 				model.globalAddr.sendMsg("/poly_render", render);
@@ -542,7 +563,7 @@
 	);
 
 	// debug tool
-	s.plotTreeView(0.5, serverView);
+// s.plotTreeView(0.5, serverView);
 
 	plotter = Plotter("plot", Rect(0, 0, 400, 300), plotView)
 		.value_((0..49));
@@ -669,11 +690,11 @@
 )
 
 // NetAddr.localAddr
-
+//
 // (
 // a = OSCFunc({ |msg, time, addr, recvPort|
-// 	msg.postln;
-// }, '/ke/update', recvPort: 57120);
+// 	[time,msg].postln;
+// }, '/ke/update');
 // )
 // a.free
-
+// OSCFunc.trace(false)
