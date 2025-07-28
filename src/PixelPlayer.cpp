@@ -12,12 +12,14 @@
 
 void PixelPlayer::setup(string fileName){
     
+
+    // player.setPixelFormat(OF_PIXELS_GRAY); // does not work!
     player.load(fileName);
     
     inputImage.clear();
     grayImage.clear();
-    inputImage.allocate(int(player.getWidth()), int(player.getHeight()));
-    grayImage.allocate(int(player.getWidth()), int(player.getHeight()));
+    inputImage.allocate(640,480);
+    grayImage.allocate(640,480);
 
 //    colorImage.allocate(int(player.getWidth()), int(player.getHeight()), OF_IMAGE_COLOR_ALPHA);
 //    colorPixels.allocate(int(player.getWidth()), int(player.getHeight()), OF_IMAGE_COLOR_ALPHA);
@@ -27,7 +29,7 @@ void PixelPlayer::setup(string fileName){
 //    player.setSpeed(0.125);
     player.play();
     
-    std::cout << "playing : " << fileName << int(player.getPixelFormat()) << std::endl;
+    std::cout << "playing: " << fileName << " f: " << int(player.getPixelFormat()) << std::endl;
 
 }
 

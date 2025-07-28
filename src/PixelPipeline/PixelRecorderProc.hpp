@@ -49,6 +49,7 @@ class PixelRecorderProc : public Base_PixelProc {
 
     void proc(){
         //procImage has image
+        //procImage.getPixels().setImageType(OF_IMAGE_GRAYSCALE);
         if(vidRecorder.isRecording()){
             bool success = vidRecorder.addFrame(procImage.getPixels());
             if (!success) {
@@ -113,7 +114,8 @@ private:
          */
             //12672000 bytes/sec =
 //            vidRecorder.setVideoBitrate("1.2M");
-//            vidRecorder.setPixelFormat("gray");
+           vidRecorder.setPixelFormat("gray");
+           vidRecorder.setOutputPixelFormat("gray16le");
 
             string timeFormat = "%Y-%m-%d-%H-%M-%S";
             string timeString = ofGetTimestampString(timeFormat);
@@ -137,11 +139,11 @@ private:
     
     void onRecordingParam(bool& val){
         if(val){
+            std::cout << "========= start recording =========" << std::endl;
             start("ke_depth", procImage.width , procImage.height);
-            std::cout << "start recording..." << std::endl;
         }else{
+            std::cout << "========= stop recording =========" << std::endl;
             stop();
-            std::cout << "stop recording." << std::endl;
         }
     };
 
