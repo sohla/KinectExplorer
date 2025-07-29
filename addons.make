@@ -4,5 +4,3 @@ ofxGui
 ofxKinect
 ofxLibRealSense2
 ofxOsc
-ofxPoco
-ofxVideoRecorder

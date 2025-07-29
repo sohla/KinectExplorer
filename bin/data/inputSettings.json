@@ -22,13 +22,15 @@
             "UnknownName": "1",
             "animate": "1",
             "blobs": "4",
-            "draw": "0",
+            "deltaH": "0.5",
+            "deltaW": "0.5",
+            "draw": "1",
             "on": "1",
             "random": "1",
             "speed": "0",
             "speedH": "0.908163",
             "speedW": "0.923469",
-            "speedX": "0"
+            "speedX": "0.142857"
         },
         "keNDIReceiver": {
             "draw": "0",
@@ -37,36 +39,6 @@
         "line_base": {
             "draw": "1",
             "on": "1"
-        },
-        "line_osc_out": {
-            "ip": "127.0.0.1",
-            "on": "1",
-            "port": "57130",
-            "resample": "263"
-        },
-        "line_osc_out57120": {
-            "ip": "192.168.20.6",
-            "on": "1",
-            "port": "57120",
-            "resample": "114"
-        },
-        "line_osc_out57130": {
-            "ip": "127.0.0.1",
-            "on": "1",
-            "port": "57130",
-            "resample": "172"
-        },
-        "line_osc_out_57120": {
-            "ip": "127.0.0.1",
-            "on": "1",
-            "port": "57120",
-            "resample": "32"
-        },
-        "line_osc_out_57130": {
-            "ip": "127.0.0.1",
-            "on": "1",
-            "port": "57130",
-            "resample": "127"
         },
         "ndi_sender": null,
         "ndi_server": null,
@@ -92,10 +64,10 @@
             "vert-invert": "0"
         },
         "nearfar": {
-            "cropBot": "0.877551",
+            "cropBot": "1",
             "cropLeft": "0",
             "cropRight": "1",
-            "cropTop": "0.188776",
+            "cropTop": "0",
             "cv-threshold": "0",
             "draw": "0",
             "far": "103",
@@ -135,9 +107,9 @@
             "distance": "255",
             "draw": "1",
             "maxRadius": "238",
-            "minRadius": "30",
+            "minRadius": "5",
             "on": "1",
-            "persistance": "15",
+            "persistance": "2",
             "sc": "127.0.0.1",
             "td": "192.168.1.150",
             "threshold": "127"

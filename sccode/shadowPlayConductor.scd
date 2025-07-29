@@ -1,21 +1,22 @@
 (
-	var noteAddr = NetAddr.new("192.168.1.150", 10001);
-	var globalAddr = NetAddr.new("192.168.1.150", 10002);
-	var keAddr = NetAddr("192.168.1.70",57000);
+// var noteAddr = NetAddr.new("192.168.1.150", 10001);
+// var globalAddr = NetAddr.new("192.168.1.150", 10002);
+// var keAddr = NetAddr("192.168.1.70",57000);
 
 
 // var noteAddr = NetAddr.new("10.1.1.6", 10001);
 // var globalAddr = NetAddr.new("10.1.1.6", 10002);
 // var keAddr = NetAddr("10.1.1.3",57000);
 
-// var noteAddr = NetAddr.new("127.0.0.1", 10001);
-// var globalAddr = NetAddr.new("127.0.0.1", 10002);
-// var keAddr = NetAddr("127.0.0.1",57000);
+var noteAddr = NetAddr.new("127.0.0.1", 10001);
+var globalAddr = NetAddr.new("127.0.0.1", 10002);
+var keAddr = NetAddr("127.0.0.1",57000);
 	var port = 57120;
 	var performancePort = 10005;
 
 
-	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
+// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
+	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.12.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 
 	var numOfBlobs = 4;
 
@@ -205,13 +206,13 @@
 
 	var bootServer = {|f|
 
-		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		 var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 
-	// var input = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-	// var output = ServerOptions.devices.indexOfEqual("External Headphones");
+	var input = ServerOptions.devices.indexOfEqual("BlackHole 16ch");
+	var output = ServerOptions.devices.indexOfEqual("External Headphones");
 	// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 	// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
 		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
@@ -283,7 +284,6 @@
 
 		Pen.scale(1.3, 1.3);
 		Pen.translate(-100, -20);
-
 		blobsDict.do({|blob,i|
 
 			if(blob.state == 2,{
@@ -602,11 +602,11 @@
 			msgToBlob.(msg, blob);
 			blobsDict.put(blob.label,blob);
 
-			// postf("blob +: % :", blob.label);
-			// blobsDict.do({|b|
-			// 	postf("\t %", b.label);
-			// });
-			// postf("% \n");
+		// postf("blob +: % :", blob.label);
+		// blobsDict.do({|b|
+		// 	postf("\t %", b.label);
+		// });
+		// postf("% \n");
 
 			patches.do({|p|
 				if(p.isOn, {
@@ -698,3 +698,6 @@
 // )
 // a.free
 // OSCFunc.trace(false)
+//
+//
+//

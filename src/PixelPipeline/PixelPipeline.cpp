@@ -13,7 +13,7 @@
 #include "NearFar_PixelProc.hpp"
 #include "NearFarColor_PixelProc.hpp"
 #include "OSCOut_PixelProc.hpp"
-#include "PixelRecorderProc.hpp"
+//#include "PixelRecorderProc.hpp"
 #include "Clear_PixelProc.hpp"
 #include "Generator_PixelProc.hpp"
 
@@ -27,7 +27,7 @@ void PixelPipeline::setup(const DepthModel &model, ofxPanel &gui) {
 
     processors.push_back( new Generator_PixelProc());
     processors.push_back( new Clear_PixelProc());
-    processors.push_back( new PixelRecorderProc());
+//    processors.push_back( new PixelRecorderProc());
     processors.push_back( new NearFar_PixelProc());
     processors.push_back( new Blur_PixelProc());
     //processors.push_back( new OSCOut_PixelProc("127.0.0.1","57120"));
