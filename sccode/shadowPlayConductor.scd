@@ -1,4 +1,5 @@
 (
+
 // var noteAddr = NetAddr.new("192.168.1.150", 10001);
 // var globalAddr = NetAddr.new("192.168.1.150", 10002);
 // var keAddr = NetAddr("192.168.1.70",57000);
@@ -8,19 +9,47 @@
 // var globalAddr = NetAddr.new("10.1.1.6", 10002);
 // var keAddr = NetAddr("10.1.1.3",57000);
 
-var noteAddr = NetAddr.new("127.0.0.1", 10001);
-var globalAddr = NetAddr.new("127.0.0.1", 10002);
-var keAddr = NetAddr("127.0.0.1",57000);
+	var noteAddr = NetAddr.new("127.0.0.1", 10001);
+	var globalAddr = NetAddr.new("127.0.0.1", 10002);
+	var keAddr = NetAddr("127.0.0.1",57000);
+
 	var port = 57120;
 	var performancePort = 10005;
 
+	//------------------------------------------------------
+	var row = 3, col = 5;
+	var files = [
+		"basicVisCalibrate.scd",
+		"blackVis.scd",
+		"tempBlobLife.scd",
+		"tempBlobPattern.scd",
+		"tempBlobTrack.scd",
+
+		"earth.scd",
+		"sunFire.scd",
+		"water.scd",
+		"discoStripes.scd",
+		"colorShape.scd",
+		"basicVis7.scd",
+
+		"blazSplit.scd",
+		"conexParty.scd",
+
+		"toDraw.scd",
+		"vol.scd",
+	];
+
+	var genPatch = {|file|
+		(\file: file, \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2)
+	};
+	var patches = files.collect({|f| genPatch.(f)});
+	//------------------------------------------------------
 
 // var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.12.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 
+	//------------------------------------------------------
 	var numOfBlobs = 4;
-
-
 
 	var window, freqScope;
 	var loadPatch, patchButton, reloadButton;
@@ -157,64 +186,21 @@ var keAddr = NetAddr("127.0.0.1",57000);
 		s.freeAll;
 		s.quit;
 
-	}
-;	//------------------------------------------------------
-	var row = 3, col = 5;
+	};
 
-	var patches = [
-
-		// patch model
-		// (\file: "basic1.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basic2.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basic3.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basic4.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basic5.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basic6.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basic7.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-
-		(\file: "basicVisCalibrate.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "blackVis.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basicVis1.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basicVis2.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basicVis3.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basicVis4.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basicVis5.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		// (\file: "basicVis7.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-
-
-		(\file: "tempBlobLife.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "tempBlobPattern.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "tempBlobTrack.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-
-
-		(\file: "earth.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "sunFire.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "water.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "discoStripes.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "colorShape.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-
-		(\file: "basicVis7.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-
-		(\file: "blazSplit.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "conexParty.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-
-
-		(\file: "toDraw.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-		(\file: "vol.scd", \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2),
-	];
 	//------------------------------------------------------
 
 	var bootServer = {|f|
 
-	// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-	// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 
-	var input = ServerOptions.devices.indexOfEqual("BlackHole 16ch");
-	var output = ServerOptions.devices.indexOfEqual("External Headphones");
-	// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-	// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+		var input = ServerOptions.devices.indexOfEqual("BlackHole 16ch");
+		var output = ServerOptions.devices.indexOfEqual("External Headphones");
+		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
+		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
 		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 		// var output = ServerOptions.devices.indexOfEqual("Radial USB Pro Output");
 
@@ -302,8 +288,8 @@ var keAddr = NetAddr("127.0.0.1",57000);
 				Pen.smoothing_(true);
 				Pen.width = 1;
 
-				Pen.fillColor = cols.at(i);
-				Pen.strokeColor = cols.at(i);
+				Pen.fillColor = cols.at(blob.label.asInteger.mod(4));
+				Pen.strokeColor = cols.at(blob.label.asInteger.mod(4));
 
 				Pen.fillOval(Rect(center.x-3, center.y-3, 6, 6));
 			// Pen.fillRect(Rect(center.x - 5,550,10, dv));
