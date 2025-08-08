@@ -16,7 +16,7 @@ void ofApp::setup(){
     depthCamera->setup(model);
     
     // load settings
-    gui.setup("inputSettings", "inputSettings.json", 1060, 0);
+    gui.setup("inputSettings", "inputSettings.json", 800, 0);
     
     // setup for remote control via OSC
     oscParamSync.setup((ofParameterGroup&)gui.getParameter(), INPORT, "localhost", SCPORT);

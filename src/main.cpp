@@ -7,7 +7,7 @@ int main(int argc, const char** argv){
     
     ofxArgParser::init(argc, argv);
     
-    ofSetupOpenGL(1300,1000,OF_WINDOW);
+    ofSetupOpenGL(1100,860,OF_WINDOW);
 
 	ofRunApp(new ofApp());
 
