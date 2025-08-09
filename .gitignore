@@ -30,7 +30,7 @@ bin/*
 # XCode 4
 xcuserdata/
 *.xcworkspace
-
+.DS_Store
 
 # Visual Studio
 *.sdf
@@ -86,3 +86,8 @@ Desktop.ini
 
 # assets
 *.mov
+*.mp3
+*.mp4
+*.m4a
+*.wav
+
