@@ -92,13 +92,13 @@
             "vert-invert": "0"
         },
         "nearfar": {
-            "cropBot": "0.673469",
+            "cropBot": "1",
             "cropLeft": "0",
             "cropRight": "1",
-            "cropTop": "0.27551",
+            "cropTop": "0",
             "cv-threshold": "0",
             "draw": "1",
-            "far": "137",
+            "far": "80",
             "horz-invert": "0",
             "map": "0",
             "near": "255",

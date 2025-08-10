@@ -1280,9 +1280,9 @@
 			isa = PBXGroup;
 			children = (
 				F96985297BB47A331D5891DD /* PixelSourceBase.h */,
+				4F95A5C6DCCE96E3DCD140A1 /* RealSenseDepthCamera.cpp */,
 				0B9D47F2A46B7CB2B6B6DE99 /* RealSenseDepthCamera.h */,
 				253B32A97EAC15C63641A1E1 /* KinectDepthCamera.cpp */,
-				4F95A5C6DCCE96E3DCD140A1 /* RealSenseDepthCamera.cpp */,
 				C39D9C76C225FE139F07905E /* KinectDepthCamera.h */,
 			);
 			name = Sources;
