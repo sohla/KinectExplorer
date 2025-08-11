@@ -98,9 +98,15 @@
             "cropTop": "0",
             "cv-threshold": "0",
             "draw": "1",
+<<<<<<< HEAD
             "far": "5",
             "horz-invert": "1",
             "map": "1",
+=======
+            "far": "80",
+            "horz-invert": "0",
+            "map": "0",
+>>>>>>> 6e561603efe9af622be0be7a71e619fdce8a6d67
             "near": "255",
             "on": "1",
             "vert-invert": "0"
