@@ -69,18 +69,17 @@ class PixelRecorderProc : public Base_PixelProc {
     };
     
     void draw(const DepthModel &model){
-
         if(vidRecorder.isRecording()){
             ofSetColor(255, 0, 0);
-            ofDrawCircle(20,20, 10);
+            ofDrawRectangle(0, 480 * model.depthCameraScale, 640 * model.depthCameraScale, 10);
         }else{
             ofSetColor(0, 0, 0);
-            ofDrawCircle(20, 20, 10);
+            ofDrawRectangle(0, 480 * model.depthCameraScale, 640 * model.depthCameraScale, 10);
         }
         ofSetColor(255, 255, 255);
     }
 
-    string title(){return "pixel recorder";};
+    string title(){return "pixelrecorder";};
     
     
     void exit(){

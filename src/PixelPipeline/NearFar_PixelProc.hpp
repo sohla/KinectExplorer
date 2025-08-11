@@ -85,11 +85,9 @@ class NearFar_PixelProc : public Base_PixelProc {
                     if(i >= (w * cropLeftParam.get()) && i <= (w * cropRightParam.get()) ){
 
                         if( index > (h * cropTopParam.get() * w) && index < (h * cropBotParam.get() * w)){ //hack cropping
-                            
-                            
                             if(pix[index] < nearParam.get() && pix[index] > farParam.get()) {
                                 if(mapParam.get()){
-                                    pix[index] = ofMap(pix[index], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near
+                                    pix[index] = ofMap(pix[index], farParam.get(), nearParam.get(), 0, 255); // mapped to far-near    
                                 }else{
                                     pix[index] = 255; // solid white
                                 };
