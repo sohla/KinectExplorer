@@ -21,7 +21,7 @@
         "generator": {
             "UnknownName": "1",
             "animate": "0",
-            "blobs": "4",
+            "blobs": "0",
             "draw": "0",
             "on": "0",
             "random": "0",
@@ -92,21 +92,15 @@
             "vert-invert": "0"
         },
         "nearfar": {
-            "cropBot": "1",
-            "cropLeft": "0",
-            "cropRight": "1",
-            "cropTop": "0",
+            "cropBot": "0.765306",
+            "cropLeft": "0.353061",
+            "cropRight": "0.706122",
+            "cropTop": "0.489796",
             "cv-threshold": "0",
             "draw": "1",
-<<<<<<< HEAD
-            "far": "5",
+            "far": "119",
             "horz-invert": "1",
             "map": "1",
-=======
-            "far": "80",
-            "horz-invert": "0",
-            "map": "0",
->>>>>>> 6e561603efe9af622be0be7a71e619fdce8a6d67
             "near": "255",
             "on": "1",
             "vert-invert": "0"
@@ -137,16 +131,16 @@
             "threshold": "249"
         },
         "pixelpoint": {
-            "blobs": "0",
+            "blobs": "4",
             "distance": "255",
             "draw": "1",
-            "maxRadius": "235",
+            "maxRadius": "174",
             "minRadius": "24",
             "on": "1",
             "persistance": "2",
             "sc": "127.0.0.1",
             "td": "192.168.1.150",
-            "threshold": "127"
+            "threshold": "126"
         },
         "pixelrecorder": {
             "recording": "0"

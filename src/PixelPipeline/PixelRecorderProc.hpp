@@ -71,10 +71,10 @@ class PixelRecorderProc : public Base_PixelProc {
     void draw(const DepthModel &model){
         if(vidRecorder.isRecording()){
             ofSetColor(255, 0, 0);
-            ofDrawRectangle(0, 480 * model.depthCameraScale, 640 * model.depthCameraScale, 10);
+            ofDrawRectangle(0, 480 * model.depthCameraScale, 640 * model.depthCameraScale, 200);
         }else{
             ofSetColor(0, 0, 0);
-            ofDrawRectangle(0, 480 * model.depthCameraScale, 640 * model.depthCameraScale, 10);
+            ofDrawRectangle(0, 480 * model.depthCameraScale, 640 * model.depthCameraScale, 200);
         }
         ofSetColor(255, 255, 255);
     }
