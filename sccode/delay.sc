@@ -13,7 +13,7 @@
 s.quit
 s.meter
 (
-SynthDef(\delay,{|out=0, fb=0.3, dt=0.2, gate=1, pr=1.0, amp=0.5|
+SynthDef(\delay,{|out=0, fb=0.3, dt=0.2, gate=1, pr=1.0, amp=0.9|
 	var in = PitchShift.ar(SoundIn.ar(0), 0.8, pr);
 	var li = LocalIn.ar(1);
 	var ft = HPF.ar(LPF.ar(in, 12000), 120);
