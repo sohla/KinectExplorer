@@ -189,7 +189,7 @@
 
 	bootServer.({
     
-    var blobs = Require("blobs.scd");
+    var blob = Require("blob.scd");
 
 		SynthDef(\mouseX, { |bus| Out.kr(bus, MouseX.kr(0,1.0))}).add;
 		SynthDef(\mouseY, { |bus| Out.kr(bus, MouseY.kr(0,1.0))}).add;
@@ -214,10 +214,10 @@
 		//------------------------------------------------------
 		initListener = OSCFunc({ |msg, time, addr, recvPort|
 
-			var blob = Event.new(proto:blobs.model);
-			blobs[\init].(blob);
-			blobs[\msgToBlob].(msg, blob);
-			blobsDict.put(blob.label,blob);
+			var b = Event.new(proto:blob.model);
+			blob[\init].(b);
+			blob[\msgToBlob].(msg, b);
+			blobsDict.put(b.label,b);
 
 		// postf("blob +: % :", blob.label);
 		// blobsDict.do({|b|
@@ -228,7 +228,7 @@
 			patches.store.do({|p|
 				if(p.isOn, {
 					if(blobsDict.values.size > 0,{
-						 p.env.use{~onBlobInit.(blob, blobsDict)};
+						 p.env.use{~onBlobInit.(b, blobsDict)};
 					});
 				});
 			});
@@ -239,17 +239,17 @@
 		//------------------------------------------------------
 		updateListener = OSCFunc({ |msg, time, addr, recvPort|
 
-			var blob = blobsDict.at(msg[1]);
+			var b = blobsDict.at(msg[1]);
 
-			if(blob != nil,{
+			if(b != nil,{
 
-				 blobs[\msgToBlob].(msg, blob);
+				 blob[\msgToBlob].(msg, b);
 				// if this blob is on tell all patches
-				if(blob.state == 2,{
+				if(b.state == 2,{
 					patches.store.do({|p|
 						if(p.isOn, {
 							if(blobsDict.values.size > 0,{
-								p.env.use{~onBlobUpdate.(blob, blobsDict)};
+								p.env.use{~onBlobUpdate.(b, blobsDict)};
 							});
 						});
 					});
@@ -260,12 +260,12 @@
 		//------------------------------------------------------
 		deinitListener = OSCFunc({ |msg, time, addr, recvPort|
 
-			var blob = blobsDict.at(msg[1]);
-			if(blob != nil,{
+			var b = blobsDict.at(msg[1]);
+			if(b != nil,{
 
 				// msgToBlob.(msg, blob);
-				blob.label = msg[1];
-				blob.state = msg[2];
+				b.label = msg[1];
+				b.state = msg[2];
 
 				patches.store.do({|p|
 					if(p.isOn, {
@@ -277,8 +277,8 @@
 				});
 
 				//needs to be longer than the fade out on the patterns inside the patch when using Ndefs
-				// {blobs[\deinit].(blob);}.defer(10);
-				blobs[\deinit].(blob);
+				// {blob[\deinit].(blob);}.defer(10);
+				blob[\deinit].(blob);
 				blobsDict.removeAt(msg[1]);
 
 				// postf("blob -: % :", blob.label);
