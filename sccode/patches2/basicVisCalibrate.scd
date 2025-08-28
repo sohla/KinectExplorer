@@ -50,7 +50,7 @@ var findNextRunning = {
 
 	// each polyline (blob)
 	4.0.do({|i|
-		var c = Color.new(0,1,1,0);
+		var c = Color.new(1,0,1,0);
 		~setPolylineColor.(i,Color.blue.asArray);
 	});
 
@@ -64,8 +64,8 @@ var findNextRunning = {
 
 	// ~setDisplace.(mix:1, x:1, y:1, period:0.3, noise:1, z:0);
 	~setDisplace.(mix:0.0);
-	// ~setFeedback.(mix:1, opacity:0.98, hue:0.5, x:0, y:-0.1, dx:0.11, dy:0.11, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
-	~setFeedback.(mix:0);
+	~setFeedback.(mix:1, opacity:0.96, hue:0.02, x:0.0, y:0.0, dx:0.0, dy:0.0, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	// ~setFeedback.(mix:0);
 
 };
 

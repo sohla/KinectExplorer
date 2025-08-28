@@ -1,17 +1,19 @@
 (
 
-// var noteAddr = NetAddr.new("192.168.1.150", 10001);
-// var globalAddr = NetAddr.new("192.168.1.150", 10002);
-// var keAddr = NetAddr("192.168.1.70",57000);
+
+// CABIN network setup
+var noteAddr = NetAddr.new("192.168.1.150", 10001);
+var globalAddr = NetAddr.new("192.168.1.150", 10002);
+var keAddr = NetAddr("192.168.1.70",57000);
 
 
 // var noteAddr = NetAddr.new("10.1.1.6", 10001);
 // var globalAddr = NetAddr.new("10.1.1.6", 10002);
 // var keAddr = NetAddr("10.1.1.3",57000);
 
-	var noteAddr = NetAddr.new("127.0.0.1", 10001);
-	var globalAddr = NetAddr.new("127.0.0.1", 10002);
-	var keAddr = NetAddr("127.0.0.1",57000);
+// var noteAddr = NetAddr.new("127.0.0.1", 10001);
+// var globalAddr = NetAddr.new("127.0.0.1", 10002);
+// var keAddr = NetAddr("127.0.0.1",57000);
 
 	var port = 57120;
 	var performancePort = 10005;
@@ -45,8 +47,8 @@
 	var patches = files.collect({|f| genPatch.(f)});
 	//------------------------------------------------------
 
-// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
-	var patchesPath = "~/Develop/OSX/Frameworks/of_v0.12.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
+var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
+// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.12.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 
 	//------------------------------------------------------
 	var numOfBlobs = 4;
@@ -192,13 +194,13 @@
 
 	var bootServer = {|f|
 
-		// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+		var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 
-		var input = ServerOptions.devices.indexOfEqual("BlackHole 16ch");
-		var output = ServerOptions.devices.indexOfEqual("External Headphones");
+	// var input = ServerOptions.devices.indexOfEqual("BlackHole 16ch");
+	// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
 		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
 		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
@@ -320,13 +322,13 @@
 		});
 
 		//plotter
-		plotter.value = plotter.value.flop;
-		plotter.value = plotter.value.insert(0, plotData.());
-		plotter.value = plotter.value.keep(50);
-		plotter.value = plotter.value.flop;
-
-		plotter.minval_(-10);
-		plotter.maxval_(10);
+	// plotter.value = plotter.value.flop;
+	// plotter.value = plotter.value.insert(0, plotData.());
+	// plotter.value = plotter.value.keep(50);
+	// plotter.value = plotter.value.flop;
+	//
+	// plotter.minval_(-10);
+	// plotter.maxval_(10);
 
 	};
 
