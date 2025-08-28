@@ -92,13 +92,13 @@
             "vert-invert": "0"
         },
         "nearfar": {
-            "cropBot": "0.765306",
-            "cropLeft": "0.353061",
-            "cropRight": "0.706122",
-            "cropTop": "0.489796",
+            "cropBot": "0.489796",
+            "cropLeft": "0.169388",
+            "cropRight": "0.87551",
+            "cropTop": "0.168367",
             "cv-threshold": "0",
             "draw": "1",
-            "far": "119",
+            "far": "5",
             "horz-invert": "1",
             "map": "1",
             "near": "255",
@@ -134,19 +134,19 @@
             "blobs": "4",
             "distance": "255",
             "draw": "1",
-            "maxRadius": "174",
-            "minRadius": "24",
+            "maxRadius": "156",
+            "minRadius": "23",
             "on": "1",
             "persistance": "2",
             "sc": "127.0.0.1",
             "td": "192.168.1.150",
-            "threshold": "126"
+            "threshold": "83"
         },
         "pixelrecorder": {
             "recording": "0"
         },
         "realtime": {
-            "realtime": "1"
+            "realtime": "0"
         },
         "reorder": {
             "draw": "1",
