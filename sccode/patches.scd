@@ -27,36 +27,82 @@ var files = [
 ];
 
 var genPatch = {|file|
-  (\file: file, \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2)
+  (\file: file, \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2, \watcher: nil)
 };
 
 var store = files.collect({|f| genPatch.(f)});
 
-// var startWatcher = {|model|
-//   var path = PathName.new(patchesPath++model.file);
+var createWatcher = {|p|
+  var path = PathName.new(patchesPath++p.file);
+  Routine {
+    loop{
+      p.env.use{
+        if(~fileTime != File.mtime(path.asAbsolutePath),{
+            ~fileTime = File.mtime(path.asAbsolutePath);
+            ("Patch" + p.file + "updated").postln;
+            reloadPatch.(p);
+        }); 
+      };
+      0.1.yield;
+    }
+  };
+};
 
-//   model.env.use{
-//     ~fileTime = File.mtime(path.asAbsolutePath);
-//     ~fileWatcher = Routine {
-//       loop{
-//         if(~fileTime != File.mtime(path.asAbsolutePath),{
-//             ~fileTime = File.mtime(path.asAbsolutePath);
-//             ~deinit.(model);
-//             interpret(str);
-//             ~init.(model);
-//             ("Patch" + model.file + "updated").postln;
-//         }); 
-//         0.1.yield;
-//       }
-//     }.play;
-//   };
-// };
+
+var reloadPatch = {|p|
+
+  if(p.env != nil,{ p.env.use{
+     if(p.isOn, {~deinit.(p)} )
+    };
+  });
+
+  load.(p);
+
+  p.env.use{
+    if(p.isOn, {~init.(p)} )
+  };
+
+  p.watcher = createWatcher.(p);
+  p.watcher.reset.play(AppClock);
+
+};
+
+
+
+var loadPatch = {|p|
+
+  p.watcher.stop;
+  p.watcher.free;
+
+  if(p.env != nil,{
+    p.env.use{
+      if(p.isOn,{
+        ~deinit.()
+      })
+    };
+  });
+
+  load.(p);
+
+  p.env.use{
+    if(p.isOn,{
+    ~init.(p);
+    })
+  };
+
+  p.watcher = createWatcher.(p);
+  p.watcher.reset.play(AppClock);
+
+};
+
 
 var load = {|model|
   var path = PathName.new(patchesPath++model.file);
   var file = File.new(path.asAbsolutePath,"r");
   var str = file.readAllString;
   var env = Environment.make {
+
+    ~fileTime = File.mtime(path.asAbsolutePath);
 
     ~setRGBColor= {|color = #[1,1,1,1]|
       model.globalAddr.sendMsg("/poly_r", color[0]);
@@ -174,5 +220,5 @@ var load = {|model|
 
 (
   store:store,
-  load:load
+  loadPatch:loadPatch
 )

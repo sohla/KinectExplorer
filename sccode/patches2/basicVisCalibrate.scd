@@ -56,7 +56,7 @@ var findNextRunning = {
 
 	~setColorRamp.(Color.green.asArray, 10);
 
-	// ~setBackground0.();
+	// ~setBackground0.(); 
 	~setBackground1.(Color.white.asArray);
 	// ~setBackground2.(blur:0.4, step:0.3);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);

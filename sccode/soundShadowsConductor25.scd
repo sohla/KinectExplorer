@@ -143,24 +143,10 @@
 			.states_([["reload", Color.yellow]])
 			.maxWidth_(100)
 			.action_({|b|
-
 				patches.store.do({|p|
-					// resetKE.();
-					if(p.isOn,{
-						p.env.use{
-							~deinit.(p);
-						};
+            patches[\reloadPatch].(p);
+            resetKE.();
 					});
-
-					patches[\load].(p);
-
-					if(p.isOn,{
-						p.env.use{
-							~init.(p);
-						};
-						resetKE.();
-					});
-				})
 			}),
 		Button()
 			.states_([["mute", Color.white],["mute", Color.red]])
@@ -291,8 +277,8 @@
 				});
 
 				//needs to be longer than the fade out on the patterns inside the patch when using Ndefs
-				{blobs[\deinit].(blob);}.defer(10);
-				// blobs[\deinit].(blob);
+				// {blobs[\deinit].(blob);}.defer(10);
+				blobs[\deinit].(blob);
 				blobsDict.removeAt(msg[1]);
 
 				// postf("blob -: % :", blob.label);
@@ -315,7 +301,7 @@
 		//------------------------------------------------------
 		TempoClock.default.tempo = 1.0;
 		// load all data into patches
-		patches.store.do({|p| patches[\load].(p)});
+		patches.store.do({|p| patches[\loadPatch].(p)});
 		resetKE.();
 	});
   
