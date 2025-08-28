@@ -167,3 +167,15 @@ Copy video files over
 scp xxxx@192.168.20.14:~/Documents/Development/openframeworks/of_v0.11.0_linuxarmv7l_release/apps/myApps/KinectExplorer/bin/data/ke_depth2020-10-16-11-50-26.mov ~/Movies
 
 
+## run conductor
+./sclang ~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/shadowPlayConductor.scd
+
+## run KinectExplorer (jetson)
+cd ~/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps/KinectExplorer
+./bin/KinectExplorer -sc "192.168.1.60" -sp "57120" -td "192.168.1.150" -tp "57130"
+- no need to change PORTS. sc expect 57120 and td expects 57130
+
+## run TouchDesigner
+
+shh then powershell
+
