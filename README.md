@@ -177,5 +177,5 @@ cd ~/Documents/Develop/openframeworks/of_v0.11.2_linuxarmv7l_release/apps/myApps
 
 ## run TouchDesigner
 
-shh then powershell
+shh then powershell (but dont its SHIT)
 

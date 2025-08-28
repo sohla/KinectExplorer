@@ -57,14 +57,13 @@ var findNextRunning = {
 	~setColorRamp.(Color.green.asArray, 10);
 
 	// ~setBackground0.();
-	~setBackground1.(Color.white
-		.asArray);
+	~setBackground1.(Color.white.asArray);
 	// ~setBackground2.(blur:0.4, step:0.3);
 	// ~setBackground3.(index:8, scale:1, rot:0.01, mode:31, color:Color.white.asArray);
 
 	// ~setDisplace.(mix:1, x:1, y:1, period:0.3, noise:1, z:0);
 	~setDisplace.(mix:0.0);
-	~setFeedback.(mix:1, opacity:0.96, hue:0.02, x:0.0, y:0.0, dx:0.0, dy:0.0, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	~setFeedback.(mix:1, opacity:0.96, hue:0.02, x:0.0, y:1.0, dx:0.0, dy:0.0, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 
 };

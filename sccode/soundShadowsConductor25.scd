@@ -1,69 +1,36 @@
 (
-
-
-
 	var port = 57120;
 	var performancePort = 10005;
-
-
-// var test = Require("test.scd");
-
 	//------------------------------------------------------
   var addresses = Require("Addresses.scd");
   var noteAddr = addresses.noteAddr.();
   var globalAddr = addresses.globalAddr.();
   var keAddr = addresses.keAddr.();
 
-
 	//------------------------------------------------------
 	var row = 3, col = 5;
-	
   var patches = Require("Patches.scd");
 
 	//------------------------------------------------------
 
-var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
-// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.12.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
+  var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
+  // var patchesPath = "~/Develop/OSX/Frameworks/of_v0.12.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
 
 	//------------------------------------------------------
 	var numOfBlobs = 4;
 
 	var window, freqScope;
-	var loadPatch, patchButton, reloadButton;
-	var graphView, plotView, plotter, serverView;
+	var reloadButton;
+	var plotView, plotter, serverView;
 
 	var pntListener, objListener, lnkListener;
 	var resetListener, initListener, updateListener, deinitListener, performanceListener;
 
-	var scale = 0.6;
-
 	//------------------------------------------------------
-	var pfmt = 0; //store the sum of all patch files modification time since epoch
-
-	var pfmtRout = Routine {|i|
-		//•• add first time condition to remove calling ~deinit when exec.
-		loop{
-			var temp = 0;
-			patches.do({ |p,i| temp = temp + File.mtime(patchesPath.asAbsolutePath++p.file) });
-			if(temp != pfmt,{ {reloadButton.valueAction_(0)}.defer() });
-			pfmt = temp;
-      // "*#*#*#*#*#*#*# reload : MUST GET RID OF THIS!!!!!".postln;
-			0.1.yield;
-		}
-	}.play;
-
-	//------------------------------------------------------
-
-
 	var blobsDict = Dictionary.new(numOfBlobs);
 	//------------------------------------------------------
 
-	
-
-	//------------------------------------------------------
-
 	var resetKE = {
-
 		{
 			keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 1);
 			keAddr.sendMsg("/inputSettings/clear/on", 1);
@@ -71,19 +38,12 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 			keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 2);
 			keAddr.sendMsg("/inputSettings/clear/on", 0);
 		}.fork
-
 	};
-
-	//------------------------------------------------------
-	// var filter = {|input,history,friction = 0.5|
-	// 	(friction * input + ((1 - friction) * history))
-	// };
 
 	//------------------------------------------------------
 	var freeAll = {
 
-		pfmtRout.stop;
-		patches.do({|p| p.env.use{~deinit.(p)} });
+		patches.store.do({|p| p.env.use{~deinit.(p)} });
 
 		resetListener.free;
 		initListener.free;
@@ -129,236 +89,12 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 	};
 
 	//------------------------------------------------------------
-	var updateGraphView = {|view|
-
-		var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
-		var vx = 0,vy = 0;
-
-		var plotData = {
-
-			var data = [0];
-
-			if(blobsDict.values.size > 0,{
-				// for now, calling all on patches
-				patches.do({|p|
-					if(p.isOn,{
-						p.env.use{
-							var d = ~onPlotData.(blobsDict);
-							if(d != nil, {data = d});
-						};
-					});
-				});
-			});
-			data;
-		};
-
-		var blobData = {|blob|
-			var data = 0;
-
-			if(blobsDict.values.size > 0,{
-				// for now, calling all on patches
-				patches.do({|p|
-					if(p.isOn,{
-						p.env.use{
-							var d = ~onBlobData.(blob);
-							if(d != nil, {data = d});
-						};
-					});
-				});
-			});
-			data;
-		};
-
-
-		Pen.fillColor = Color.gray(0,1);
-		Pen.fillRect(window.view.bounds);
-
-		if(s.serverRunning == false,{
-			Pen.strokeColor = Color.magenta;
-		Pen.stringAtPoint("booting server...", 10@10, color:Color.yellow(0.5));
-		});
-
-		Pen.scale(1.3, 1.3);
-		Pen.translate(-100, -20);
-		blobsDict.do({|blob,i|
-
-			if(blob.state == 2,{
-
-				var prev = [];
-
-				var rect  = Rect.fromArray(blob.rect.getnSynchronous(4));
-				var center = Point(blob.center.getnSynchronous(2)[0] * blob.depthCamWidth, blob.center.getnSynchronous(2)[1] * blob.depthCamHeight);
-				var velocity = Point(blob.velocity.getnSynchronous(2)[0], blob.velocity.getnSynchronous(2)[1]);
-
-				var ax, ay, bx, by, mx, my;
-				var xdif, ydif, a1, b1, a2, b2;
-
-				var dv = blobData.(blob);
-
-				Pen.smoothing_(true);
-				Pen.width = 1;
-
-				Pen.fillColor = cols.at(blob.label.asInteger.mod(4));
-				Pen.strokeColor = cols.at(blob.label.asInteger.mod(4));
-
-				Pen.fillOval(Rect(center.x-3, center.y-3, 6, 6));
-			// Pen.fillRect(Rect(center.x - 5,550,10, dv));
-
-				Pen.strokeRect(rect);
-
-			 	Pen.moveTo(center);
-				Pen.lineTo(Point(center.x+ (velocity.x*2), center.y+(velocity.y*2)));
-				Pen.stroke;
-
-				Pen.stringAtPoint(i.asString + ":" + blob.label.asString + ":" + blob.state, center.x + 20@center.y);
-
-				prev = blob.data.reshape(1,2)[0];
-				blob.data.reshape(blob.data.size,2).do({|o,j|
-
-					if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
-						ax = prev[0];
-						ay = prev[1];
-						bx = o[0];
-						by = o[1];
-					 	Pen.moveTo(Point(ax, ay));
-						Pen.lineTo(Point(bx, by));
-						Pen.stroke;
-						prev = o;
-					});
-				});
-			});
-		});
-
-		//plotter
-	// plotter.value = plotter.value.flop;
-	// plotter.value = plotter.value.insert(0, plotData.());
-	// plotter.value = plotter.value.keep(50);
-	// plotter.value = plotter.value.flop;
-	//
-	// plotter.minval_(-10);
-	// plotter.maxval_(10);
-
-	};
-
-	//------------------------------------------------------------
-	loadPatch = {|model|
-		var path = PathName.new(patchesPath++model.file);
-		var file = File.new(path.asAbsolutePath,"r");
-		var str = file.readAllString;
-		var env = Environment.make {
-
-			~setRGBColor= {|color = #[1,1,1,1]|
-				model.globalAddr.sendMsg("/poly_r", color[0]);
-				model.globalAddr.sendMsg("/poly_g", color[1]);
-				model.globalAddr.sendMsg("/poly_b", color[2]);
-				model.globalAddr.sendMsg("/poly_a", color[3]);
-			};
-
-
-			~setPolyline = {|render = 1, lineWidth = 1, solid = 1|
-				model.globalAddr.sendMsg("/poly_render", render);
-				model.globalAddr.sendMsg("/poly_linewidth",lineWidth);
-				model.globalAddr.sendMsg("/poly_solid", solid);
-			};
-
-			~setPolylineColor = {|index = 0, color = #[1,1,1,1]|
-				// // polyline colors
-				// globalAddr.sendMsg("/poly_r", 1);
-
-				model.globalAddr.sendMsg("/poly_r"++(index+1), color[0]);
-				model.globalAddr.sendMsg("/poly_g"++(index+1), color[1]);
-				model.globalAddr.sendMsg("/poly_b"++(index+1), color[2]);
-				model.globalAddr.sendMsg("/poly_a"++(index+1), color[3]);
-			};
-
-
-			~setColorRamp = {|color = #[1,1,1], hue = 1|
-				// global color ramp
-				globalAddr.sendMsg("/ramp_r", color[0]);
-				globalAddr.sendMsg("/ramp_g", color[1]);
-				globalAddr.sendMsg("/ramp_b", color[2]);
-
-				globalAddr.sendMsg("/ramp_hue1", hue);
-			};
-
-			// background
-			~setBackground0 = {
-				globalAddr.sendMsg("/background_index",0);
-				globalAddr.sendMsg("/background_r", 0);
-				globalAddr.sendMsg("/background_g", 0);
-				globalAddr.sendMsg("/background_b", 0);
-			};
-
-			~setBackground1 = {|color = #[1,1,1]|
-				globalAddr.sendMsg("/background_index",1);
-				globalAddr.sendMsg("/background_r", color[0]);
-				globalAddr.sendMsg("/background_g", color[1]);
-				globalAddr.sendMsg("/background_b", color[2]);
-			};
-
-
-			~setBackground2 = {|blur = 0.1, step = 0.1|
-				globalAddr.sendMsg("/background_index",2);
-				globalAddr.sendMsg("/cell_blur", blur);
-				globalAddr.sendMsg("/cell_step", step);
-			};
-
-			~setBackground3 = {|index = 0, scale = 1, rot = 0.0, mode = 0, color = #[1,1,1]|
-				globalAddr.sendMsg("/background_index",3);
-				globalAddr.sendMsg("/background_image_index", index);
-				globalAddr.sendMsg("/background_image_scale", scale);
-				globalAddr.sendMsg("/background_image_rotspeed", rot);
-				globalAddr.sendMsg("/background_image_blendmode",mode);
-				globalAddr.sendMsg("/background_r", color[0]);
-				globalAddr.sendMsg("/background_g", color[1]);
-				globalAddr.sendMsg("/background_b", color[2]);
-			};
-
-			~setDisplace = {|mix = 1, x = 0.0, y = 0.0, period = 0.1, noise = 1, z = 0.0|
-				// displace polyline
-				globalAddr.sendMsg("/displace_mix", mix);//on/off
-				globalAddr.sendMsg("/displace_x", x);
-				globalAddr.sendMsg("/displace_y", y);
-				globalAddr.sendMsg("/displace_period", period);
-				globalAddr.sendMsg("/displace_noise_harmonic", noise);
-				globalAddr.sendMsg("/displace_speedz",z);
-			};
-
-
-			~setFeedback = {|mix=1, opacity=0.9, hue=0.2, x=0, y=0, dx=0, dy=0, edgeColor=#[0,0,0], edgeBlack=0.0, edgeStength=0.0|
-
-				globalAddr.sendMsg("/feedback_mix", mix);
-				globalAddr.sendMsg("/feedback_opacity", opacity);
-
-				globalAddr.sendMsg("/feedback_hue", hue);
-
-				globalAddr.sendMsg("/feedback_x", x); //-1 1
-				globalAddr.sendMsg("/feedback_y", y);
-
-				globalAddr.sendMsg("/feedback_displacex",dx); //-1 1
-				globalAddr.sendMsg("/feedback_displacey", dy);
-
-				globalAddr.sendMsg("/feedback_edge_r", edgeColor[0]);
-				globalAddr.sendMsg("/feedback_edge_g", edgeColor[1]);
-				globalAddr.sendMsg("/feedback_edge_b", edgeColor[2]);
-
-				globalAddr.sendMsg("/feedback_edge_blacklevel", edgeBlack);
-				globalAddr.sendMsg("/feedback_edge_strength", edgeStength);
-
-			};
-			//•• add shared functionality here ••//
-			interpret(str);
-
-
-		};
-		model.env = env;
-		//• load synth here instead of init?
-	};
-
+	var renderer = Require("renderer.scd");
 	//------------------------------------------------------
-	patchButton = {|i|{|j|
+	var patchButton = {|i|{|j|
 		var index = (i * col) + j;
-		var p = patches[index];
+		var p = patches.store[index];
+
 		if( p != nil,{
 			Button()
 				.states_([[p.file, Color.gray(0.2)],[p.file, Color.green(0.8)]])
@@ -370,9 +106,13 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 					if(b.value == 1,{
 						resetKE.();//•• maybe not
 						p.isOn = true;
-						p.env.use{~init.(p)};
+            p.env.use{
+              ~init.(p)
+            };
 					},{
-						p.env.use{~deinit.(p)};
+						p.env.use{
+              ~deinit.(p)
+            };
 						resetKE.();
 						p.isOn = false;
 					});
@@ -404,7 +144,7 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 			.maxWidth_(100)
 			.action_({|b|
 
-				patches.do({|p|
+				patches.store.do({|p|
 					// resetKE.();
 					if(p.isOn,{
 						p.env.use{
@@ -412,7 +152,7 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 						};
 					});
 
-					loadPatch.(p);
+					patches[\load].(p);
 
 					if(p.isOn,{
 						p.env.use{
@@ -435,14 +175,7 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 				s.freeAll;
 			}),
 		GridLayout.rows(*patchButton.()),
-		graphView = UserView()
-				.minHeight_(500)
-				.minWidth_(500)
-				.drawFunc_(updateGraphView)
-				.frameRate_(30)
-				.animate_(true)
-				.clearOnRefresh_(false),
-
+    renderer.(blobsDict, patches),
 		HLayout(
 			plotView = UserView()
 				.minHeight_(200)
@@ -480,7 +213,7 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 		resetListener = OSCFunc({ |msg, time, addr, recvPort|
 
 			blobsDict.do({|blob|
-				patches.do({|p| m.env.use{
+				patches.store.do({|p| m.env.use{
 					if(p.isOn, {
 						if(blobsDict.values.size > 0,{
 							~onBlobDeinit.(blob, blobsDict);
@@ -506,7 +239,7 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 		// });
 		// postf("% \n");
 
-			patches.do({|p|
+			patches.store.do({|p|
 				if(p.isOn, {
 					if(blobsDict.values.size > 0,{
 						 p.env.use{~onBlobInit.(blob, blobsDict)};
@@ -527,7 +260,7 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 				 blobs[\msgToBlob].(msg, blob);
 				// if this blob is on tell all patches
 				if(blob.state == 2,{
-					patches.do({|p|
+					patches.store.do({|p|
 						if(p.isOn, {
 							if(blobsDict.values.size > 0,{
 								p.env.use{~onBlobUpdate.(blob, blobsDict)};
@@ -548,7 +281,7 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 				blob.label = msg[1];
 				blob.state = msg[2];
 
-				patches.do({|p|
+				patches.store.do({|p|
 					if(p.isOn, {
 						if(blobsDict.values.size > 0,{
 							p.env.use{~onBlobDeinit.(blob, blobsDict)};
@@ -582,24 +315,9 @@ var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/K
 		//------------------------------------------------------
 		TempoClock.default.tempo = 1.0;
 		// load all data into patches
-		patches.do({|p| loadPatch.(p)});
+		patches.store.do({|p| patches[\load].(p)});
 		resetKE.();
 	});
-
-  // test.funcA.();
-  // test.funcB.funcB.("S");
   
 )
 
-// NetAddr.localAddr
-//
-// (
-// a = OSCFunc({ |msg, time, addr, recvPort|
-// 	[time,msg].postln;
-// }, '/ke/update');
-// )
-// a.free
-// OSCFunc.trace(false)
-//
-//
-//
