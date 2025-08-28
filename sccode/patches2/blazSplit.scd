@@ -52,7 +52,7 @@ var findNextRunning = {
 	//----------------------------------------------------------------------------
 	globalAddr.sendMsg("/xfade",1);//0 off 1 mix 
 
-	~setPolyline.(0,1,1);
+	~setPolyline.(1,1,1);
 
 	4.0.do({|i|
 		var c = [Color.red, Color.blue, Color.green, Color.white];
@@ -171,7 +171,7 @@ var findNextRunning = {
 		    \scale, Pswitch([0.8,0.2,0.3,0.3],i),
 		    \scx, 3,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, 20,
-		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.73,-1,1)},
+		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.73,0,4)},
 		    \sy, 0,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),

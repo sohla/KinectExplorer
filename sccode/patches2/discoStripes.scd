@@ -207,7 +207,7 @@ var findNextRunning = {
 		    \scx, Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		    \scy, 0.1,
 		    \sx, Pfunc{blob.center.getnSynchronous(2)[0].linlin(0.21,0.79,-1,1)},
-		    \sy, -1.1,
+		    \sy, -2,
 		    \ex, Pkey(\sx),
 		    \ey,  Pkey(\sy),
 		    \imageindex, Pwhite(0,15).floor,
