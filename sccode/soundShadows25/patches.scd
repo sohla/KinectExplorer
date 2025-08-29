@@ -1,4 +1,4 @@
-var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/patches2/";
+var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
 
 
 var addresses = Require("Addresses.scd");
@@ -7,23 +7,10 @@ var globalAddr = addresses.globalAddr.();
   
 var files = [
   "basicVisCalibrate.scd",
-  "blackVis.scd",
-  "tempBlobLife.scd",
-  "tempBlobPattern.scd",
-  "tempBlobTrack.scd",
-
-  "earth.scd",
-  "sunFire.scd",
-  "water.scd",
-  "discoStripes.scd",
-  "colorShape.scd",
+  "basicVis1.scd",
   "basicVis7.scd",
-
-  "blazSplit.scd",
-  "conexParty.scd",
-
-  "toDraw.scd",
-  "vol.scd",
+  "basic1.scd",
+  "basic6.scd",
 ];
 
 var genPatch = {|file|
