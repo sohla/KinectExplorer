@@ -6,6 +6,7 @@ var noteAddr = addresses.noteAddr.();
 var globalAddr = addresses.globalAddr.();
   
 var files = [
+  "vis1.scd",
   "basicVisCalibrate.scd",
   "basicVis1.scd",
   "basicVis7.scd",
@@ -91,6 +92,12 @@ var load = {|model|
 
     ~fileTime = File.mtime(path.asAbsolutePath);
 
+    ~setPolyline = {|render = 1, lineWidth = 1, solid = 1|
+      model.globalAddr.sendMsg("/poly_render", render);
+      model.globalAddr.sendMsg("/poly_linewidth",lineWidth);
+      model.globalAddr.sendMsg("/poly_solid", solid);
+    };
+
     ~setRGBColor= {|color = #[1,1,1,1]|
       model.globalAddr.sendMsg("/poly_r", color[0]);
       model.globalAddr.sendMsg("/poly_g", color[1]);
@@ -99,11 +106,6 @@ var load = {|model|
     };
 
 
-    ~setPolyline = {|render = 1, lineWidth = 1, solid = 1|
-      model.globalAddr.sendMsg("/poly_render", render);
-      model.globalAddr.sendMsg("/poly_linewidth",lineWidth);
-      model.globalAddr.sendMsg("/poly_solid", solid);
-    };
 
     ~setPolylineColor = {|index = 0, color = #[1,1,1,1]|
       // // polyline colors
