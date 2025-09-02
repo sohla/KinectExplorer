@@ -8,7 +8,7 @@
   var keAddr = addresses.keAddr.();
 
 	//------------------------------------------------------
-	var row = 3, col = 5;
+	var row = 3, col = 3;
   var patches = Require("Patches.scd");
 
 	//------------------------------------------------------
@@ -20,7 +20,7 @@
 	// var plotter;
 
 	var pntListener, objListener, lnkListener;
-	var resetListener, initListener, updateListener, deinitListener, performanceListener;
+	var resetListener, initListener, updateListener, deinitListener, performanceListener, patchListener;
 
 	//------------------------------------------------------
 	var blobsDict = Dictionary.new(numOfBlobs);
@@ -99,7 +99,7 @@
 			("Synths: "++s.numSynths).drawAtPoint(300@4, Font.default, Color.yellow);
 	});	
 
-	var patchButton = {|i|{|j|
+	var patchButtons = {|i|{|j|
 		var index = (i * col) + j;
 		var p = patches.store[index];
 
@@ -173,7 +173,7 @@
 				UserView(),
 				UserView(),
 			]),
-		GridLayout.rows(*patchButton.()),
+		GridLayout.rows(*patchButtons.()),
     renderer.(blobsDict, patches),
 		HLayout(
 			plotView = UserView()
@@ -231,6 +231,7 @@
 			var b = Event.new(proto:blob.model);
 			
 			blob[\init].(b);
+			// msg.postln; BUG init does not have any meaningful data
 			blob[\msgToBlob].(msg, b);
 			
 			blobsDict.put(label,b);
@@ -298,6 +299,15 @@
 
 		}, '/ke/deinit', recvPort: port);
 		//------------------------------------------------------
+		patchListener = OSCFunc({ |msg, time, addr, recvPort|
+
+			var index = msg[1];
+			{
+				patchButtons.flat.do{|b| b.valueAction_(0)};
+				patchButtons.flat[index].valueAction_(1);
+			}.defer;
+
+		}, '/ke/patch', recvPort: port);		//------------------------------------------------------
 
 		//••• TODO
 		// performanceListener = OSCFunc.newMatching({ |msg, time, addr, recvPort|
@@ -309,6 +319,7 @@
 		// load all data into patches
 		patches.store.do({|p| patches[\loadPatch].(p)});
 		resetKE.();
+
 	});
   
 )
