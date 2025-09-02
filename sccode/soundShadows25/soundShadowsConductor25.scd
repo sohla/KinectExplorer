@@ -58,16 +58,16 @@
 
 	var bootServer = {|f|
 
-		var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-		var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 
 	// var input = ServerOptions.devices.indexOfEqual("BlackHole 16ch");
 	// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-		// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
-		// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
+		var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+		var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 		// var output = ServerOptions.devices.indexOfEqual("Radial USB Pro Output");
 
 		o = Server.local.options;
@@ -97,7 +97,7 @@
 			("UGens: "++s.numUGens).drawAtPoint(100@4, Font.default, Color.yellow);
 			("Groups: "++s.numGroups).drawAtPoint(200@4, Font.default, Color.yellow);
 			("Synths: "++s.numSynths).drawAtPoint(300@4, Font.default, Color.yellow);
-	});	
+	});
 
 	var patchButtons = {|i|{|j|
 		var index = (i * col) + j;
@@ -201,7 +201,7 @@
 
 
 	bootServer.({
-    
+
     var blob = Require("blob.scd");
 
 		SynthDef(\mouseX, { |bus| Out.kr(bus, MouseX.kr(0,1.0))}).add;
@@ -229,11 +229,11 @@
 
 			var label = msg[1];
 			var b = Event.new(proto:blob.model);
-			
+
 			blob[\init].(b);
 			// msg.postln; BUG init does not have any meaningful data
 			blob[\msgToBlob].(msg, b);
-			
+
 			blobsDict.put(label,b);
 
 			// postf("blob init: % \n", label);
@@ -256,7 +256,7 @@
 			var b = blobsDict.at(label);
 
 			if(b != nil,{
-			
+
 				//blobsDict.keys.postln;
 
 				 blob[\msgToBlob].(msg, b);
@@ -321,6 +321,6 @@
 		resetKE.();
 
 	});
-  
+
 )
 

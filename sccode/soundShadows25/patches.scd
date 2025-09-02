@@ -1,10 +1,11 @@
-var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
+// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
+var patchesPath = "~/Develop/OSX/Projects/KinectExplorer/sccode/soundShadows25/patches25/";
 
 
 var addresses = Require("Addresses.scd");
 var noteAddr = addresses.noteAddr.();
 var globalAddr = addresses.globalAddr.();
-  
+
 var files = [
   "vis1.scd",
   "zones.scd",
@@ -16,7 +17,7 @@ var files = [
   "blueMoon.scd",
   "leaf.scd",
 
-  
+
 ];
 
 var genPatch = {|file|
@@ -34,7 +35,7 @@ var createWatcher = {|p|
             ~fileTime = File.mtime(path.asAbsolutePath);
             ("Patch" + p.file + "updated").postln;
             reloadPatch.(p);
-        }); 
+        });
       };
       0.1.yield;
     }
@@ -95,9 +96,9 @@ var load = {|model|
   var str = file.readAllString;
   var env = Environment.make {
 
-    ~setOSCReset = { 
-      model.globalAddr.sendMsg("/oscReset", 1); 
-      model.globalAddr.sendMsg("/oscReset", 0); 
+    ~setOSCReset = {
+      model.globalAddr.sendMsg("/oscReset", 1);
+      model.globalAddr.sendMsg("/oscReset", 0);
     };
 
 
