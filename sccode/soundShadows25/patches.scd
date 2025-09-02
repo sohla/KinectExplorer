@@ -7,11 +7,16 @@ var globalAddr = addresses.globalAddr.();
   
 var files = [
   "vis1.scd",
-  "basicVisCalibrate.scd",
-  "basicVis1.scd",
-  "basicVis7.scd",
-  "basic1.scd",
-  "basic6.scd",
+  "zones.scd",
+  "blobColors.scd",
+  "water.scd",
+  "pond.scd",
+  "forest.scd",
+  "zones2.scd",
+  "blueMoon.scd",
+  "leaf.scd",
+
+  
 ];
 
 var genPatch = {|file|
@@ -181,7 +186,7 @@ var load = {|model|
 
     ~setFeedback = {|mix=1, opacity=0.9, hue=0.2, x=0, y=0, dx=0, dy=0, edgeColor=#[0,0,0], edgeBlack=0.0, edgeStength=0.0|
 
-      "set feedback".postln;
+      // "set feedback".postln;
       globalAddr.sendMsg("/feedback_mix", mix);
       globalAddr.sendMsg("/feedback_opacity", opacity);
 
