@@ -231,6 +231,7 @@
 			var b = Event.new(proto:blob.model);
 			
 			blob[\init].(b);
+			// msg.postln; BUG init does not have any meaningful data
 			blob[\msgToBlob].(msg, b);
 			
 			blobsDict.put(label,b);

@@ -3,11 +3,16 @@
 
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
 
-	~setPolyline.(1,1,1);
+	~setOSCReset.(1);
+	~setXfade.(0.2);
+
+	~setPolyline.(0,1,1);
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
-
-
+	// ~setBackground0.(); 
+	// ~setBackground1.(Color.white.asArray);
+	// ~setBackground2.(blur:0.7, step:0.3);
+	~setBackground3.(index:1, scale:1, rot:0, mode:9, color:Color.white.asArray);
 
 	// each polyline (blob)
 	4.do({|i|
@@ -19,15 +24,12 @@
 	});
 
 
-	// ~setBackground0.(); 
-	// ~setBackground1.(Color.white.asArray);
-	~setBackground2.(blur:0.7, step:0.3);
-	// ~setBackground3.(index:1, scale:1, rot:0, mode:1, color:Color.red.asArray);
 
+	// ~setDisplace.(mix:1, x:3, y:10, period:0.1, noise:0.2, z:1);
 	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
 	~setDisplace.(mix:0.0);
 
-	// ~setFeedback.(mix:1, opacity:0.96, hue:0.1, x:0.0, y:0.0, dx:0.0, dy:0.0, edgeColor:Color(0,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	// ~setFeedback.(mix:1, opacity:0.96, hue:0.02, x:0.0, y:0.2, dx:0.0, dy:0.0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.0, edgeStength:0.0);
 	~setFeedback.(mix:0);
   
 

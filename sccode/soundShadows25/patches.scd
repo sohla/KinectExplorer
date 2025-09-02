@@ -90,7 +90,15 @@ var load = {|model|
   var str = file.readAllString;
   var env = Environment.make {
 
+    ~setOSCReset = { 
+      model.globalAddr.sendMsg("/oscReset", 1); 
+      model.globalAddr.sendMsg("/oscReset", 0); 
+    };
+
+
     ~fileTime = File.mtime(path.asAbsolutePath);
+
+    ~setXfade = {|v| model.globalAddr.sendMsg("/xfade", v)};
 
     ~setPolyline = {|render = 1, lineWidth = 1, solid = 1|
       model.globalAddr.sendMsg("/poly_render", render);
