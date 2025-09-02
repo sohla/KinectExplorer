@@ -1,3 +1,4 @@
+<<<<<<< HEAD:sccode/patches2/water.scd
 var pairs = Dictionary.new(4);
 var patterns = Array.fill(4,{nil});
 var fadeValues = [1,1,1,1];
@@ -73,12 +74,47 @@ var findNextRunning = {
 	~setFeedback.(mix:1, opacity:0.99, hue:0.02, x:0, y:0.1, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.1);
 	// ~setFeedback.(mix:0);
 
+=======
+// ------------------------------------------------------
+~init = {|patch|
+
+  var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
+
+	// ~setOSCReset.(1);
+	~setXfade.(1);
+
+	~setPolyline.(1,1,1);
+  ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
+
+	// ~setBackground0.(); 
+	// ~setBackground1.(Color.white().darken(0.2).asArray);
+	// ~setBackground2.(blur:0.7, step:0.1);
+	~setBackground3.(index:25, scale:1, rot:0, mode:31, color:Color.blue.asArray);
+
+	// each polyline (blob)
+	4.do({|i|
+		var c = Color.new(0,1/2,0.5/2,1);
+		// var c = Color.black().lighten(0.1);
+		// var c = Color.hsv(0.1 + (0.05 * i),1,1);
+    // var c = colors[i];
+		~setPolylineColor.(i,c.asArray); // might be broken
+	});
+
+	// ~setDisplace.(mix:0.2, x:10, y:0.1, period:1, noise:1, z:0);
+	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
+	~setDisplace.(mix:0.0);
+
+	~setFeedback.(mix:0.8, opacity:0.96, hue:0.02, x:0.0, y:0.04, dx:0.0, dy:0.0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.2, edgeStength:0.7);
+	// ~setFeedback.(mix:0);
+  
+>>>>>>> 4e51be7 (build for week 6):sccode/soundShadows25/patches25/water.scd
 
 };
 
 //------------------------------------------------------
 ~deinit = {|patch|
 
+<<<<<<< HEAD:sccode/patches2/water.scd
 	postf("deinit : % \n", patch.file);
 
 	// ~setBackground0.();
@@ -110,10 +146,13 @@ var findNextRunning = {
 
 
 
+=======
+>>>>>>> 4e51be7 (build for week 6):sccode/soundShadows25/patches25/water.scd
 };
 
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
+<<<<<<< HEAD:sccode/patches2/water.scd
 
 	var i = findNextRunning.();
 
@@ -231,10 +270,15 @@ var findNextRunning = {
 
 	});
 	
+=======
+	// postf("blob init: % \n", blob.label);
+
+>>>>>>> 4e51be7 (build for week 6):sccode/soundShadows25/patches25/water.scd
 };
 
 //------------------------------------------------------
 ~onBlobUpdate = {|blob, blobsDict|
+<<<<<<< HEAD:sccode/patches2/water.scd
 // [blob.depthCamWidth, blob.depthCamHeight].postln;
 
 };
@@ -243,10 +287,27 @@ var findNextRunning = {
 ~onPlotData = {|blobsDict|
 	
 	blobsDict.size
+=======
+};
+
+//------------------------------------------------------
+~onBlobDeinit = {|blob, blobsDict|
+	// postf("blob deinit: % \n", blob.label);
+
+};
+
+
+//------------------------------------------------------
+~onPlotData = {|blobsDict|	
+>>>>>>> 4e51be7 (build for week 6):sccode/soundShadows25/patches25/water.scd
 };
 
 //------------------------------------------------------
 ~onBlobData = {|blob|
+<<<<<<< HEAD:sccode/patches2/water.scd
 	
 };
 
+=======
+};
+>>>>>>> 4e51be7 (build for week 6):sccode/soundShadows25/patches25/water.scd
