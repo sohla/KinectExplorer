@@ -12,7 +12,7 @@
 	// ~setBackground0.(); 
 	// ~setBackground1.(Color.white().darken(0.2).asArray);
 	// ~setBackground2.(blur:0.7, step:0.1);
-	~setBackground3.(index:21, scale:1, rot:0, mode:31, color:Color.hsv(0.23,1,1).darken(0.69).asArray);
+	~setBackground3.(index:21, scale:1, rot:0, mode:31, color:Color.hsv(0.23,1,1).darken(0.99).asArray);
 
 	// each polyline (blob)
 	4.do({|i|
@@ -24,11 +24,11 @@
 	});
 
 	// ~setDisplace.(mix:0.2, x:10, y:0.1, period:1, noise:1, z:0);
-	~setDisplace.(mix:1, x:4, y:4, period:2, noise:1.3, z:0);
+	~setDisplace.(mix:1, x:4, y:4, period:3, noise:1.3, z:0);
 	// ~setDisplace.(mix:0.0);
 
-	// ~setFeedback.(mix:0.8, opacity:0.9, hue:0.02, x:0.0, y:0.3, dx:0.0, dy:0.0, edgeColor:Color(1,1,0).asArray, edgeBlack:0.1, edgeStength:0.0);
-	~setFeedback.(mix:0);
+	~setFeedback.(mix:0.2, opacity:0.9, hue:0.02, x:0.0, y:0.03, dx:0.0, dy:-0.0, edgeColor:Color(1,1,0).asArray, edgeBlack:0.1, edgeStength:0.3);
+	// ~setFeedback.(mix:0);
   
 
 };
