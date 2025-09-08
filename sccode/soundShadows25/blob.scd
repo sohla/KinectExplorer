@@ -51,8 +51,8 @@ var model = (
 			blob.acceleration.setn([msg[16], msg[17]]);
 			blob.velocityRate.set(msg[18]);
 			blob.accelerationRate.set(msg[19]);
-			blob.dataSize = msg[20].asInteger;
-			blob.data = msg.copyRange(21,127*2);
+			blob.dataSize = msg[20].asInteger - 2;
+			blob.data = msg.copyRange(21,blob.dataSize*2);
 
 	};
 

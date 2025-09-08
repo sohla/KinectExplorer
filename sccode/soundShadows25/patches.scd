@@ -1,12 +1,13 @@
-// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
-var patchesPath = "~/Develop/OSX/Projects/KinectExplorer/sccode/soundShadows25/patches25/";
+var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
+// var patchesPath = "~/Develop/OSX/Projects/KinectExplorer/sccode/soundShadows25/patches25/";
 
 
 var addresses = Require("Addresses.scd");
 var noteAddr = addresses.noteAddr.();
 var globalAddr = addresses.globalAddr.();
-
+ var keAddr = addresses.keAddr.();
 var files = [
+  "visShape1.scd",
   "vis1.scd",
   "zones.scd",
   "blobColors.scd",
@@ -23,6 +24,15 @@ var files = [
 var genPatch = {|file|
   (\file: file, \env: Environment.make({}), \noteAddr: noteAddr, \globalAddr: globalAddr, \isOn: false, \fadeIn: 1, \fadeOut: 2, \watcher: nil)
 };
+var resetKE = {
+  {
+    keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 1);
+    keAddr.sendMsg("/inputSettings/clear/on", 1);
+    0.2.wait;
+    keAddr.sendMsg("/inputSettings/pixelpoint/persistance", 2);
+    keAddr.sendMsg("/inputSettings/clear/on", 0);
+  }.fork
+};
 
 var store = files.collect({|f| genPatch.(f)});
 
@@ -34,6 +44,7 @@ var createWatcher = {|p|
         if(~fileTime != File.mtime(path.asAbsolutePath),{
             ~fileTime = File.mtime(path.asAbsolutePath);
             ("Patch" + p.file + "updated").postln;
+            resetKE.();
             reloadPatch.(p);
         });
       };
