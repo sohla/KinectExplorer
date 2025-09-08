@@ -70,10 +70,10 @@ class Generator_PixelProc : public Base_PixelProc {
         // make some gblobs
         for(int i = 0; i < 4; i++){
             gblob b = {
-                ofRandom(100,640-100),  // x
-                float(480 * 0.8),       // y
-                ofRandom(20,40),        // w
-                ofRandom(180,290),      // h
+                ofRandom(0, 640),  // x
+                480,       // y
+                ofRandom(40,60),        // w
+                200,      // h
                 int(ofRandom(190,210)), // hue
                 ofRandom(-15,15),       // delta
             };
@@ -95,18 +95,18 @@ class Generator_PixelProc : public Base_PixelProc {
                     gblobs[i].h += sin(ofGetFrameNum() * ofMap(i, 0, blobsParam.get(), 0.10, 0.15) * speedHParam.get() ) * 1.1;
                 }
 
-                if(gblobs[i].x < 100){
-                    gblobs[i].x = 100;
+                if(gblobs[i].x < 0){
+                    gblobs[i].x = 0;
                     gblobs[i].delta *= -1;
                 }
-                if(gblobs[i].x > 440){
-                    gblobs[i].x = 440;
+                if(gblobs[i].x > 640){
+                    gblobs[i].x = 640;
                     gblobs[i].delta *= -1;
                 }
                 // draw it
                 gblob gb = gblobs[i];
                 ofSetColor(gb.hue);
-                ofDrawRectRounded(gb.x, gb.y - gb.h, gb.w, gb.h, 10);
+                ofDrawRectRounded(gb.x, 480 - gb.h, gb.w, gb.h, 10);
             };
 
         fbo.end();
