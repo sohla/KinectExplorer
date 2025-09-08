@@ -142,16 +142,14 @@ var findNextRunning = {
 		    \rotstart, -90,
 		    \rotend, -90,
 		    \speed, 10,
-		    // \freq, 1,
 		    \wobble, 1.1,
+				\osc, Pfunc{|e| 
 
-			\osc, Pfunc{|e| 
-
-				if(e[\dur].isKindOf(Rest) != true,{
-					vizMessage.(e, i);
-				});
-				true // must return true 
-			}
+					if(e[\dur].isKindOf(Rest) != true,{
+						vizMessage.(e, i);
+					});
+					true // must return true 
+				}
 	  	)
 	);
 

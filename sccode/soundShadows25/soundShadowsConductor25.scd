@@ -58,16 +58,16 @@
 
 	var bootServer = {|f|
 
-	// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-	// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 
 	// var input = ServerOptions.devices.indexOfEqual("BlackHole 16ch");
 	// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-		var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
-		var output = ServerOptions.devices.indexOfEqual("Built-in Output");
+	// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+	// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 		// var output = ServerOptions.devices.indexOfEqual("Radial USB Pro Output");
 
 		o = Server.local.options;
@@ -307,8 +307,9 @@
 				patchButtons.flat[index].valueAction_(1);
 			}.defer;
 
-		}, '/ke/patch', recvPort: port);		//------------------------------------------------------
-
+		}, '/ke/patch', recvPort: port);		
+		
+		//------------------------------------------------------
 		//••• TODO
 		// performanceListener = OSCFunc.newMatching({ |msg, time, addr, recvPort|
 		// 	msg.postln;
@@ -320,6 +321,45 @@
 		patches.store.do({|p| patches[\loadPatch].(p)});
 		resetKE.();
 
+	});
+	//------------------------------------------------------
+	Event.addEventType(\customVisualEvent, {
+
+		var vizMessage = {|e|
+			if(noteAddr != nil, {
+				{noteAddr.sendMsg("/shadow", 
+					"shape", e[\shape],
+					"duration", e[\vdur],
+					"attack", e[\vatt],
+					"release", e[\vrel],
+					"color", e[\color],
+					"scale", e[\vscale],
+
+					"scx", e[\scx],
+					"scy", e[\scy],        
+					"sx", e[\sx],
+					"sy", e[\sy],
+					"ex", e[\ex],
+					"ey", e[\ey],
+					"imageindex", e[\imageindex],
+					"rotstart",e[\rotstart],
+					"rotend", e[\rotend],
+
+					"speed", 1,//e[\speed],
+					"freq", 20,
+					"amp", 0.04,
+
+					"wobble", e[\wobble],
+				);}.defer(0.1);
+			});
+		};
+
+		// currentEnvironment.postln;
+		if(currentEnvironment[\dur].isKindOf(Rest) != true,{
+          vizMessage.(currentEnvironment);
+    });
+		// currentEnvironment.play;
+		// true
 	});
 
 )
