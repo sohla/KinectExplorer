@@ -230,22 +230,26 @@
 			var label = msg[1];
 			var b = Event.new(proto:blob.model);
 
-			blob[\init].(b);
-			// msg.postln; BUG init does not have any meaningful data
-			blob[\msgToBlob].(msg, b);
 
-			blobsDict.put(label,b);
+			Routine{
+				blob[\init].(b);
+				s.sync;
+				// msg.postln; BUG init does not have any meaningful data - sync might help
+				blob[\msgToBlob].(msg, b);
+				s.sync;
+				blobsDict.put(label,b);
 
-			// postf("blob init: % \n", label);
+				// postf("blob init: % \n", label);
 
-			patches.store.do({|p|
-				if(p.isOn, {
-					if(blobsDict.values.size > 0,{
-						 p.env.use{~onBlobInit.(b, blobsDict)};
+				patches.store.do({|p|
+					if(p.isOn, {
+						if(blobsDict.values.size > 0,{
+							p.env.use{~onBlobInit.(b, blobsDict)};
+						});
 					});
 				});
-			});
 
+			}.play;
 			//blobsDict.postln;
 		}, '/ke/init', recvPort: port);
 
@@ -358,7 +362,8 @@
 		if(currentEnvironment[\dur].isKindOf(Rest) != true,{
           vizMessage.(currentEnvironment);
     });
-		// currentEnvironment.play;
+		~type = \note;
+		currentEnvironment.play;
 		// true
 	});
 

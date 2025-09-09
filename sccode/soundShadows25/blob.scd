@@ -26,18 +26,22 @@ var model = (
 
   var init = {|blob|
 
-			blob.area = Bus.control(s,1);
-			blob.perimeter = Bus.control(s,1);
-			blob.center = Bus.control(s,2);
-			blob.rect = Bus.control(s,4);
-			blob.velocity = Bus.control(s,2);
-			blob.acceleration = Bus.control(s,2);
-			blob.velocityRate = Bus.control(s,1);
-			blob.accelerationRate = Bus.control(s,1);
+			// Routine{
+				blob.area = Bus.control(s,1);
+				blob.perimeter = Bus.control(s,1);
+				blob.center = Bus.control(s,2);
+				blob.rect = Bus.control(s,4);
+				blob.velocity = Bus.control(s,2);
+				blob.acceleration = Bus.control(s,2);
+				blob.velocityRate = Bus.control(s,1);
+				blob.accelerationRate = Bus.control(s,1);
+				// s.sync;
+			// }.play;
 	};
 
 	var msgToBlob = {|msg, blob|
 
+			// Routine{
 			blob.label = msg[1];
 			blob.state = msg[2];
 			blob.area.set(msg[3] * 100);
@@ -53,19 +57,23 @@ var model = (
 			blob.accelerationRate.set(msg[19]);
 			blob.dataSize = msg[20].asInteger - 2;
 			blob.data = msg.copyRange(21,blob.dataSize*2);
+			// s.sync;
+			// }.play;
 
 	};
 
 	var deinit = {|blob|
 
-		blob.area.free;
-		blob.perimeter.free;
-		blob.center.free;
-		blob.rect.free;
-		blob.velocity.free;
-		blob.velocityRate.free;
-		blob.accelerationRate;
-
+		// Routine{
+			blob.area.free;
+			blob.perimeter.free;
+			blob.center.free;
+			blob.rect.free;
+			blob.velocity.free;
+			blob.velocityRate.free;
+			blob.accelerationRate;
+			// s.sync;
+		// }.play;
 	};
 
   (
