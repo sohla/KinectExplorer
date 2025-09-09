@@ -58,16 +58,16 @@
 
 	var bootServer = {|f|
 
-	var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-	var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");
 		// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 
 	// var input = ServerOptions.devices.indexOfEqual("BlackHole 16ch");
 	// var output = ServerOptions.devices.indexOfEqual("External Headphones");
 		// var output = ServerOptions.devices.indexOfEqual("Soundflower (2ch)");
-	// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
-	// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
+	var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+	var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 		// var output = ServerOptions.devices.indexOfEqual("Radial USB Pro Output");
 
 		o = Server.local.options;
@@ -311,8 +311,8 @@
 				patchButtons.flat[index].valueAction_(1);
 			}.defer;
 
-		}, '/ke/patch', recvPort: port);		
-		
+		}, '/ke/patch', recvPort: port);
+
 		//------------------------------------------------------
 		//••• TODO
 		// performanceListener = OSCFunc.newMatching({ |msg, time, addr, recvPort|
@@ -331,7 +331,7 @@
 
 		var vizMessage = {|e|
 			if(noteAddr != nil, {
-				{noteAddr.sendMsg("/shadow", 
+				{noteAddr.sendMsg("/shadow",
 					"shape", e[\shape],
 					"duration", e[\vdur],
 					"attack", e[\vatt],
@@ -340,7 +340,7 @@
 					"scale", e[\vscale],
 
 					"scx", e[\scx],
-					"scy", e[\scy],        
+					"scy", e[\scy],
 					"sx", e[\sx],
 					"sy", e[\sy],
 					"ex", e[\ex],

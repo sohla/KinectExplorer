@@ -42,7 +42,7 @@ SynthDef(\raindrop, {
 	~setPolyline.(1,1,1);
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
-	// ~setBackground0.(); 
+	// ~setBackground0.();
 	// ~setBackground1.(Color.blue().darken(0.3).asArray);
 	// ~setBackground2.(blur:0.5, step:0.06);
   // ~setBackground2.(blur:0.7, step:0.1);
@@ -64,7 +64,7 @@ SynthDef(\raindrop, {
 
 	~setFeedback.(mix:0.9, opacity:0.77, hue:0.02, x:0.00, y:-0.0, dx:0.0, dy:0.0, edgeColor:Color(0,0.7,0.2).asArray, edgeBlack:0.1, edgeStength:1.0);
 	// ~setFeedback.(mix:0);
-  
+
 };
 
 //------------------------------------------------------
@@ -88,13 +88,13 @@ SynthDef(\raindrop, {
       \instrument, \raindrop,
       \dur, Pexprand(0.13, 0.05, inf) * 3,
       \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
-      \amp, 1,
+      \amp, 0.1,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
       \attackTime, 0.001,
       \decayTime, Pexprand(0.11, 0.04, inf),  // Varied decay time
       \filterFreq, Pexprand(900, 2000, inf) * 2,  // Random filter frequency
       \filterRQ, Pwhite(0.5, 1.5, inf),
-	    \wobble, Pwhite(3,7,inf),      
+	    \wobble, Pwhite(3,7,inf),
       // visuals
       \modi, Pfunc({ blob.label.asInteger.mod(4)}),
       \shape, 1,
@@ -106,7 +106,7 @@ SynthDef(\raindrop, {
       \scx, 1.0,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 1.0,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
-      \sy, Pfunc({ -3.5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5 
+      \sy, Pfunc({ -3.5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
       \ex, Pkey(\sx),
       \ey, Pkey(\sy),//Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
       // \test, Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,1.0)}).trace,
@@ -138,7 +138,7 @@ SynthDef(\raindrop, {
   patterns.at(blob.label).clear;
   patterns.removeAt(blob.label);
 
-  
+
 };
 
 

@@ -33,7 +33,7 @@ SynthDef(\raindrop, {
 	~setPolyline.(1,1,1);
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
-	// ~setBackground0.(); 
+	// ~setBackground0.();
 	// ~setBackground1.(Color.white().darken(0.2).asArray);
 	// ~setBackground2.(blur:0.7, step:0.1);
 	~setBackground3.(index:27, scale:1, rot:0, mode:31, color:Color.white.asArray);
@@ -53,8 +53,8 @@ SynthDef(\raindrop, {
 
 	// ~setFeedback.(mix:1, opacity:0.96, hue:0.02, x:0.0, y:0.04, dx:0.0, dy:0.0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.3, edgeStength:0.9);
 	~setFeedback.(mix:0);
-  
-  
+
+
 
 };
 
@@ -85,7 +85,7 @@ SynthDef(\raindrop, {
       \decayTime, Pexprand(0.11, 0.04, inf),  // Varied decay time
       \filterFreq, Pexprand(900, 2000, inf) * 2,  // Random filter frequency
       \filterRQ, Pwhite(0.5, 1.5, inf),
-	    \wobble, Pwhite(3,7,inf),      
+	    \wobble, Pwhite(3,7,inf),
       // visuals
       \modi, Pfunc({ blob.label.asInteger.mod(4)}),
       \shape, 3,
@@ -97,7 +97,7 @@ SynthDef(\raindrop, {
       \scx, 1,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 1,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
-      \sy, -1, 
+      \sy, -1,
       \ex, Pkey(\sx),
       \ey, -4.5//Pfunc({ -5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
     )
@@ -120,7 +120,7 @@ SynthDef(\raindrop, {
   patterns.at(blob.label).clear;
   patterns.removeAt(blob.label);
 
-  
+
 };
 
 
