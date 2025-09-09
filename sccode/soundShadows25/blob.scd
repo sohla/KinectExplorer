@@ -25,55 +25,48 @@ var model = (
 	);
 
   var init = {|blob|
-
-			// Routine{
-				blob.area = Bus.control(s,1);
-				blob.perimeter = Bus.control(s,1);
-				blob.center = Bus.control(s,2);
-				blob.rect = Bus.control(s,4);
-				blob.velocity = Bus.control(s,2);
-				blob.acceleration = Bus.control(s,2);
-				blob.velocityRate = Bus.control(s,1);
-				blob.accelerationRate = Bus.control(s,1);
-				// s.sync;
-			// }.play;
+			// "blob_init".postln;
+			blob.area = Bus.control(s,1);
+			blob.perimeter = Bus.control(s,1);
+			blob.center = Bus.control(s,2);
+			blob.rect = Bus.control(s,4);
+			blob.velocity = Bus.control(s,2);
+			blob.acceleration = Bus.control(s,2);
+			blob.velocityRate = Bus.control(s,1);
+			blob.accelerationRate = Bus.control(s,1);
+			postf("Bus index: % \n", blob.accelerationRate.index);
+			// 14 total buses per blob
+			// 14 * 4 * 2 = 112
 	};
 
 	var msgToBlob = {|msg, blob|
-
-			// Routine{
-			blob.label = msg[1];
-			blob.state = msg[2];
-			blob.area.set(msg[3] * 100);
-			blob.perimeter.set(msg[4] * 100);
-			blob.center.setn([msg[5],msg[6]]);
-			blob.rect.setn([msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000]);
-			blob.depthCamWidth = msg[11];
-			blob.depthCamHeight = msg[12];
-			blob.index = msg[13].asInteger;
-			blob.velocity.setn([msg[14], msg[15]]);
-			blob.acceleration.setn([msg[16], msg[17]]);
-			blob.velocityRate.set(msg[18]);
-			blob.accelerationRate.set(msg[19]);
-			blob.dataSize = msg[20].asInteger - 2;
-			blob.data = msg.copyRange(21,blob.dataSize*2);
-			// s.sync;
-			// }.play;
-
+		blob.label = msg[1];
+		blob.state = msg[2];
+		blob.area.set(msg[3] * 100);
+		blob.perimeter.set(msg[4] * 100);
+		blob.center.setn([msg[5],msg[6]]);
+		blob.rect.setn([msg[7] * 1000,msg[8]* 1000,msg[9]* 1000,msg[10]* 1000]);
+		blob.depthCamWidth = msg[11];
+		blob.depthCamHeight = msg[12];
+		blob.index = msg[13].asInteger;
+		blob.velocity.setn([msg[14], msg[15]]);
+		blob.acceleration.setn([msg[16], msg[17]]);
+		blob.velocityRate.set(msg[18]);
+		blob.accelerationRate.set(msg[19]);
+		blob.dataSize = msg[20].asInteger - 2;
+		blob.data = msg.copyRange(21,blob.dataSize*2);
 	};
 
 	var deinit = {|blob|
-
-		// Routine{
-			blob.area.free;
-			blob.perimeter.free;
-			blob.center.free;
-			blob.rect.free;
-			blob.velocity.free;
-			blob.velocityRate.free;
-			blob.accelerationRate;
-			// s.sync;
-		// }.play;
+		// "blob_deinit".postln;
+		blob.area.free;
+		blob.perimeter.free;
+		blob.center.free;
+		blob.rect.free;
+		blob.velocity.free;
+		blob.acceleration.free;		
+		blob.velocityRate.free;
+		blob.accelerationRate;
 	};
 
   (

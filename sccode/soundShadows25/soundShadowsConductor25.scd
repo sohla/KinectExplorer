@@ -230,7 +230,6 @@
 			var label = msg[1];
 			var b = Event.new(proto:blob.model);
 
-
 			Routine{
 				blob[\init].(b);
 				s.sync;
@@ -283,7 +282,6 @@
 			var label = msg[1];
 			var b = blobsDict.at(label);
 			if(b != nil,{
-
 				patches.store.do({|p|
 					if(p.isOn, {
 						if(blobsDict.values.size > 0,{
@@ -293,13 +291,15 @@
 					});
 				});
 
-				blob[\deinit].(blob);
-				blobsDict.removeAt(label);
-
+				Routine{
+					blobsDict.removeAt(label); // must remove first before telling server!
+					blob[\deinit].(b);
+					s.sync;
+				}.play;
 				// postf("blob deinit: % \n", label);
+				postf("num of blobs: % \n", blobsDict.size);
 
 			});
-
 
 		}, '/ke/deinit', recvPort: port);
 		//------------------------------------------------------

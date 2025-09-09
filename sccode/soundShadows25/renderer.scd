@@ -2,48 +2,13 @@
 var renderer = {|blobsDict, patches|
 
     UserView()
-				.minHeight_(500)
-				.minWidth_(500)
+				.minHeight_(480)
+				.minWidth_(640)
         .background_(Color.black)
 				.drawFunc_({|view|
 
               var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
               var vx = 0,vy = 0;
-
-              var plotData = {
-
-                var data = [0];
-
-                if(blobsDict.values.size > 0,{
-                  // for now, calling all on patches
-                  patches.store.do({|p|
-                    if(p.isOn,{
-                      p.env.use{
-                        var d = ~onPlotData.(blobsDict);
-                        if(d != nil, {data = d});
-                      };
-                    });
-                  });
-                });
-                data;
-              };
-
-              var blobData = {|blob|
-                var data = 0;
-
-                if(blobsDict.values.size > 0,{
-                  // for now, calling all on patches
-                  patches.store.do({|p|
-                    if(p.isOn,{
-                      p.env.use{
-                        var d = ~onBlobData.(blob);
-                        if(d != nil, {data = d});
-                      };
-                    });
-                  });
-                });
-                data;
-              };
 
 
 
@@ -52,8 +17,6 @@ var renderer = {|blobsDict, patches|
               Pen.stringAtPoint("booting server...", 10@10, color:Color.yellow(0.5));
               });
 
-              Pen.scale(1.3, 1.3);
-              Pen.translate(-100, -20);
               blobsDict.do({|blob,i|
 
                 if(blob.state == 2,{
@@ -67,8 +30,6 @@ var renderer = {|blobsDict, patches|
                   var ax, ay, bx, by, mx, my;
                   var xdif, ydif, a1, b1, a2, b2;
 
-                  var dv = blobData.(blob);
-
                   Pen.smoothing_(true);
                   Pen.width = 1;
 
@@ -76,7 +37,6 @@ var renderer = {|blobsDict, patches|
                   Pen.strokeColor = cols.at(blob.label.asInteger.mod(4));
 
                   Pen.fillOval(Rect(center.x-3, center.y-3, 6, 6));
-                // Pen.fillRect(Rect(center.x - 5,550,10, dv));
 
                   Pen.strokeRect(rect);
 
@@ -88,7 +48,6 @@ var renderer = {|blobsDict, patches|
 
                   prev = blob.data.reshape(1,2)[0];
                   blob.data.reshape(blob.data.size,2).do({|o,j|
-
                     if( (o[0].asFloat > 1) && (o[1].asFloat > 1) ,{
                       ax = prev[0];
                       ay = prev[1];
