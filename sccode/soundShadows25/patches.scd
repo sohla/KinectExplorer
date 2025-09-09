@@ -7,6 +7,8 @@ var noteAddr = addresses.noteAddr.();
 var globalAddr = addresses.globalAddr.();
  var keAddr = addresses.keAddr.();
 var files = [
+  "black.scd",
+  "white.scd",
   "visShape1.scd",
   "vis1.scd",
   "zones.scd",
