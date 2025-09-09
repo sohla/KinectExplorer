@@ -77,7 +77,7 @@ SynthDef(\raindrop, {
     Pbind(
       \type, \customVisualEvent,
       \instrument, \raindrop,
-      \dur, Pwhite(0.1,0.2),
+      \dur, Pwhite(0.2,0.3),
       \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
       \amp, 0,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
@@ -89,9 +89,9 @@ SynthDef(\raindrop, {
       // visuals
       \modi, Pfunc({ blob.label.asInteger.mod(4)}),
       \shape, 5,
-      \vdur, 1.6,//Pwhite(0.1,0.2) * 2,
-      \vatt, 0.3,
-      \vrel, 0.41,
+      \vdur, 0.6,//Pwhite(0.1,0.2) * 2,
+      \vatt, 0.1,
+      \vrel, 0.8,
       \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
       \vscale, 0.2,
       \scx, 1,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),

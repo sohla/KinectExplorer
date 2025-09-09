@@ -12,7 +12,7 @@
 	// ~setBackground0.(); 
 	// ~setBackground1.(Color.white().darken(0.2).asArray);
 	// ~setBackground2.(blur:0.7, step:0.1);
-	~setBackground3.(index:6, scale:1, rot:0, mode:31, color:Color.green.darken(0.8).asArray);
+	~setBackground3.(index:8, scale:1, rot:0, mode:31, color:Color.green.darken(0.8).asArray);
 
 	// each polyline (blob)
 	4.do({|i|

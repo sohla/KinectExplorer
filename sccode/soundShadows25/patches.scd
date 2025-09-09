@@ -10,14 +10,16 @@ var files = [
   "visShape1.scd",
   "vis1.scd",
   "zones.scd",
-  "blobColors.scd",
+  "zones2.scd",
+  "blobi.scd",
   "water.scd",
   "pond.scd",
   "forest.scd",
-  "zones2.scd",
   "blueMoon.scd",
   "leaf.scd",
-
+  "swamp.scd",
+  "snowy.scd",
+  "windy.scd",
 
 ];
 

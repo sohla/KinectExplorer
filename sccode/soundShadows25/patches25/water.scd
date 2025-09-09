@@ -1,34 +1,59 @@
+var patterns = Dictionary.new(4);
 // ------------------------------------------------------
 ~init = {|patch|
 
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
 
+
+SynthDef(\raindrop, {
+    |out=0, freq=1000, amp=0.1, pan=0, gate=1, attackTime=0.001, decayTime=0.05,
+	filterFreq=3000, filterRQ=1, wobble=10,
+ 	reverbMix=0.3, reverbRoom=0.03, reverbDamp=0.5|
+
+	var sig, env;
+    var verb;
+
+    // Envelope for the droplet shape
+    env = EnvGen.ar(Env.perc(attackTime, decayTime), gate);
+
+    // Basic droplet sound
+    sig = SinOsc.ar(freq * LFPar.ar(wobble,pi/2, 0.2,1)) * env;
+
+    // Apply bandpass filter
+    sig = BPF.ar(sig, filterFreq, filterRQ);
+    verb = FreeVerb.ar(sig, reverbMix, reverbRoom, reverbDamp);
+
+	DetectSilence.ar(verb, doneAction: 2);
+    Out.ar(out, PanAz.ar(2, verb, pan, 1, 2, 0.5) * amp);
+}).add;
+
 	// ~setOSCReset.(1);
 	~setXfade.(1);
 
-	~setPolyline.(1,2,0);
+	~setPolyline.(1,2,1);
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
+  ~setColorRamp.(Color(0.5,0.5,0.9).asArray, 200);
 	// ~setBackground0.(); 
 	// ~setBackground1.(Color.white().darken(0.2).asArray);
 	// ~setBackground2.(blur:0.7, step:0.1);
-	~setBackground3.(index:25, scale:1, rot:0, mode:31, color:Color.blue.lighten(0.4).asArray);
+	~setBackground3.(index:30, scale:1, rot:0, mode:31, color:Color.blue.lighten(0.4).asArray);
 
 	// each polyline (blob)
 	4.do({|i|
 		// var c = Color.new(0,1/2,0.5/2,1);
-		// var c = Color.black().lighten(0.1);
-		var c = Color.hsv(0.3 + (0.05 * i),0.7,0.7);
+		var c = Color.hsv(0.64,0.8,0.05);
+		// var c = Color.hsv(0.3 + (0.05 * i),0.7,0.7);
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
 
-	// ~setDisplace.(mix:0.2, x:10, y:0.1, period:1, noise:1, z:0);
+	~setDisplace.(mix:0.2, x:10, y:0, period:1, noise:1, z:0);
 	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
-	~setDisplace.(mix:0.0);
+	// ~setDisplace.(mix:0.0);
 
-	~setFeedback.(mix:0.6, opacity:0.96, hue:0.2, x:0.0, y:0.04, dx:0.0, dy:0.0, edgeColor:Color(0,1,1).asArray, edgeBlack:0.2, edgeStength:0.5);
-	// ~setFeedback.(mix:0);
+	// ~setFeedback.(mix:0.9, opacity:0.94, hue:0.03, x:0.0, y:0.03, dx:0.0, dy:0.0, edgeColor:Color(0,0.3,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	~setFeedback.(mix:0);
   
 
 };
@@ -36,12 +61,61 @@
 //------------------------------------------------------
 ~deinit = {|patch|
 
+  patterns.do({|p,i|
+    p.stop;
+  });
+  patterns.free;
+	~setPolyline.(0,1,1);
+
 };
 
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
-	// postf("blob init: % \n", blob.label);
 
+
+  var pattern = Pdef("pa_"++blob.label,
+    Pbind(
+      \type, \customVisualEvent,
+      \instrument, \raindrop,
+      \dur, 0.3,//Pexprand(0.13, 0.3, inf) ,
+      \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
+      \amp, 0,
+      \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
+      \attackTime, 0.001,
+      \decayTime, Pexprand(0.11, 0.04, inf),  // Varied decay time
+      \filterFreq, Pexprand(900, 2000, inf) * 2,  // Random filter frequency
+      \filterRQ, Pwhite(0.5, 1.5, inf),
+	    \wobble, Pwhite(3,7,inf),      
+      // visuals
+      \modi, Pfunc({ blob.label.asInteger.mod(4)}),
+      \shape, 2,
+      \vdur, 0.9,
+      \vatt, 0.1,
+      \vrel, 0.4,
+      \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
+      \vscale, Pwhite(0.01,0.1),
+      \scx, 1.0,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
+		  \scy, 1.0,
+      \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
+      \sy, Pfunc({ -3.5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5 
+      \ex, Pkey(\sx),
+      \ey, Pkey(\sy) + 1,//Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
+      // \test, Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,1.0)}).trace,
+      // \imageindex, 2,
+      // \rotstart, 180,
+      // \rotend, 180,
+      // \speed, 10,
+      // \bc, 20,
+      \wobble, 1,
+      // \vmix, PLFTri(140,0,0.4,0.5,inf),
+
+    )
+  ).play;
+
+  patterns.put(blob.label, pattern);
+  patterns.at(blob.label).play;
+
+	postf("blob init: %\n", blob.label);
 };
 
 //------------------------------------------------------
@@ -50,15 +124,12 @@
 
 //------------------------------------------------------
 ~onBlobDeinit = {|blob, blobsDict|
-	// postf("blob deinit: % \n", blob.label);
+	postf("blob deinit: % \n", blob.label);
+  // Pdef("pa_"++blob.label).clear;
+  patterns.at(blob.label).clear;
+  patterns.removeAt(blob.label);
 
+  
 };
 
 
-//------------------------------------------------------
-~onPlotData = {|blobsDict|	
-};
-
-//------------------------------------------------------
-~onBlobData = {|blob|
-};
