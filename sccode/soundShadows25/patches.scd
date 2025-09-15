@@ -1,5 +1,5 @@
-// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
-var patchesPath = "~/Develop/OSX/Projects/KinectExplorer/sccode/soundShadows25/patches25/";
+var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
+// var patchesPath = "~/Develop/OSX/Projects/KinectExplorer/sccode/soundShadows25/patches25/";
 
 
 var addresses = Require("Addresses.scd");
@@ -173,10 +173,14 @@ var load = {|model|
     };
 
 
-    ~setBackground2 = {|blur = 0.1, step = 0.1|
+    ~setBackground2 = {|blur = 0.1, step = 0.1, index = 0, color = #[1,1,1]|
       globalAddr.sendMsg("/background_index",2);
       globalAddr.sendMsg("/cell_blur", blur);
       globalAddr.sendMsg("/cell_step", step);
+      globalAddr.sendMsg("/background_image_index", index);
+      globalAddr.sendMsg("/background_r", color[0]);
+      globalAddr.sendMsg("/background_g", color[1]);
+      globalAddr.sendMsg("/background_b", color[2]);
     };
 
     ~setBackground3 = {|index = 0, scale = 1, rot = 0.0, mode = 0, color = #[1,1,1]|

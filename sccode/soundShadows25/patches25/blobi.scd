@@ -35,7 +35,9 @@ SynthDef(\raindrop, {
 
 	// ~setBackground0.();
 	// ~setBackground1.(Color.white().darken(0.2).asArray);
-	~setBackground2.(blur:0.7, step:0.1);
+	// ~setBackground2.(blur:0.7, step:0.1);
+  	~setBackground2.(blur:0.7, step:0.1, index:25, color:Color.hsv(0.9,1,1).asArray);
+
 	// ~setBackground3.(index:25, scale:1, rot:0, mode:31, color:Color.blue.asArray);
 
 	// each polyline (blob)
@@ -46,7 +48,7 @@ SynthDef(\raindrop, {
     var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
-  ~setColorRamp.(Color(0.0,1.0,1.0).asArray, 120);
+  ~setColorRamp.(Color(1.0,0.0,0.0).asArray, 20);
 	// ~setDisplace.(mix:1, x:3, y:10, period:0.1, noise:0.2, z:1);
 	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
 	~setDisplace.(mix:0.0);

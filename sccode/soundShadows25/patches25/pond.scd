@@ -46,13 +46,13 @@ SynthDef(\raindrop, {
 	// ~setBackground1.(Color.blue().darken(0.3).asArray);
 	// ~setBackground2.(blur:0.5, step:0.06);
   // ~setBackground2.(blur:0.7, step:0.1);
-	~setBackground3.(index:23, scale:1, rot:0, mode:3, color:Color.hsv(0.27,0.6,1).asArray);
+	~setBackground3.(index:24, scale:1, rot:0, mode:3, color:Color.hsv(0.27,0.6,1).asArray);
 
 	// each polyline (blob)
 	4.do({|i|
 		// var c = Color.new(0,1/2,0.5/2,1);
 		// var c = Color.blue(0.5).alpha_(0.1);
-		var c = Color.hsv(0.2 + (0.02 * i),0.5,0.3).darken(0.9);
+		var c = Color.hsv(0.27 + (0.04 * i),0.6,0.3).darken(0.5);
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
@@ -86,7 +86,7 @@ SynthDef(\raindrop, {
     Pbind(
       \type, \customVisualEvent,
       \instrument, \raindrop,
-      \dur, Pexprand(0.13, 0.05, inf) * 3,
+      \dur, Pexprand(0.13, 0.05, inf) * 2,
       \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
       \amp, 0.1,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
