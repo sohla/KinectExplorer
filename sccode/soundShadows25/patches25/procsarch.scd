@@ -36,7 +36,7 @@ SynthDef(\raindrop, {
 	// ~setBackground0.();
 	// ~setBackground1.(Color.white().darken(0.2).asArray);
 	// ~setBackground2.(blur:0.7, step:0.1);
-  	~setBackground2.(blur:0.7, step:0.1, index:25, color:Color.hsv(0.9,1,1).asArray);
+  	~setBackground2.(blur:0.7, step:0.1, index:25, color:Color.hsv(0.99,1,1).asArray);
 
 	// ~setBackground3.(index:25, scale:1, rot:0, mode:31, color:Color.blue.asArray);
 
@@ -50,8 +50,8 @@ SynthDef(\raindrop, {
 	});
   ~setColorRamp.(Color(1.0,0.0,0.0).asArray, 20);
 	// ~setDisplace.(mix:1, x:3, y:10, period:0.1, noise:0.2, z:1);
-	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
-	~setDisplace.(mix:0.0);
+	~setDisplace.(mix:1, x:0.03, y:3, period:3, noise:5, z:0);
+	// ~setDisplace.(mix:0.0);
 
 	// ~setFeedback.(mix:1, opacity:0.96, hue:0.02, x:0.0, y:0.04, dx:0.0, dy:0.0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.3, edgeStength:0.9);
 	~setFeedback.(mix:0);
@@ -79,7 +79,7 @@ SynthDef(\raindrop, {
     Pbind(
       \type, \customVisualEvent,
       \instrument, \raindrop,
-      \dur, 0.25,//Pexprand(0.13, 0.3, inf) ,
+      \dur, 0.15,//Pexprand(0.13, 0.3, inf) ,
       \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
       \amp, 0,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
@@ -95,13 +95,13 @@ SynthDef(\raindrop, {
       \vatt, 0.1,
       \vrel, 0.1,
       \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
-      \vscale, 2.0,
-      \scx, 0.3,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
-		  \scy, 1,
+      \vscale, 1,
+      \scx, Pwhite(0.01,0.1) / 10,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
+		  \scy, 1.0,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}),
       \sy, -1,
       \ex, Pkey(\sx),
-      \ey, -5//Pfunc({ - + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
+      \ey, -3.2//Pfunc({ - + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
     )
   ).play;
 

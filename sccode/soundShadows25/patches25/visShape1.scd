@@ -34,7 +34,8 @@ SynthDef(\raindrop, {
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
 	// ~setBackground0.();
-	~setBackground1.(Color.white().asArray);
+	~setBackground1.(Color.red().lighten(0.8).asArray);
+	// ~setBackground2.(blur:0.2, step:0.02, index:1, color:Color.red.asArray);
 	// ~setBackground2.(blur:0.7, step:0.1);
 	// ~setBackground3.(index:22, scale:1, rot:0, mode:33, color:Color.white.asArray);
 
@@ -46,7 +47,7 @@ SynthDef(\raindrop, {
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
-  ~setColorRamp.(Color(0.01,1.0,1.0).asArray, 120);
+  ~setColorRamp.(Color(1.0,0.0,1.0).asArray, 80);
 	// ~setDisplace.(mix:0.2, x:3, y:3, period:0.1, noise:0.2, z:1);
 	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
 	~setDisplace.(mix:0.0);
@@ -92,7 +93,7 @@ SynthDef(\raindrop, {
       \vdur, 1.2,//Pwhite(0.1,0.2) * 2,
       \vatt, 0.03,
       \vrel, 0.01,
-      \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
+      \color, Pwhite(0.0,1.0),//Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
       \vscale,1,
       \scx, 0.6,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 0.2,
