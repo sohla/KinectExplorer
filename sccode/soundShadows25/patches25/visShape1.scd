@@ -30,31 +30,31 @@ SynthDef(\raindrop, {
 	// ~setOSCReset.(1);
 	~setXfade.(1);
 
-	~setPolyline.(1,1,1);
+	~setPolyline.(0,1,1);
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
-	// ~setBackground0.(); 
-	// ~setBackground1.(Color.white().darken(0.2).asArray);
+	// ~setBackground0.();
+	~setBackground1.(Color.white().asArray);
 	// ~setBackground2.(blur:0.7, step:0.1);
-	~setBackground3.(index:22, scale:1, rot:0, mode:31, color:Color.white.asArray);
+	// ~setBackground3.(index:22, scale:1, rot:0, mode:33, color:Color.white.asArray);
 
 	// each polyline (blob)
 	4.do({|i|
 		// var c = Color.new(0,1/2,0.5/2,1);
-		var c = Color.white().lighten(0.1);
-		// var c = Color.hsv(0.1 + (0.05 * i),1,1);
+		// var c = Color.white().lighten(0.1);
+		var c = Color.hsv(0.1 + (0.05 * i),1,1);
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
-  ~setColorRamp.(Color(1.0,1.0,1.0).asArray, 200);
+  ~setColorRamp.(Color(0.01,1.0,1.0).asArray, 120);
 	// ~setDisplace.(mix:0.2, x:3, y:3, period:0.1, noise:0.2, z:1);
 	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
 	~setDisplace.(mix:0.0);
 
-	~setFeedback.(mix:0.4, opacity:0.86, hue:0.02, x:0.2, y:0.4, dx:0.0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.3, edgeStength:0.3);
-	// ~setFeedback.(mix:0);
-  
-  
+	// ~setFeedback.(mix:0.4, opacity:0.86, hue:0.02, x:0.2, y:0.4, dx:0.0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.3, edgeStength:0.3);
+	~setFeedback.(mix:0);
+
+
 
 };
 
@@ -77,7 +77,7 @@ SynthDef(\raindrop, {
     Pbind(
       \type, \customVisualEvent,
       \instrument, \raindrop,
-      \dur, Pwhite(0.1,0.2),
+      \dur, 0.2,//Pwhite(0.1,0.2),
       \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
       \amp, 0,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
@@ -85,21 +85,21 @@ SynthDef(\raindrop, {
       \decayTime, Pexprand(0.11, 0.04, inf),  // Varied decay time
       \filterFreq, Pexprand(900, 2000, inf) * 2,  // Random filter frequency
       \filterRQ, Pwhite(0.5, 1.5, inf),
-	    \wobble, Pwhite(3,7,inf),      
+	    \wobble, Pwhite(3,7,inf),
       // visuals
       \modi, Pfunc({ blob.label.asInteger.mod(4)}),
-      \shape, 5,
-      \vdur, 1.6,//Pwhite(0.1,0.2) * 2,
-      \vatt, 0.3,
-      \vrel, 0.41,
+      \shape, 0,
+      \vdur, 1.2,//Pwhite(0.1,0.2) * 2,
+      \vatt, 0.03,
+      \vrel, 0.01,
       \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
-      \vscale, 0.2,
-      \scx, 1,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
-		  \scy, 1,
-      \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
-      \sy, Pwhite(-3,-4.5), 
-      \ex, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(0.6,0.8),
-      \ey, Pfunc({ -3 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
+      \vscale,1,
+      \scx, 0.6,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
+		  \scy, 0.2,
+      \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}),
+      \sy, -3,
+			\ex, Pkey(\sx),
+      \ey, -1,
     )
   ).play;
 
@@ -120,7 +120,7 @@ SynthDef(\raindrop, {
   patterns.at(blob.label).clear;
   patterns.removeAt(blob.label);
 
-  
+
 };
 
 
