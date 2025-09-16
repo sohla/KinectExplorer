@@ -94,7 +94,7 @@
 	//------------------------------------------------------
 	var cpuView = UserView()
 		.minWidth_(60)
-		.maxHeight_(20)
+		.minHeight_(20)
 		.animate_(true)
 		.drawFunc_({|uv|
 			var cpu = s.peakCPU ? 0;

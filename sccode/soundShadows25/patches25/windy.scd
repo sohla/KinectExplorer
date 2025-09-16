@@ -1,32 +1,33 @@
 var patterns = Dictionary.new(4);
+var synths = Dictionary.new(4);
 // ------------------------------------------------------
 ~init = {|patch|
 
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
 
+  SynthDef(\sheet3, {
+    |out=0, amp=0.5, density=0.5, strength=0.5,
+    filterFreq=400, filterQ=0.5,
+    reverbMix=0.5, reverbRoom=0.5, reverbDamp=0.2, gate=0, my=0.5, mx=0.5,pan=0|
 
-SynthDef(\raindrop, {
-    |out=0, freq=1000, amp=0.1, pan=0, gate=1, attackTime=0.001, decayTime=0.05,
-	filterFreq=3000, filterRQ=1, wobble=10,
- 	reverbMix=0.3, reverbRoom=0.03, reverbDamp=0.5|
+    var wind, filtered, reverbed;
+    var densityMod, strengthMod;
+    var env = EnvGen.ar(Env.asr(1.3,1.0,3 ), gate, doneAction:2);
+    var klank;
 
-	var sig, env;
-    var verb;
+    densityMod = LFNoise2.kr(0.1).range(0.8, 1.2) * mx.lag(5);
+    strengthMod = LFNoise2.kr(0.2).range(0.8, 1.2) * my.lag(3.5);
+    wind = [WhiteNoise.ar(1),WhiteNoise.ar(1)];
+    wind = Dust.ar(densityMod * 10000) * wind;
+    wind = wind * strengthMod;
+    klank = Klank.ar(`[[800, 1071, 1153, 1723] * 0.4, nil, [1, 0.4,0.1,0.03]], wind) * 0.6;
 
-    // Envelope for the droplet shape
-    env = EnvGen.ar(Env.perc(attackTime, decayTime), gate);
+    filtered = RLPF.ar(wind, filterFreq.lag(3)  * strengthMod.linexp(0, 1, 0.5, 2), filterQ);
+    reverbed = FreeVerb.ar(filtered, reverbMix, reverbRoom, reverbDamp);
+    reverbed = Balance2.ar(reverbed[0],reverbed[1],pan.lag(3));
+    Out.ar(out, reverbed * amp.lag(0.0001) * env);
 
-    // Basic droplet sound
-    sig = SinOsc.ar(freq * LFPar.ar(wobble,pi/2, 0.2,1)) * env;
-
-    // Apply bandpass filter
-    sig = BPF.ar(sig, filterFreq, filterRQ);
-    verb = FreeVerb.ar(sig, reverbMix, reverbRoom, reverbDamp);
-
-	DetectSilence.ar(verb, doneAction: 2);
-    Out.ar(out, PanAz.ar(2, verb, pan, 1, 2, 0.5) * amp);
-}).add;
-
+  }).add;
 	// ~setOSCReset.(1);
 	~setXfade.(1);
 
@@ -65,6 +66,12 @@ SynthDef(\raindrop, {
     p.stop;
   });
   patterns.free;
+
+  synths.do({|p,i|
+    p.set(\gate, 0);
+  });
+  synths.free;
+
 	~setPolyline.(0,1,1);
 
 };
@@ -76,7 +83,6 @@ SynthDef(\raindrop, {
   var pattern = Pdef("pa_"++blob.label,
     Pbind(
       \type, \customVisualEvent,
-      \instrument, \raindrop,
       \dur, Pwhite(0.2,0.3),
       \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
       \amp, 0,
@@ -103,14 +109,22 @@ SynthDef(\raindrop, {
     )
   ).play;
 
+  var synth = Synth(\sheet3, [\gate, 1]);
+  synths.put(blob.label, synth);
+
   patterns.put(blob.label, pattern);
   patterns.at(blob.label).play;
 
+
 	postf("blob init: %\n", blob.label);
+
 };
 
 //------------------------------------------------------
 ~onBlobUpdate = {|blob, blobsDict|
+  synths.at(blob.label).set(\filterFreq, blob.center.getnSynchronous(2)[0].linexp(0,1.0,300,1700));
+  synths.at(blob.label).set(\mx, blob.center.getnSynchronous(2)[1].linexp(0,2.0,0.2,0.9));
+  synths.at(blob.label).set(\my, blob.center.getnSynchronous(2)[1].linexp(0,2.0,0.2,0.9));
 };
 
 //------------------------------------------------------
@@ -120,6 +134,8 @@ SynthDef(\raindrop, {
   patterns.at(blob.label).clear;
   patterns.removeAt(blob.label);
 
+  synths.at(blob.label).set(\gate, 0);
+  synths.removeAt(blob.label);
 
 };
 

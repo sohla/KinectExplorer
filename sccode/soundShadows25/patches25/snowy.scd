@@ -5,27 +5,24 @@ var patterns = Dictionary.new(4);
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
 
 
-SynthDef(\raindrop, {
-    |out=0, freq=1000, amp=0.1, pan=0, gate=1, attackTime=0.001, decayTime=0.05,
-	filterFreq=3000, filterRQ=1, wobble=10,
- 	reverbMix=0.3, reverbRoom=0.03, reverbDamp=0.5|
+	SynthDef(\wingChimes2, {|freq = 1000, pulseFreq = 1, amp = 0, rq = 0.0008, att = 0.07, dec = 0.3, sus = 0.3, rel = 3, gate = 1, numHarms = 10, pan =0|
+		var snd, env;
+		env = EnvGen.kr(Env.adsr(att, dec, sus, rel), gate: gate, doneAction: 2);
+		snd = BPF.ar(
+			in: WhiteNoise.ar(Select.ar(0,
+				[
+					Blip.ar(pulseFreq, numHarms, 0.5),
+					LFPulse.ar(pulseFreq,0,0.5) * 0.1
+				]
+			)),
+			freq: (freq * [1,1.003]),
+			rq: Lag.kr(rq, 1));
+		snd = snd * env * Lag.kr(amp, 1) * 20;
+		snd = Clip.ar(snd, -0.5, 0.5);
+		snd = BLowShelf.ar(snd,200,1,4);
+		Out.ar(0, Pan2.ar(snd, pan));
+	}).add;
 
-	var sig, env;
-    var verb;
-
-    // Envelope for the droplet shape
-    env = EnvGen.ar(Env.perc(attackTime, decayTime), gate);
-
-    // Basic droplet sound
-    sig = SinOsc.ar(freq * LFPar.ar(wobble,pi/2, 0.2,1)) * env;
-
-    // Apply bandpass filter
-    sig = BPF.ar(sig, filterFreq, filterRQ);
-    verb = FreeVerb.ar(sig, reverbMix, reverbRoom, reverbDamp);
-
-	DetectSilence.ar(verb, doneAction: 2);
-    Out.ar(out, PanAz.ar(2, verb, pan, 1, 2, 0.5) * amp);
-}).add;
 
 	// ~setOSCReset.(1);
 	~setXfade.(1);
@@ -76,16 +73,16 @@ SynthDef(\raindrop, {
   var pattern = Pdef("pa_"++blob.label,
     Pbind(
       \type, \customVisualEvent,
-      \instrument, \raindrop,
+      \instrument, \wingChimes2,
       \dur, Pwhite(0.3,0.5),
-      \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
-      \amp, 0,
+      \root, Pseq([4,2,0,-2].stutter(8), inf),
+      \octave, Pseq([7,6,5].stutter(3), inf) - 2,
+      \note, Pseq([0,4,8,12].reverse, inf),
+      \amp, 1,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
       \attackTime, 0.001,
-      \decayTime, Pexprand(0.11, 0.04, inf),  // Varied decay time
-      \filterFreq, Pexprand(900, 2000, inf) * 2,  // Random filter frequency
-      \filterRQ, Pwhite(0.5, 1.5, inf),
-	    \wobble, Pwhite(3,7,inf),
+      \rq, Pwhite(0.0008, 0.0012),
+
       // visuals
       \modi, Pfunc({ blob.label.asInteger.mod(4)}),
       \shape, 3,

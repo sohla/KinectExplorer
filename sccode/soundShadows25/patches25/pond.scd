@@ -58,12 +58,10 @@ SynthDef(\raindrop, {
 	});
   ~setColorRamp.(Color(0,0.8,0.3).asArray, 100);
 
-	// ~setDisplace.(mix:1.0, x:2, y:2, period:1, noise:1, z:0);
-	// ~setDisplace.(mix:0.8, x:4, y:4, period:0.1, noise:2.3, z:0);
-	// ~setDisplace.(mix:0.0);
-~setDisplace.(mix:1, x:1.0, y:1, period:3, noise:5, z:0);
+  ~setDisplace.(mix:0.0);
+// ~setDisplace.(mix:0.2, x:1.0, y:1, period:3, noise:5, z:0);
 	
-	~setFeedback.(mix:0.9, opacity:0.77, hue:0.02, x:0.00, y:-0.0, dx:0.0, dy:0.0, edgeColor:Color(0,0.7,0.2).asArray, edgeBlack:0.1, edgeStength:1.0);
+	~setFeedback.(mix:0.9, opacity:0.77, hue:0.02, x:0.01, y:-0.01, dx:0.0, dy:0.0, edgeColor:Color(0,0.8,0.2).asArray, edgeBlack:0.01, edgeStength:1.1);
 	// ~setFeedback.(mix:0);
 
 };
@@ -101,9 +99,9 @@ SynthDef(\raindrop, {
       \shape, 1,
       \vdur, 0.03,
       \vatt, 0.1,
-      \vrel, 0.4,
+      \vrel, 0.3,
       \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
-      \vscale, Pwhite(0.05,0.3),
+      \vscale, Pwhite(0.05,0.15),
       \scx, 1.0,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 1.0,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
