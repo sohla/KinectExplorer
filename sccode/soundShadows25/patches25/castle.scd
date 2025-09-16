@@ -88,7 +88,7 @@ SynthDef(\raindrop, {
 	    \wobble, Pwhite(3,7,inf),
       // visuals
       \modi, Pfunc({ blob.label.asInteger.mod(4)}),
-      \shape, 6,
+      \shape, Pseq([0,6].stutter(20), inf),
       \vdur, 0.2,//Pwhite(0.1,0.2) * 2,
       \vatt, 0.1,
       \vrel, 1.3,

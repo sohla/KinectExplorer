@@ -83,10 +83,11 @@ SynthDef(\raindrop, {
 
   var pattern = Pdef("pa_"++blob.label,
     Pbind(
+      \modi, Pfunc({ blob.label.asInteger.mod(4)}),
       \type, \customVisualEvent,
       \instrument, \raindrop,
       \dur, Pexprand(0.13, 0.05, inf) * 2,
-      \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
+      \freq, Pexprand(990, 770, inf) + (180 * Pkey(\modi)) - 700,
       \amp, 0.1,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
       \attackTime, 0.001,
@@ -95,17 +96,16 @@ SynthDef(\raindrop, {
       \filterRQ, Pwhite(0.5, 1.5, inf),
 	    \wobble, Pwhite(3,7,inf),
       // visuals
-      \modi, Pfunc({ blob.label.asInteger.mod(4)}),
       \shape, 1,
       \vdur, 0.03,
       \vatt, 0.1,
       \vrel, 0.3,
       \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
-      \vscale, Pwhite(0.05,0.15),
+      \vscale, Pwhite(0.1,0.25),
       \scx, 1.0,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 1.0,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
-      \sy, Pfunc({ -2.5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
+      \sy, Pfunc({ -3.5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
       \ex, Pkey(\sx),
       \ey, Pkey(\sy),//Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
       // \test, Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,1.0)}).trace,

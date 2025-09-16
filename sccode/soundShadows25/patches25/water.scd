@@ -4,28 +4,17 @@ var patterns = Dictionary.new(4);
 
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
 
-
-SynthDef(\raindrop, {
-    |out=0, freq=1000, amp=0.1, pan=0, gate=1, attackTime=0.001, decayTime=0.05,
-	filterFreq=3000, filterRQ=1, wobble=10,
- 	reverbMix=0.3, reverbRoom=0.03, reverbDamp=0.5|
-
-	var sig, env;
-    var verb;
-
-    // Envelope for the droplet shape
-    env = EnvGen.ar(Env.perc(attackTime, decayTime), gate);
-
-    // Basic droplet sound
-    sig = SinOsc.ar(freq * LFPar.ar(wobble,pi/2, 0.2,1)) * env;
-
-    // Apply bandpass filter
-    sig = BPF.ar(sig, filterFreq, filterRQ);
-    verb = FreeVerb.ar(sig, reverbMix, reverbRoom, reverbDamp);
-
-	DetectSilence.ar(verb, doneAction: 2);
-    Out.ar(out, PanAz.ar(2, verb, pan, 1, 2, 0.5) * amp);
+SynthDef(\plob, {|out = 0, freq = 150, amp = 0.3, pan = 0, gate = 1, sl = 0.3|
+	var slide = XLine.ar(1.0, 10.0, sl,doneAction: 2);
+	var env = EnvGen.ar(Env.perc(0.03,2), gate);
+	var sig = SinOsc.ar(freq + (freq * slide)) * env;
+  var filtered = RLPF.ar(sig, freq * 1.5, 0.3);
+  var dly = filtered;//CombL.ar(filtered, 0.3, 0.3, 3.0);
+  dly = LPF.ar(dly, 800);
+  DetectSilence.ar(dly, doneAction: 2);
+  Out.ar(out, Pan2.ar(dly * amp, pan));
 }).add;
+
 
 	// ~setOSCReset.(1);
 	~setXfade.(1);
@@ -76,10 +65,11 @@ SynthDef(\raindrop, {
   var pattern = Pdef("pa_"++blob.label,
     Pbind(
       \type, \customVisualEvent,
-      \instrument, \raindrop,
-      \dur, Pexprand(0.2, 0.3, inf)/3,
-      \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
-      \amp, 0,
+      \instrument, \plob,
+      \dur, Pexprand(0.3, 0.7, inf),
+      \freq, Pwhite(20,44).midicps,
+      \sl, Pwhite(0.3,2.7),
+      \amp, Pwhite(0.01,0.1),
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
       \attackTime, 0.001,
       \decayTime, Pexprand(0.11, 0.04, inf),  // Varied decay time
@@ -97,7 +87,7 @@ SynthDef(\raindrop, {
       \scx, 1,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 1,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
-      \sy, Pfunc({ -3.0 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
+      \sy, Pfunc({ -3.4 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
       \ex, Pkey(\sx),
       \ey, Pkey(\sy) + 1,//Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
       // \test, Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,1.0)}).trace,

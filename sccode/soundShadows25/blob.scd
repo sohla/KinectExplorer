@@ -34,7 +34,7 @@ var model = (
 			blob.acceleration = Bus.control(s,2);
 			blob.velocityRate = Bus.control(s,1);
 			blob.accelerationRate = Bus.control(s,1);
-			postf("Bus index: % \n", blob.accelerationRate.index);
+			// postf("Bus index: % \n", blob.accelerationRate.index);
 			// 14 total buses per blob
 			// 14 * 4 * 2 = 112
 	};

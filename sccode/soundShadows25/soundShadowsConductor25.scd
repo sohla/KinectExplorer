@@ -316,7 +316,7 @@
 					s.sync;
 				}.play;
 				// postf("blob deinit: % \n", label);
-				postf("num of blobs: % \n", blobsDict.size);
+				// postf("num of blobs: % \n", blobsDict.size);
 
 			});
 

@@ -1,8 +1,17 @@
+var synths = Dictionary.new(4);
+
 // ------------------------------------------------------
 ~init = {|patch|
 
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
+SynthDef(\waves22, { |out=0, gate=0, amp = 0.2|
+    var env = EnvGen.ar(Env.asr(1.3,1.0,8 ), gate, doneAction:2);
 
+	var spd = 0.03.rrand(0.09);//MouseY.kr(0.03,0.09);
+	var nsa = RHPF.ar(BrownNoise.ar(0.1), LFSaw.ar(spd*2,1).linexp(-1,1,200,19000));
+	var sig = SinOsc.ar(spd,LFPar.ar(spd,0,pi) *[1,1.02], nsa);
+	Out.ar(out, sig * env * amp);
+}).add;
 	// ~setOSCReset.(1);
 	~setXfade.(1);
 
@@ -36,22 +45,33 @@
 
 //------------------------------------------------------
 ~deinit = {|patch|
+  synths.do({|p,i|
+    p.set(\gate, 0);
+  });
+  synths.free;
 
 };
 
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
 	// postf("blob init: % \n", blob.label);
+  var synth = Synth(\waves22, [\gate, 1]);
+  synths.put(blob.label, synth);
 
 };
 
 //------------------------------------------------------
 ~onBlobUpdate = {|blob, blobsDict|
+  synths.at(blob.label).set(\filterFreq, blob.center.getnSynchronous(2)[0].linexp(0,1.0,300,1700));
+  synths.at(blob.label).set(\mx, blob.center.getnSynchronous(2)[1].linexp(0,2.0,0.2,0.9));
+  synths.at(blob.label).set(\my, blob.center.getnSynchronous(2)[1].linexp(0,2.0,0.2,0.9));
 };
 
 //------------------------------------------------------
 ~onBlobDeinit = {|blob, blobsDict|
 	// postf("blob deinit: % \n", blob.label);
+  synths.at(blob.label).set(\gate, 0);
+  synths.removeAt(blob.label);
 
 };
 
