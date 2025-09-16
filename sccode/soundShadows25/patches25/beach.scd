@@ -25,7 +25,7 @@
 	});
 
 	// ~setDisplace.(mix:1, x:3, y:10, period:0.1, noise:0.2, z:1);
-	~setDisplace.(mix:0.8, x:1, y:0, period:1, noise:5, z:0);
+	~setDisplace.(mix:0.5, x:0.5, y:0, period:1, noise:5, z:0);
 	// ~setDisplace.(mix:0.0);
 
 	~setFeedback.(mix:1, opacity:0.9, hue:0.02, x:0.0, y:0.04, dx:0.0, dy:0.0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.3, edgeStength:0.9);

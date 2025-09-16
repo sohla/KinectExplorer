@@ -40,19 +40,19 @@ SynthDef(\raindrop, {
 
 	// each polyline (blob)
 	4.do({|i|
-		// var c = Color.new(0,1/2,0.5/2,1);
-		// var c = Color.white().lighten(0.1);
-		var c = Color.hsv(0.1 + (0.05 * i),1,1);
+		// var c = Color.new(0.1,0.1,0.1).darken(0.3);
+		var c = Color.black();
+		// var c = Color.hsv(0.1 + (0.05 * i),1,1);
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
-  ~setColorRamp.(Color(0.3,0.3,0.3).asArray, 0);
+  ~setColorRamp.(Color(0.0,0.0,0.0).asArray, 0);
 	// ~setDisplace.(mix:0.2, x:3, y:3, period:0.1, noise:0.2, z:1);
 	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
 	~setDisplace.(mix:0.0);
 
-	// ~setFeedback.(mix:0.4, opacity:0.86, hue:0.02, x:0.2, y:0.4, dx:0.0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.3, edgeStength:0.3);
-	~setFeedback.(mix:0);
+	~setFeedback.(mix:1, opacity:0.98, hue:0.02, x:0.0, y:-1, dx:0.0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	// ~setFeedback.(mix:0);
 
 
 

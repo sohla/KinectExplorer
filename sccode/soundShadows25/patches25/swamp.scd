@@ -40,14 +40,14 @@ SynthDef(\raindrop, {
 
 	// each polyline (blob)
 	4.do({|i|
-		// var c = Color.new(0,1/2,0.5/2,1);
-		var c = Color.black().lighten(0.1);
+		var c = Color.new255(134, 129, 35).lighten(0.5);
+		// var c = Color.grey().lighten(0.1);
 		// var c = Color.hsv(0.1 + (0.05 * i),1,1);
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
   ~setColorRamp.(Color(0.0,0.0,0.0).asArray, 200);
-	~setDisplace.(mix:0.2, x:3, y:3, period:0.1, noise:0.2, z:1);
+	~setDisplace.(mix:0.8, x:5, y:1, period:0.5, noise:0.02, z:0.1);
 	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
 	// ~setDisplace.(mix:0.0);
 
@@ -77,7 +77,7 @@ SynthDef(\raindrop, {
     Pbind(
       \type, \customVisualEvent,
       \instrument, \raindrop,
-			\dur, Pwhite(0.2,0.3),
+			\dur, Pwhite(0.3,0.4),
       \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
       \amp, 0,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
@@ -89,7 +89,7 @@ SynthDef(\raindrop, {
       // visuals
       \modi, Pfunc({ blob.label.asInteger.mod(4)}),
       \shape, 3,
-      \vdur, Pwhite(1.1,1.9) * 2,
+      \vdur, Pwhite(1.1,1.9),
       \vatt, 0.02,
       \vrel, 1.8,
       \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
@@ -99,7 +99,7 @@ SynthDef(\raindrop, {
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
       \sy, -1,
       \ex, Pkey(\sx),
-      \ey, -4.5//Pfunc({ -5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
+      \ey, -3.5//Pfunc({ -5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
     )
   ).play;
 

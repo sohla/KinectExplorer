@@ -184,12 +184,26 @@
 			plotView = UserView()
 				.minHeight_(200)
 				.minWidth_(300),
+		),
+			Slider()
+				.maxHeight_(40)
+				.orientation_(\horizontal)
+				.action_({|v|
+					{globalAddr.sendMsg("/render_cam_x", v.value.linlin(0.0,1.0,2.0,4.0))}.defer;
+				}),
+			Slider()
+				.maxHeight_(40)
+				.orientation_(\horizontal)
+				.action_({|v|
+					{globalAddr.sendMsg("/render_cam_y", v.value.linlin(0.0,1.0,-4.0,4.0))}.defer;
+				}),
+			Slider()
+				.maxHeight_(40)
+				.orientation_(\horizontal)
+				.action_({|v|
+					{globalAddr.sendMsg("/render_cam_z", v.value.linlin(0.0,1.0,2.0,8.0))}.defer;
+				}),
 
-
-			// freqScope = FreqScopeView()
-			// 	.freqMode_(1)
-			// 	.active_(true),
-		)
 		),
 		serverView = UserView()
 			.minWidth_(300)
