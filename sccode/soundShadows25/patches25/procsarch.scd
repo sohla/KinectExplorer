@@ -34,7 +34,7 @@ SynthDef(\raindrop, {
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
 	// ~setBackground1.(Color.white().darken(0.2).asArray);
-		~setBackground2.(blur:0.7, step:0.1, index:25, color:Color.hsv(0.99,1,1).lighten(0.8).asArray);
+		~setBackground2.(blur:0.7, step:0.1, index:25, color:Color.hsv(0.99,1,1).lighten(0.99).asArray);
 
 	// each polyline (blob)
 	4.do({|i|

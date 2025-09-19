@@ -35,12 +35,12 @@ SynthDef(\raindrop, {
 	// ~setBackground0.();
 	// ~setBackground1.(Color.white().darken(0.8).asArray);
 	// ~setBackground2.(blur:0.5, step:0.06);
-	~setBackground3.(index:22, scale:1, rot:0, mode:28, color:Color.red.lighten(0.5).asArray);
+	~setBackground3.(index:22, scale:1, rot:0, mode:28, color:Color.red.lighten(0.9).asArray);
 
 	// each polyline (blob)
 	4.do({|i|
 		// var c = Color.new(0,1/2,0.5/2,1);
-		var c = Color.blue().lighten(0.1);
+		var c = Color.red().lighten(0.5);
 		// var c = Color.hsv(0.2 + (0.02 * i),1,1).darken(0.5);
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
@@ -50,7 +50,7 @@ SynthDef(\raindrop, {
 	~setDisplace.(mix:0.3, x:4, y:4, period:0.1, noise:2.3, z:0);
 	// ~setDisplace.(mix:0.0);
 
-	~setFeedback.(mix:0.5, opacity:0.99, hue:0.02, x:0.0, y:0.1, dx:0.1, dy:0.0, edgeColor:Color(1,1,0).asArray, edgeBlack:0.1, edgeStength:0.0);
+	~setFeedback.(mix:1, opacity:0.9, hue:0.02, x:0.0, y:0.1, dx:0.1, dy:0.0, edgeColor:Color(1,1,0).asArray, edgeBlack:0.1, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
 
 
@@ -99,7 +99,7 @@ SynthDef(\raindrop, {
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.3,0.3),
       \sy,  -1,
       \ex, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.03,0.03),
-      \ey, Pfunc({ -4.5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
+      \ey, Pfunc({ -3.5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
       // \test, Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,1.0)}).trace,
       // \imageindex, 2,
       // \rotstart, 180,

@@ -2,15 +2,15 @@
 var renderer = {|blobsDict, patches|
 
     UserView()
-				.minHeight_(480)
-				.minWidth_(640)
+				.minHeight_(480/2)
+				.minWidth_(640/2)
         .background_(Color.black)
 				.drawFunc_({|view|
 
               var cols = [Color.magenta, Color.green, Color.blue, Color.yellow];
               var vx = 0,vy = 0;
 
-
+		Pen.scale(0.5,0.5);
 
               if(s.serverRunning == false,{
                 Pen.strokeColor = Color.magenta;

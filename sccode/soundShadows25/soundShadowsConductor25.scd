@@ -82,6 +82,7 @@
 		o.memSize = 8192 * 2;
 		o.numInputBusChannels = 2;
 		o.numOutputBusChannels = 2;
+	s.volume = 4.dbamp;
 
 		s.waitForBoot{
 			"💫 👻 welcome to sound shadows 25 👻 💫".postln;
@@ -135,8 +136,8 @@
 
 	//------------------------------------------------------
 	QtGUI.palette = QPalette.dark;
-	window = Window("💫 👻 sound shadows 👻 💫",Rect(0,0,Window.screenBounds.width * 0.5, Window.screenBounds.height - 300)
-		.center_(Window.screenBounds.width*0.85@100)
+	window = Window("💫 👻 sound shadows 👻 💫",Rect(0,0,Window.screenBounds.width * 0.5, Window.screenBounds.height/4)
+		.center_(Window.screenBounds.width*0.85@10)
 	).front;
 
 	//------------------------------------------------------
@@ -180,11 +181,11 @@
 			]),
 		GridLayout.rows(*patchButtons.()),
     renderer.(blobsDict, patches),
-		HLayout(
-			plotView = UserView()
-				.minHeight_(200)
-				.minWidth_(300),
-		),
+		// HLayout(
+		// 	plotView = UserView()
+		// 	.minHeight_(10)
+		// 	.minWidth_(150),
+		// ),
 			Slider()
 				.maxHeight_(40)
 				.orientation_(\horizontal)

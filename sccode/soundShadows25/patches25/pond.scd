@@ -60,7 +60,7 @@ SynthDef(\raindrop, {
 
   ~setDisplace.(mix:0.0);
 // ~setDisplace.(mix:0.2, x:1.0, y:1, period:3, noise:5, z:0);
-	
+
 	~setFeedback.(mix:0.9, opacity:0.77, hue:0.02, x:0.01, y:-0.01, dx:0.0, dy:0.0, edgeColor:Color(0,0.8,0.2).asArray, edgeBlack:0.01, edgeStength:1.1);
 	// ~setFeedback.(mix:0);
 
@@ -88,7 +88,7 @@ SynthDef(\raindrop, {
       \instrument, \raindrop,
       \dur, Pexprand(0.13, 0.05, inf) * 2,
       \freq, Pexprand(990, 770, inf) + (180 * Pkey(\modi)) - 700,
-      \amp, 0.1,
+      \amp, 0.5,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
       \attackTime, 0.001,
       \decayTime, Pexprand(0.11, 0.04, inf),  // Varied decay time
@@ -105,7 +105,7 @@ SynthDef(\raindrop, {
       \scx, 1.0,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 1.0,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
-      \sy, Pfunc({ -3.5 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
+      \sy, Pfunc({ -3.2 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
       \ex, Pkey(\sx),
       \ey, Pkey(\sy),//Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
       // \test, Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,1.0)}).trace,

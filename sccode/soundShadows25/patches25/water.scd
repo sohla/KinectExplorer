@@ -31,8 +31,9 @@ SynthDef(\plob, {|out = 0, freq = 150, amp = 0.3, pan = 0, gate = 1, sl = 0.3|
 	// each polyline (blob)
 	4.do({|i|
 		// var c = Color.new(0,1/2,0.5/2,1);
-		var c = Color.hsv(0.64,0.8,0.05);
+		// var c = Color.hsv(0.64,0.8,0.05);
 		// var c = Color.hsv(0.3 + (0.05 * i),0.7,0.7);
+		var c = Color.gray();
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
@@ -87,7 +88,7 @@ SynthDef(\plob, {|out = 0, freq = 150, amp = 0.3, pan = 0, gate = 1, sl = 0.3|
       \scx, 1,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 1,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}) + Pwhite(-0.1,0.1),
-      \sy, Pfunc({ -3.4 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
+      \sy, Pfunc({ -3.3 + Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),//Pwhite(-2.0,-2.5), //-1 to -4.5
       \ex, Pkey(\sx),
       \ey, Pkey(\sy) + 1,//Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,3.5)}),
       // \test, Pfunc({Rect.fromArray(blob.rect.getnSynchronous(4)).height.linlin(0.0,480.0,0,1.0)}).trace,

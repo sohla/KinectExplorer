@@ -41,21 +41,18 @@ SynthDef(\raindrop, {
 	// each polyline (blob)
 	4.do({|i|
 		// var c = Color.new(0.1,0.1,0.1).darken(0.3);
-		var c = Color.black();
+		var c = Color.green();
 		// var c = Color.hsv(0.1 + (0.05 * i),1,1);
     // var c = colors[i];
 		~setPolylineColor.(i,c.asArray); // might be broken
 	});
-  ~setColorRamp.(Color(0.0,0.0,0.0).asArray, 0);
+	~setColorRamp.(Color(1.0,1.0,1.0).darken(0.7).asArray, 0);
 	// ~setDisplace.(mix:0.2, x:3, y:3, period:0.1, noise:0.2, z:1);
 	// ~setDisplace.(mix:1, x:0.1, y:3, period:0.1, noise:5, z:0);
 	~setDisplace.(mix:0.0);
 
-	~setFeedback.(mix:1, opacity:0.98, hue:0.02, x:0.0, y:-1, dx:0.0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
+	~setFeedback.(mix:1, opacity:0.98, hue:0.02, x:0.0, y:-10, dx:0.0, dy:0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.0, edgeStength:0.0);
 	// ~setFeedback.(mix:0);
-
-
-
 };
 
 //------------------------------------------------------
@@ -66,18 +63,16 @@ SynthDef(\raindrop, {
   });
   patterns.free;
 	~setPolyline.(0,1,1);
-
 };
 
 //---------------------------------------------------
 ~onBlobInit = {|blob, blobsDict|
 
-
   var pattern = Pdef("pa_"++blob.label,
     Pbind(
       \type, \customVisualEvent,
       \instrument, \raindrop,
-      \dur, 0.1,//Pwhite(0.1,0.2),
+      \dur, 0.2,//Pwhite(0.1,0.2),
       \freq, Pexprand(1400, 770, inf),  // Random frequency for each droplet
       \amp, 0,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
@@ -88,25 +83,24 @@ SynthDef(\raindrop, {
 	    \wobble, Pwhite(3,7,inf),
       // visuals
       \modi, Pfunc({ blob.label.asInteger.mod(4)}),
-      \shape, Pseq([0,6].stutter(20), inf),
+      \shape, 1,//Pseq([0,6].stutter(20), inf),
       \vdur, 0.2,//Pwhite(0.1,0.2) * 2,
       \vatt, 0.1,
       \vrel, 1.3,
       \color, Pswitch([0.01,0.25,0.5,0.75], Pkey(\modi)),//Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.3,0.7,0.1,0.9)}),
-      \vscale,1,
-      \scx, 0.1,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
-		  \scy, 0.2,
-      \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}),
+      \vscale,0.5,
+      \scx, 0.6,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
+		  \scy, 0.4,
+      \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.06}),
       \sy, -2.5,
 			\ex, Pkey(\sx),
-      \ey, -0.5,
+      \ey, -1.0,
     )
   ).play;
 
   patterns.put(blob.label, pattern);
   patterns.at(blob.label).play;
-
-	postf("blob init: %\n", blob.label);
+  postf("blob init: %\n", blob.label);
 };
 
 //------------------------------------------------------

@@ -98,7 +98,7 @@ SynthDef(\raindrop, {
       \scx, 0.6,//Pfunc({blob.rect.getnSynchronous(4)[2].linlin(50,150,0.7,2)}),
 		  \scy, 0.2,
       \sx, Pfunc({blob.center.getnSynchronous(2)[0].linlin(0.0,1.0,0,3.05) + 0.05}),
-      \sy, -3,
+      \sy, -3.5,
 			\ex, Pkey(\sx),
       \ey, -1,
     )

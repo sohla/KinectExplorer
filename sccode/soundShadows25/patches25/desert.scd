@@ -10,7 +10,7 @@ var notes = [0,7,16,14,11];
 
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
 
-	SynthDef(\bowedSun, { |out, freq=111, gate=0, amp = 0.4, ffrq = 1000, pan = 0|
+	SynthDef(\bowedSun, { |out, freq=111, gate=0, amp = 0.7, ffrq = 1000, pan = 0|
 
 		var env = EnvGen.ar(Env.asr(1.1,1.0,3.0), gate, doneAction:Done.freeSelf);
 		var env2 = EnvGen.ar(Env.perc(0.003,2.8), gate);

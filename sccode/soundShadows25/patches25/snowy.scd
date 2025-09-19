@@ -48,8 +48,8 @@ var patterns = Dictionary.new(4);
 	~setDisplace.(mix:0.5, x:0.1, y:0.1, period:0.1, noise:5, z:0);
 	// ~setDisplace.(mix:0.0);
 
-	// ~setFeedback.(mix:1, opacity:0.96, hue:0.02, x:0.0, y:0.04, dx:0.0, dy:0.0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.3, edgeStength:0.9);
-	~setFeedback.(mix:0);
+	~setFeedback.(mix:1, opacity:0.96, hue:0.02, x:0.0, y:0.04, dx:0.0, dy:0.0, edgeColor:Color(1,1,1).asArray, edgeBlack:0.3, edgeStength:0.1);
+	// ~setFeedback.(mix:0);
 
 
 
@@ -78,7 +78,7 @@ var patterns = Dictionary.new(4);
       \root, Pseq([4,2,0,-2].stutter(8), inf),
       \octave, Pseq([7,6,5].stutter(3), inf) - 2,
       \note, Pseq([0,4,8,12].reverse, inf),
-      \amp, 1,
+      \amp, 0,
       \pan, Pwhite(-1.0, 1.0, inf),    // Random panning
       \attackTime, 0.001,
       \rq, Pwhite(0.0008, 0.0012),

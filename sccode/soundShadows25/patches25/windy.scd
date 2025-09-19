@@ -6,7 +6,7 @@ var synths = Dictionary.new(4);
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
 
   SynthDef(\sheet3, {
-    |out=0, amp=0.5, density=0.5, strength=0.5,
+    |out=0, amp=1.4, density=0.5, strength=0.5,
     filterFreq=400, filterQ=0.5,
     reverbMix=0.5, reverbRoom=0.5, reverbDamp=0.2, gate=0, my=0.5, mx=0.5,pan=0|
 

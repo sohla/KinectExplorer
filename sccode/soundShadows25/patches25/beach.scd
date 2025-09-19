@@ -4,7 +4,7 @@ var synths = Dictionary.new(4);
 ~init = {|patch|
 
   var colors = [Color.red, Color.yellow, Color.blue, Color.cyan, Color.green];
-SynthDef(\waves22, { |out=0, gate=0, amp = 0.2|
+SynthDef(\waves22, { |out=0, gate=0, amp = 0.8|
     var env = EnvGen.ar(Env.asr(1.3,1.0,8 ), gate, doneAction:2);
 
 	var spd = 0.03.rrand(0.09);//MouseY.kr(0.03,0.09);
@@ -18,7 +18,7 @@ SynthDef(\waves22, { |out=0, gate=0, amp = 0.2|
 	~setPolyline.(1,1,1);
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
-	// ~setBackground0.(); 
+	// ~setBackground0.();
 	// ~setBackground1.(Color.white().asArray);
 	~setBackground2.(blur:0.7, step:0.03, index:1, color:Color.yellow.lighten(0.5).asArray);
 	// ~setBackground3.(index:25, scale:1, rot:0, mode:31, color:Color.blue.asArray);
@@ -39,7 +39,7 @@ SynthDef(\waves22, { |out=0, gate=0, amp = 0.2|
 
 	~setFeedback.(mix:1, opacity:0.9, hue:0.02, x:0.0, y:0.04, dx:0.0, dy:0.0, edgeColor:Color(0,1,0).asArray, edgeBlack:0.3, edgeStength:0.9);
 	// ~setFeedback.(mix:0);
-  
+
 
 };
 
@@ -77,7 +77,7 @@ SynthDef(\waves22, { |out=0, gate=0, amp = 0.2|
 
 
 //------------------------------------------------------
-~onPlotData = {|blobsDict|	
+~onPlotData = {|blobsDict|
 };
 
 //------------------------------------------------------
