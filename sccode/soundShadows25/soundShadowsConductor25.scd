@@ -59,12 +59,12 @@
 	var bootServer = {|f|
 
 	// CABIN
-	// var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
-	// var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	var input = ServerOptions.devices.indexOfEqual("SERIES 208i");
+	var output = ServerOptions.devices.indexOfEqual("SERIES 208i");
 
 	// LAPTOP
-	var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
-	var output = ServerOptions.devices.indexOfEqual("Built-in Output");
+	// var input = ServerOptions.devices.indexOfEqual("Built-in Microph");
+	// var output = ServerOptions.devices.indexOfEqual("Built-in Output");
 
 
 		 // var input = ServerOptions.devices.indexOfEqual("ZoomAudioD");

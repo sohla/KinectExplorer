@@ -1,5 +1,5 @@
-// var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
-var patchesPath = "~/Develop/OSX/Projects/KinectExplorer/sccode/soundShadows25/patches25/";
+var patchesPath = "~/Develop/OSX/Frameworks/of_v0.11.0_osx_release/apps/myApps/KinectExplorer/sccode/soundShadows25/patches25/";
+// var patchesPath = "~/Develop/OSX/Projects/KinectExplorer/sccode/soundShadows25/patches25/";
 
 
 var addresses = Require("Addresses.scd");

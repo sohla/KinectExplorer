@@ -6,7 +6,7 @@
 	// ~setOSCReset.(1);
 	~setXfade.(1);
 
-	~setPolyline.(1,1,1);
+	~setPolyline.(0,1,1);
   ~setRGBColor.([1,1,1,1]); //might need to reset in globals OSC IN
 
 	// ~setBackground0.();
@@ -27,8 +27,8 @@
 	// ~setDisplace.(mix:0.8, x:4, y:4, period:0.1, noise:2.3, z:0);
 	~setDisplace.(mix:0.0);
 
-	~setFeedback.(mix:0.98, opacity:0.98, hue:0.02, x:0.0, y:0.07, dx:0.0, dy:0.0, edgeColor:Color(0,0,1).asArray, edgeBlack:0.1, edgeStength:0);
-	// ~setFeedback.(mix:0);
+	// ~setFeedback.(mix:0.98, opacity:0.98, hue:0.02, x:0.0, y:0.07, dx:0.0, dy:0.0, edgeColor:Color(0,0,1).asArray, edgeBlack:0.1, edgeStength:0);
+	~setFeedback.(mix:0);
 
 
 };
